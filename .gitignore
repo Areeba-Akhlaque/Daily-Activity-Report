@@ -12,11 +12,11 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Old scripts (now in execution/)
-fetch_all_clickup_activity.py
-fetch_github_activity.py
-fetch_google_workspace_activity.py
-fetch_figma_activity.py
-fetch_backendless_activity.py
-refresh_dashboard.py
-fix_activity_time.py
+# Old scripts (now in execution/) - root folder only
+/fetch_all_clickup_activity.py
+/fetch_github_activity.py
+/fetch_google_workspace_activity.py
+/fetch_figma_activity.py
+/fetch_backendless_activity.py
+/refresh_dashboard.py
+/fix_activity_time.py
