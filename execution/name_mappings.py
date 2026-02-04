@@ -23,10 +23,10 @@ NAME_MAP = {
     'megha@pvragon.com': 'Megha Sharma',
     'saifullah@pvragon.com': 'Saifullah Khan',
     'sunnat@pvragon.com': 'Sunnat Choriev',
-    'roman@pvragon.com': 'Roman',
-    'saymond@pvragon.com': 'Saymond',
-    'victor@pvragon.com': 'Victor',
-    'tara@pvragon.com': 'Tara',
+    'roman@pvragon.com': 'Roman Naidenko',
+    'saymond@pvragon.com': 'Saymond Montoya',
+    'victor@pvragon.com': 'Victor Cheung',
+    'tara@pvragon.com': 'Tara Yowell',
     'ricardo@pvragon.com': 'Ricardo',
     
     # === Personal Gmail Accounts ===
@@ -91,6 +91,21 @@ NAME_MAP = {
     'Muhammad Farhan': 'Muhammad Farhan',
     'Saifullah Khan': 'Saifullah Khan',
     'Sunnat Choriev': 'Sunnat Choriev',
+    
+    # === Google Workspace Display Names ===
+    # These are how names appear in Google Workspace reports
+    'A.S. Johan': 'A.S. Johan',
+    'Adriane Barredo': 'Adriane Barredo',
+    'Alexander': 'Alexander Pavelko',
+    'Bradd Schofield': 'Bradd Schofield',
+    'Jeniffer Rosa': 'Jeniffer Rosa',
+    'Keeko Villaveces': 'Keeko Villaveces',
+    'Lena Klapper': 'Lena Klapper',
+    'Mariana Gracia Salgado': 'Mariana Gracia Salgado',
+    'Roman Naidenko': 'Roman Naidenko',
+    'Saymond Montoya': 'Saymond Montoya',
+    'Tara Yowell': 'Tara Yowell',
+    'Victor Cheung': 'Victor Cheung',
 }
 
 # Exclusion patterns - accounts to skip
@@ -110,6 +125,7 @@ EXCLUDE_PATTERNS = [
     'melanie@novastarcreative.com', 's.bruton@okridecare.com',
     'sarahjbru@gmail.com', 'lucah.e.hereford@gmail.com',
     'ericaeggers@google.com', 'c.hedrick@davidrobertsconsulting.com',
+    'Casey Hedrick', 'Toni McGee',
 ]
 
 
@@ -145,23 +161,34 @@ def map_name(identifier):
         'saifullah': 'Saifullah Khan',
         'sunnat': 'Sunnat Choriev',
         'juan': 'Juan Vidal',
-        'roman': 'Roman',
-        'victor': 'Victor',
-        'saymond': 'Saymond',
-        'tara': 'Tara',
+        'roman naidenko': 'Roman Naidenko',
+        'roman': 'Roman Naidenko',
+        'victor cheung': 'Victor Cheung',
+        'victor': 'Victor Cheung',
+        'saymond montoya': 'Saymond Montoya',
+        'saymond': 'Saymond Montoya',
+        'tara yowell': 'Tara Yowell',
+        'tara': 'Tara Yowell',
         'ricardo': 'Ricardo',
         'bogdan': 'Bogdan',
         'xingran': 'Xingran Du',
         'kinney': 'Kinney',
         'michel': 'Michel',
         'david': 'David',
-        'bradd': 'Bradd Konert',
+        'bradd schofield': 'Bradd Schofield',
+        'bradd konert': 'Bradd Konert',
+        'bradd': 'Bradd Schofield',
         'megha': 'Megha Sharma',
         'adriane': 'Adriane Barredo',
         'mariana': 'Mariana Gracia Salgado',
         'cristina': 'Cristina Villarreal',
         'maz': 'Maz Tayebi',
         'jerry': 'Jerry Miller',
+        'jeniffer': 'Jeniffer Rosa',
+        'keeko': 'Keeko Villaveces',
+        'lena': 'Lena Klapper',
+        'a.s. johan': 'A.S. Johan',
+        'johan': 'A.S. Johan',
     }
     
     for keyword, name in keyword_map.items():
