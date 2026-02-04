@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,16 +21,31 @@
             --success: #10b981;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg-primary); color: var(--text-primary); min-height: 100vh; font-size: 14px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        .container { max-width: 1600px; margin: 0 auto; padding: 24px; }
-        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
         /* Header */
-        header { 
-            background: var(--bg-card); 
-            padding: 24px; 
-            border-radius: 12px; 
+        header {
+            background: var(--bg-card);
+            padding: 24px;
+            border-radius: 12px;
             border: 1px solid var(--border);
             margin-bottom: 24px;
             display: flex;
@@ -38,16 +54,42 @@
             justify-content: space-between;
             align-items: center;
         }
-        
-        .title h1 { font-size: 20px; font-weight: 600; color: white; }
-        .title p { color: var(--text-secondary); margin-top: 4px; }
+
+        .title h1 {
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .title p {
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
 
         /* Filters */
-        .filters { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end; }
-        .filter-group { display: flex; flex-direction: column; gap: 6px; position: relative; }
-        .filter-label { font-size: 11px; text-transform: uppercase; font-weight: 600; color: var(--text-secondary); }
-        
-        select, .multi-select-btn {
+        .filters {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            position: relative;
+        }
+
+        .filter-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        select,
+        .multi-select-btn {
             background: var(--bg-primary);
             border: 1px solid var(--border);
             color: white;
@@ -57,382 +99,541 @@
             cursor: pointer;
             font-family: inherit;
         }
-        
+
         /* Dropdown for MultiSelect */
-        .dropdown { position: absolute; top: 100%; left: 0; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 6px; width: 220px; max-height: 300px; overflow-y: auto; z-index: 100; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.3); padding: 8px; margin-top: 4px; }
-        .dropdown.show { display: block; }
-        .dropdown-item { padding: 8px; display: flex; align-items: center; gap: 8px; cursor: pointer; border-radius: 4px; }
-        .dropdown-item:hover { background: rgba(255,255,255,0.05); }
-        .dropdown-item input { accent-color: var(--accent); }
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            width: 220px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            padding: 8px;
+            margin-top: 4px;
+        }
+
+        .dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .dropdown-item input {
+            accent-color: var(--accent);
+        }
 
         /* Stats */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 24px; }
-        .stat-card { background: var(--bg-card); padding: 20px; border-radius: 12px; border: 1px solid var(--border); }
-        .stat-val { font-size: 28px; font-weight: 700; color: white; margin: 8px 0; }
-        .stat-label { color: var(--text-secondary); font-size: 12px; text-transform: uppercase; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .stat-val {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            margin: 8px 0;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 12px;
+            text-transform: uppercase;
+        }
 
         /* Charts */
-        .grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 20px; }
-        .grid-2-equal { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
-        .card { background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; }
-        .card-header { display: flex; justify-content: space-between; margin-bottom: 16px; }
-        .card-title { font-weight: 600; font-size: 16px; }
-        .chart-wrap { position: relative; height: 300px; width: 100%; }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .grid-2-equal {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .chart-wrap {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
 
         /* Data Table */
-        .table-container { overflow-x: auto; max-height: 500px; }
-        table { width: 100%; border-collapse: collapse; white-space: nowrap; font-size: 13px; }
-        th { text-align: left; padding: 12px; border-bottom: 1px solid var(--border); color: var(--text-secondary); background: var(--bg-secondary); position: sticky; top: 0; }
-        td { padding: 12px; border-bottom: 1px solid var(--border); color: var(--text-primary); }
-        tr:hover td { background: rgba(255,255,255,0.02); }
+        .table-container {
+            overflow-x: auto;
+            max-height: 500px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            white-space: nowrap;
+            font-size: 13px;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+            background: var(--bg-secondary);
+            position: sticky;
+            top: 0;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
 
         /* Leaderboard */
-        .avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; display: inline-flex; margin-right: 8px; vertical-align: middle; }
-        
-        .loading { position: fixed; inset: 0; background: var(--bg-primary); display: flex; align-items: center; justify-content: center; z-index: 1000; flex-direction: column; gap: 16px; }
-        .spinner { width: 40px; height: 40px; border: 4px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        .avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: white;
+            display: inline-flex;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
 
-        @media (max-width: 1024px) { .grid-2, .grid-2-equal { grid-template-columns: 1fr; } }
+        .loading {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 1024px) {
+
+            .grid-2,
+            .grid-2-equal {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
+
 <body>
 
-<div id="loading" class="loading">
-    <div class="spinner"></div>
-    <p>Loading realtime data...</p>
-</div>
+    <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Loading realtime data...</p>
+    </div>
 
-<div class="container" id="dashboard" style="display: none;">
-    <header>
-        <div class="title">
-            <h1>Pvragon Activity Dashboard</h1>
-            <p id="lastUpdated">Last updated: ...</p>
-        </div>
-        <div class="filters">
-            <!-- Member Filter (Multi) -->
-            <div class="filter-group">
-                <span class="filter-label">Team Members</span>
-                <button class="multi-select-btn" onclick="toggleDropdown('memberDropdown')">All Members</button>
-                <div id="memberDropdown" class="dropdown"></div>
+    <div class="container" id="dashboard" style="display: none;">
+        <header>
+            <div class="title">
+                <h1>Pvragon Activity Dashboard</h1>
+                <p id="lastUpdated">Last updated: ...</p>
             </div>
+            <div class="filters">
+                <!-- Member Filter (Multi) -->
+                <div class="filter-group">
+                    <span class="filter-label">Team Members</span>
+                    <button class="multi-select-btn" onclick="toggleDropdown('memberDropdown')">All Members</button>
+                    <div id="memberDropdown" class="dropdown"></div>
+                </div>
 
-            <!-- Platform Filter (Single) -->
-            <div class="filter-group">
-                <span class="filter-label">Platform</span>
-                <select id="platformFilter" onchange="applyFilters()">
-                    <option value="all">All Platforms</option>
-                    <option value="Google Workspace">Google Workspace</option>
-                    <option value="ClickUp">ClickUp</option>
-                    <option value="GitHub">GitHub</option>
-                    <option value="Figma">Figma</option>
-                    <option value="Backendless App">Backendless</option>
-                </select>
+                <!-- Platform Filter (Single) -->
+                <div class="filter-group">
+                    <span class="filter-label">Platform</span>
+                    <select id="platformFilter" onchange="applyFilters()">
+                        <option value="all">All Platforms</option>
+                        <option value="Google Workspace">Google Workspace</option>
+                        <option value="ClickUp">ClickUp</option>
+                        <option value="GitHub">GitHub</option>
+                        <option value="Figma">Figma</option>
+                        <option value="Backendless App">Backendless</option>
+                    </select>
+                </div>
+
+                <!-- Date Range -->
+                <div class="filter-group">
+                    <span class="filter-label">Timeframe</span>
+                    <select id="dateFilter" onchange="applyFilters()">
+                        <option value="7">Last 7 Days</option>
+                        <option value="14">Last 14 Days</option>
+                        <option value="30" selected>Last 30 Days</option>
+                        <option value="all">All Time</option>
+                    </select>
+                </div>
             </div>
+        </header>
 
-            <!-- Date Range -->
-            <div class="filter-group">
-                <span class="filter-label">Timeframe</span>
-                <select id="dateFilter" onchange="applyFilters()">
-                    <option value="7">Last 7 Days</option>
-                    <option value="14">Last 14 Days</option>
-                    <option value="30" selected>Last 30 Days</option>
-                    <option value="all">All Time</option>
-                </select>
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Activities</div>
+                <div class="stat-val" id="totalActivities">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Avg Daily Hours</div>
+                <div class="stat-val" id="avgHours">0h</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Avg Break Time</div>
+                <div class="stat-val" id="avgBreak">0m</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Active Members</div>
+                <div class="stat-val" id="activeCount">0</div>
             </div>
         </div>
-    </header>
 
-    <!-- Stats -->
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-label">Total Activities</div>
-            <div class="stat-val" id="totalActivities">0</div>
+        <!-- Main Charts -->
+        <div class="grid-2">
+            <div class="card">
+                <div class="card-header"><span class="card-title">Activity Trend</span></div>
+                <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
+            </div>
+            <div class="card">
+                <div class="card-header"><span class="card-title">Platform Mix</span></div>
+                <div class="chart-wrap"><canvas id="donutChart"></canvas></div>
+            </div>
         </div>
-        <div class="stat-card">
-            <div class="stat-label">Avg Daily Hours</div>
-            <div class="stat-val" id="avgHours">0h</div>
+
+        <!-- Secondary Charts -->
+        <div class="grid-2-equal">
+            <div class="card">
+                <div class="card-header"><span class="card-title">Team Leaderboard (Events)</span></div>
+                <div class="chart-wrap"><canvas id="leaderboardChart"></canvas></div>
+            </div>
+            <div class="card">
+                <div class="card-header"><span class="card-title">Work Intensity (Hours)</span></div>
+                <div class="chart-wrap"><canvas id="hoursChart"></canvas></div>
+            </div>
         </div>
-        <div class="stat-card">
-            <div class="stat-label">Avg Break Time</div>
-            <div class="stat-val" id="avgBreak">0m</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-label">Active Members</div>
-            <div class="stat-val" id="activeCount">0</div>
+
+        <!-- Data Table -->
+        <div class="card">
+            <div class="card-header"><span class="card-title">Detailed Logs</span></div>
+            <div class="table-container">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Member</th>
+                            <th>Platform</th>
+                            <th>Event Type</th>
+                            <th>Count</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 
-    <!-- Main Charts -->
-    <div class="grid-2">
-        <div class="card">
-            <div class="card-header"><span class="card-title">Activity Trend</span></div>
-            <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
-        </div>
-        <div class="card">
-            <div class="card-header"><span class="card-title">Platform Mix</span></div>
-            <div class="chart-wrap"><canvas id="donutChart"></canvas></div>
-        </div>
-    </div>
+    <script>
+        let rawData = { audit: [], time: [] };
+        let charts = {};
+        let selectedMembers = new Set();
 
-    <!-- Secondary Charts -->
-    <div class="grid-2-equal">
-        <div class="card">
-            <div class="card-header"><span class="card-title">Team Leaderboard (Events)</span></div>
-            <div class="chart-wrap"><canvas id="leaderboardChart"></canvas></div>
-        </div>
-        <div class="card">
-            <div class="card-header"><span class="card-title">Work Intensity (Hours)</span></div>
-            <div class="chart-wrap"><canvas id="hoursChart"></canvas></div>
-        </div>
-    </div>
+        // Config
+        const chartColors = {
+            blue: '#6366f1', purple: '#8b5cf6', green: '#10b981', orange: '#f59e0b', red: '#ef4444'
+        };
 
-    <!-- Data Table -->
-    <div class="card">
-        <div class="card-header"><span class="card-title">Detailed Logs</span></div>
-        <div class="table-container">
-            <table id="dataTable">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Member</th>
-                        <th>Platform</th>
-                        <th>Event Type</th>
-                        <th>Count</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody"></tbody>
-            </table>
-        </div>
-    </div>
-</div>
+        // Initialize
+        async function init() {
+            try {
+                // Cache Buster for Realtime
+                const res = await fetch(`data.json?t=${Date.now()}`);
+                if (!res.ok) throw new Error("Data not found");
+                const json = await res.json();
 
-<script>
-    let rawData = { audit: [], time: [] };
-    let charts = {};
-    let selectedMembers = new Set();
-    
-    // Config
-    const chartColors = { 
-        blue: '#6366f1', purple: '#8b5cf6', green: '#10b981', orange: '#f59e0b', red: '#ef4444' 
-    };
+                rawData.audit = json.dailyAudit || [];
+                rawData.time = json.timeAnalysis || [];
 
-    // Initialize
-    async function init() {
-        try {
-            // Cache Buster for Realtime
-            const res = await fetch(`data.json?t=${Date.now()}`);
-            if (!res.ok) throw new Error("Data not found");
-            const json = await res.json();
-            
-            rawData.audit = json.dailyAudit || [];
-            rawData.time = json.timeAnalysis || [];
-            
-            document.getElementById('lastUpdated').innerText = `Last Updated: ${json.lastUpdated || 'Unknown'}`;
-            
-            // Setup Member Multi-Select
-            const members = [...new Set(rawData.audit.map(r => r['Team Member']))].sort().filter(m => m);
-            const drop = document.getElementById('memberDropdown');
-            
-            // "All" option
-            drop.innerHTML = `
+                document.getElementById('lastUpdated').innerText = `Last Updated: ${json.lastUpdated || 'Unknown'}`;
+
+                // Setup Member Multi-Select
+                const members = [...new Set(rawData.audit.map(r => r['Team Member']))].sort().filter(m => m);
+                const drop = document.getElementById('memberDropdown');
+
+                // "All" option
+                drop.innerHTML = `
                 <div class="dropdown-item" onclick="toggleAllMembers()">
                     <input type="checkbox" id="chk-all" checked> <span>Select All</span>
                 </div>
             `;
-            
-            members.forEach(m => {
-                selectedMembers.add(m);
-                const div = document.createElement('div');
-                div.className = 'dropdown-item';
-                div.onclick = (e) => { e.stopPropagation(); toggleMember(m); };
-                div.innerHTML = `<input type="checkbox" checked value="${m}" id="chk-${m.replace(/\s/g,'')}"> <span>${m}</span>`;
-                drop.appendChild(div);
-            });
 
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
-            
-            initCharts();
-            applyFilters();
+                members.forEach(m => {
+                    selectedMembers.add(m);
+                    const div = document.createElement('div');
+                    div.className = 'dropdown-item';
+                    div.onclick = (e) => { e.stopPropagation(); toggleMember(m); };
+                    div.innerHTML = `<input type="checkbox" checked value="${m}" id="chk-${m.replace(/\s/g, '')}"> <span>${m}</span>`;
+                    drop.appendChild(div);
+                });
 
-            // Click outside to close dropdown
-            document.addEventListener('click', (e) => {
-                if (!e.target.closest('.filter-group')) {
-                    document.getElementById('memberDropdown').classList.remove('show');
-                }
-            });
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
 
-        } catch (e) {
-            document.getElementById('loading').innerHTML = `<p style="color:red">Error: ${e.message}</p>`;
+                initCharts();
+                applyFilters();
+
+                // Click outside to close dropdown
+                document.addEventListener('click', (e) => {
+                    if (!e.target.closest('.filter-group')) {
+                        document.getElementById('memberDropdown').classList.remove('show');
+                    }
+                });
+
+            } catch (e) {
+                document.getElementById('loading').innerHTML = `<p style="color:red">Error: ${e.message}</p>`;
+            }
         }
-    }
 
-    function toggleDropdown(id) {
-        document.getElementById(id).classList.toggle('show');
-    }
+        function toggleDropdown(id) {
+            document.getElementById(id).classList.toggle('show');
+        }
 
-    function toggleMember(name) {
-        const checkbox = document.getElementById(`chk-${name.replace(/\s/g,'')}`);
-        checkbox.checked = !checkbox.checked;
-        
-        if (checkbox.checked) selectedMembers.add(name);
-        else selectedMembers.delete(name);
-        
-        // Update "All" check state
-        document.getElementById('chk-all').checked = false; // logic simplified
-        
-        applyFilters();
-    }
+        function toggleMember(name) {
+            const checkbox = document.getElementById(`chk-${name.replace(/\s/g, '')}`);
+            checkbox.checked = !checkbox.checked;
 
-    function toggleAllMembers() {
-        const allChk = document.getElementById('chk-all');
-        const isChecked = !allChk.checked; // Toggle
-        allChk.checked = isChecked;
-        
-        const inputs = document.getElementById('memberDropdown').querySelectorAll('input[value]');
-        selectedMembers.clear();
-        
-        inputs.forEach(input => {
-            input.checked = isChecked;
-            if (isChecked) selectedMembers.add(input.value);
-        });
-        applyFilters();
-    }
+            if (checkbox.checked) selectedMembers.add(name);
+            else selectedMembers.delete(name);
 
-    function parseDate(str) {
-        if (!str) return new Date();
-        const [m, d, y] = str.split('/');
-        return new Date(2000 + parseInt(y), parseInt(m) - 1, parseInt(d));
-    }
+            // Update "All" check state
+            document.getElementById('chk-all').checked = false; // logic simplified
 
-    function applyFilters() {
-        const platform = document.getElementById('platformFilter').value;
-        const days = document.getElementById('dateFilter').value;
-        
-        const now = new Date();
-        const cutoff = days === 'all' ? new Date(2000, 0, 1) : new Date(now.setDate(now.getDate() - parseInt(days)));
+            applyFilters();
+        }
 
-        // Filter Data
-        const filteredAudit = rawData.audit.filter(row => {
-            if (!selectedMembers.has(row['Team Member'])) return false;
-            // Exclude Email receive if desired? (User requested 0)
-            if (row['Event Type'].toLowerCase().includes('email receive')) return false;
+        function toggleAllMembers() {
+            const allChk = document.getElementById('chk-all');
+            const isChecked = !allChk.checked; // Toggle
+            allChk.checked = isChecked;
 
-            if (platform !== 'all' && row['Platform'] !== platform) return false;
-            return parseDate(row['Activity Date']) >= cutoff;
-        });
+            const inputs = document.getElementById('memberDropdown').querySelectorAll('input[value]');
+            selectedMembers.clear();
 
-        const filteredTime = rawData.time.filter(row => {
-            if (!selectedMembers.has(row['Team Member'])) return false;
-            return parseDate(row['Date']) >= cutoff;
-        });
+            inputs.forEach(input => {
+                input.checked = isChecked;
+                if (isChecked) selectedMembers.add(input.value);
+            });
+            applyFilters();
+        }
 
-        updateDashboard(filteredAudit, filteredTime);
-    }
+        function parseDate(str) {
+            if (!str) return new Date();
+            const [m, d, y] = str.split('/');
+            return new Date(2000 + parseInt(y), parseInt(m) - 1, parseInt(d));
+        }
 
-    function updateDashboard(audit, time) {
-        // KFIs
-        document.getElementById('totalActivities').innerText = audit.reduce((a,b) => a + (parseInt(b.Count)||0), 0).toLocaleString();
-        document.getElementById('activeCount').innerText = new Set(audit.map(r => r['Team Member'])).size;
+        function applyFilters() {
+            const platform = document.getElementById('platformFilter').value;
+            const days = document.getElementById('dateFilter').value;
 
-        const totalHours = time.reduce((a,b) => a + (parseFloat(b['Active Window (Hours)'])||0), 0);
-        document.getElementById('avgHours').innerText = (time.length ? (totalHours / time.length).toFixed(1) : 0) + 'h';
+            const now = new Date();
+            const cutoff = days === 'all' ? new Date(2000, 0, 1) : new Date(now.setDate(now.getDate() - parseInt(days)));
 
-        const totalBreak = time.reduce((a,b) => a + (parseInt(b['Longest Break (Minutes)'])||0), 0);
-        document.getElementById('avgBreak').innerText = (time.length ? Math.round(totalBreak / time.length) : 0) + 'm';
+            // Filter Data
+            const filteredAudit = rawData.audit.filter(row => {
+                if (!selectedMembers.has(row['Team Member'])) return false;
+                // Exclude Email receive if desired? (User requested 0)
+                const eventType = (row['Event Type'] || row['Activity Type'] || '').toLowerCase();
+                if (eventType.includes('email receive')) return false;
 
-        // Update Charts
-        updateTrend(audit);
-        updateDonut(audit);
-        updateLeaderboard(audit);
-        updateHours(time);
+                if (platform !== 'all' && row['Platform'] !== platform) return false;
+                return parseDate(row['Activity Date']) >= cutoff;
+            });
 
-        // Update Table (Limit 100)
-        const tableBody = document.getElementById('tableBody');
-        tableBody.innerHTML = audit.slice(0, 100).map(r => `
+            const filteredTime = rawData.time.filter(row => {
+                if (!selectedMembers.has(row['Team Member'])) return false;
+                return parseDate(row['Date']) >= cutoff;
+            });
+
+            updateDashboard(filteredAudit, filteredTime);
+        }
+
+        function updateDashboard(audit, time) {
+            // KFIs
+            document.getElementById('totalActivities').innerText = audit.reduce((a, b) => a + (parseInt(b.Count) || 0), 0).toLocaleString();
+            document.getElementById('activeCount').innerText = new Set(audit.map(r => r['Team Member'])).size;
+
+            const totalHours = time.reduce((a, b) => a + (parseFloat(b['Active Window (Hours)']) || 0), 0);
+            document.getElementById('avgHours').innerText = (time.length ? (totalHours / time.length).toFixed(1) : 0) + 'h';
+
+            const totalBreak = time.reduce((a, b) => a + (parseInt(b['Longest Break (Minutes)']) || 0), 0);
+            document.getElementById('avgBreak').innerText = (time.length ? Math.round(totalBreak / time.length) : 0) + 'm';
+
+            // Update Charts
+            updateTrend(audit);
+            updateDonut(audit);
+            updateLeaderboard(audit);
+            updateHours(time);
+
+            // Update Table (Limit 100)
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = audit.slice(0, 100).map(r => `
             <tr>
                 <td>${r['Activity Date']}</td>
                 <td>
-                    <div class="avatar">${r['Team Member'].slice(0,2).toUpperCase()}</div>
+                    <div class="avatar">${r['Team Member'].slice(0, 2).toUpperCase()}</div>
                     ${r['Team Member']}
                 </td>
                 <td>${r['Platform']}</td>
-                <td>${r['Event Type']}</td>
+                <td>${r['Event Type'] || r['Activity Type']}</td>
                 <td>${r['Count']}</td>
             </tr>
         `).join('');
-    }
+        }
 
-    function updateTrend(data) {
-        const dates = {};
-        data.forEach(r => {
-            dates[r['Activity Date']] = (dates[r['Activity Date']] || 0) + (parseInt(r.Count) || 0);
-        });
-        
-        // Sort dates
-        const sorted = Object.keys(dates).sort((a,b) => parseDate(a) - parseDate(b));
-        
-        charts.trend.data.labels = sorted;
-        charts.trend.data.datasets[0].data = sorted.map(d => dates[d]);
-        charts.trend.update();
-    }
+        function updateTrend(data) {
+            const dates = {};
+            data.forEach(r => {
+                dates[r['Activity Date']] = (dates[r['Activity Date']] || 0) + (parseInt(r.Count) || 0);
+            });
 
-    function updateDonut(data) {
-        const plats = {};
-        data.forEach(r => plats[r.Platform] = (plats[r.Platform]||0) + (parseInt(r.Count)||0));
-        
-        charts.donut.data.labels = Object.keys(plats);
-        charts.donut.data.datasets[0].data = Object.values(plats);
-        charts.donut.update();
-    }
+            // Sort dates
+            const sorted = Object.keys(dates).sort((a, b) => parseDate(a) - parseDate(b));
 
-    function updateLeaderboard(data) {
-        const users = {};
-        data.forEach(r => users[r['Team Member']] = (users[r['Team Member']]||0) + (parseInt(r.Count)||0));
-        const sorted = Object.entries(users).sort((a,b) => b[1] - a[1]).slice(0, 10);
-        
-        charts.leaderboard.data.labels = sorted.map(x => x[0]);
-        charts.leaderboard.data.datasets[0].data = sorted.map(x => x[1]);
-        charts.leaderboard.update();
-    }
-    
-    function updateHours(data) {
-        const buckets = { '0-4h': 0, '4-8h': 0, '8-12h': 0, '12+h': 0 };
-        data.forEach(r => {
-            const h = parseFloat(r['Active Window (Hours)']) || 0;
-            if (h < 4) buckets['0-4h']++;
-            else if (h < 8) buckets['4-8h']++;
-            else if (h < 12) buckets['8-12h']++;
-            else buckets['12+h']++;
-        });
-        
-        charts.hours.data.labels = Object.keys(buckets);
-        charts.hours.data.datasets[0].data = Object.values(buckets);
-        charts.hours.update();
-    }
+            charts.trend.data.labels = sorted;
+            charts.trend.data.datasets[0].data = sorted.map(d => dates[d]);
+            charts.trend.update();
+        }
 
-    function initCharts() {
-        const opts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } };
-        
-        charts.trend = new Chart(document.getElementById('trendChart'), {
-            type: 'line', data: { datasets: [{ borderColor: '#6366f1', borderWidth: 2, fill: true, backgroundColor: 'rgba(99,102,241,0.1)', tension: 0.3 }] }, options: opts 
-        });
-        
-        charts.donut = new Chart(document.getElementById('donutChart'), {
-            type: 'doughnut', data: { datasets: [{ backgroundColor: Object.values(chartColors) }] }, options: { ...opts, plugins: { legend: { position: 'right' } } } 
-        });
-        
-        charts.leaderboard = new Chart(document.getElementById('leaderboardChart'), {
-            type: 'bar', data: { datasets: [{ backgroundColor: '#8b5cf6', borderRadius: 4 }] }, options: { ...opts, indexAxis: 'y' } 
-        });
-        
-        charts.hours = new Chart(document.getElementById('hoursChart'), {
-            type: 'bar', data: { datasets: [{ backgroundColor: '#10b981', borderRadius: 4 }] }, options: opts 
-        });
-    }
+        function updateDonut(data) {
+            const plats = {};
+            data.forEach(r => plats[r.Platform] = (plats[r.Platform] || 0) + (parseInt(r.Count) || 0));
 
-    window.addEventListener('DOMContentLoaded', init);
-</script>
+            charts.donut.data.labels = Object.keys(plats);
+            charts.donut.data.datasets[0].data = Object.values(plats);
+            charts.donut.update();
+        }
+
+        function updateLeaderboard(data) {
+            const users = {};
+            data.forEach(r => users[r['Team Member']] = (users[r['Team Member']] || 0) + (parseInt(r.Count) || 0));
+            const sorted = Object.entries(users).sort((a, b) => b[1] - a[1]).slice(0, 10);
+
+            charts.leaderboard.data.labels = sorted.map(x => x[0]);
+            charts.leaderboard.data.datasets[0].data = sorted.map(x => x[1]);
+            charts.leaderboard.update();
+        }
+
+        function updateHours(data) {
+            const buckets = { '0-4h': 0, '4-8h': 0, '8-12h': 0, '12+h': 0 };
+            data.forEach(r => {
+                const h = parseFloat(r['Active Window (Hours)']) || 0;
+                if (h < 4) buckets['0-4h']++;
+                else if (h < 8) buckets['4-8h']++;
+                else if (h < 12) buckets['8-12h']++;
+                else buckets['12+h']++;
+            });
+
+            charts.hours.data.labels = Object.keys(buckets);
+            charts.hours.data.datasets[0].data = Object.values(buckets);
+            charts.hours.update();
+        }
+
+        function initCharts() {
+            const opts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } };
+
+            charts.trend = new Chart(document.getElementById('trendChart'), {
+                type: 'line', data: { datasets: [{ borderColor: '#6366f1', borderWidth: 2, fill: true, backgroundColor: 'rgba(99,102,241,0.1)', tension: 0.3 }] }, options: opts
+            });
+
+            charts.donut = new Chart(document.getElementById('donutChart'), {
+                type: 'doughnut', data: { datasets: [{ backgroundColor: Object.values(chartColors) }] }, options: { ...opts, plugins: { legend: { position: 'right' } } }
+            });
+
+            charts.leaderboard = new Chart(document.getElementById('leaderboardChart'), {
+                type: 'bar', data: { datasets: [{ backgroundColor: '#8b5cf6', borderRadius: 4 }] }, options: { ...opts, indexAxis: 'y' }
+            });
+
+            charts.hours = new Chart(document.getElementById('hoursChart'), {
+                type: 'bar', data: { datasets: [{ backgroundColor: '#10b981', borderRadius: 4 }] }, options: opts
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
 </body>
+
 </html>
