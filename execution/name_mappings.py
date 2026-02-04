@@ -37,6 +37,7 @@ NAME_MAP = {
     'farhan.muhammed9998@gmail.com': 'Muhammad Farhan',
     'areeba.akhlaque@gmail.com': 'Areeba Akhlaque',
     'saifullahkhan.dev@gmail.com': 'Saifullah Khan',
+    'saif72437': 'Saifullah Khan',
     'KristiBergeron17@gmail.com': 'Kristi Bergeron',
     'roman.naidenko@gmail.com': 'Roman',
     'xingrandu@gmail.com': 'Xingran Du',
@@ -117,6 +118,7 @@ EXCLUDE_PATTERNS = [
     'build@pvragon.com', 'careers@pvragon.com', 'employees@pvragon.com',
     'support@pvragon.com', 'gcp-organization-admins@pvragon.com',
     'rc-eng-notifications@', 'service-admins@', 'softstackers@',
+    'Eng', 'Errors-Rc', 'RefCheqr-eng-notifications@pvragon.com', '/hd/domain/pvragon.com',
     
     # Bots
     'dependabot[bot]', 'vercel[bot]', 'github-actions[bot]',
