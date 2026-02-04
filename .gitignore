@@ -1,10 +1,19 @@
-# Files to ignore
+# Sensitive files (do NOT commit)
 .env
 credentials.json
 token.json
+client_secret*.json
+
+# Temporary files
 .tmp/
 __pycache__/
 *.pyc
+
+# Data files (generated, not tracked)
+console_audit_logs.csv
+*.csv
+
+# OS files
 .DS_Store
 Thumbs.db
 
@@ -12,11 +21,5 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Old scripts (now in execution/) - root folder only
-/fetch_all_clickup_activity.py
-/fetch_github_activity.py
-/fetch_google_workspace_activity.py
-/fetch_figma_activity.py
-/fetch_backendless_activity.py
-/refresh_dashboard.py
-/fix_activity_time.py
+# Dashboard subdirectory in execution (artifact)
+execution/dashboard/
