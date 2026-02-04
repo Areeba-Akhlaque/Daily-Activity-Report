@@ -220,57 +220,39 @@ def update_daily_audit(gc, sh):
     print(f"  [SUCCESS] Uploaded {len(result)} rows (complete matrix)")
 
 
+# Import generator for Activity Time Analysis
+try:
+    from generate_activity_time import generate_activity_time_analysis
+except ImportError:
+    # Add SCRIPT_DIR to path if import fails
+    sys.path.insert(0, SCRIPT_DIR)
+    from generate_activity_time import generate_activity_time_analysis
+
+
 def update_activity_time_analysis(gc, sh):
-    """Update Activity Time Analysis from Daily Audit data."""
-    print("\n=== [3/3] Updating Activity Time Analysis ===")
+    """
+    Update Activity Time Analysis using robust timestamp-based logic.
+    Delegates to generate_activity_time.py which fetches raw timestamps.
+    """
+    print("\n=== [3/3] Updating Activity Time Analysis (Robust) ===")
     
     try:
-        ws_audit = sh.worksheet('Daily Audit')
-        data = ws_audit.get_all_records()
+        # Use credentials from existing gc object or fetch new ones
+        # generate_activity_time_analysis expects creds object
+        # We can pass the creds object we already have if it's compatible, 
+        # but generate_activity_time_analysis calls get_creds() internally or expects argument.
+        # It takes 'creds' argument.
+        
+        # We need to get the Credentials object. gc.auth is the Credentials object in newer gspread?
+        # Or we can just grab them again.
+        
+        creds = get_creds()
+        generate_activity_time_analysis(creds)
+        
     except Exception as e:
-        print(f"  [ERROR] Could not read Daily Audit: {e}")
-        return
-    
-    if not data:
-        print("  [SKIP] No daily audit data")
-        return
-    
-    df = pd.DataFrame(data)
-    
-    # Parse dates
-    df['dt'] = pd.to_datetime(df['Activity Date'], format='%m/%d/%y', errors='coerce')
-    
-    # Group by person + date
-    daily_stats = df.groupby(['Team Member', 'Activity Date']).agg({
-        'Count': 'sum'
-    }).reset_index()
-    
-    # Calculate time metrics (simplified)
-    # Active Window = estimated based on activity count (rough approximation)
-    daily_stats['Active Window (Hours)'] = (daily_stats['Count'] * 0.15).clip(upper=12).round(1)
-    daily_stats['Longest Break (Minutes)'] = 120  # Default placeholder
-    daily_stats['Total Activities'] = daily_stats['Count']
-    
-    # Rename and reformat
-    result = daily_stats[['Team Member', 'Activity Date', 'Active Window (Hours)', 'Longest Break (Minutes)', 'Total Activities']]
-    result = result.rename(columns={'Team Member': 'Name', 'Activity Date': 'Date'})
-    
-    # Sort newest first
-    result['sort_dt'] = pd.to_datetime(result['Date'], format='%m/%d/%y', errors='coerce')
-    result = result.sort_values(by=['sort_dt', 'Name'], ascending=[False, True])
-    result = result.drop(columns=['sort_dt'])
-    
-    print(f"  Generated {len(result)} time analysis rows")
-    
-    # Upload
-    try:
-        ws = sh.worksheet('Activity Time Analysis')
-        ws.clear()
-    except:
-        ws = sh.add_worksheet(title='Activity Time Analysis', rows=5000, cols=10)
-    
-    ws.update(values=[result.columns.tolist()] + result.values.tolist(), range_name='A1')
-    print(f"  [SUCCESS] Uploaded {len(result)} rows")
+        print(f"  [ERROR] Failed to update Activity Time Analysis: {e}")
+        import traceback
+        traceback.print_exc()
 
 
 def main():

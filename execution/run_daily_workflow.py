@@ -56,8 +56,12 @@ def main():
     results['figma'] = run_script('fetch_figma.py', 'Figma Activity')
     results['backendless'] = run_script('fetch_backendless.py', 'Backendless Activity')
     
+    # Step 1.5: Generate Reports (Daily Audit + Activity Time Analysis)
+    print("\n📊 STEP 1.5: GENERATING REPORTS")
+    results['reports'] = run_script('generate_reports.py', 'Daily Audit & Time Analysis')
+    
     # Step 2: Refresh dashboard
-    print("\n📊 STEP 2: REFRESHING DASHBOARD")
+    print("\n📈 STEP 2: REFRESHING DASHBOARD")
     results['dashboard'] = run_script('refresh_dashboard.py', 'Dashboard Data Export')
     
     # Step 3: Send email summary

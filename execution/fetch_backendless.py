@@ -42,51 +42,12 @@ APP_ID = os.environ.get('BACKENDLESS_APP_ID', 'DF9C4AEE-7CAC-4014-8293-8D7065794
 DEV_LOGIN = os.environ.get('BACKENDLESS_DEV_LOGIN', '')
 DEV_PASSWORD = os.environ.get('BACKENDLESS_DEV_PASSWORD', '')
 
-# Name mapping - consistency across platforms
-NAME_MAP = {
-    # Pvragon emails
-    'adriane@pvragon.com': 'Adriane Barredo',
-    'alexander@pvragon.com': 'Alexander Pavelko',
-    'areeba@pvragon.com': 'Areeba Akhlaque',
-    'bilal@pvragon.com': 'Bilal Munir',
-    'bradd@pvragon.com': 'Bradd Konert',
-    'cherry@pvragon.com': 'Cherry Aznar',
-    'cristina@pvragon.com': 'Cristina Villarreal',
-    'farhan@pvragon.com': 'Muhammad Farhan',
-    'jaime@pvragon.com': 'James Hereford',
-    'jerry@pvragon.com': 'Jerry Miller',
-    'juan@pvragon.com': 'Juan Vidal',
-    'kristi@pvragon.com': 'Kristi Bergeron',
-    'mariana@pvragon.com': 'Mariana Gracia Salgado',
-    'maz@pvragon.com': 'Maz Tayebi',
-    'megha@pvragon.com': 'Megha Sharma',
-    'saifullah@pvragon.com': 'Saifullah Khan',
-    'sunnat@pvragon.com': 'Sunnat Choriev',
-    'roman@pvragon.com': 'Roman',
-    'saymond@pvragon.com': 'Saymond',
-    'victor@pvragon.com': 'Victor',
-    
-    # External emails
-    'aleksandar.m.tanaskovic@gmail.com': 'Alexander Pavelko',
-    'oO.Pavelko@gmail.com': 'Alexander Pavelko',
-    'alex.pavelko@backendlessmail.com': 'Alexander Pavelko',
-    'jkhereford@gmail.com': 'James Hereford',
-    'bilalmunir985@gmail.com': 'Bilal Munir',
-    'farhan.muhammed9998@gmail.com': 'Muhammad Farhan',
-    'areeba.akhlaque@gmail.com': 'Areeba Akhlaque',
-    'saifullahkhan.dev@gmail.com': 'Saifullah Khan',
-    'KristiBergeron17@gmail.com': 'Kristi Bergeron',
-}
-
-# System accounts to exclude
-EXCLUDE_PATTERNS = [
-    'kelly@pvragon.com', 'Kelly', 'Kelly Hereford',
-    'build@pvragon.com', 'careers@pvragon.com', 'employees@pvragon.com',
-    'support@pvragon.com', 'gcp-organization-admins@pvragon.com',
-    'rc-eng-notifications@', 'service-admins@', 'softstackers@',
-    'dependabot[bot]', 'vercel[bot]',
-]
-
+# Import name mappings
+try:
+    from name_mappings import map_name, should_exclude
+except ImportError:
+    sys.path.insert(0, SCRIPT_DIR)
+    from name_mappings import map_name, should_exclude
 
 def get_google_creds():
     """Get Google OAuth credentials."""
@@ -99,22 +60,6 @@ def get_google_creds():
     return creds
 
 
-def map_name(email):
-    """Map email to friendly name."""
-    email_lower = email.lower()
-    for key, value in NAME_MAP.items():
-        if key.lower() == email_lower:
-            return value
-    return email
-
-
-def should_exclude(name):
-    """Check if name should be excluded."""
-    name_lower = name.lower()
-    for pattern in EXCLUDE_PATTERNS:
-        if pattern.lower() in name_lower:
-            return True
-    return False
 
 
 def fetch_and_process_csv():
