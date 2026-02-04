@@ -516,6 +516,11 @@
 
                 setupFilters();
 
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+
+                initCharts();
+
                 // Set Default Date (Last 30 Days)
                 const end = new Date();
                 const start = new Date();
@@ -524,11 +529,6 @@
                 document.getElementById('startDate').valueAsDate = start;
                 document.getElementById('endDate').valueAsDate = end;
                 handleDateChange(); // triggers applyFilters
-
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-
-                initCharts();
 
             } catch (e) {
                 console.error(e);
