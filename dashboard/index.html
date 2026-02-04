@@ -486,7 +486,7 @@
         let charts = {};
 
         // Config
-        const EXCLUDED_TERMS = ['gmail received', 'received email', 'received message'];
+        const EXCLUDED_TERMS = ['gmail received', 'received email', 'message received', 'email received'];
 
         async function init() {
             try {
@@ -505,8 +505,11 @@
 
                 // Remove Excluded
                 rawData = rawData.filter(r => {
-                    const t = r.type.toLowerCase();
-                    return !EXCLUDED_TERMS.some(term => t.includes(term));
+                    const t = (r.type || '').toLowerCase();
+                    const p = (r.platform || '').toLowerCase();
+                    // Check Type AND Platform for excluded terms
+                    if (EXCLUDED_TERMS.some(term => t.includes(term) || p.includes(term))) return false;
+                    return true;
                 });
 
                 document.getElementById('lastUpdated').innerText = json.lastUpdated || '';
@@ -529,16 +532,24 @@
 
             } catch (e) {
                 console.error(e);
-                document.getElementById('loading').innerHTML = 'Error loading data.';
+                document.getElementById('loading').innerHTML = 'Error loading data: ' + e.message;
             }
         }
 
         function parseDate(str) {
             if (!str) return new Date();
-            const [m, d, y] = str.split('/');
-            // Handle 2 digit year
-            const year = y.length === 2 ? 2000 + parseInt(y) : parseInt(y);
-            return new Date(year, parseInt(m) - 1, parseInt(d));
+            // Handle YYYY-MM-DD
+            if (str.includes('-')) {
+                const [y, m, d] = str.split('-');
+                return new Date(parseInt(y), parseInt(m) - 1, parseInt(d));
+            }
+            // Handle MM/DD/YY or MM/DD/YYYY
+            if (str.includes('/')) {
+                const [m, d, y] = str.split('/');
+                const year = y.length === 2 ? 2000 + parseInt(y) : parseInt(y);
+                return new Date(year, parseInt(m) - 1, parseInt(d));
+            }
+            return new Date(str); // Fallback
         }
 
         /* FILTERS SETUP */
