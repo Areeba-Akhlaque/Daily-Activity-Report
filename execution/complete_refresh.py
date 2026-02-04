@@ -98,8 +98,15 @@ def update_console_audit_logs(gc, sh):
 
 
 def update_daily_audit(gc, sh):
-    """Regenerate Daily Audit from all source tabs."""
-    print("\n=== [2/3] Updating Daily Audit ===")
+    """
+    Regenerate Daily Audit from all source tabs.
+    
+    IMPORTANT: Creates a COMPLETE MATRIX with ALL combinations:
+    - Every Person × Every Date × Every Platform × Every Event Type
+    - Missing combinations get Count = 0
+    - This standardizes the pivot table output and makes comparison easier.
+    """
+    print("\n=== [2/3] Updating Daily Audit (Complete Matrix) ===")
     
     # Source tabs
     source_tabs = [
@@ -111,6 +118,9 @@ def update_daily_audit(gc, sh):
     ]
     
     all_data = []
+    all_persons = set()
+    all_dates = set()
+    all_event_types = set()  # (Platform, Event Type) tuples
     
     for tab_name in source_tabs:
         try:
@@ -129,7 +139,7 @@ def update_daily_audit(gc, sh):
                 # Apply name mapping
                 name = map_name(name)
                 
-                if not should_exclude(name) and name and date:
+                if not should_exclude(name) and name and date and event_type:
                     all_data.append({
                         'Team Member': name,
                         'Activity Date': date,
@@ -138,6 +148,11 @@ def update_daily_audit(gc, sh):
                         'Count': int(count) if count else 0
                     })
                     
+                    # Track all unique values
+                    all_persons.add(name)
+                    all_dates.add(date)
+                    all_event_types.add((platform, event_type))
+                    
         except Exception as e:
             print(f"  [WARN] {tab_name}: {e}")
     
@@ -145,27 +160,64 @@ def update_daily_audit(gc, sh):
         print("  [SKIP] No data to update")
         return
     
+    print(f"  Found: {len(all_persons)} persons, {len(all_dates)} dates, {len(all_event_types)} event types")
+    
+    # Create lookup dictionary for existing counts
     df = pd.DataFrame(all_data)
+    existing = df.groupby(['Team Member', 'Activity Date', 'Platform', 'Activity Type'])['Count'].sum().to_dict()
     
-    # Aggregate (in case of duplicates)
-    summary = df.groupby(['Team Member', 'Activity Date', 'Platform', 'Activity Type'])['Count'].sum().reset_index()
+    # Generate COMPLETE MATRIX (all combinations including 0s)
+    print("  Generating complete matrix with all combinations...")
+    matrix_rows = []
     
-    # Sort newest first
-    summary['sort_dt'] = pd.to_datetime(summary['Activity Date'], format='%m/%d/%y', errors='coerce')
-    summary = summary.sort_values(by=['sort_dt', 'Platform', 'Activity Type'], ascending=[False, True, True])
-    summary = summary.drop(columns=['sort_dt'])
+    for person in sorted(all_persons):
+        for date in sorted(all_dates, key=lambda d: datetime.strptime(d, '%m/%d/%y'), reverse=True):
+            for (platform, event_type) in sorted(all_event_types):
+                key = (person, date, platform, event_type)
+                count = existing.get(key, 0)  # 0 if not found
+                
+                matrix_rows.append({
+                    'Team Member': person,
+                    'Activity Date': date,
+                    'Platform': platform,
+                    'Activity Type': event_type,
+                    'Count': count
+                })
     
-    print(f"  Total aggregated: {len(summary)} rows")
+    result = pd.DataFrame(matrix_rows)
     
-    # Upload
+    # Sort: Date (newest first), then Platform, then Activity Type, then Person
+    result['sort_dt'] = pd.to_datetime(result['Activity Date'], format='%m/%d/%y', errors='coerce')
+    result = result.sort_values(
+        by=['sort_dt', 'Platform', 'Activity Type', 'Team Member'], 
+        ascending=[False, True, True, True]
+    )
+    result = result.drop(columns=['sort_dt'])
+    
+    print(f"  Total matrix rows: {len(result)} (includes 0s for all combinations)")
+    
+    # Upload in chunks (may be large)
     try:
         ws = sh.worksheet('Daily Audit')
         ws.clear()
     except:
-        ws = sh.add_worksheet(title='Daily Audit', rows=50000, cols=10)
+        ws = sh.add_worksheet(title='Daily Audit', rows=100000, cols=10)
     
-    ws.update(values=[summary.columns.tolist()] + summary.values.tolist(), range_name='A1')
-    print(f"  [SUCCESS] Uploaded {len(summary)} rows")
+    # Upload header
+    headers = result.columns.tolist()
+    rows_to_upload = [headers] + result.values.tolist()
+    
+    # Upload in chunks of 10000 rows
+    CHUNK_SIZE = 10000
+    for i in range(0, len(rows_to_upload), CHUNK_SIZE):
+        chunk = rows_to_upload[i:i + CHUNK_SIZE]
+        if i == 0:
+            ws.update(values=chunk, range_name='A1')
+        else:
+            ws.append_rows(chunk[1:] if i > 0 else chunk)  # Skip header on subsequent chunks
+        print(f"    Uploaded rows {i} to {min(i + CHUNK_SIZE, len(rows_to_upload))}")
+    
+    print(f"  [SUCCESS] Uploaded {len(result)} rows (complete matrix)")
 
 
 def update_activity_time_analysis(gc, sh):
