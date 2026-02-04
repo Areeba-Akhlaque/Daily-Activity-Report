@@ -119,6 +119,7 @@ EXCLUDE_PATTERNS = [
     'support@pvragon.com', 'gcp-organization-admins@pvragon.com',
     'rc-eng-notifications@', 'service-admins@', 'softstackers@',
     'Eng', 'Errors-Rc', 'RefCheqr-eng-notifications@pvragon.com', '/hd/domain/pvragon.com',
+    'support-getmilotrack@pvragon.com', 'contact-getmilotrack@pvragon.com', 'contact-refio.so@pvragon.com',
     
     # Bots
     'dependabot[bot]', 'vercel[bot]', 'github-actions[bot]',
@@ -127,7 +128,9 @@ EXCLUDE_PATTERNS = [
     'melanie@novastarcreative.com', 's.bruton@okridecare.com',
     'sarahjbru@gmail.com', 'lucah.e.hereford@gmail.com',
     'ericaeggers@google.com', 'c.hedrick@davidrobertsconsulting.com',
-    'Casey Hedrick', 'Toni McGee', 'marcpetrelis1997@gmail.com',
+    'Casey Hedrick', 'Toni McGee', 'marcpetrelis1997@gmail.com', 
+    'alex.gramajo@softstackers.com', 'lucas.acosta@softstackers.com', 
+    'ml@zipdev.com'
 ]
 
 
