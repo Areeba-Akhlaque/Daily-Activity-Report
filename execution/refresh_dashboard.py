@@ -18,19 +18,20 @@ import time
 print(f"=== Dashboard Data Refresh - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ===")
 
 # Configuration
-SHEET_ID = '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo'
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-DASHBOARD_DIR = os.path.join(SCRIPT_DIR, 'dashboard')
+ROOT_DIR = os.path.dirname(SCRIPT_DIR)
+SHEET_ID = '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo'
+DASHBOARD_DIR = os.path.join(ROOT_DIR, 'dashboard')
 
 # Ensure dashboard directory exists
 os.makedirs(DASHBOARD_DIR, exist_ok=True)
 
 # Auth
 print("[1/3] Authenticating...")
-creds = Credentials.from_authorized_user_file(os.path.join(SCRIPT_DIR, 'token.json'))
+creds = Credentials.from_authorized_user_file(os.path.join(ROOT_DIR, 'token.json'))
 if not creds.valid and creds.refresh_token:
     creds.refresh(Request())
-    with open(os.path.join(SCRIPT_DIR, 'token.json'), 'w') as f:
+    with open(os.path.join(ROOT_DIR, 'token.json'), 'w') as f:
         f.write(creds.to_json())
 
 gc = gspread.authorize(creds)
