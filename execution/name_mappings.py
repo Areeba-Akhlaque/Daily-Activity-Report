@@ -130,7 +130,7 @@ EXCLUDE_PATTERNS = [
     'ericaeggers@google.com', 'c.hedrick@davidrobertsconsulting.com',
     'Casey Hedrick', 'Toni McGee', 'marcpetrelis1997@gmail.com', 
     'alex.gramajo@softstackers.com', 'lucas.acosta@softstackers.com', 
-    'ml@zipdev.com', 'alex.gramajo@softstackers.com',
+    'ml@zipdev.com',
 ]
 
 
