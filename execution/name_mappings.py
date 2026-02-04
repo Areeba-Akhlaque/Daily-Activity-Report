@@ -131,6 +131,7 @@ EXCLUDE_PATTERNS = [
     'Casey Hedrick', 'Toni McGee', 'marcpetrelis1997@gmail.com', 
     'alex.gramajo@softstackers.com', 'lucas.acosta@softstackers.com', 
     'ml@zipdev.com',
+    'User -1', 'User -', 'User ',  # Generic backendless system users
 ]
 
 
