@@ -1,0 +1,22 @@
+# Files to ignore
+.env
+credentials.json
+token.json
+.tmp/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Old scripts (now in execution/)
+fetch_all_clickup_activity.py
+fetch_github_activity.py
+fetch_google_workspace_activity.py
+fetch_figma_activity.py
+fetch_backendless_activity.py
+refresh_dashboard.py
+fix_activity_time.py

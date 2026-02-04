@@ -1,0 +1,75 @@
+name: Daily Activity Audit
+
+on:
+  schedule:
+    # Run at 3:00 AM UTC = 7:00 PM PST (during standard time)
+    # Run at 2:00 AM UTC = 7:00 PM PDT (during daylight saving)
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+    # Allow manual trigger from GitHub Actions UI
+
+jobs:
+  daily-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      
+      - name: Setup Google credentials
+        run: |
+          echo '${{ secrets.GOOGLE_CREDENTIALS }}' > credentials.json
+          echo '${{ secrets.GOOGLE_TOKEN }}' > token.json
+      
+      - name: Create .env file
+        run: |
+          cat > .env << EOF
+          GOOGLE_SHEET_ID=${{ secrets.GOOGLE_SHEET_ID }}
+          CLICKUP_API_KEY=${{ secrets.CLICKUP_API_KEY }}
+          CLICKUP_WORKSPACE_ID=${{ secrets.CLICKUP_WORKSPACE_ID }}
+          CLICKUP_TEAM_ID=${{ secrets.CLICKUP_TEAM_ID }}
+          GITHUB_TOKEN=${{ secrets.GH_PAT }}
+          GITHUB_ORG=Pvragon
+          FIGMA_TOKEN=${{ secrets.FIGMA_TOKEN }}
+          FIGMA_TEAM_ID=${{ secrets.FIGMA_TEAM_ID }}
+          BACKENDLESS_APP_ID=${{ secrets.BACKENDLESS_APP_ID }}
+          BACKENDLESS_API_KEY=${{ secrets.BACKENDLESS_API_KEY }}
+          EMAIL_RECIPIENTS=${{ secrets.EMAIL_RECIPIENTS }}
+          DASHBOARD_URL=https://pvragon.github.io/activity-dashboard
+          START_DATE=2026-01-01
+          EOF
+      
+      - name: Run daily workflow
+        run: python execution/run_daily_workflow.py
+      
+      - name: Commit and push dashboard data
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email github-actions[bot]@users.noreply.github.com
+          git add dashboard/data.json
+          git diff --staged --quiet || git commit -m "🔄 Auto-update dashboard data - $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Workflow summary
+        if: always()
+        run: |
+          echo "## Daily Audit Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Triggered at:** $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status:** ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Links" >> $GITHUB_STEP_SUMMARY
+          echo "- [Google Sheet](https://docs.google.com/spreadsheets/d/${{ secrets.GOOGLE_SHEET_ID }})" >> $GITHUB_STEP_SUMMARY
+          echo "- [Dashboard](https://pvragon.github.io/activity-dashboard)" >> $GITHUB_STEP_SUMMARY
