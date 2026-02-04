@@ -20,7 +20,17 @@ print(f"=== Dashboard Data Refresh - {datetime.now().strftime('%Y-%m-%d %H:%M:%S
 # Configuration
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(SCRIPT_DIR)
-SHEET_ID = '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo'
+# Load .env explicitly
+env_path = os.path.join(ROOT_DIR, '.env')
+if os.path.exists(env_path):
+    with open(env_path) as f:
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith('#') and '=' in line:
+                key, value = line.split('=', 1)
+                os.environ[key] = value
+
+SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
 DASHBOARD_DIR = os.path.join(ROOT_DIR, 'dashboard')
 
 # Ensure dashboard directory exists
