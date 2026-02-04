@@ -92,7 +92,10 @@ def fetch_google_workspace_events(creds):
                         break
                     data = resp.json()
                     
-                    for item in data.get('items', []):
+                    items = data.get('items', [])
+                    print(f"    Fetched {len(items)} items from {app}...")
+                    
+                    for item in items:
                         actor = item.get('actor', {})
                         email = actor.get('email', '')
                         if not email or actor.get('callerType') == 'KEY':
@@ -260,6 +263,11 @@ def generate_activity_time_analysis(creds):
         
         # Active window
         active_window = (last - first).total_seconds() / 3600
+        
+        # Data Integrity: If multiple events exist but duration is 0 (same minute), 
+        # set minimum 0.1 hours (6 mins) to reflect activity burst.
+        if active_window == 0 and len(times) > 1:
+            active_window = 0.1
         
         results.append({
             'Team Member': name,

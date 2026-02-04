@@ -125,7 +125,7 @@ EXCLUDE_PATTERNS = [
     'melanie@novastarcreative.com', 's.bruton@okridecare.com',
     'sarahjbru@gmail.com', 'lucah.e.hereford@gmail.com',
     'ericaeggers@google.com', 'c.hedrick@davidrobertsconsulting.com',
-    'Casey Hedrick', 'Toni McGee',
+    'Casey Hedrick', 'Toni McGee', 'marcpetrelis1997@gmail.com',
 ]
 
 
@@ -160,6 +160,7 @@ def map_name(identifier):
         'bergeron': 'Kristi Bergeron',
         'saifullah': 'Saifullah Khan',
         'sunnat': 'Sunnat Choriev',
+        'javidal10': 'Juan Vidal',
         'juan': 'Juan Vidal',
         'roman naidenko': 'Roman Naidenko',
         'roman': 'Roman Naidenko',
