@@ -47,7 +47,7 @@ jobs:
           EMAIL_RECIPIENTS=${{ secrets.EMAIL_RECIPIENTS }}
           EMAIL_USER=${{ secrets.EMAIL_USER }}
           EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}
-          DASHBOARD_URL=https://pvragon.github.io/activity-dashboard
+          DASHBOARD_URL=https://Areeba-Akhlaque.github.io/Daily-Activity-Report/dashboard/index.html
           START_DATE=2026-01-01
           EOF
       
