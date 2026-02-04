@@ -9,6 +9,7 @@ import os
 import sys
 import requests
 import pandas as pd
+import json
 from datetime import datetime, timezone
 from collections import defaultdict
 import gspread
@@ -32,25 +33,59 @@ def load_env():
 
 load_env()
 
-BACKENDLESS_APP_ID = os.environ.get('BACKENDLESS_APP_ID', '5EC56BA3-AA29-2AC1-FFEE-A7C07D146900')
-BACKENDLESS_API_KEY = os.environ.get('BACKENDLESS_API_KEY', '1E5DDF72-6AEB-4CC9-9B1B-EAD29FEE0A23')
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
 START_DATE = os.environ.get('START_DATE', '2026-01-01')
 
-# Timestamp for filtering
-START_TS = int(datetime.strptime(START_DATE, '%Y-%m-%d').timestamp() * 1000)
+# Backendless Console credentials
+CONSOLE_HOST = os.environ.get('BACKENDLESS_CONSOLE_HOST', 'https://console.okridecare.com')
+APP_ID = os.environ.get('BACKENDLESS_APP_ID', 'DF9C4AEE-7CAC-4014-8293-8D706579495A')
+DEV_LOGIN = os.environ.get('BACKENDLESS_DEV_LOGIN', '')
+DEV_PASSWORD = os.environ.get('BACKENDLESS_DEV_PASSWORD', '')
 
-# Name mapping
+# Name mapping - consistency across platforms
 NAME_MAP = {
-    'bilal@pvragon.com': 'Bilal Munir',
-    'jaime@pvragon.com': 'James Hereford',
+    # Pvragon emails
+    'adriane@pvragon.com': 'Adriane Barredo',
     'alexander@pvragon.com': 'Alexander Pavelko',
     'areeba@pvragon.com': 'Areeba Akhlaque',
+    'bilal@pvragon.com': 'Bilal Munir',
+    'bradd@pvragon.com': 'Bradd Konert',
+    'cherry@pvragon.com': 'Cherry Aznar',
+    'cristina@pvragon.com': 'Cristina Villarreal',
     'farhan@pvragon.com': 'Muhammad Farhan',
-    'saifullah@pvragon.com': 'Saifullah Khan',
+    'jaime@pvragon.com': 'James Hereford',
+    'jerry@pvragon.com': 'Jerry Miller',
     'juan@pvragon.com': 'Juan Vidal',
-    # Add more as discovered
+    'kristi@pvragon.com': 'Kristi Bergeron',
+    'mariana@pvragon.com': 'Mariana Gracia Salgado',
+    'maz@pvragon.com': 'Maz Tayebi',
+    'megha@pvragon.com': 'Megha Sharma',
+    'saifullah@pvragon.com': 'Saifullah Khan',
+    'sunnat@pvragon.com': 'Sunnat Choriev',
+    'roman@pvragon.com': 'Roman',
+    'saymond@pvragon.com': 'Saymond',
+    'victor@pvragon.com': 'Victor',
+    
+    # External emails
+    'aleksandar.m.tanaskovic@gmail.com': 'Alexander Pavelko',
+    'oO.Pavelko@gmail.com': 'Alexander Pavelko',
+    'alex.pavelko@backendlessmail.com': 'Alexander Pavelko',
+    'jkhereford@gmail.com': 'James Hereford',
+    'bilalmunir985@gmail.com': 'Bilal Munir',
+    'farhan.muhammed9998@gmail.com': 'Muhammad Farhan',
+    'areeba.akhlaque@gmail.com': 'Areeba Akhlaque',
+    'saifullahkhan.dev@gmail.com': 'Saifullah Khan',
+    'KristiBergeron17@gmail.com': 'Kristi Bergeron',
 }
+
+# System accounts to exclude
+EXCLUDE_PATTERNS = [
+    'kelly@pvragon.com', 'Kelly', 'Kelly Hereford',
+    'build@pvragon.com', 'careers@pvragon.com', 'employees@pvragon.com',
+    'support@pvragon.com', 'gcp-organization-admins@pvragon.com',
+    'rc-eng-notifications@', 'service-admins@', 'softstackers@',
+    'dependabot[bot]', 'vercel[bot]',
+]
 
 
 def get_google_creds():
@@ -64,94 +99,70 @@ def get_google_creds():
     return creds
 
 
-def fetch_backendless_activity():
-    """Fetch console activity from Backendless."""
-    print("[1/3] Fetching Backendless Console Activity...")
-    
-    events = []
-    
-    # Backendless Console API endpoint
-    url = f"https://api.backendless.com/{BACKENDLESS_APP_ID}/{BACKENDLESS_API_KEY}/console/audit"
-    
-    headers = {
-        'Content-Type': 'application/json'
-    }
-    
-    try:
-        # Fetch with pagination
-        offset = 0
-        page_size = 100
-        
-        while True:
-            params = {
-                'pageSize': page_size,
-                'offset': offset
-            }
-            
-            response = requests.get(url, headers=headers, params=params)
-            
-            if response.status_code != 200:
-                print(f"  API returned status {response.status_code}")
-                # Try alternative endpoint
-                break
-            
-            data = response.json()
-            
-            if not data:
-                break
-            
-            for log in data:
-                timestamp = log.get('timestamp', 0)
-                if timestamp < START_TS:
-                    continue
-                
-                user = log.get('user', '')
-                action = log.get('action', '')
-                
-                if user:
-                    date_str = datetime.fromtimestamp(timestamp / 1000).strftime('%m/%d/%y')
-                    name = NAME_MAP.get(user.lower(), user)
-                    
-                    events.append({
-                        'name': name,
-                        'date': date_str,
-                        'event_type': action
-                    })
-            
-            if len(data) < page_size:
-                break
-            
-            offset += page_size
-    
-    except Exception as e:
-        print(f"  Error fetching from Backendless API: {e}")
-        print("  Note: Backendless Console API may require special permissions")
-    
-    # If no events from API, check if there's existing data in the sheet
-    if not events:
-        print("  No new events from API. Checking existing sheet data...")
-    
-    return events
+def map_name(email):
+    """Map email to friendly name."""
+    email_lower = email.lower()
+    for key, value in NAME_MAP.items():
+        if key.lower() == email_lower:
+            return value
+    return email
 
 
-def aggregate_events(events):
-    """Aggregate events by name, date, event_type."""
-    counts = defaultdict(int)
+def should_exclude(name):
+    """Check if name should be excluded."""
+    name_lower = name.lower()
+    for pattern in EXCLUDE_PATTERNS:
+        if pattern.lower() in name_lower:
+            return True
+    return False
+
+
+def fetch_and_process_csv():
+    """Load from console_audit_logs.csv if it exists."""
+    csv_path = os.path.join(ROOT_DIR, 'console_audit_logs.csv')
     
-    for e in events:
-        key = (e['name'], e['date'], e['event_type'])
-        counts[key] += 1
+    if not os.path.exists(csv_path):
+        print(f"  CSV not found: {csv_path}")
+        return []
     
-    rows = []
-    for (name, date, event_type), count in sorted(counts.items()):
-        rows.append({
-            'Name': name,
-            'Date': date,
-            'Event Type': event_type,
-            'Count': count
-        })
+    df = pd.read_csv(csv_path)
+    print(f"  Loaded {len(df)} records from CSV")
     
-    return rows
+    # Parse developer column to get email
+    def get_email(dev_str):
+        try:
+            if pd.isna(dev_str):
+                return 'Unknown'
+            dev = json.loads(str(dev_str))
+            return dev.get('email', 'Unknown')
+        except:
+            return 'Unknown'
+    
+    df['Email'] = df['developer'].apply(get_email)
+    df['Name'] = df['Email'].apply(map_name)
+    
+    # Filter exclusions
+    df = df[~df['Name'].apply(should_exclude)]
+    df = df[~df['Email'].apply(should_exclude)]
+    
+    # Filter for start date
+    df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
+    df = df[df['timestamp'] >= START_DATE]
+    
+    # Map columns
+    df['Date'] = df['timestamp'].dt.strftime('%m/%d/%y')
+    df['Event Type'] = df['event'].fillna('Unknown')
+    df['Platform'] = 'Backendless App'
+    
+    # Aggregate
+    summary = df.groupby(['Name', 'Date', 'Platform', 'Event Type']).size().reset_index(name='Count')
+    
+    # Sort by date DESCENDING (newest first)
+    summary['sort_dt'] = pd.to_datetime(summary['Date'], format='%m/%d/%y')
+    summary = summary.sort_values(by=['sort_dt', 'Name'], ascending=[False, True])
+    summary = summary.drop(columns=['sort_dt'])
+    
+    return summary[['Name', 'Date', 'Platform', 'Event Type', 'Count']].to_dict('records')
 
 
 def upload_to_sheet(rows, creds):
@@ -162,19 +173,18 @@ def upload_to_sheet(rows, creds):
     sh = gc.open_by_key(SHEET_ID)
     
     try:
-        ws = sh.worksheet('Backendless_Activity')
+        ws = sh.worksheet('Console_Audit_Logs')
+        ws.clear()
     except:
-        ws = sh.add_worksheet(title='Backendless_Activity', rows=1000, cols=5)
+        ws = sh.add_worksheet(title='Console_Audit_Logs', rows=5000, cols=10)
     
     if rows:
-        # Clear and write new data
-        ws.clear()
-        df = pd.DataFrame(rows)
-        values = [df.columns.tolist()] + df.values.tolist()
+        headers = ['Name', 'Date', 'Platform', 'Event Type', 'Count']
+        values = [headers] + [[r[h] for h in headers] for r in rows]
         ws.update(values=values, range_name='A1')
-        print(f"  Uploaded {len(rows)} rows")
+        print(f"  Uploaded {len(rows)} rows (sorted by newest date first)")
     else:
-        print("  No new events to upload (keeping existing data)")
+        print("  No data to upload")
 
 
 def main():
@@ -185,14 +195,16 @@ def main():
     # Get credentials
     creds = get_google_creds()
     
-    # Fetch events
-    events = fetch_backendless_activity()
-    print(f"  Found {len(events)} events")
+    # Fetch and process data
+    print("[1/3] Loading Backendless audit data...")
+    rows = fetch_and_process_csv()
+    print(f"  Processed {len(rows)} aggregated rows")
     
-    # Aggregate
-    print("[2/3] Aggregating events...")
-    rows = aggregate_events(events)
-    print(f"  Aggregated to {len(rows)} rows")
+    if rows:
+        dates = sorted(set(r['Date'] for r in rows))
+        print(f"  Date range: {dates[0]} to {dates[-1]}")
+        names = sorted(set(r['Name'] for r in rows))
+        print(f"  Team members: {names}")
     
     # Upload
     upload_to_sheet(rows, creds)
