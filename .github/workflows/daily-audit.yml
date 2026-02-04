@@ -45,6 +45,8 @@ jobs:
           BACKENDLESS_APP_ID=${{ secrets.BACKENDLESS_APP_ID }}
           BACKENDLESS_API_KEY=${{ secrets.BACKENDLESS_API_KEY }}
           EMAIL_RECIPIENTS=${{ secrets.EMAIL_RECIPIENTS }}
+          EMAIL_USER=${{ secrets.EMAIL_USER }}
+          EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}
           DASHBOARD_URL=https://pvragon.github.io/activity-dashboard
           START_DATE=2026-01-01
           EOF

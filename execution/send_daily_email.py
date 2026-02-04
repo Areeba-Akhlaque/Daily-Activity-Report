@@ -12,6 +12,7 @@ import base64
 from datetime import datetime, timedelta
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import smtplib
 
 import gspread
 from google.oauth2.credentials import Credentials
@@ -37,6 +38,8 @@ load_env()
 
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
 EMAIL_RECIPIENTS = os.environ.get('EMAIL_RECIPIENTS', 'areeba@pvragon.com,jaime@pvragon.com').split(',')
+EMAIL_USER = os.environ.get('EMAIL_USER', '')
+EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD', '')
 DASHBOARD_URL = os.environ.get('DASHBOARD_URL', 'https://pvragon.github.io/activity-dashboard')
 SHEET_URL = f'https://docs.google.com/spreadsheets/d/{SHEET_ID}'
 
@@ -200,6 +203,28 @@ def generate_email_html(summary):
     return html
 
 
+def send_email_smtp(user, password, recipients, subject, html_content):
+    """Send email using SMTP (App Password)."""
+    try:
+        msg = MIMEMultipart('alternative')
+        msg['Subject'] = subject
+        msg['From'] = f"Pvragon Activity Bot <{user}>"
+        msg['To'] = ', '.join(recipients)
+        
+        msg.attach(MIMEText(html_content, 'html'))
+        
+        # Connect to Gmail SMTP (SSL)
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+            server.login(user, password)
+            server.send_message(msg)
+            
+        print(f"[SUCCESS] Email sent via SMTP (User: {user})")
+        return True
+    except Exception as e:
+        print(f"[ERROR] SMTP Failed: {e}")
+        return False
+
+
 def send_email(creds, recipients, subject, html_content):
     """Send email using Gmail API."""
     service = build('gmail', 'v1', credentials=creds)
@@ -244,7 +269,13 @@ def main():
     
     # Send email
     print(f"[3/3] Sending to: {', '.join(EMAIL_RECIPIENTS)}")
-    success = send_email(creds, EMAIL_RECIPIENTS, subject, html)
+    
+    if EMAIL_USER and EMAIL_PASSWORD:
+        print(f"  Using SMTP (App Password)...")
+        success = send_email_smtp(EMAIL_USER, EMAIL_PASSWORD, EMAIL_RECIPIENTS, subject, html)
+    else:
+        print(f"  Using Gmail API (OAuth)...")
+        success = send_email(creds, EMAIL_RECIPIENTS, subject, html)
     
     if success:
         print("\n[COMPLETE] Daily summary email sent successfully!")
