@@ -52,32 +52,11 @@ def get_google_creds():
 
 def fetch_from_api():
     """Attempt to fetch logs via Backendless API."""
-    print("[1/3] Attempting API Fetch (Backendless)...")
-    
-    # 1. Try to Login or Use API Key
-    custom_domain = os.environ.get('BACKENDLESS_API_URL', 'https://api.backendless.com')
-    # Remove trailing slash
-    custom_domain = custom_domain.rstrip('/')
-    
-    base_url = f"{custom_domain}/{APP_ID}/{API_KEY}"
-    
-    # Try multiple potential table names for Audit logs
-    tables = ['Audit', 'Log', 'ConsoleAudit', 'DeveloperLog']
-    
-    all_logs = []
-    
-    for table in tables:
-        url = f"{base_url}/data/{table}?pageSize=100&sortBy=created%20desc"
-        try:
-            print(f"  Checking table '{table}'...")
-            res = requests.get(url)
-            if res.status_code == 200:
-                data = res.json()
-                if data:
-                    print(f"  [SUCCESS] Found {len(data)} records in {table}")
-                    all_logs.extend(data)
-                    # Break on first found? Or merge? 
-                    # Usually Audit is the one.
+    print("[1/3] Backendless Console Logs API Check...")
+    print("  ! Console/Management Logs are NOT accessible via standard REST API Keys.")
+    print("  ! Please manually export 'console_audit_logs.csv' from Backendless and push to this repo.")
+    print("  ! Falling back to checking local CSV file...")
+    return []
                     break
         except Exception as e:
             print(f"  [Error] {table}: {e}")
