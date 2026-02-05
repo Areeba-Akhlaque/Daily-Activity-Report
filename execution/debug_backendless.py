@@ -8,45 +8,29 @@ load_dotenv()
 
 APP_ID = os.getenv('BACKENDLESS_APP_ID')
 API_KEY = os.getenv('BACKENDLESS_API_KEY')
+CUSTOM = os.getenv('BACKENDLESS_API_URL', 'https://api.backendless.com').rstrip('/')
 
-# Backendless API Base URL (US Cluster)
-BASE_URL = f"https://api.backendless.com/{APP_ID}/{API_KEY}"
+BASE_URL = f"{CUSTOM}/{APP_ID}/{API_KEY}"
 
-def check_table(table_name):
-    print(f"\nChecking table: {table_name}...")
-    url = f"{BASE_URL}/data/{table_name}?pageSize=1"
+print(f"Checking Access: {BASE_URL}")
+
+def check(table):
+    print(f"Probing {table}...")
     try:
-        res = requests.get(url)
+        # 5 second timeout
+        res = requests.get(f"{BASE_URL}/data/{table}?pageSize=1", timeout=5)
+        print(f"Status: {res.status_code}")
         if res.status_code == 200:
-            data = res.json()
-            print(f"[SUCCESS] Table '{table_name}' accessible!")
-            print(f"Sample data: {json.dumps(data, indent=2)}")
+            print(f"DATA FOUND in {table}!")
+            try: print(json.dumps(res.json(), indent=2)) 
+            except: pass
             return True
         else:
-            print(f"[FAILED] {res.status_code} - {res.text}")
-            return False
+            print(f"Error: {res.text}")
     except Exception as e:
-        print(f"[ERROR] {e}")
-        return False
+        print(f"Exception: {e}")
+    return False
 
-def main():
-    if not APP_ID or not API_KEY:
-        print("Missing Credentials in .env")
-        return
-
-    print("Probing Backendless API for Logs/Audits...")
-    
-    # Common table names for logs
-    candidates = ['Log', 'Audit', 'ConsoleLog', 'Activity', 'StartTable'] 
-    
-    found = False
-    for table in candidates:
-        if check_table(table):
-            found = True
-            
-    if not found:
-        print("\nNo standard log tables found via Data API.")
-        print("It implies logs are only in Console (Management API required or unavailable via Data API).")
-
-if __name__ == "__main__":
-    main()
+check('Audit')
+check('Log')
+check('ConsoleAudit')
