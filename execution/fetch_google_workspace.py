@@ -165,6 +165,10 @@ def fetch_audit_logs(creds, application_name):
                         
                         if keep_event:
                             dt = pd.to_datetime(timestamp)
+                            # Filter out "Gmail Received" events entirely
+                            if mapped_event == "Gmail Received":
+                                continue
+
                             all_events.append({
                                 "Name": actor_email,
                                 "Date": dt.strftime('%m/%d/%y'),
