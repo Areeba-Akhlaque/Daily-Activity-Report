@@ -54,11 +54,12 @@ def fetch_from_api():
     """Attempt to fetch logs via Backendless API."""
     print("[1/3] Attempting API Fetch (Backendless)...")
     
-    # 1. Try to Login as Developer
-    # Backendless Developer Console Login is tricky without browser.
-    # We will try the API Key access to 'Audit' table first.
+    # 1. Try to Login or Use API Key
+    custom_domain = os.environ.get('BACKENDLESS_API_URL', 'https://api.backendless.com')
+    # Remove trailing slash
+    custom_domain = custom_domain.rstrip('/')
     
-    base_url = f"https://api.backendless.com/{APP_ID}/{API_KEY}"
+    base_url = f"{custom_domain}/{APP_ID}/{API_KEY}"
     
     # Try multiple potential table names for Audit logs
     tables = ['Audit', 'Log', 'ConsoleAudit', 'DeveloperLog']
