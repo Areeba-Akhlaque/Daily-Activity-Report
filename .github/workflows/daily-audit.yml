@@ -44,7 +44,7 @@ jobs:
           FIGMA_TEAM_ID=${{ secrets.FIGMA_TEAM_ID }}
           BACKENDLESS_APP_ID=${{ secrets.BACKENDLESS_APP_ID }}
           BACKENDLESS_API_KEY=${{ secrets.BACKENDLESS_API_KEY }}
-          EMAIL_RECIPIENTS=areeba@pvragon.com
+          EMAIL_RECIPIENTS=areeba@pvragon.com,jaime@pvragon.com
           EMAIL_USER=${{ secrets.EMAIL_USER }}
           EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}
           DASHBOARD_URL=https://Areeba-Akhlaque.github.io/Daily-Activity-Report/dashboard/index.html
