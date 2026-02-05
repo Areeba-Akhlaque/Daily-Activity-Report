@@ -8,6 +8,7 @@ Run this on a schedule (e.g., every hour) to keep the dashboard updated.
 import requests
 import json
 import pandas as pd
+import pytz
 from datetime import datetime, timezone, timedelta
 import gspread
 from google.oauth2.credentials import Credentials
@@ -15,7 +16,11 @@ from google.auth.transport.requests import Request
 import os
 import time
 
-print(f"=== Dashboard Data Refresh - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ===")
+# Set Timezone to PST
+PST = pytz.timezone('America/Los_Angeles')
+now_pst = datetime.now(timezone.utc).astimezone(PST)
+
+print(f"=== Dashboard Data Refresh - {now_pst.strftime('%Y-%m-%d %H:%M:%S %Z')} ===")
 
 # Configuration
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -71,7 +76,7 @@ except Exception as e:
 dashboard_data = {
     'dailyAudit': data1,
     'timeAnalysis': data2,
-    'lastUpdated': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+    'lastUpdated': now_pst.strftime('%Y-%m-%d %H:%M:%S %Z'),
     'stats': {
         'totalAuditRows': len(data1),
         'totalTimeRows': len(data2),
