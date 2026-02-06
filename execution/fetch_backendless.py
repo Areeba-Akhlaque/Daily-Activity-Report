@@ -33,6 +33,10 @@ def fetch_raw_api_logs():
     dev_login = os.environ.get('BACKENDLESS_DEV_LOGIN')
     dev_password = os.environ.get('BACKENDLESS_DEV_PASSWORD')
     
+    # DEBUG: Check if secrets are passed
+    if dev_login: print(f"  [DEBUG] Login Env found (Length: {len(dev_login)})")
+    else: print("  [DEBUG] Login Env var IS EMPTY/MISSING")
+    
     if not dev_login or not dev_password:
         print("  [API] Developer Credentials not set. Skipping login.")
         return []
@@ -151,16 +155,32 @@ def upload_to_sheet(rows, creds):
     print(f"[Sheet] Uploading {len(rows)} rows...")
     gc = gspread.authorize(creds)
     sh = gc.open_by_key(SHEET_ID)
+    
+    ws = None
     try:
         ws = sh.worksheet('Console_Audit_Logs')
         ws.clear()
-    except:
-        ws = sh.add_worksheet('Console_Audit_Logs', 5000, 10)
-        
-    if rows:
+    except Exception as e:
+        print(f"  [Sheet] Error accessing/clearing sheet: {e}")
+        print("  [Sheet] Attempting to recreate/add worksheet...")
+        try:
+            # Try to delete if it exists but is broken
+            try: sh.del_worksheet(sh.worksheet('Console_Audit_Logs'))
+            except: pass
+            
+            ws = sh.add_worksheet('Console_Audit_Logs', 5000, 10)
+        except Exception as e2:
+            print(f"  [Sheet] CRITICAL: Could not create worksheet: {e2}")
+            return
+
+    if rows and ws:
         headers = ['Name', 'Date', 'Platform', 'Event Type', 'Count']
         values = [headers] + [[r.get(h, '') for h in headers] for r in rows]
-        ws.update(values=values, range_name='A1')
+        try:
+            ws.update(values=values, range_name='A1')
+            print("  [Sheet] Upload Success.")
+        except Exception as e:
+            print(f"  [Sheet] Update Failed: {e}")
 
 def main():
     print("="*60)
