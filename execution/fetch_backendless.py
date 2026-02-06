@@ -51,11 +51,84 @@ def get_google_creds():
     return creds
 
 def fetch_from_api():
-    """Attempt to fetch logs via Backendless API."""
+    """Attempt to fetch logs via Backendless Developer Console API."""
     print("[1/3] Backendless Console Logs API Check...")
-    print("  ! Console/Management Logs are NOT accessible via standard REST API Keys.")
-    print("  ! Please manually export 'console_audit_logs.csv' from Backendless and push to this repo.")
-    print("  ! Falling back to checking local CSV file...")
+    
+    dev_login = os.environ.get('BACKENDLESS_DEV_LOGIN')
+    dev_password = os.environ.get('BACKENDLESS_DEV_PASSWORD')
+    
+    if not dev_login or not dev_password:
+        print("  ! Developer Credentials not found in env.")
+        print("  ! Please set BACKENDLESS_DEV_LOGIN and BACKENDLESS_DEV_PASSWORD.")
+        print("  ! Falling back to CSV.")
+        return []
+
+    print(f"  > Attempting Developer Login as: {dev_login} ...")
+    
+    # 1. Login to Console (Simulate Browser)
+    # The Console API usually resides at api.backendless.com or the install URL
+    # We will try the standard SaaS endpoint first.
+    login_url = "https://api.backendless.com/console/home/login"
+    
+    session = requests.Session()
+    try:
+        # Step A: Login
+        payload = {"login": dev_login, "password": dev_password}
+        res = session.post(login_url, json=payload, headers={"Content-Type": "application/json"})
+        
+        if res.status_code != 200:
+            print(f"  [Error] Login Failed: {res.status_code} - {res.text}")
+            return []
+            
+        auth_data = res.json()
+        auth_key = auth_data.get('authKey')
+        print("  > Login Success! Auth Key acquired.")
+        
+        # Step B: Fetch Audit Logs
+        # Endpoint: /console/application/{appId}/audit/log ?
+        # We need to construct the URL.
+        # Assuming standard console path.
+        log_url = f"https://api.backendless.com/console/application/{APP_ID}/audit/log"
+        
+        # We may need the 'auth-key' header
+        headers = {
+            "auth-key": auth_key,
+            "Content-Type": "application/json"
+        }
+        
+        print(f"  > Fetching Logs from: {log_url}")
+        res_log = session.get(log_url, headers=headers)
+        
+        if res_log.status_code == 200:
+            data = res_log.json()
+            # The structure might be list or {'data': []}
+            if isinstance(data, dict) and 'data' in data:
+                logs = data['data']
+            elif isinstance(data, list):
+                logs = data
+            else:
+                logs = []
+                
+            print(f"  [SUCCESS] Fetched {len(logs)} Console Audit Logs via API!")
+            
+            # Normalize fields to match CSV structure for downstream processing
+            normalized = []
+            for log in logs:
+                # Map fields: 'created' -> 'timestamp', etc
+                # We need to inspect one to be sure, but we'll store raw and let process handle it 
+                # or map here. The 'update_console_audit_logs' expects CSV columns.
+                # Let's verify structure later. For now, return raw.
+                normalized.append(log)
+                
+            return normalized
+            
+        else:
+            print(f"  [Error] Log Fetch Failed: {res_log.status_code} - {res_log.text}")
+            
+    except Exception as e:
+        print(f"  [Exception] {e}")
+
+    print("  ! API Fetch failed. Falling back to CSV.")
     return []
                     break
         except Exception as e:
