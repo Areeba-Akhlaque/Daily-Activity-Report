@@ -44,6 +44,8 @@ jobs:
           FIGMA_TEAM_ID=${{ secrets.FIGMA_TEAM_ID }}
           BACKENDLESS_APP_ID=${{ secrets.BACKENDLESS_APP_ID }}
           BACKENDLESS_API_KEY=${{ secrets.BACKENDLESS_API_KEY }}
+          BACKENDLESS_DEV_LOGIN=${{ secrets.BACKENDLESS_DEV_LOGIN }}
+          BACKENDLESS_DEV_PASSWORD=${{ secrets.BACKENDLESS_DEV_PASSWORD }}
           EMAIL_RECIPIENTS=areeba@pvragon.com
           EMAIL_USER=${{ secrets.EMAIL_USER }}
           EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}
