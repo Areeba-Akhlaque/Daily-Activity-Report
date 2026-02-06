@@ -12,6 +12,18 @@ from google.auth.transport.requests import Request
 # Import name mappings
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(SCRIPT_DIR)
+
+def load_env():
+    env_path = os.path.join(ROOT_DIR, '.env')
+    if os.path.exists(env_path):
+        with open(env_path) as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#') and '=' in line:
+                    key, value = line.split('=', 1)
+                    os.environ[key] = value
+load_env()
+
 sys.path.insert(0, SCRIPT_DIR)
 from name_mappings import map_name, should_exclude
 

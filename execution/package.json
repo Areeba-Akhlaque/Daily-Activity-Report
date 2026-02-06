@@ -1,0 +1,9 @@
+{
+  "name": "audit-fetch",
+  "version": "1.0.0",
+  "description": "Helper scripts for Backendless Audit",
+  "main": "fetch_backendless_node.js",
+  "dependencies": {
+    "backendless-console-sdk": "*"
+  }
+}

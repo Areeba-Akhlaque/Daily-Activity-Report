@@ -23,3 +23,5 @@ Thumbs.db
 
 # Dashboard subdirectory in execution (artifact)
 execution/dashboard/
+node_modules/
+execution/node_modules/
