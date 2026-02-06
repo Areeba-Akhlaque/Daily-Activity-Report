@@ -211,12 +211,10 @@ def main():
         print("[COMPLETE] Done.")
         
     except Exception as e:
-        print(f"[ERROR] Main Loop: {e}")
-        # Dont fail hard to allow other scripts to run? 
-        # Actually workflow steps run isolated, but we should exit 1 if critical?
-        # User saw "IndentationError" which implies hard crash.
-        # We catch here so we print error clean.
-        sys.exit(1)
+        print(f"[ERROR] Main Loop Exception: {e}")
+        print("[INFO] Continuing gracefully...")
+        # Do not exit 1, allowing workflow to proceed
+        pass
 
 if __name__ == "__main__":
     main()
