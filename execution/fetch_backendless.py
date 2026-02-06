@@ -1,37 +1,30 @@
-
 import requests
 import json
 import pandas as pd
-from datetime import datetime, timezone
+from datetime import datetime
 import os
 import sys
 import gspread
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
+import re
+import time
 
-# Import name mappings
+# Add current directory to path for imports
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(SCRIPT_DIR)
-
-def load_env():
-    env_path = os.path.join(ROOT_DIR, '.env')
-    if os.path.exists(env_path):
-        with open(env_path) as f:
-            for line in f:
-                line = line.strip()
-                if line and not line.startswith('#') and '=' in line:
-                    key, value = line.split('=', 1)
-                    os.environ[key] = value
-load_env()
-
 sys.path.insert(0, SCRIPT_DIR)
 from name_mappings import map_name, should_exclude
 
 # Config
-START_DATE_STR = os.environ.get('START_DATE', '2026-01-01')
+# RECIPE: Target https://develop.backendless.com/console/home/login
+# Note: 'console.backendless.com' is often an alias for 'develop.backendless.com'
+LOGIN_URL = "https://develop.backendless.com/console/home/login"
+
 APP_ID = os.environ.get('BACKENDLESS_APP_ID')
-API_KEY = os.environ.get('BACKENDLESS_API_KEY')
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID')
+DEV_LOGIN = os.environ.get('BACKENDLESS_DEV_LOGIN')
+DEV_PASSWORD = os.environ.get('BACKENDLESS_DEV_PASSWORD')
 
 def get_google_creds():
     token_path = os.path.join(ROOT_DIR, 'token.json')
@@ -40,193 +33,166 @@ def get_google_creds():
         creds.refresh(Request())
     return creds
 
-def fetch_raw_api_logs():
-    """Attempt login and fetch raw audit logs."""
-    dev_login = os.environ.get('BACKENDLESS_DEV_LOGIN')
-    dev_password = os.environ.get('BACKENDLESS_DEV_PASSWORD')
+def clean_developer_email(dev_raw):
+    """
+    Robust parsing to retrieve Email from Developer column.
+    Strategies:
+    1. Check if dict (API valid)
+    2. Check if JSON string (API raw)
+    3. Regex search for email pattern
+    """
+    if not dev_raw: return "Unknown"
     
-    # DEBUG: Check if secrets are passed
-    if dev_login: print(f"  [DEBUG] Login Env found (Length: {len(dev_login)})")
-    else: print("  [DEBUG] Login Env var IS EMPTY/MISSING")
+    val = str(dev_raw)
     
-    if not dev_login or not dev_password:
-        print("  [API] Developer Credentials not set. Skipping login.")
+    # 1. Try JSON/Dict
+    try:
+        if isinstance(dev_raw, dict):
+            return dev_raw.get('email', val)
+        if isinstance(dev_raw, str) and ('{' in dev_raw):
+            data = json.loads(dev_raw)
+            if 'email' in data: return data['email']
+    except: pass
+
+    # 2. Regex
+    try:
+        match = re.search(r'[\w\.-]+@[\w\.-]+', val)
+        if match: return match.group(0)
+    except: pass
+    
+    return val
+
+def fetch_logs_internal_api():
+    if not DEV_LOGIN or not DEV_PASSWORD:
+        print("[API] Credentials Missing (LOGIN/PASSWORD).")
         return []
-        
-    print(f"  [API] Attempting login as {dev_login}...")
-    session = requests.Session()
+
+    s = requests.Session()
+    print(f"[API] Logging in to {LOGIN_URL}...")
     try:
         # 1. Login
-        # Use custom domain or fallback to API
-        custom = os.environ.get('BACKENDLESS_API_URL', 'https://api.backendless.com').rstrip('/')
-        # Usually console login is at api.backendless.com/console/home/login
-        # Try generic first
-        login_url = "https://api.backendless.com/console/home/login"
+        login_payload = {'login': DEV_LOGIN, 'password': DEV_PASSWORD}
+        res = s.post(LOGIN_URL, json=login_payload)
         
-        login_res = session.post(login_url, json={'login': dev_login, 'password': dev_password}, headers={"Content-Type": "application/json"})
-        if login_res.status_code != 200:
-            print(f"  [API] Login Failed: {login_res.status_code} - {login_res.text}")
+        if res.status_code != 200:
+            print(f"[API] Login Failed: {res.status_code} - {res.text}")
             return []
             
-        auth_key = login_res.json().get('authKey')
-        print("  [API] Login Success. Fetching logs...")
-        
-        # 2. Fetch Logs
-        log_url = f"https://api.backendless.com/console/application/{APP_ID}/audit/log"
-        # Increase size? pageSize=1000? Not sure if supported.
-        res = session.get(log_url, headers={"auth-key": auth_key})
-        
-        if res.status_code == 200:
-            data = res.json()
-            # Struct check
-            if isinstance(data, dict) and 'data' in data: return data['data']
-            if isinstance(data, list): return data
+        # 2. Capture Auth Key
+        auth_key = res.headers.get('auth-key')
+        if not auth_key:
+            try: auth_key = res.json().get('authKey')
+            except: pass
+            
+        if not auth_key:
+            print("[API] FATAL: Login successful but no auth-key found in headers/body.")
+            print(f"Headers: {res.headers}")
             return []
-        else:
-            print(f"  [API] Fetch Error: {res.status_code} - {res.text}")
+            
+        print(f"[API] Auth Key Captured: {auth_key[:10]}...")
+        
+        # 3. Fetch Audit Logs
+        # URL: https://develop.backendless.com/{APP_ID}/console/security/audit-logs
+        audit_url = f"https://develop.backendless.com/{APP_ID}/console/security/audit-logs"
+        headers = {'auth-key': auth_key}
+        
+        print(f"[API] Fetching Logs from {audit_url}...")
+        log_res = s.get(audit_url, headers=headers)
+        
+        if log_res.status_code != 200:
+            print(f"[API] Log Validated Failed: {log_res.status_code} - {log_res.text}")
             return []
+            
+        data = log_res.json()
+        if isinstance(data, list): return data
+        if isinstance(data, dict): return data.get('data', [])
+        return []
+        
     except Exception as e:
-        print(f"  [API] Exception: {e}")
+        print(f"[API] Exception: {e}")
         return []
 
-def fetch_raw_csv_logs():
-    """Read local CSV."""
-    csv_path = os.path.join(ROOT_DIR, 'console_audit_logs.csv')
-    if not os.path.exists(csv_path):
-        return []
-    print("  [CSV] Reading local file...")
-    try:
-        return pd.read_csv(csv_path).to_dict('records')
-    except:
-        return []
+def main():
+    print("="*60)
+    print("Backendless Activity Fetch (Python Recipe)")
+    print("="*60)
+    
+    logs = fetch_logs_internal_api()
+    source = 'API'
+    
+    if not logs:
+        print("[WARN] API returned no logs. Checking local CSV...")
+        csv_path = os.path.join(ROOT_DIR, 'console_audit_logs.csv')
+        if os.path.exists(csv_path):
+             try:
+                 logs = pd.read_csv(csv_path).to_dict('records')
+                 source = 'CSV'
+                 print(f"[CSV] Loaded {len(logs)} rows.")
+             except: pass
+    
+    if not logs:
+        print("[ERROR] No data found.")
+        return # Exit gracefully
 
-def process_logs(logs, source_type='API'):
-    """Convert raw logs (API or CSV dicts) to Summary format."""
-    print(f"  Processing {len(logs)} records from {source_type}...")
+    # Process
+    print(f"Processing {len(logs)} logs from {source}...")
     processed = []
     
     for log in logs:
-        # EXTRACT FIELDS
-        email = 'Unknown'
-        event = 'Unknown'
-        timestamp = 0
-        
         try:
-            # API Format usually: {'developer': '...', 'event': '...', 'created': 173...}
-            # CSV Format usually: {'developer': '{"email":...}', 'event': '...', 'timestamp': 173...}
-            
-            # Email
-            if 'developer' in log:
-                dev = log['developer']
-                if source_type == 'CSV':
-                    # CSV stores it as JSON string often
-                    try: 
-                         if isinstance(dev, str) and '{' in dev: dev = json.loads(dev).get('email')
-                    except: pass
-                email = dev if isinstance(dev, str) else str(dev)
-            else:
-                email = log.get('email', 'Unknown')
-                
-            # Event
-            event = log.get('event') or log.get('action') or 'Unknown'
-            
-            # Timestamp
-            timestamp = log.get('created') or log.get('timestamp')
-            
-            if not timestamp: continue
-            
-            # Convert to Date
-            ts_val = float(timestamp) / 1000.0 if float(timestamp) > 9999999999 else float(timestamp) # Handle ms vs s
-            dt = datetime.fromtimestamp(ts_val)
-            
-            if dt.strftime('%Y-%m-%d') < START_DATE_STR: continue
-            
-            # Map Name
+            # Developer
+            dev_raw = log.get('developer')
+            email = clean_developer_email(dev_raw)
             name = map_name(email)
             if should_exclude(name): continue
             
+            # Timestamp (ms -> date)
+            ts = log.get('created') or log.get('timestamp')
+            if not ts: continue
+            
+            ts = float(ts)
+            if ts > 9999999999: ts = ts / 1000.0
+            dt = datetime.fromtimestamp(ts)
+            
+            date_str = dt.strftime('%m/%d/%y') # For Sheet Match
+            if date_str < '01/01/26': continue # Start Date filter
+            
+            # Event
+            event = log.get('action') or log.get('event') or 'Unknown'
+            
             processed.append({
                 'Name': name,
-                'Date': dt.strftime('%m/%d/%y'),
+                'Date': date_str,
                 'Platform': 'Backendless App',
                 'Event Type': event,
                 'Count': 1
             })
-            
-        except Exception as e:
-            continue
-            
-    if not processed: return []
-    
+        except: continue
+        
+    if not processed:
+        print("No relevant logs found after processing.")
+        return
+
     # Aggregate
     df = pd.DataFrame(processed)
     summary = df.groupby(['Name', 'Date', 'Platform', 'Event Type']).size().reset_index(name='Count')
-    return summary.to_dict('records')
-
-def upload_to_sheet(rows, creds):
-    print(f"[Sheet] Uploading {len(rows)} rows...")
+    rows = summary.to_dict('records')
+    
+    # Upload
+    print(f"[Sheet] Uploading {len(rows)} summarized rows...")
+    creds = get_google_creds()
     gc = gspread.authorize(creds)
     sh = gc.open_by_key(SHEET_ID)
     
-    ws = None
-    try:
-        ws = sh.worksheet('Console_Audit_Logs')
-        ws.clear()
-    except Exception as e:
-        print(f"  [Sheet] Error accessing/clearing sheet: {e}")
-        print("  [Sheet] Attempting to recreate/add worksheet...")
-        try:
-            # Try to delete if it exists but is broken
-            try: sh.del_worksheet(sh.worksheet('Console_Audit_Logs'))
-            except: pass
-            
-            ws = sh.add_worksheet('Console_Audit_Logs', 5000, 10)
-        except Exception as e2:
-            print(f"  [Sheet] CRITICAL: Could not create worksheet: {e2}")
-            return
-
-    if rows and ws:
-        headers = ['Name', 'Date', 'Platform', 'Event Type', 'Count']
-        values = [headers] + [[r.get(h, '') for h in headers] for r in rows]
-        try:
-            ws.update(values=values, range_name='A1')
-            print("  [Sheet] Upload Success.")
-        except Exception as e:
-            print(f"  [Sheet] Update Failed: {e}")
-
-def main():
-    print("="*60)
-    print("Backendless Activity Fetch")
-    print("="*60)
+    # Update 'Console_Audit_Logs'
+    try: ws = sh.worksheet('Console_Audit_Logs')
+    except: ws = sh.add_worksheet('Console_Audit_Logs', 5000, 10)
     
-    try:
-        # 1. Try API
-        logs = fetch_raw_api_logs()
-        source = 'API'
-        
-        # 2. Fallback to CSV
-        if not logs:
-            print("  [INFO] No API logs found. Trying CSV...")
-            logs = fetch_raw_csv_logs()
-            source = 'CSV'
-            
-        if not logs:
-            print("  [WARN] No data found from any source.")
-            return
-
-        # 3. Process
-        summary = process_logs(logs, source)
-        
-        # 4. Upload
-        creds = get_google_creds()
-        upload_to_sheet(summary, creds)
-        print("[COMPLETE] Done.")
-        
-    except Exception as e:
-        print(f"[ERROR] Main Loop Exception: {e}")
-        print("[INFO] Continuing gracefully...")
-        # Do not exit 1, allowing workflow to proceed
-        pass
+    ws.clear()
+    headers = ['Name', 'Date', 'Platform', 'Event Type', 'Count']
+    values = [headers] + [[r[h] for h in headers] for r in rows]
+    ws.update(values=values, range_name='A1')
+    print("[SUCCESS] Done.")
 
 if __name__ == "__main__":
     main()

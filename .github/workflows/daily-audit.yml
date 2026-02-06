@@ -17,25 +17,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-
-      - name: Install Node Dependencies
-        run: |
-          cd execution
-          npm install
-
-      - name: Fetch Backendless Logs (Node SDK)
-        env:
-          BACKENDLESS_DEV_LOGIN: ${{ secrets.BACKENDLESS_DEV_LOGIN }}
-          BACKENDLESS_DEV_PASSWORD: ${{ secrets.BACKENDLESS_DEV_PASSWORD }}
-          BACKENDLESS_APP_ID: ${{ secrets.BACKENDLESS_APP_ID }}
-          BACKENDLESS_API_URL: https://api.okridecare.com
-        run: node execution/fetch_backendless_node.js
-        continue-on-error: true
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
