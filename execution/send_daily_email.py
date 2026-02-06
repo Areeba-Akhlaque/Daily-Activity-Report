@@ -37,7 +37,7 @@ def load_env():
 load_env()
 
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
-EMAIL_RECIPIENTS = os.environ.get('EMAIL_RECIPIENTS', 'areeba@pvragon.com,jaime@pvragon.com').split(',')
+EMAIL_RECIPIENTS = os.environ.get('EMAIL_RECIPIENTS', 'areeba@pvragon.com').split(',')
 EMAIL_USER = os.environ.get('EMAIL_USER', '')
 EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD', '')
 DASHBOARD_URL = os.environ.get('DASHBOARD_URL', 'https://pvragon.github.io/activity-dashboard')
