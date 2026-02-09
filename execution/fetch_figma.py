@@ -75,13 +75,11 @@ def fetch_files_for_projects(projects):
             fname = f['name']
             
             # 1. Fetch comments
+            print(f"    Fetching activity for: {fname}...")
             c_url = f"https://api.figma.com/v1/files/{fkey}/comments"
             c_resp = requests.get(c_url, headers=get_headers())
             if c_resp.status_code == 200:
                 comments = c_resp.json().get('comments', [])
-                if comments:
-                    print(f"      [DEBUG] Found {len(comments)} raw comments in file: {fname}")
-                
                 for c in comments:
                     if 'created_at' not in c: continue
                     created_dt = pd.to_datetime(c['created_at']).tz_localize(None)
@@ -91,27 +89,12 @@ def fetch_files_for_projects(projects):
                             "Name": user_name, "Date": created_dt.strftime('%m/%d/%y'),
                             "Event Type": "Comment Posted", "Platform": "Figma"
                         })
-                    else:
-                        # Log the date of the most recent skipped comment to verify filters
-                        if not hasattr(fetch_files_for_projects, 'last_skip_log'):
-                            fetch_files_for_projects.last_skip_log = 0
-                        if fetch_files_for_projects.last_skip_log < 5:
-                           print(f"      [FIGMA DEBUG] Skipping old comment from: {created_dt.strftime('%Y-%m-%d')}")
-                           fetch_files_for_projects.last_skip_log += 1
-            elif c_resp.status_code != 200:
-                 print(f"      [DEBUG] Error fetching comments for {fname}: {c_resp.status_code}")
 
             # 2. Fetch versions (as "File Updated" events)
             v_url = f"https://api.figma.com/v1/files/{fkey}/versions"
             v_resp = requests.get(v_url, headers=get_headers())
             if v_resp.status_code == 200:
                 versions = v_resp.json().get('versions', [])
-                if versions:
-                    # Check first version date for debugging
-                    v0 = versions[0]
-                    v0_dt = pd.to_datetime(v0['created_at']).tz_localize(None)
-                    print(f"      [DEBUG] Found {len(versions)} versions. Latest: {v0_dt.strftime('%Y-%m-%d')} by {v0.get('user', {}).get('handle')}")
-                
                 for v in versions:
                     if 'created_at' not in v: continue
                     v_dt = pd.to_datetime(v['created_at']).tz_localize(None)
@@ -134,7 +117,6 @@ def fetch_files_for_projects(projects):
                                 "Event Type": etype, "Platform": "Figma"
                             })
             
-            print(f"    Finished activity for: {fname}. Subtotal: {len(all_events)} events.")
             time.sleep(1) # More generous rate limit for versions + comments
             
     return all_events
