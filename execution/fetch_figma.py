@@ -99,6 +99,12 @@ def fetch_files_for_projects(projects):
             v_resp = requests.get(v_url, headers=get_headers())
             if v_resp.status_code == 200:
                 versions = v_resp.json().get('versions', [])
+                if versions:
+                    # Check first version date for debugging
+                    v0 = versions[0]
+                    v0_dt = pd.to_datetime(v0['created_at']).tz_localize(None)
+                    print(f"      [DEBUG] Found {len(versions)} versions. Latest: {v0_dt.strftime('%Y-%m-%d')} by {v0.get('user', {}).get('handle')}")
+                
                 for v in versions:
                     if 'created_at' not in v: continue
                     v_dt = pd.to_datetime(v['created_at']).tz_localize(None)
@@ -121,6 +127,7 @@ def fetch_files_for_projects(projects):
                                 "Event Type": etype, "Platform": "Figma"
                             })
             
+            print(f"    Finished activity for: {fname}. Subtotal: {len(all_events)} events.")
             time.sleep(1) # More generous rate limit for versions + comments
             
     return all_events

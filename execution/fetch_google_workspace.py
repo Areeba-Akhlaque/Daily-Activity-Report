@@ -142,13 +142,13 @@ def fetch_audit_logs(creds, application_name):
                         elif application_name == 'gmail':
                             event_lower = event_name.lower()
                             
-                            # Log every Gmail event name we see once, to help debugging
-                            if not hasattr(fetch_audit_logs, 'seen_gmail_events'):
-                                fetch_audit_logs.seen_gmail_events = set()
+                            # SUPER-VERBOSE LOGGING: Log everything for Gmail for one run
+                            if not hasattr(fetch_audit_logs, 'gmail_debug_count'):
+                                fetch_audit_logs.gmail_debug_count = 0
                             
-                            if event_name not in fetch_audit_logs.seen_gmail_events:
-                                print(f"      [INFO] Gmail Event type seen: '{event_name}'")
-                                fetch_audit_logs.seen_gmail_events.add(event_name)
+                            if fetch_audit_logs.gmail_debug_count < 20:
+                                print(f"      [GMAIL DEBUG] Actor: {actor_email}, Event: {event_name}")
+                                fetch_audit_logs.gmail_debug_count += 1
 
                             if event_lower == 'delivery':
                                 mapped_event = "Gmail Received"
