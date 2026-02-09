@@ -75,11 +75,13 @@ def fetch_files_for_projects(projects):
             fname = f['name']
             
             # 1. Fetch comments
-            print(f"    Fetching activity for: {fname}...")
             c_url = f"https://api.figma.com/v1/files/{fkey}/comments"
             c_resp = requests.get(c_url, headers=get_headers())
             if c_resp.status_code == 200:
                 comments = c_resp.json().get('comments', [])
+                if comments:
+                    print(f"      [DEBUG] Found {len(comments)} raw comments in file: {fname}")
+                
                 for c in comments:
                     if 'created_at' not in c: continue
                     created_dt = pd.to_datetime(c['created_at']).tz_localize(None)
@@ -89,6 +91,8 @@ def fetch_files_for_projects(projects):
                             "Name": user_name, "Date": created_dt.strftime('%m/%d/%y'),
                             "Event Type": "Comment Posted", "Platform": "Figma"
                         })
+            elif c_resp.status_code != 200:
+                 print(f"      [DEBUG] Error fetching comments for {fname}: {c_resp.status_code}")
 
             # 2. Fetch versions (as "File Updated" events)
             v_url = f"https://api.figma.com/v1/files/{fkey}/versions"

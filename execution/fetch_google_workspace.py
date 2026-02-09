@@ -141,11 +141,14 @@ def fetch_audit_logs(creds, application_name):
                                 keep_event = True
                         elif application_name == 'gmail':
                             event_lower = event_name.lower()
-                            # DEBUG: If we get 0 events, we need to know what names Google uses
-                            if not any(x in event_lower for x in ['send', 'sent', 'compose', 'mail', 'delivery']):
-                                # Only print first few unknown events to avoid log spam
-                                if len(all_events) < 5:
-                                    print(f"      DEBUG Gmail Event found: {event_name}")
+                            
+                            # Log every Gmail event name we see once, to help debugging
+                            if not hasattr(fetch_audit_logs, 'seen_gmail_events'):
+                                fetch_audit_logs.seen_gmail_events = set()
+                            
+                            if event_name not in fetch_audit_logs.seen_gmail_events:
+                                print(f"      [INFO] Gmail Event type seen: '{event_name}'")
+                                fetch_audit_logs.seen_gmail_events.add(event_name)
 
                             if event_lower == 'delivery':
                                 mapped_event = "Gmail Received"
@@ -154,7 +157,6 @@ def fetch_audit_logs(creds, application_name):
                                 keep_event = True
                                 mapped_event = "Gmail Send"
                             else:
-                                # For Gmail, if we haven't found any "Send" events, let's see what's available
                                 pass
                         
                         if keep_event:
