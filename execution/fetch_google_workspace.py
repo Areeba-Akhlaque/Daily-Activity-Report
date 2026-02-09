@@ -3,6 +3,7 @@ import json
 import pandas as pd
 from datetime import datetime, timezone
 import os
+import sys
 import time
 import gspread
 from google.oauth2.credentials import Credentials
@@ -26,6 +27,10 @@ def load_env():
                     os.environ[key] = value
 
 load_env()
+
+# Import name mappings
+sys.path.insert(0, SCRIPT_DIR)
+from name_mappings import map_name, should_exclude
 
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
 START_DATE_STR = os.environ.get('START_DATE', '2026-01-01') + "T00:00:00Z"
@@ -200,6 +205,12 @@ def process_and_upload(events):
         return
 
     df = pd.DataFrame(events)
+    # Map names
+    df['Name'] = df['Name'].apply(map_name)
+    
+    # Filter exclusions
+    df = df[~df['Name'].apply(should_exclude)]
+    
     # Aggregate daily
     summary = df.groupby(['Name', 'Date', 'Platform', 'Event Type']).size().reset_index(name='Quantity')
     summary['sort_dt'] = pd.to_datetime(summary['Date'], format='%m/%d/%y')
