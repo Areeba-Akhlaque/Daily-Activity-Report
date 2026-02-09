@@ -140,7 +140,8 @@ def fetch_audit_logs(creds, application_name):
                             if event_name in ['edit', 'create', 'upload', 'rename']:
                                 keep_event = True
                         elif application_name == 'gmail':
-                            if event_name == 'delivery':
+                            event_lower = event_name.lower()
+                            if event_lower == 'delivery':
                                 # Extract sender domain from message parameters
                                 sender_domain = ''
                                 for p in ev.get('parameters', []):
@@ -164,7 +165,7 @@ def fetch_audit_logs(creds, application_name):
                                 if not is_excluded:
                                     keep_event = True
                                     mapped_event = "Gmail Received"
-                            elif event_name == 'send':
+                            elif event_lower in ['send', 'sent', 'compose', 'draft_send', 'message_send']:
                                 keep_event = True
                                 mapped_event = "Gmail Send"
                         
