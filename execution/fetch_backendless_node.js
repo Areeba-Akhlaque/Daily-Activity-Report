@@ -56,7 +56,7 @@ async function main() {
                 else if (log.user_email) dev = log.user_email;
                 else if (log.email) dev = log.email;
 
-                csvLines.push(`${dev},${event},${timestamp}`);
+                csvLines.push(`"${dev.trim()}","${event.trim()}",${timestamp}`);
             });
 
             const csvPath = path.join(__dirname, '../console_audit_logs.csv');

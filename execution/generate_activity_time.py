@@ -188,10 +188,13 @@ def fetch_backendless_events():
             
             # Parse developer email
             def get_email(dev_str):
+                s = str(dev_str).strip()
+                if not s or s == 'nan' or s == 'None': return ''
                 try:
-                    if pd.isna(dev_str): return ''
-                    return json.loads(str(dev_str)).get('email', '')
-                except: return ''
+                    if s.startswith('{'):
+                        return json.loads(s).get('email', '')
+                except: pass
+                return s
             
             df['email'] = df['developer'].apply(get_email)
             
