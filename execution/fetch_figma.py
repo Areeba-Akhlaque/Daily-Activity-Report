@@ -91,6 +91,13 @@ def fetch_files_for_projects(projects):
                             "Name": user_name, "Date": created_dt.strftime('%m/%d/%y'),
                             "Event Type": "Comment Posted", "Platform": "Figma"
                         })
+                    else:
+                        # Log the date of the most recent skipped comment to verify filters
+                        if not hasattr(fetch_files_for_projects, 'last_skip_log'):
+                            fetch_files_for_projects.last_skip_log = 0
+                        if fetch_files_for_projects.last_skip_log < 5:
+                           print(f"      [FIGMA DEBUG] Skipping old comment from: {created_dt.strftime('%Y-%m-%d')}")
+                           fetch_files_for_projects.last_skip_log += 1
             elif c_resp.status_code != 200:
                  print(f"      [DEBUG] Error fetching comments for {fname}: {c_resp.status_code}")
 

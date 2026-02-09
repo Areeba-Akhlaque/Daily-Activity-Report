@@ -142,18 +142,23 @@ def fetch_audit_logs(creds, application_name):
                         elif application_name == 'gmail':
                             event_lower = event_name.lower()
                             
-                            # SUPER-VERBOSE LOGGING: Log everything for Gmail for one run
-                            if not hasattr(fetch_audit_logs, 'gmail_debug_count'):
-                                fetch_audit_logs.gmail_debug_count = 0
+                            # Log first 50 Gmail events to see what's actually there
+                            if not hasattr(fetch_audit_logs, 'gmail_event_track'):
+                                fetch_audit_logs.gmail_event_track = set()
                             
-                            if fetch_audit_logs.gmail_debug_count < 20:
-                                print(f"      [GMAIL DEBUG] Actor: {actor_email}, Event: {event_name}")
-                                fetch_audit_logs.gmail_debug_count += 1
+                            if event_name not in fetch_audit_logs.gmail_event_track:
+                                print(f"      [GMAIL INFO] Event Seen: '{event_name}' (Actor: {actor_email})")
+                                fetch_audit_logs.gmail_event_track.add(event_name)
 
-                            if event_lower == 'delivery':
+                            # Broad Send detection
+                            is_send = any(x in event_lower for x in ['send', 'sent', 'compose', 'mail', 'message'])
+                            # Exclude delivery/received
+                            is_receive = any(x in event_lower for x in ['delivery', 'receive', 'received'])
+
+                            if is_receive:
                                 mapped_event = "Gmail Received"
                                 keep_event = True 
-                            elif any(x in event_lower for x in ['send', 'sent', 'compose', 'mail']):
+                            elif is_send:
                                 keep_event = True
                                 mapped_event = "Gmail Send"
                             else:
