@@ -141,33 +141,21 @@ def fetch_audit_logs(creds, application_name):
                                 keep_event = True
                         elif application_name == 'gmail':
                             event_lower = event_name.lower()
+                            # DEBUG: If we get 0 events, we need to know what names Google uses
+                            if not any(x in event_lower for x in ['send', 'sent', 'compose', 'mail', 'delivery']):
+                                # Only print first few unknown events to avoid log spam
+                                if len(all_events) < 5:
+                                    print(f"      DEBUG Gmail Event found: {event_name}")
+
                             if event_lower == 'delivery':
-                                # Extract sender domain from message parameters
-                                sender_domain = ''
-                                for p in ev.get('parameters', []):
-                                    if p.get('name') == 'message_info':
-                                        msg_params = p.get('messageValue', {}).get('parameter', [])
-                                        for mp in msg_params:
-                                            if mp.get('name') == 'rfc2822_message_id':
-                                                mid = mp.get('value', '')
-                                                if '@' in mid:
-                                                    sender_domain = mid.split('@')[-1].rstrip('>')
-                                                break
-                                        break
-                                
-                                # Check if sender domain should be excluded
-                                is_excluded = False
-                                for excl in EXCLUDED_SENDER_DOMAINS:
-                                    if sender_domain == excl or sender_domain.endswith('.' + excl) or sender_domain.endswith(excl):
-                                        is_excluded = True
-                                        break
-                                
-                                if not is_excluded:
-                                    keep_event = True
-                                    mapped_event = "Gmail Received"
-                            elif event_lower in ['send', 'sent', 'compose', 'draft_send', 'message_send']:
+                                mapped_event = "Gmail Received"
+                                keep_event = True 
+                            elif any(x in event_lower for x in ['send', 'sent', 'compose', 'mail']):
                                 keep_event = True
                                 mapped_event = "Gmail Send"
+                            else:
+                                # For Gmail, if we haven't found any "Send" events, let's see what's available
+                                pass
                         
                         if keep_event:
                             dt = pd.to_datetime(timestamp)
@@ -175,8 +163,11 @@ def fetch_audit_logs(creds, application_name):
                             if mapped_event == "Gmail Received":
                                 continue
 
+                            # Apply mapping immediately to ensure consistency
+                            display_name = map_name(actor_email)
+                            
                             all_events.append({
-                                "Name": actor_email,
+                                "Name": display_name,
                                 "Date": dt.strftime('%m/%d/%y'),
                                 "timestamp_dt": dt,
                                 "Platform": "Google Workspace",
