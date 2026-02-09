@@ -34,7 +34,7 @@ jobs:
           BACKENDLESS_DEV_PASSWORD: ${{ secrets.BACKENDLESS_DEV_PASSWORD }}
           BACKENDLESS_APP_ID: ${{ secrets.BACKENDLESS_APP_ID }}
           BACKENDLESS_API_KEY: ${{ secrets.BACKENDLESS_API_KEY }}
-          BACKENDLESS_API_URL: https://api.okridecare.com
+          BACKENDLESS_API_URL: https://develop.backendless.com
         run: node execution/fetch_backendless_node.js
         continue-on-error: true
 
