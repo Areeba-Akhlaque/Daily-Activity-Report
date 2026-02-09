@@ -1,58 +1,47 @@
-
-"""
-REFRESH GOOGLE TOKEN
-====================
-Run this script LOCALLY to regenerate your 'token.json' with the correct permissions.
-
-1. Ensure 'credentials.json' is in this folder.
-2. Run this script: python refresh_google_token.py
-3. A browser will open. Login with your Google Workspace Admin account.
-4. Copy the content of the NEW 'token.json' file.
-5. Update your GitHub Secret 'GOOGLE_TOKEN' with this new content.
-"""
-
 import os
+import os.path
 from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
+from google.auth.transport.requests import Request
 
-# Scopes needed for Audit Logs and Sheets
+# The scopes required for your reports
 SCOPES = [
-    'https://www.googleapis.com/auth/admin.reports.audit.readonly',
     'https://www.googleapis.com/auth/spreadsheets',
-    'https://www.googleapis.com/auth/drive'
+    'https://www.googleapis.com/auth/admin.reports.audit.readonly'
 ]
 
 def main():
     creds = None
-    # Load existing token if valid (unlikely if scopes changed)
+    # Check if we have an existing token
     if os.path.exists('token.json'):
-        try:
-            creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-        except:
-            print("Old token invalid or incompatible.")
-
+        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+    
+    # If no valid credentials, let's log in
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
-            try:
-                creds.refresh(Request())
-            except:
-                creds = None
-        
-        if not creds:
+            print("Refreshing existing token...")
+            creds.refresh(Request())
+        else:
+            print("Starting new login flow...")
             if not os.path.exists('credentials.json'):
-                print("ERROR: missing 'credentials.json'. Please download it from Google Cloud Console.")
+                print("Error: 'credentials.json' not found in this folder!")
                 return
-
+                
             flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
             creds = flow.run_local_server(port=0)
-
-        # Save the new token
+            
+        # Save the credentials for next time
         with open('token.json', 'w') as token:
             token.write(creds.to_json())
             
-    print("\nSUCCESS! 'token.json' has been updated.")
-    print("Now open 'token.json', copy the entire content, and update your GitHub Secret 'GOOGLE_TOKEN'.")
+        print("\n" + "="*40)
+        print("SUCCESS! 'token.json' has been created.")
+        print("="*40)
+        print("Next steps:")
+        print("1. Open the 'token.json' file.")
+        print("2. Copy the entire text content.")
+        print("3. Go to GitHub -> Settings -> Secrets and variables -> Actions.")
+        print("4. Update your 'GOOGLE_TOKEN' secret with this new text.")
 
 if __name__ == '__main__':
     main()
