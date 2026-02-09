@@ -102,9 +102,15 @@ def fetch_files_for_projects(projects):
                         user_name = v.get('user', {}).get('handle', 'Unknown')
                         # Filter out system-level autosaves labeled as 'Figma'
                         if user_name.lower() != 'figma':
-                            # Use version label if available, otherwise generic edit
+                            # Detect if it's the first version (Creation)
+                            is_first = (v == versions[-1])
+                            
+                            # Use version label if available
                             v_label = v.get('label')
-                            etype = f"File Edited ({v_label})" if v_label else "File Edited"
+                            if is_first:
+                                etype = f"File Created ({v_label})" if v_label else "File Created"
+                            else:
+                                etype = f"File Edited ({v_label})" if v_label else "File Edited"
                             
                             all_events.append({
                                 "Name": user_name, "Date": v_dt.strftime('%m/%d/%y'),
