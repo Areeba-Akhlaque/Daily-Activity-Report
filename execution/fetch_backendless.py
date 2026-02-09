@@ -22,7 +22,7 @@ from name_mappings import map_name, should_exclude
 LOGIN_URL = "https://develop.backendless.com/console/home/login"
 
 APP_ID = os.environ.get('BACKENDLESS_APP_ID')
-SHEET_ID = os.environ.get('GOOGLE_SHEET_ID')
+SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
 DEV_LOGIN = os.environ.get('BACKENDLESS_DEV_LOGIN')
 DEV_PASSWORD = os.environ.get('BACKENDLESS_DEV_PASSWORD')
 

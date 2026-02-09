@@ -63,13 +63,19 @@ def update_console_audit_logs(gc, sh):
     
     # Parse developer column
     def get_email(dev_str):
+        s = str(dev_str).strip()
+        if not s or s == 'nan' or s == 'None': return 'Unknown'
+        
+        # Try JSON first (legacy compatibility)
         try:
-            if pd.isna(dev_str):
-                return 'Unknown'
-            dev = json.loads(str(dev_str))
-            return dev.get('email', 'Unknown')
+            if s.startswith('{'):
+                d = json.loads(s)
+                if isinstance(d, dict): return d.get('email', 'Unknown')
         except:
-            return 'Unknown'
+            pass
+            
+        # Fallback: Assume it's an email string
+        return s
     
     df['Email'] = df['developer'].apply(get_email)
     df['Name'] = df['Email'].apply(map_name)
