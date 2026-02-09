@@ -27,7 +27,7 @@ def load_env():
 
 load_env()
 
-SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '')
+SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
 START_DATE_STR = os.environ.get('START_DATE', '2026-01-01') + "T00:00:00Z"
 SCOPES = [
     'https://www.googleapis.com/auth/spreadsheets',
@@ -107,7 +107,7 @@ def fetch_audit_logs(creds, application_name):
             while True:
                 resp = requests.get(url, headers=headers, params=params)
                 if resp.status_code != 200:
-                    print(f"    Error {resp.status_code}: {resp.text}")
+                    print(f"    Error {resp.status_code} fetching logs for {application_name}: {resp.text}")
                     break
                 
                 data = resp.json()

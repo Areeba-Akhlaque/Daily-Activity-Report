@@ -28,10 +28,14 @@ def load_env():
 
 load_env()
 
+# Import name mappings
+sys.path.insert(0, SCRIPT_DIR)
+from name_mappings import map_name, should_exclude
+
 CLICKUP_API_KEY = os.environ.get('CLICKUP_API_KEY', '')
 WORKSPACE_ID = os.environ.get('CLICKUP_WORKSPACE_ID', '9011906822')
 TEAM_ID = os.environ.get('CLICKUP_TEAM_ID', '9011906822')
-SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '')
+SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
 START_DATE_STR = os.environ.get('START_DATE', '2026-01-01')
 START_TS_MS = int(datetime.strptime(START_DATE_STR, "%Y-%m-%d").timestamp() * 1000)
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
@@ -200,7 +204,8 @@ def process_and_upload(events):
     if not events: print("  No events found."); return
     
     df = pd.DataFrame(events)
-    df['Name'] = df['user_id'].apply(lambda x: USER_CACHE.get(str(x), f"User {x}"))
+    df['Raw Name'] = df['user_id'].apply(lambda x: USER_CACHE.get(str(x), f"User {x}"))
+    df['Name'] = df['Raw Name'].apply(map_name)
     df['Date'] = pd.to_datetime(df['timestamp'], unit='ms').dt.strftime('%m/%d/%y')
     
     summary = df.groupby(['Name', 'Date', 'event_type']).size().reset_index(name='Quantity')

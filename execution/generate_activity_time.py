@@ -101,6 +101,15 @@ def fetch_google_workspace_events(creds):
                         if not email or actor.get('callerType') == 'KEY':
                             continue
                         
+                        # Filter Gmail Received
+                        if app == 'gmail':
+                            is_received = False
+                            for ev in item.get('events', []):
+                                if ev.get('name') == 'delivery':
+                                    is_received = True
+                                    break
+                            if is_received: continue
+
                         ts = item.get('id', {}).get('time', '')
                         if ts:
                             try:

@@ -28,9 +28,13 @@ def load_env():
 
 load_env()
 
+# Import name mappings
+sys.path.insert(0, SCRIPT_DIR)
+from name_mappings import map_name, should_exclude
+
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN', '')
 GITHUB_ORG = os.environ.get('GITHUB_ORG', 'Pvragon')
-SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '')
+SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
 START_DATE_STR = os.environ.get('START_DATE', '2026-01-01')
 # GitHub API uses ISO 8601 strings.
 START_DATE_DT = datetime.strptime(START_DATE_STR, "%Y-%m-%d")
@@ -124,15 +128,16 @@ def process_and_upload(events):
         return
         
     df = pd.DataFrame(events)
+    # Map names
+    df['Name'] = df['User'].apply(map_name)
+    
     # Aggregate
-    summary = df.groupby(['User', 'Date', 'Event Type']).size().reset_index(name='Quantity')
+    summary = df.groupby(['Name', 'Date', 'Event Type']).size().reset_index(name='Quantity')
     summary['sort_dt'] = pd.to_datetime(summary['Date'], format='%m/%d/%y')
     summary = summary.sort_values(by=['sort_dt', 'Quantity'], ascending=[False, False])
     
     summary['Platform'] = "GitHub"
-    final_df = summary[['User', 'Date', 'Platform', 'Event Type', 'Quantity']]
-    # Rename 'User' to 'Name' for consistency
-    final_df = final_df.rename(columns={'User': 'Name'})
+    final_df = summary[['Name', 'Date', 'Platform', 'Event Type', 'Quantity']]
     
     print(f"[4/4] Uploading {len(final_df)} rows to Google Sheet...")
     # Auth

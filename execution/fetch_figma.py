@@ -28,9 +28,13 @@ def load_env():
 
 load_env()
 
+# Import name mappings
+sys.path.insert(0, SCRIPT_DIR)
+from name_mappings import map_name, should_exclude
+
 FIGMA_TOKEN = os.environ.get('FIGMA_TOKEN', '')
 FIGMA_TEAM_ID = os.environ.get('FIGMA_TEAM_ID', '')
-SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '')
+SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
 START_DATE_STR = os.environ.get('START_DATE', '2026-01-01')
 START_DATE_DT = datetime.strptime(START_DATE_STR, "%Y-%m-%d")
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
@@ -99,7 +103,7 @@ def fetch_files_for_projects(projects):
                         if user_name.lower() != 'figma':
                             all_events.append({
                                 "Name": user_name, "Date": v_dt.strftime('%m/%d/%y'),
-                                "Event Type": "File Updated", "Platform": "Figma"
+                                "Event Type": "File Edited", "Platform": "Figma"
                             })
             
             time.sleep(1) # More generous rate limit for versions + comments
@@ -113,6 +117,12 @@ def process_and_upload(events):
         return
         
     df = pd.DataFrame(events)
+    # Map names
+    df['Name'] = df['Name'].apply(map_name)
+    
+    # Filter exclusions
+    df = df[~df['Name'].apply(should_exclude)]
+    
     # Aggregate
     summary = df.groupby(['Name', 'Date', 'Event Type', 'Platform']).size().reset_index(name='Quantity')
     summary['sort_dt'] = pd.to_datetime(summary['Date'], format='%m/%d/%y')

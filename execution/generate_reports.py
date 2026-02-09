@@ -158,6 +158,10 @@ def update_daily_audit(gc, sh):
                 # Apply name mapping
                 name = map_name(name)
                 
+                # Skip "Gmail Received" if it somehow slipped into a source tab
+                if event_type == "Gmail Received":
+                    continue
+                    
                 if not should_exclude(name) and name and date and event_type:
                     all_data.append({
                         'Team Member': name,
@@ -167,6 +171,9 @@ def update_daily_audit(gc, sh):
                         'Count': int(count) if count else 0
                     })
                     
+                    if event_type == "Gmail Received":
+                        continue
+                        
                     # Track all unique values
                     all_persons.add(name)
                     all_dates.add(date)
