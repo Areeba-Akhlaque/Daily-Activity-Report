@@ -81,117 +81,97 @@ def get_creds():
             return None
     return creds
 
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+def fetch_window(url, headers, start_dt, end_dt, application_name):
+    start_str = start_dt.strftime('%Y-%m-%dT%H:%M:%SZ')
+    end_str = end_dt.strftime('%Y-%m-%dT%H:%M:%SZ')
+    print(f"  [Parallel] Scanning {application_name}: {start_str} to {end_str}")
+    
+    events_in_window = []
+    params = {
+        "startTime": start_str,
+        "endTime": end_str,
+        "maxResults": 1000
+    }
+    
+    try:
+        while True:
+            resp = requests.get(url, headers=headers, params=params, timeout=30)
+            if resp.status_code != 200:
+                print(f"    [Error {resp.status_code}] {resp.text}")
+                break
+            
+            data = resp.json()
+            items = data.get('items', [])
+            for item in items:
+                actor_email = item.get('actor', {}).get('email', '')
+                if not actor_email: continue
+                
+                timestamp = item.get('id', {}).get('time', '')
+                for ev in item.get('events', []):
+                    event_name = ev.get('name', '')
+                    
+                    # Discovery: Log what we see for Gmail to identify Send events
+                    if application_name == 'gmail':
+                        if not hasattr(fetch_audit_logs, 'all_seen'): fetch_audit_logs.all_seen = set()
+                        if event_name not in fetch_audit_logs.all_seen:
+                            print(f"      [DISCOVERY] Seen Gmail Event: '{event_name}'")
+                            fetch_audit_logs.all_seen.add(event_name)
+
+                    keep_event = False
+                    mapped_event = f"{application_name.capitalize()} {event_name}"
+                    
+                    if application_name == 'drive':
+                        if event_name in ['edit', 'create', 'upload', 'rename']:
+                            keep_event = True
+                    elif application_name == 'gmail':
+                        event_lower = event_name.lower()
+                        # Extreme Detection for Send
+                        is_send = any(x in event_lower for x in ['send', 'sent', 'compose', 'mail', 'message', 'outbox', 'upload'])
+                        if is_send and "receive" not in event_lower and "delivery" not in event_lower:
+                            keep_event = True
+                            mapped_event = "Gmail Send"
+
+                    if keep_event:
+                        dt = pd.to_datetime(timestamp)
+                        events_in_window.append({
+                            "Name": map_name(actor_email),
+                            "Date": dt.strftime('%m/%d/%y'),
+                            "Platform": "Google Workspace",
+                            "Event Type": mapped_event,
+                            "Quantity": 1
+                        })
+            
+            next_token = data.get('nextPageToken')
+            if not next_token: break
+            params['pageToken'] = next_token
+    except Exception as e:
+        print(f"    [Window Exception] {e}")
+        
+    return events_in_window
+
 def fetch_audit_logs(creds, application_name):
-    print(f"Fetching audit logs for: {application_name}...")
+    print(f"Starting optimized parallel fetch for: {application_name}")
     all_events = []
     url = f"https://admin.googleapis.com/admin/reports/v1/activity/users/all/applications/{application_name}"
     headers = {"Authorization": f"Bearer {creds.token}"}
     
-    # Define time windows (30 days max each)
     start_dt = pd.to_datetime(START_DATE_STR)
     now_dt = datetime.now(timezone.utc)
     
-    current_start = start_dt
-    while current_start < now_dt:
-        current_end = current_start + pd.Timedelta(days=30)
-        if current_end > now_dt:
-            current_end = now_dt
-            
-        start_str = current_start.strftime('%Y-%m-%dT%H:%M:%SZ')
-        end_str = current_end.strftime('%Y-%m-%dT%H:%M:%SZ')
-        
-        print(f"  Scanning window: {start_str} to {end_str}")
-        
-        params = {
-            "startTime": start_str,
-            "endTime": end_str,
-            "maxResults": 1000
-        }
-        
-        try:
-            while True:
-                resp = requests.get(url, headers=headers, params=params)
-                if resp.status_code != 200:
-                    print(f"    Error {resp.status_code} fetching logs for {application_name}: {resp.text}")
-                    break
-                
-                data = resp.json()
-                items = data.get('items', [])
-                for item in items:
-                    actor = item.get('actor', {})
-                    actor_email = actor.get('email', '')
-                    caller_type = actor.get('callerType', '')
-                    
-                    # Skip system-triggered events (no human actor)
-                    if caller_type == 'KEY' or not actor_email:
-                        continue
-                    
-                    timestamp = item.get('id', {}).get('time', '')
-                    events = item.get('events', [])
-                    
-                    for ev in events:
-                        event_name = ev.get('name', '')
-                        
-                        # Filtering based on user requirements
-                        keep_event = False
-                        mapped_event = f"{application_name.capitalize()} {event_name}"
-                        
-                        if application_name == 'drive':
-                            if event_name in ['edit', 'create', 'upload', 'rename']:
-                                keep_event = True
-                        elif application_name == 'gmail':
-                            event_lower = event_name.lower()
-                            
-                            # Broad Send detection
-                            is_send = any(x in event_lower for x in ['send', 'sent', 'compose', 'mail', 'message'])
-                            # Exclude delivery/received
-                            is_receive = any(x in event_lower for x in ['delivery', 'receive', 'received'])
+    windows = []
+    curr = start_dt
+    while curr < now_dt:
+        nxt = curr + pd.Timedelta(days=30)
+        windows.append((curr, nxt if nxt < now_dt else now_dt))
+        curr = nxt
 
-                            if is_receive:
-                                mapped_event = "Gmail Received"
-                                keep_event = True 
-                            elif is_send:
-                                keep_event = True
-                                mapped_event = "Gmail Send"
-                                # Log newly found send event names
-                                if not hasattr(fetch_audit_logs, 'logged_send_types'): fetch_audit_logs.logged_send_types = set()
-                                if event_name not in fetch_audit_logs.logged_send_types:
-                                    print(f"      [GMAIL INFO] Captured Send Event: '{event_name}'")
-                                    fetch_audit_logs.logged_send_types.add(event_name)
-                            else:
-                                pass
-                        
-                        if keep_event:
-                            dt = pd.to_datetime(timestamp)
-                            # Filter out "Gmail Received" events entirely
-                            if mapped_event == "Gmail Received":
-                                continue
-
-                            # Apply mapping immediately to ensure consistency
-                            display_name = map_name(actor_email)
-                            
-                            all_events.append({
-                                "Name": display_name,
-                                "Date": dt.strftime('%m/%d/%y'),
-                                "timestamp_dt": dt,
-                                "Platform": "Google Workspace",
-                                "Event Type": mapped_event,
-                                "Quantity": 1
-                            })
-                            
-                if len(all_events) % 500 == 0 and items:
-                    print(f"    Current total events found: {len(all_events)}...")
-                
-                next_token = data.get('nextPageToken')
-                if not next_token:
-                    break
-                params['pageToken'] = next_token
-        except Exception as e:
-            print(f"    Exception: {e}")
-            break
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        futures = [executor.submit(fetch_window, url, headers, w[0], w[1], application_name) for w in windows]
+        for f in as_completed(futures):
+            all_events.extend(f.result())
             
-        current_start = current_end
-        
     return all_events
 
 def process_and_upload(events):
