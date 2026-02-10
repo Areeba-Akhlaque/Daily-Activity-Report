@@ -89,6 +89,12 @@ def fetch_files_for_projects(projects):
                             "Name": user_name, "Date": created_dt.strftime('%m/%d/%y'),
                             "Event Type": "Comment Posted", "Platform": "Figma"
                         })
+                    else:
+                        # Log if we skip a large number of recent but non-2026 comments
+                        if not hasattr(fetch_files_for_projects, 'skip_log'): fetch_files_for_projects.skip_log = 0
+                        if fetch_files_for_projects.skip_log < 5:
+                            print(f"      [FIGMA INFO] Skipping comment from: {created_dt.strftime('%Y-%m-%d')}")
+                            fetch_files_for_projects.skip_log += 1
 
             # 2. Fetch versions (as "File Updated" events)
             v_url = f"https://api.figma.com/v1/files/{fkey}/versions"

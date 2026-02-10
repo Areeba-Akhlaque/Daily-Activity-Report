@@ -107,6 +107,8 @@ NAME_MAP = {
     'Saymond Montoya': 'Saymond Montoya',
     'Tara Yowell': 'Tara Yowell',
     'Victor Cheung': 'Victor Cheung',
+    'Mariana': 'Mariana Gracia Salgado',
+    'Bradd': 'Bradd Konert',
 }
 
 # Exclusion patterns - accounts to skip
