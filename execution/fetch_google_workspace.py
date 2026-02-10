@@ -112,13 +112,6 @@ def fetch_window(url, headers, start_dt, end_dt, application_name):
                 for ev in item.get('events', []):
                     event_name = ev.get('name', '')
                     
-                    # Discovery: Log what we see for Gmail to identify Send events
-                    if application_name == 'gmail':
-                        if not hasattr(fetch_audit_logs, 'all_seen'): fetch_audit_logs.all_seen = set()
-                        if event_name not in fetch_audit_logs.all_seen:
-                            print(f"      [DISCOVERY] Seen Gmail Event: '{event_name}'")
-                            fetch_audit_logs.all_seen.add(event_name)
-
                     keep_event = False
                     mapped_event = f"{application_name.capitalize()} {event_name}"
                     
@@ -126,18 +119,22 @@ def fetch_window(url, headers, start_dt, end_dt, application_name):
                         if event_name in ['edit', 'create', 'upload', 'rename']:
                             keep_event = True
                     elif application_name == 'gmail':
-                        event_lower = event_name.lower()
-                        # Extreme Detection for Send
-                        is_send = any(x in event_lower for x in ['send', 'sent', 'compose', 'mail', 'message', 'outbox', 'upload'])
-                        if is_send and "receive" not in event_lower and "delivery" not in event_lower:
+                        # In non-Enterprise workspace, 'delivery' is the main event.
+                        # We track this as 'Gmail Activity' since specific 'send' is unavailable.
+                        if event_name == 'delivery':
                             keep_event = True
-                            mapped_event = "Gmail Send"
-
+                            mapped_event = "Gmail Activity"
+                    
                     if keep_event:
                         dt = pd.to_datetime(timestamp)
+                        
+                        # Apply mapping immediately to ensure consistency
+                        display_name = map_name(actor_email)
+                        
                         events_in_window.append({
-                            "Name": map_name(actor_email),
+                            "Name": display_name,
                             "Date": dt.strftime('%m/%d/%y'),
+                            "timestamp_dt": dt,
                             "Platform": "Google Workspace",
                             "Event Type": mapped_event,
                             "Quantity": 1
