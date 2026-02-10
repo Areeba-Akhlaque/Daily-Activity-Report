@@ -33,7 +33,7 @@ sys.path.insert(0, SCRIPT_DIR)
 from name_mappings import map_name, should_exclude
 
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
-START_DATE_STR = os.environ.get('START_DATE', '2025-11-01') + "T00:00:00Z"
+START_DATE_STR = os.environ.get('START_DATE', '2026-01-01') + "T00:00:00Z"
 SCOPES = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/admin.reports.audit.readonly'
@@ -116,14 +116,14 @@ def fetch_window(url, headers, start_dt, end_dt, application_name):
                     mapped_event = f"{application_name.capitalize()} {event_name}"
                     
                     if application_name == 'drive':
-                        if event_name in ['edit', 'create', 'upload', 'rename']:
+                        # Strict Filter: Only content modifications
+                        if event_name in ['edit', 'create']:
                             keep_event = True
                     elif application_name == 'gmail':
                         # In non-Enterprise workspace, 'delivery' is the main event.
                         # We track this as 'Gmail Activity' since specific 'send' is unavailable.
                         if event_name == 'delivery':
                             keep_event = True
-                            mapped_event = "Gmail Activity"
                     
                     if keep_event:
                         dt = pd.to_datetime(timestamp)
