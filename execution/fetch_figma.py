@@ -101,27 +101,34 @@ def fetch_files_for_projects(projects):
             v_resp = requests.get(v_url, headers=get_headers())
             if v_resp.status_code == 200:
                 versions = v_resp.json().get('versions', [])
-                for v in versions:
-                    if 'created_at' not in v: continue
-                    v_dt = pd.to_datetime(v['created_at']).tz_localize(None)
-                    if v_dt >= START_DATE_DT:
-                        user_name = v.get('user', {}).get('handle', 'Unknown')
-                        # Filter out system-level autosaves labeled as 'Figma'
-                        if user_name.lower() != 'figma':
-                            # Detect if it's the first version (Creation)
-                            is_first = (v == versions[-1])
-                            
-                            # Use version label if available
-                            v_label = v.get('label')
-                            if is_first:
-                                etype = f"File Created ({v_label})" if v_label else "File Created"
-                            else:
-                                etype = f"File Edited ({v_label})" if v_label else "File Edited"
-                            
-                            all_events.append({
-                                "Name": user_name, "Date": v_dt.strftime('%m/%d/%y'),
-                                "Event Type": etype, "Platform": "Figma"
-                            })
+                if versions:
+                    # Sort just in case (API usually returns newest first)
+                    # We need oldest last to detect creation
+                    
+                    # Process Creation (Oldest Version)
+                    oldest_v = versions[-1]
+                    if 'created_at' in oldest_v:
+                         v_dt = pd.to_datetime(oldest_v['created_at']).tz_localize(None)
+                         if v_dt >= START_DATE_DT:
+                             user = oldest_v.get('user', {}).get('handle', 'Unknown')
+                             if user.lower() != 'figma':
+                                 all_events.append({
+                                     "Name": user, "Date": v_dt.strftime('%m/%d/%y'),
+                                     "Event Type": "File Created", "Platform": "Figma"
+                                 })
+
+                    # Process Edits (All other versions)
+                    for v in versions[:-1]:
+                        if 'created_at' not in v: continue
+                        v_dt = pd.to_datetime(v['created_at']).tz_localize(None)
+                        
+                        if v_dt >= START_DATE_DT:
+                            user = v.get('user', {}).get('handle', 'Unknown')
+                            if user.lower() != 'figma':
+                                 all_events.append({
+                                     "Name": user, "Date": v_dt.strftime('%m/%d/%y'),
+                                     "Event Type": "File Edited", "Platform": "Figma"
+                                 })
             
             time.sleep(1) # More generous rate limit for versions + comments
             
