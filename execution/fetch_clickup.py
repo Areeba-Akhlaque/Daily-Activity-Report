@@ -127,27 +127,43 @@ def fetch_task_activity():
             
     return events, list(task_ids)
 
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+def fetch_comments_for_task(tid):
+    try:
+        url = f"https://api.clickup.com/api/v2/task/{tid}/comment"
+        resp = requests.get(url, headers=get_headers_v2(), timeout=10)
+        if resp.status_code == 200:
+            comments = resp.json().get('comments', [])
+            task_events = []
+            for c in comments:
+                c_date = int(c.get('date', 0))
+                if c_date >= START_TS_MS:
+                    uid = str(c.get('user', {}).get('id', ''))
+                    task_events.append({"user_id": uid, "timestamp": c_date, "event_type": "Comment Posted"})
+            return task_events
+    except:
+        pass
+    return []
+
 def fetch_comments_for_active_tasks(task_ids):
-    print(f"  Fetching comments for {len(task_ids)} relevant tasks...")
+    print(f"  Fetching comments for {len(task_ids)} relevant tasks (Parallel)...")
     events = []
-    count = 0
-    for tid in task_ids:
-        try:
-            url = f"https://api.clickup.com/api/v2/task/{tid}/comment"
-            resp = requests.get(url, headers=get_headers_v2())
-            if resp.status_code == 200:
-                comments = resp.json().get('comments', [])
-                for c in comments:
-                    c_date = int(c.get('date', 0))
-                    if c_date >= START_TS_MS:
-                        uid = str(c.get('user', {}).get('id', ''))
-                        events.append({"user_id": uid, "timestamp": c_date, "event_type": "Comment Posted"})
+    
+    # Use ThreadPool to fetch comments in parallel (max 10 threads to avoid hitting rate limits too hard)
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        future_to_tid = {executor.submit(fetch_comments_for_task, tid): tid for tid in task_ids}
+        
+        count = 0
+        for future in as_completed(future_to_tid):
+            result = future.result()
+            if result:
+                events.extend(result)
             
             count += 1
-            if count % 50 == 0: print(f"    Checked comments for {count}/{len(task_ids)} tasks...")
-            # Respect rate limits
-            if count % 10 == 0: time.sleep(0.1)
-        except: pass
+            if count % 100 == 0:
+                print(f"    Checked comments for {count}/{len(task_ids)} tasks...")
+                
     return events
 
 def fetch_chat_activity():
