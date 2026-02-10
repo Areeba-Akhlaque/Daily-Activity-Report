@@ -33,7 +33,7 @@ sys.path.insert(0, SCRIPT_DIR)
 from name_mappings import map_name, should_exclude
 
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
-START_DATE_STR = os.environ.get('START_DATE', '2026-01-01') + "T00:00:00Z"
+START_DATE_STR = os.environ.get('START_DATE', '2025-11-01') + "T00:00:00Z"
 SCOPES = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/admin.reports.audit.readonly'
