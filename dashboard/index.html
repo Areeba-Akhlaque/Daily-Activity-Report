@@ -328,7 +328,7 @@
     <div class="container" id="dashboard" style="display: none;">
         <header>
             <div class="header-left">
-                <h1>Activity Dashboard</h1>
+                <h1>Pvragon Activity Dashboard</h1>
                 <p id="page-subtitle">Realtime Monitoring</p>
             </div>
             <div><span id="lastUpdated" style="font-size: 12px; color: var(--text-secondary);"></span></div>
@@ -415,26 +415,9 @@
         </div>
 
         <div class="grid-2">
-            <div class="card">
+            <div class="card" style="grid-column: 1 / -1;">
                 <div class="card-header"><span class="card-title">Team Leaderboard (Event Count)</span></div>
-                <div class="chart-wrap" style="height: 500px;"><canvas id="leaderboardChart"></canvas></div>
-            </div>
-            <div class="card">
-                <div class="card-header"><span class="card-title">Data Summary (Events by Type/Day)</span></div>
-                <div class="table-container">
-                    <table id="dataTable">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Member</th>
-                                <th>Platform</th>
-                                <th>Event Type</th>
-                                <th>Count</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody"></tbody>
-                    </table>
-                </div>
+                <div class="chart-wrap" style="height: 600px;"><canvas id="leaderboardChart"></canvas></div>
             </div>
         </div>
 
@@ -592,66 +575,174 @@
             updateDashboard(filtered);
         };
 
+        const PLATFORM_COLORS = {
+            'Google Workspace': '#4285F4',
+            'ClickUp': '#7b68ee',
+            'GitHub': '#24292e',
+            'Figma': '#F24E1E',
+            'Backendless App': '#32D74B',
+            'Other': '#777'
+        };
+
+        function getStringColor(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) hash = str.charCodeAt(i) + ((hash << 5) - hash);
+            const c = (hash & 0x00FFFFFF).toString(16).toUpperCase();
+            return '#' + '00000'.substring(0, 6 - c.length) + c;
+        }
+
         function updateDashboard(data) {
             const total = data.reduce((a, b) => a + b.count, 0);
             document.getElementById('val-events').innerText = total.toLocaleString();
-            document.getElementById('val-members').innerText = new Set(data.filter(r => r.count > 0).map(r => r.member)).size;
-            const daysDiv = Math.max(1, (state.endDate - state.startDate) / (1000 * 60 * 60 * 24));
-            document.getElementById('val-avg').innerText = Math.round(total / daysDiv);
+
+            // Calc unique active members
+            const activeMembers = new Set(data.filter(r => r.count > 0).map(r => r.member));
+            document.getElementById('val-members').innerText = activeMembers.size;
+
+            // Calc avg
+            let days = 1;
+            if (state.startDate && state.endDate) {
+                days = Math.max(1, (state.endDate - state.startDate) / (1000 * 60 * 60 * 24));
+            }
+            document.getElementById('val-avg').innerText = Math.round(total / days);
 
             const platCounts = {};
             data.forEach(r => platCounts[r.platform] = (platCounts[r.platform] || 0) + r.count);
-            const topPlat = Object.entries(platCounts).sort((a, b) => b[1] - a[1])[0];
-            document.getElementById('val-top-plat').innerText = topPlat ? topPlat[0] : '-';
+            const sortedPlats = Object.entries(platCounts).sort((a, b) => b[1] - a[1]);
+            document.getElementById('val-top-plat').innerText = sortedPlats[0] ? sortedPlats[0][0] : '-';
 
-            updateTrend(data);
+            updateTrend(data, activeMembers);
             updatePlatform(platCounts);
             updateLeaderboard(data);
-
-            const sorted = [...data].sort((a, b) => parseDate(b.date) - parseDate(a.date));
-            document.getElementById('tableBody').innerHTML = sorted.slice(0, 200).map(r => {
-                const emoji = getEmoji(r.type);
-                return `<tr>
-                <td>${r.date}</td>
-                <td><div style="display:flex;align-items:center;gap:8px"><div class="badge-plat" style="width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px">${r.member ? r.member.slice(0, 2).toUpperCase() : '?'}</div> ${r.member}</div></td>
-                <td><span class="badge badge-plat">${r.platform}</span></td>
-                <td>${emoji} ${r.type}</td>
-                <td>${r.count}</td>
-            </tr>`;
-            }).join('');
         }
 
-        function updateTrend(data) {
-            const dates = {};
-            data.forEach(r => dates[r.date] = (dates[r.date] || 0) + r.count);
-            const sortedDates = Object.keys(dates).sort((a, b) => parseDate(a) - parseDate(b));
+        function updateTrend(data, activeMembers) {
+            // Group by Date + Member
+            const dateMap = {}; // date -> { member: count }
+            const allDates = new Set();
+
+            data.forEach(r => {
+                if (!dateMap[r.date]) dateMap[r.date] = {};
+                dateMap[r.date][r.member] = (dateMap[r.date][r.member] || 0) + r.count;
+                allDates.add(r.date);
+            });
+
+            const sortedDates = [...allDates].sort((a, b) => parseDate(a) - parseDate(b));
+
+            // Create datasets for each visible member
+            const datasets = [];
+
+            // Only show members who are selected AND have activity in the filtered range
+            activeMembers.forEach(member => {
+                const color = getStringColor(member);
+                const series = sortedDates.map(d => (dateMap[d] && dateMap[d][member]) || 0);
+
+                datasets.push({
+                    label: member,
+                    data: series,
+                    borderColor: color,
+                    backgroundColor: color,
+                    fill: false,
+                    tension: 0.3,
+                    pointRadius: 2,
+                    borderWidth: 2
+                });
+            });
+
             charts.trend.data.labels = sortedDates;
-            charts.trend.data.datasets[0].data = sortedDates.map(d => dates[d]);
+            charts.trend.data.datasets = datasets;
             charts.trend.update();
         }
 
         function updatePlatform(counts) {
             charts.platform.data.labels = Object.keys(counts);
             charts.platform.data.datasets[0].data = Object.values(counts);
+            charts.platform.data.datasets[0].backgroundColor = Object.keys(counts).map(p => PLATFORM_COLORS[p] || '#777');
             charts.platform.update();
         }
 
         function updateLeaderboard(data) {
-            const users = {};
-            data.forEach(r => users[r.member] = (users[r.member] || 0) + r.count);
-            // Ensure non-zero
-            const sorted = Object.entries(users).filter(x => x[1] > 0).sort((a, b) => b[1] - a[1]).slice(0, 15);
-            charts.leaderboard.data.labels = sorted.map(x => x[0]);
-            charts.leaderboard.data.datasets[0].data = sorted.map(x => x[1]);
+            // Stacked Bar: Y=Member, X=Count, Stacks=Platform
+
+            // 1. Identify all active members and sort by Total Count
+            const memberTotals = {};
+            data.forEach(r => memberTotals[r.member] = (memberTotals[r.member] || 0) + r.count);
+            const sortedMembers = Object.entries(memberTotals)
+                .filter(x => x[1] > 0)
+                .sort((a, b) => b[1] - a[1])
+                .map(x => x[0]); // Names only
+
+            // 2. Identify all platforms
+            const platforms = ['ClickUp', 'GitHub', 'Google Workspace', 'Figma', 'Backendless App'];
+
+            // 3. Build Datasets
+            // dataset = { label: 'ClickUp', data: [countForMem1, countForMem2...], backgroundColor: ... }
+            const datasets = platforms.map(plat => {
+                const dataPoints = sortedMembers.map(mem => {
+                    // Find all rows for this member + platform
+                    // Optimization: Pre-aggregate map would be faster but this is fine only <100k rows
+                    const rows = data.filter(r => r.member === mem && r.platform === plat);
+                    return rows.reduce((acc, curr) => acc + curr.count, 0);
+                });
+
+                return {
+                    label: plat,
+                    data: dataPoints,
+                    backgroundColor: PLATFORM_COLORS[plat] || '#777',
+                    borderRadius: 2
+                };
+            });
+
+            charts.leaderboard.data.labels = sortedMembers;
+            charts.leaderboard.data.datasets = datasets;
+            charts.leaderboard.options.scales.x.stacked = true;
+            charts.leaderboard.options.scales.y.stacked = true;
             charts.leaderboard.update();
         }
 
         function initCharts() {
-            const opts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } };
-            const color = '#6366f1';
-            charts.trend = new Chart(document.getElementById('trendChart'), { type: 'line', data: { datasets: [{ borderColor: color, backgroundColor: 'rgba(99,102,241,0.1)', fill: true, tension: 0.3 }] }, options: opts });
-            charts.platform = new Chart(document.getElementById('platformChart'), { type: 'doughnut', data: { datasets: [{ backgroundColor: ['#6366f1', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444'] }] }, options: { ...opts, plugins: { legend: { position: 'right' } } } });
-            charts.leaderboard = new Chart(document.getElementById('leaderboardChart'), { type: 'bar', data: { datasets: [{ backgroundColor: color, borderRadius: 4 }] }, options: { ...opts, indexAxis: 'y' } });
+            const commonOpts = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 10, color: '#94a3b8' } } }
+            };
+
+            // Line chart
+            charts.trend = new Chart(document.getElementById('trendChart'), {
+                type: 'line',
+                data: { labels: [], datasets: [] },
+                options: {
+                    ...commonOpts,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 10, color: '#94a3b8' } } },
+                    scales: {
+                        x: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
+                        y: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }
+                    }
+                }
+            });
+
+            // Platform Pie
+            charts.platform = new Chart(document.getElementById('platformChart'), {
+                type: 'doughnut',
+                data: { labels: [], datasets: [{ data: [] }] },
+                options: { ...commonOpts, plugins: { legend: { position: 'right', labels: { color: '#94a3b8' } } } }
+            });
+
+            // Stacked Bar Leaderboard
+            charts.leaderboard = new Chart(document.getElementById('leaderboardChart'), {
+                type: 'bar',
+                data: { labels: [], datasets: [] },
+                options: {
+                    ...commonOpts,
+                    indexAxis: 'y', // Horizontal bars
+                    interaction: { mode: 'y' },
+                    scales: {
+                        x: { stacked: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
+                        y: { stacked: true, grid: { display: false }, ticks: { color: '#94a3b8' } }
+                    }
+                }
+            });
         }
 
         window.addEventListener('DOMContentLoaded', init);
