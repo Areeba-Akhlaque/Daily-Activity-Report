@@ -73,6 +73,7 @@ def fetch_events_for_repos(repos):
     EVENT_MAP = {
         "PushEvent": "Code Pushed",
         "PullRequestEvent": "PR Opened/Closed",
+        "PullRequestReviewEvent": "PR Reviewed",  # Added this
         "PullRequestReviewCommentEvent": "PR Comment Posted",
         "IssueCommentEvent": "Issue/PR Comment Posted",
         "IssuesEvent": "Issue Opened/Closed",
@@ -82,10 +83,7 @@ def fetch_events_for_repos(repos):
 
     for repo in repos:
         repo_name = repo['name']
-        # Skip repos that haven't been updated since 2026
-        updated_at = datetime.strptime(repo['updated_at'], "%Y-%m-%dT%H:%M:%SZ")
-        if updated_at < START_DATE_DT:
-            continue
+        # removed updated_at check to be safe
             
         print(f"  Fetching events for: {repo_name}...")
         page = 1
