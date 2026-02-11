@@ -136,6 +136,8 @@ EXCLUDE_PATTERNS = [
     'ml@zipdev.com',
     'User -1', 'User -', 'User ',  # Generic backendless system users
     'Bogdan', # Exclude Bogdan as requested
+    'David', 'David Roberts', # Exclude David
+    'Mariana', 'Mariana Gracia Salgado', # Exclude Mari
 ]
 
 
