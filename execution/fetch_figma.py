@@ -38,7 +38,10 @@ FIGMA_TEAM_ID = os.environ.get('FIGMA_TEAM_ID', '')
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
 START_DATE_STR = os.environ.get('START_DATE', '2026-01-01')
 START_DATE_DT = datetime.strptime(START_DATE_STR, "%Y-%m-%d")
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+SCOPES = [
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/admin.reports.audit.readonly'
+]
 
 def get_headers():
     return {

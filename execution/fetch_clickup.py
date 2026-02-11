@@ -39,7 +39,10 @@ TEAM_ID = os.environ.get('CLICKUP_TEAM_ID', '9011906822')
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
 START_DATE_STR = os.environ.get('START_DATE', '2026-01-01')
 START_TS_MS = int(datetime.strptime(START_DATE_STR, "%Y-%m-%d").timestamp() * 1000)
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+SCOPES = [
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/admin.reports.audit.readonly'
+]
 
 USER_CACHE = {}
 

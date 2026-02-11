@@ -27,11 +27,19 @@ SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8
 DEV_LOGIN = os.environ.get('BACKENDLESS_DEV_LOGIN')
 DEV_PASSWORD = os.environ.get('BACKENDLESS_DEV_PASSWORD')
 
+SCOPES = [
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/admin.reports.audit.readonly'
+]
+
 def get_google_creds():
     token_path = os.path.join(ROOT_DIR, 'token.json')
-    creds = Credentials.from_authorized_user_file(token_path)
+    creds = Credentials.from_authorized_user_file(token_path, SCOPES)
     if not creds.valid and creds.refresh_token:
         creds.refresh(Request())
+        # Save refreshed token to ensure persistence of correct scopes
+        with open(token_path, 'w') as token:
+            token.write(creds.to_json())
     return creds
 
 def clean_developer_email(dev_raw):

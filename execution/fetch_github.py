@@ -39,7 +39,10 @@ SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8
 START_DATE_STR = os.environ.get('START_DATE', '2026-01-01')
 # GitHub API uses ISO 8601 strings.
 START_DATE_DT = datetime.strptime(START_DATE_STR, "%Y-%m-%d")
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+SCOPES = [
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/admin.reports.audit.readonly'
+]
 
 def get_headers():
     return {
