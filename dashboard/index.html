@@ -7,33 +7,39 @@
     <title>Pvragon Team Activity Dashboard</title>
     <link rel="icon" type="image/png" href="Logo.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --bg-primary: #0f172a;
             --bg-secondary: #1e293b;
-            --bg-card: #1e293b;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            /* Glassmorphism */
             --accent: #6366f1;
             --accent-hover: #4f46e5;
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
-            --border: #334155;
+            --border: rgba(255, 255, 255, 0.1);
             --success: #10b981;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-primary);
+            font-family: 'Lato', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+            background-attachment: fixed;
             color: var(--text-primary);
             min-height: 100vh;
             font-size: 14px;
+        }
+
+        .card,
+        header,
+        .filters-container,
+        .stat-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
         }
 
         .container {
@@ -534,12 +540,24 @@
 
         window.toggleAll = (cat) => {
             const allChk = document.getElementById(`chk-all-${cat}`);
-            const isChecked = !allChk.checked;
-            allChk.checked = isChecked;
+            // Use global event object safely if available, or assume text click if not
+            const e = window.event;
+            // If the event target is NOT the checkbox itself, we must toggle manually.
+            if (e && e.target !== allChk) {
+                allChk.checked = !allChk.checked;
+            }
+
+            const isChecked = allChk.checked;
             const inputs = document.getElementById(`${cat}List`).querySelectorAll('input');
             const set = state[cat + 's'];
-            set.clear();
-            inputs.forEach(inp => { inp.checked = isChecked; if (isChecked) set.add(inp.value); });
+
+            if (isChecked) {
+                inputs.forEach(inp => { inp.checked = true; set.add(inp.value); });
+            } else {
+                inputs.forEach(inp => { inp.checked = false; });
+                set.clear();
+            }
+
             updateButtonText(cat, set.size, inputs.length);
             applyFilters();
         };

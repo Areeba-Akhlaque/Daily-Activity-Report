@@ -67,7 +67,7 @@ jobs:
           BACKENDLESS_API_KEY=${{ secrets.BACKENDLESS_API_KEY }}
           BACKENDLESS_DEV_LOGIN=${{ secrets.BACKENDLESS_DEV_LOGIN }}
           BACKENDLESS_DEV_PASSWORD=${{ secrets.BACKENDLESS_DEV_PASSWORD }}
-          EMAIL_RECIPIENTS=areeba@pvragon.com
+          EMAIL_RECIPIENTS=areeba@pvragon.com,jaime@pvragon.com
           EMAIL_USER=${{ secrets.EMAIL_USER }}
           EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}
           DASHBOARD_URL=https://Areeba-Akhlaque.github.io/Daily-Activity-Report/dashboard/index.html
