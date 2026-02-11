@@ -154,33 +154,8 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
                         if event_name == 'send':
                             keep = True
                             mapped_type = "Gmail Send"
-                        elif event_name == 'delivery':
-                            mail_type = -1
-                            
-                            # 1. Check top-level parameters
-                            for p in ev.get('parameters', []):
-                                pname = p.get('name', '')
-                                
-                                # Direct match (sometimes API flattens it)
-                                if 'mail_event_type' in pname:
-                                    try:
-                                        val = p.get('intValue') or p.get('value')
-                                        if val is not None: mail_type = int(val)
-                                    except: pass
-                                
-                                # NESTED MATCH (Found in debug output)
-                                if pname == 'event_info':
-                                    nested_params = p.get('messageValue', {}).get('parameter', [])
-                                    for np in nested_params:
-                                        if np.get('name') == 'mail_event_type':
-                                            try:
-                                                val = np.get('intValue')
-                                                if val is not None: mail_type = int(val)
-                                            except: pass
-                            
-                            if mail_type == 1:
-                                keep = True
-                                mapped_type = "Gmail Send"
+                        # Explicitly excluding 'delivery' events as they are passive/received
+                        # and user wants strictly 'Send' activity only.
                                 
                     elif application_name == 'drive':
                          if event_name in ['edit', 'create', 'upload']:

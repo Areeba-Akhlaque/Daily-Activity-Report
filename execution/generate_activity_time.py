@@ -101,14 +101,14 @@ def fetch_google_workspace_events(creds):
                         if not email or actor.get('callerType') == 'KEY':
                             continue
                         
-                        # Filter Gmail Received
+                        # Filter Gmail: Only count 'send' events (strict User Activity)
                         if app == 'gmail':
-                            is_received = False
+                            has_send = False
                             for ev in item.get('events', []):
-                                if ev.get('name') == 'delivery':
-                                    is_received = True
+                                if ev.get('name') == 'send':
+                                    has_send = True
                                     break
-                            if is_received: continue
+                            if not has_send: continue
 
                         ts = item.get('id', {}).get('time', '')
                         if ts:
