@@ -308,10 +308,10 @@ if __name__ == "__main__":
         
         print(f"Authentication Successful. Valid until: {creds.expiry}")
         
-        # Drive first
-        drive_events = fetch_audit_logs(creds, 'drive')
-        
-        # Gmail next
+        # Gmail first (Prioritize fix verification)
         gmail_events = fetch_audit_logs(creds, 'gmail')
+        
+        # Drive next
+        drive_events = fetch_audit_logs(creds, 'drive')
         
         process_and_upload(drive_events + gmail_events)
