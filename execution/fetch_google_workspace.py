@@ -95,6 +95,10 @@ def fetch_window(url, headers, start_dt, end_dt, application_name):
         "maxResults": 1000
     }
     
+    # CRITICAL FIX FROM USER GUIDE: Use eventName='send' directly for Gmail
+    if application_name == 'gmail':
+        params['eventName'] = 'send'
+    
     try:
         while True:
             resp = requests.get(url, headers=headers, params=params, timeout=30)
@@ -108,8 +112,17 @@ def fetch_window(url, headers, start_dt, end_dt, application_name):
                 actor_email = item.get('actor', {}).get('email', '')
                 if not actor_email: continue
                 
+                if not actor_email: continue
+                
                 timestamp = item.get('id', {}).get('time', '')
-                for ev in item.get('events', []):
+                
+                # If we are strictly fetching 'send' events (as per guide), 
+                # we don't need to iterate through item['events'] to filter.
+                # The API already filtered for us via eventName='send'.
+                # However, the structure is still:
+                events = item.get('events', [])
+                for ev in events:
+                    # Double check event name just in case, or just take the valid one
                     event_name = ev.get('name', '')
                     
                     keep_event = False
@@ -119,13 +132,15 @@ def fetch_window(url, headers, start_dt, end_dt, application_name):
                         # Strict Filter: Only content modifications
                         if event_name in ['edit', 'create']:
                             keep_event = True
-                    elif application_name == 'gmail':
-                        # In non-Enterprise workspace, 'delivery' is the main event.
-                        # We track this as 'Gmail Activity' since specific 'send' is unavailable.
-                        if event_name == 'delivery':
-                            keep_event = True
-                            mapped_event = "Gmail Send"
                     
+                    elif application_name == 'gmail':
+                        # Guide Method: We specifically requested eventName='send'.
+                        # So any event returned IS a send event.
+                        # We label it nicely.
+                        if event_name == 'send':
+                           keep_event = True
+                           mapped_event = "Gmail Send"
+
                     if keep_event:
                         dt = pd.to_datetime(timestamp)
                         
