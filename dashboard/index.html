@@ -23,6 +23,12 @@
             --success: #10b981;
         }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Lato', sans-serif;
             background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
@@ -32,6 +38,13 @@
             font-size: 14px;
         }
 
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        /* Glassmorphism Cards */
         .card,
         header,
         .filters-container,
@@ -40,69 +53,30 @@
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--border);
-        }
-
-        .container {
-            max-width: 1800px;
-            margin: 0 auto;
-            padding: 24px;
-        }
-
-        #loading {
-            position: fixed;
-            inset: 0;
-            background: var(--bg-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            flex-direction: column;
-            gap: 16px;
-            font-size: 16px;
-        }
-
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid var(--border);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
+            border-radius: 12px;
         }
 
         header {
-            background: var(--bg-card);
-            padding: 24px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            margin-bottom: 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 24px 32px;
+            margin-bottom: 30px;
         }
 
         .header-left h1 {
-            font-size: 20px;
-            font-weight: 600;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
         }
 
-        .header-left p {
+        #page-subtitle {
             color: var(--text-secondary);
-            font-size: 12px;
-            margin-top: 4px;
+            font-size: 14px;
         }
 
         .filters-container {
-            background: var(--bg-card);
             padding: 16px 24px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
             margin-bottom: 24px;
             display: flex;
             gap: 20px;
@@ -122,13 +96,13 @@
             text-transform: uppercase;
             font-weight: 600;
             color: var(--text-secondary);
-            letter-spacing: 0.5px;
         }
 
+        /* Input Styling */
         select,
         input[type="date"],
         .multi-select-btn {
-            background: var(--bg-primary);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border);
             color: white;
             padding: 8px 12px;
@@ -147,8 +121,10 @@
         .multi-select-btn:focus {
             outline: none;
             border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.1);
         }
 
+        /* Dropdown Styling */
         .dropdown {
             position: absolute;
             top: 100%;
@@ -159,7 +135,8 @@
             width: 240px;
             max-height: 300px;
             overflow-y: auto;
-            z-index: 100;
+            z-index: 9999;
+            /* Ensure visible */
             display: none;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             padding: 8px;
@@ -177,7 +154,7 @@
 
         .dropdown-search input {
             width: 100%;
-            background: var(--bg-primary);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border);
             color: white;
             padding: 6px;
@@ -195,7 +172,7 @@
         }
 
         .dropdown-item:hover {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .dropdown-item input {
@@ -212,10 +189,7 @@
         }
 
         .stat-card {
-            background: var(--bg-card);
             padding: 20px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
         }
 
         .stat-val {
@@ -240,9 +214,6 @@
         }
 
         .card {
-            background: var(--bg-card);
-            border-radius: 12px;
-            border: 1px solid var(--border);
             padding: 20px;
             display: flex;
             flex-direction: column;
@@ -270,41 +241,10 @@
             width: 100%;
         }
 
-        .table-container {
-            overflow-x: auto;
-            max-height: 600px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            white-space: nowrap;
-            font-size: 13px;
-        }
-
-        th {
-            text-align: left;
-            padding: 14px 16px;
-            border-bottom: 1px solid var(--border);
-            color: var(--text-secondary);
-            background: var(--bg-secondary);
-            position: sticky;
-            top: 0;
-            font-weight: 600;
-            z-index: 10;
-        }
-
-        td {
-            padding: 12px 16px;
-            border-bottom: 1px solid var(--border);
-            color: var(--text-primary);
-        }
-
-        tr:hover td {
-            background: rgba(255, 255, 255, 0.02);
-        }
-
+        /* Badges */
         .badge {
+            display: inline-flex;
+            align-items: center;
             padding: 4px 8px;
             border-radius: 4px;
             font-size: 11px;
@@ -312,23 +252,38 @@
         }
 
         .badge-plat {
-            background: rgba(99, 102, 241, 0.15);
+            background: rgba(99, 102, 241, 0.1);
             color: #818cf8;
+            border: 1px solid rgba(99, 102, 241, 0.2);
         }
 
         @media (max-width: 1024px) {
             .grid-2 {
                 grid-template-columns: 1fr;
             }
+
+            .filters-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                width: 100%;
+            }
+
+            select,
+            input,
+            .multi-select-btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
 
 <body>
-
-    <div id="loading">
-        <div class="spinner"></div>
-        <p>Loading data...</p>
+    <div id="loading"
+        style="display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 18px; color: var(--text-secondary);">
+        <i class="fas fa-spinner fa-spin" style="margin-right: 10px;"></i> Loading Dashboard...
     </div>
 
     <div class="container" id="dashboard" style="display: none;">
@@ -349,31 +304,33 @@
                 <span class="filter-label">End Date</span>
                 <input type="date" id="endDate" onchange="handleDateChange()">
             </div>
-            <div class="filter-group">
+            <div class="filter-group" style="flex-grow: 1;">
                 <span class="filter-label">Team Members</span>
-                <button class="multi-select-btn" onclick="toggleDropdown('memberDropdown')">
+                <div class="multi-select-btn" onclick="toggleDropdown('memberDropdown')">
                     <span id="memberCountText">All Members</span>
-                    <i class="fas fa-chevron-down" style="font-size: 10px;"></i>
-                </button>
-                <div id="memberDropdown" class="dropdown">
-                    <div class="dropdown-item" onclick="toggleAll('member')"><input type="checkbox" id="chk-all-member"
-                            checked> <span>Select All</span></div>
-                    <div class="dropdown-search"><input type="text" placeholder="Search..."
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="dropdown" id="memberDropdown">
+                    <div class="dropdown-search"><input type="text" placeholder="Search members..."
                             onkeyup="filterDropdown(this)"></div>
+                    <div class="dropdown-item" onclick="toggleAll('member')">
+                        <input type="checkbox" id="chk-all-member" checked> <span>Select All</span>
+                    </div>
                     <div id="memberList"></div>
                 </div>
             </div>
-            <div class="filter-group">
+            <div class="filter-group" style="flex-grow: 1;">
                 <span class="filter-label">Event Types</span>
-                <button class="multi-select-btn" onclick="toggleDropdown('typeDropdown')">
+                <div class="multi-select-btn" onclick="toggleDropdown('typeDropdown')">
                     <span id="typeCountText">All Events</span>
-                    <i class="fas fa-chevron-down" style="font-size: 10px;"></i>
-                </button>
-                <div id="typeDropdown" class="dropdown">
-                    <div class="dropdown-item" onclick="toggleAll('type')"><input type="checkbox" id="chk-all-type"
-                            checked> <span>Select All</span></div>
-                    <div class="dropdown-search"><input type="text" placeholder="Search..."
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="dropdown" id="typeDropdown">
+                    <div class="dropdown-search"><input type="text" placeholder="Search types..."
                             onkeyup="filterDropdown(this)"></div>
+                    <div class="dropdown-item" onclick="toggleAll('type')">
+                        <input type="checkbox" id="chk-all-type" checked> <span>Select All</span>
+                    </div>
                     <div id="typeList"></div>
                 </div>
             </div>
@@ -385,7 +342,7 @@
                     <option value="ClickUp">ClickUp</option>
                     <option value="GitHub">GitHub</option>
                     <option value="Figma">Figma</option>
-                    <option value="Backendless App">Backendless</option>
+                    <option value="Backendless App">Backendless App</option>
                 </select>
             </div>
         </div>
@@ -393,29 +350,29 @@
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-label">Total Events</div>
-                <div class="stat-val" id="val-events">0</div>
+                <div class="stat-val" id="val-events">-</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">Active Members</div>
-                <div class="stat-val" id="val-members">0</div>
+                <div class="stat-val" id="val-members">-</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">Avg Daily Events</div>
-                <div class="stat-val" id="val-avg">0</div>
+                <div class="stat-val" id="val-avg">-</div>
             </div>
             <div class="stat-card">
-                <div class="stat-label">Most Active Platform</div>
+                <div class="stat-label">Top Platform</div>
                 <div class="stat-val" id="val-top-plat" style="font-size: 20px;">-</div>
             </div>
         </div>
 
         <div class="grid-2">
             <div class="card">
-                <div class="card-header"><span class="card-title">Activity Timeline</span></div>
+                <div class="card-header"><span class="card-title">Activity Timeline (Internal Team)</span></div>
                 <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
             </div>
             <div class="card">
-                <div class="card-header"><span class="card-title">Events by Platform</span></div>
+                <div class="card-header"><span class="card-title">Platform Distribution</span></div>
                 <div class="chart-wrap"><canvas id="platformChart"></canvas></div>
             </div>
         </div>
@@ -426,128 +383,143 @@
                 <div class="chart-wrap" style="height: 600px;"><canvas id="leaderboardChart"></canvas></div>
             </div>
         </div>
-
     </div>
 
     <script>
         let rawData = [];
-        let state = { members: new Set(), types: new Set(), startDate: null, endDate: null, platform: 'all' };
-        let charts = {};
-        const EXCLUDED_TERMS = ['gmail received', 'received email', 'message received', 'email received'];
+        let state = {
+            startDate: null,
+            endDate: null,
+            members: new Set(),
+            types: new Set(),
+            platform: 'all'
+        };
+        let charts = { trend: null, platform: null, leaderboard: null };
 
-        function getEmoji(type) {
-            type = (type || '').toLowerCase();
-            if (type.includes('commit') || type.includes('push') || type.includes('repo')) return '💻';
-            if (type.includes('merge') || type.includes('pull') || type.includes('request')) return '🔀';
-            if (type.includes('msg') || type.includes('message') || type.includes('slack') || type.includes('comment')) return '💬';
-            if (type.includes('email')) return '📧';
-            if (type.includes('task') || type.includes('status') || type.includes('clickup')) return '✅';
-            if (type.includes('figma') || type.includes('design') || type.includes('layer')) return '🎨';
-            if (type.includes('console') || type.includes('table') || type.includes('schema')) return '🔧';
-            return '📝';
-        }
-
-        function parseDate(str) {
-            if (!str) return new Date();
-            if (str.includes('-')) { const [y, m, d] = str.split('-'); return new Date(parseInt(y), parseInt(m) - 1, parseInt(d)); }
-            if (str.includes('/')) {
-                const [m, d, y] = str.split('/');
-                const year = y.length === 2 ? 2000 + parseInt(y) : parseInt(y);
-                return new Date(year, parseInt(m) - 1, parseInt(d));
-            }
-            return new Date(str);
-        }
+        // Colors
+        const PLATFORM_COLORS = {
+            'Google Workspace': '#4285F4',
+            'ClickUp': '#7b68ee',
+            'GitHub': '#24292e',
+            'Figma': '#F24E1E',
+            'Backendless App': '#32D74B',
+            'Other': '#777'
+        };
+        const PIE_COLORS = ['#6366f1', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444'];
 
         async function init() {
             try {
-                const res = await fetch(`data.json?t=${Date.now()}`);
-                const json = await res.json();
+                // Determine Data Source
+                const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+                // Adjust path as needed (assuming relative path for GitHub Pages)
+                const path = 'data.json?t=' + new Date().getTime();
 
-                rawData = (json.dailyAudit || []).map(r => ({
-                    date: r['Activity Date'],
-                    member: r['Team Member'],
-                    platform: r['Platform'],
-                    type: (r['Event Type'] || r['Activity Type'] || 'Unknown'),
-                    count: parseInt(r['Count'] || 0)
-                }));
+                const response = await fetch(path);
+                if (!response.ok) throw new Error('Failed to load data');
+                rawData = await response.json();
 
-                rawData = rawData.filter(r => {
-                    const t = (r.type || '').toLowerCase();
-                    const p = (r.platform || '').toLowerCase();
-                    if (EXCLUDED_TERMS.some(term => t.includes(term) || p.includes(term))) return false;
-                    return true;
-                });
+                // Parse dates and set defaults
+                const dates = rawData.map(r => parseDate(r.date)).filter(Boolean).sort((a, b) => a - b);
+                if (dates.length) {
+                    // Default last 30 days
+                    const last = dates[dates.length - 1];
+                    const first = new Date(last);
+                    first.setDate(first.getDate() - 30);
 
-                document.getElementById('lastUpdated').innerText = json.lastUpdated || '';
+                    document.getElementById('endDate').valueAsDate = last;
+                    document.getElementById('startDate').valueAsDate = first;
+                    state.startDate = first;
+                    state.endDate = last;
+
+                    document.getElementById('lastUpdated').innerText = 'Last Updated: ' + new Date().toLocaleString();
+                }
+
+                initCharts();
                 setupFilters();
+                applyFilters();
 
-                // Initialization Order Fixed
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'block';
-                initCharts();
-
-                const end = new Date();
-                const start = new Date();
-                start.setDate(end.getDate() - 30);
-                document.getElementById('startDate').valueAsDate = start;
-                document.getElementById('endDate').valueAsDate = end;
-                handleDateChange();
-
             } catch (e) {
+                document.getElementById('loading').innerHTML = '<span style="color:red">Error loading data. Please try again.</span>';
                 console.error(e);
-                document.getElementById('loading').innerHTML = 'Error loading data: ' + e.message;
             }
+        }
+
+        function parseDate(str) {
+            if (!str) return null;
+            const parts = str.split('/');
+            if (parts.length === 3) {
+                // MM/DD/YY
+                const y = parseInt(parts[2]) + 2000;
+                return new Date(y, parseInt(parts[0]) - 1, parseInt(parts[1]));
+            }
+            return new Date(str);
         }
 
         function setupFilters() {
             const members = [...new Set(rawData.map(r => r.member))].filter(Boolean).sort();
             const types = [...new Set(rawData.map(r => r.type))].filter(Boolean).sort();
+
             populateDropdown('memberList', members, 'member');
             populateDropdown('typeList', types, 'type');
+
             state.members = new Set(members);
             state.types = new Set(types);
+
             updateButtonText('member', members.length, members.length);
             updateButtonText('type', types.length, types.length);
         }
 
         function populateDropdown(id, items, category) {
             document.getElementById(id).innerHTML = items.map(item => `
-            <div class="dropdown-item" onclick="toggleItem('${category}', '${item.replace(/'/g, "\\'")}')">
-                <input type="checkbox" checked id="chk-${category}-${item.replace(/\s/g, '-')}" value="${item}">
-                <span>${item}</span>
-            </div>
-        `).join('');
+                <div class="dropdown-item" onclick="toggleItem('${category}', '${item.replace(/'/g, "\\'")}')">
+                    <input type="checkbox" checked id="chk-${category}-${item.replace(/\s/g, '-')}" value="${item}"> 
+                    <span>${item}</span>
+                </div>
+            `).join('');
         }
 
         window.toggleDropdown = (id) => {
-            document.querySelectorAll('.dropdown').forEach(d => { if (d.id !== id) d.classList.remove('show'); });
+            // Close others
+            document.querySelectorAll('.dropdown').forEach(d => {
+                if (d.id !== id) d.classList.remove('show');
+            });
             document.getElementById(id).classList.toggle('show');
         };
-        document.addEventListener('click', e => { if (!e.target.closest('.filter-group')) document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('show')); });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', e => {
+            if (!e.target.closest('.filter-group')) {
+                document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('show'));
+            }
+        });
 
         window.toggleItem = (cat, val) => {
             const set = state[cat + 's'];
             if (set.has(val)) set.delete(val); else set.add(val);
+
             const safeId = val.replace(/\s/g, '-');
             const chk = document.getElementById(`chk-${cat}-${safeId}`);
             if (chk) chk.checked = set.has(val);
+
             const allChk = document.getElementById(`chk-all-${cat}`);
             const total = document.getElementById(`${cat}List`).children.length;
             allChk.checked = set.size === total;
+
             updateButtonText(cat, set.size, total);
             applyFilters();
         };
 
         window.toggleAll = (cat) => {
             const allChk = document.getElementById(`chk-all-${cat}`);
-            // Use global event object safely if available, or assume text click if not
             const e = window.event;
-            // If the event target is NOT the checkbox itself, we must toggle manually.
+            // Robust toggle logic: if target is not check, toggle it manually
             if (e && e.target !== allChk) {
                 allChk.checked = !allChk.checked;
             }
-
             const isChecked = allChk.checked;
+
             const inputs = document.getElementById(`${cat}List`).querySelectorAll('input');
             const set = state[cat + 's'];
 
@@ -557,20 +529,25 @@
                 inputs.forEach(inp => { inp.checked = false; });
                 set.clear();
             }
-
             updateButtonText(cat, set.size, inputs.length);
             applyFilters();
         };
 
         window.filterDropdown = (input) => {
             const term = input.value.toLowerCase();
-            input.parentElement.parentElement.querySelectorAll('.dropdown-item:not(:first-child)').forEach(div => {
+            const items = input.parentElement.parentElement.querySelectorAll('.dropdown-item');
+            // Skip first one (Select All)
+            for (let i = 1; i < items.length; i++) {
+                const div = items[i];
                 div.style.display = div.innerText.toLowerCase().includes(term) ? 'flex' : 'none';
-            });
+            }
         };
 
         function updateButtonText(cat, selected, total) {
-            document.getElementById(`${cat}CountText`).innerText = (selected === total) ? `All ${cat === 'member' ? 'Members' : 'Events'}` : `${selected} Selected`;
+            const text = (selected === total)
+                ? `All ${cat === 'member' ? 'Members' : 'Events'}`
+                : `${selected} Selected`;
+            document.getElementById(`${cat}CountText`).innerText = text;
         }
 
         window.handleDateChange = () => {
@@ -581,25 +558,20 @@
 
         window.applyFilters = () => {
             state.platform = document.getElementById('platformFilter').value;
+
             const filtered = rawData.filter(r => {
                 if (!state.members.has(r.member)) return false;
                 if (!state.types.has(r.type)) return false;
                 if (state.platform !== 'all' && r.platform !== state.platform) return false;
+
                 const d = parseDate(r.date);
                 if (state.startDate && d < state.startDate) return false;
                 if (state.endDate && d > state.endDate) return false;
+
                 return true;
             });
-            updateDashboard(filtered);
-        };
 
-        const PLATFORM_COLORS = {
-            'Google Workspace': '#4285F4',
-            'ClickUp': '#7b68ee',
-            'GitHub': '#24292e',
-            'Figma': '#F24E1E',
-            'Backendless App': '#32D74B',
-            'Other': '#777'
+            updateDashboard(filtered);
         };
 
         function getStringColor(str) {
@@ -613,11 +585,9 @@
             const total = data.reduce((a, b) => a + b.count, 0);
             document.getElementById('val-events').innerText = total.toLocaleString();
 
-            // Calc unique active members
             const activeMembers = new Set(data.filter(r => r.count > 0).map(r => r.member));
             document.getElementById('val-members').innerText = activeMembers.size;
 
-            // Calc avg
             let days = 1;
             if (state.startDate && state.endDate) {
                 days = Math.max(1, (state.endDate - state.startDate) / (1000 * 60 * 60 * 24));
@@ -635,9 +605,11 @@
         }
 
         function updateTrend(data, activeMembers) {
-            // Group by Date + Member
-            const dateMap = {}; // date -> { member: count }
+            const dateMap = {};
             const allDates = new Set();
+
+            // Filter: Identify members who have Google Workspace activity (Core Team)
+            const gwMembers = new Set(data.filter(r => r.platform === 'Google Workspace').map(r => r.member));
 
             data.forEach(r => {
                 if (!dateMap[r.date]) dateMap[r.date] = {};
@@ -646,12 +618,12 @@
             });
 
             const sortedDates = [...allDates].sort((a, b) => parseDate(a) - parseDate(b));
-
-            // Create datasets for each visible member
             const datasets = [];
 
-            // Only show members who are selected AND have activity in the filtered range
+            // Filter timeline logic
             activeMembers.forEach(member => {
+                if (!gwMembers.has(member)) return; // Only core team
+
                 const color = getStringColor(member);
                 const series = sortedDates.map(d => (dateMap[d] && dateMap[d][member]) || 0);
 
@@ -675,30 +647,22 @@
         function updatePlatform(counts) {
             charts.platform.data.labels = Object.keys(counts);
             charts.platform.data.datasets[0].data = Object.values(counts);
-            charts.platform.data.datasets[0].backgroundColor = Object.keys(counts).map(p => PLATFORM_COLORS[p] || '#777');
+            charts.platform.data.datasets[0].backgroundColor = Object.keys(counts).map((_, i) => PIE_COLORS[i % PIE_COLORS.length]);
             charts.platform.update();
         }
 
         function updateLeaderboard(data) {
-            // Stacked Bar: Y=Member, X=Count, Stacks=Platform
-
-            // 1. Identify all active members and sort by Total Count
             const memberTotals = {};
             data.forEach(r => memberTotals[r.member] = (memberTotals[r.member] || 0) + r.count);
             const sortedMembers = Object.entries(memberTotals)
                 .filter(x => x[1] > 0)
                 .sort((a, b) => b[1] - a[1])
-                .map(x => x[0]); // Names only
+                .map(x => x[0]);
 
-            // 2. Identify all platforms
             const platforms = ['ClickUp', 'GitHub', 'Google Workspace', 'Figma', 'Backendless App'];
 
-            // 3. Build Datasets
-            // dataset = { label: 'ClickUp', data: [countForMem1, countForMem2...], backgroundColor: ... }
             const datasets = platforms.map(plat => {
                 const dataPoints = sortedMembers.map(mem => {
-                    // Find all rows for this member + platform
-                    // Optimization: Pre-aggregate map would be faster but this is fine only <100k rows
                     const rows = data.filter(r => r.member === mem && r.platform === plat);
                     return rows.reduce((acc, curr) => acc + curr.count, 0);
                 });
@@ -713,8 +677,6 @@
 
             charts.leaderboard.data.labels = sortedMembers;
             charts.leaderboard.data.datasets = datasets;
-            charts.leaderboard.options.scales.x.stacked = true;
-            charts.leaderboard.options.scales.y.stacked = true;
             charts.leaderboard.update();
         }
 
@@ -725,7 +687,6 @@
                 plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 10, color: '#94a3b8' } } }
             };
 
-            // Line chart
             charts.trend = new Chart(document.getElementById('trendChart'), {
                 type: 'line',
                 data: { labels: [], datasets: [] },
@@ -740,20 +701,18 @@
                 }
             });
 
-            // Platform Pie
             charts.platform = new Chart(document.getElementById('platformChart'), {
                 type: 'doughnut',
-                data: { labels: [], datasets: [{ data: [] }] },
+                data: { labels: [], datasets: [{ data: [], borderWidth: 0 }] },
                 options: { ...commonOpts, plugins: { legend: { position: 'right', labels: { color: '#94a3b8' } } } }
             });
 
-            // Stacked Bar Leaderboard
             charts.leaderboard = new Chart(document.getElementById('leaderboardChart'), {
                 type: 'bar',
                 data: { labels: [], datasets: [] },
                 options: {
                     ...commonOpts,
-                    indexAxis: 'y', // Horizontal bars
+                    indexAxis: 'y',
                     interaction: { mode: 'y' },
                     scales: {
                         x: { stacked: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
