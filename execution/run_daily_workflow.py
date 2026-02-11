@@ -52,7 +52,7 @@ def main():
     print("\n[STEP 1] FETCHING PLATFORM DATA")
     results['clickup'] = run_script('fetch_clickup.py', 'ClickUp Activity')
     results['github'] = run_script('fetch_github.py', 'GitHub Activity')
-    results['google'] = run_script('fetch_google_workspace.py', 'Google Workspace Activity')
+    results['google'] = run_script('fetch_google_workspace_unified.py', 'Google Workspace Activity')
     results['figma'] = run_script('fetch_figma.py', 'Figma Activity')
     results['backendless'] = run_script('fetch_backendless.py', 'Backendless Activity')
     
