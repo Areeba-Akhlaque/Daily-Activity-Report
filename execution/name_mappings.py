@@ -188,7 +188,7 @@ def map_name(identifier):
         'david': 'David',
         'bradd schofield': 'Bradd Schofield',
         'bradd konert': 'Bradd Konert',
-        'bradd': 'Bradd Schofield',
+        'Bradd Konert': 'Bradd Schofield',
         'megha': 'Megha Sharma',
         'adriane': 'Adriane Barredo',
         'mariana': 'Mariana Gracia Salgado',

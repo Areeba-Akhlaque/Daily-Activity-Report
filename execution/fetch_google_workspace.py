@@ -124,6 +124,7 @@ def fetch_window(url, headers, start_dt, end_dt, application_name):
                         # We track this as 'Gmail Activity' since specific 'send' is unavailable.
                         if event_name == 'delivery':
                             keep_event = True
+                            mapped_event = "Gmail Send"
                     
                     if keep_event:
                         dt = pd.to_datetime(timestamp)

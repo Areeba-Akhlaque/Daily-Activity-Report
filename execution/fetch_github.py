@@ -132,6 +132,9 @@ def process_and_upload(events):
     # Map names
     df['Name'] = df['User'].apply(map_name)
     
+    # Filter exclusions
+    df = df[~df['Name'].apply(should_exclude)]
+    
     # Aggregate
     summary = df.groupby(['Name', 'Date', 'Event Type']).size().reset_index(name='Quantity')
     summary['sort_dt'] = pd.to_datetime(summary['Date'], format='%m/%d/%y')

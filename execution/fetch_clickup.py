@@ -223,6 +223,9 @@ def process_and_upload(events):
     df = pd.DataFrame(events)
     df['Raw Name'] = df['user_id'].apply(lambda x: USER_CACHE.get(str(x), f"User {x}"))
     df['Name'] = df['Raw Name'].apply(map_name)
+    
+    # Filter out "User ..." (unidentified generic users)
+    df = df[~df['Name'].str.startswith('User')]
     df['Date'] = pd.to_datetime(df['timestamp'], unit='ms').dt.strftime('%m/%d/%y')
     
     summary = df.groupby(['Name', 'Date', 'event_type']).size().reset_index(name='Quantity')
