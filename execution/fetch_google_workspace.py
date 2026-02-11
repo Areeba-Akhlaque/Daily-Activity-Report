@@ -155,25 +155,28 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
                             keep = True
                             mapped_type = "Gmail Send"
                         elif event_name == 'delivery':
-                            # DEBUG: Print raw params to see structure
-                            # Only print first few to avoid spam
-                            # if len(events) < 3:
-                            #     print(f"    [DEBUG] Delivery Params: {ev.get('parameters', [])}")
-
                             mail_type = -1
+                            
+                            # 1. Check top-level parameters
                             for p in ev.get('parameters', []):
                                 pname = p.get('name', '')
                                 
-                                # Check flattened "mail_event_type" or "event_info.mail_event_type"
+                                # Direct match (sometimes API flattens it)
                                 if 'mail_event_type' in pname:
                                     try:
                                         val = p.get('intValue') or p.get('value')
-                                        mail_type = int(val) if val is not None else -1
+                                        if val is not None: mail_type = int(val)
                                     except: pass
                                 
-                                # Check nested 'event_info' (some APIs nest parameters)
+                                # NESTED MATCH (Found in debug output)
                                 if pname == 'event_info':
-                                    pass # complex parsing if needed
+                                    nested_params = p.get('messageValue', {}).get('parameter', [])
+                                    for np in nested_params:
+                                        if np.get('name') == 'mail_event_type':
+                                            try:
+                                                val = np.get('intValue')
+                                                if val is not None: mail_type = int(val)
+                                            except: pass
                             
                             if mail_type == 1:
                                 keep = True
@@ -203,8 +206,9 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
                 
         except HttpError as e:
             if e.resp.status in [403, 429, 500, 502, 503]:
-                print(f"    [Retry] API Error {e.resp.status}. Waiting 5s...")
-                time.sleep(5)
+                error_body = e.content.decode('utf-8') if e.content else "No content"
+                print(f"    [Retry] API Error {e.resp.status}. Detail: {error_body}. Waiting 10s...")
+                time.sleep(10)
                 continue
             else:
                 # print(f"    [Error] {e}") # specific window error shouldn't crash all
