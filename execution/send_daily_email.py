@@ -38,42 +38,60 @@ def load_env():
 load_env()
 
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
+def safe_int(val):
+    """Safely convert to int, defaulting to 0."""
+    try:
+        if not val: return 0
+        return int(float(str(val).replace(',', '')))
+    except (ValueError, TypeError):
+        return 0
+
+def safe_float(val):
+    """Safely convert to float, defaulting to 0.0."""
+    try:
+        if not val: return 0.0
+        return float(str(val).replace(',', ''))
+    except (ValueError, TypeError):
+        return 0.0
+
 def get_daily_summary(creds):
     """Fetch summary data from Google Sheet with detailed daily breakdown."""
+    print("Fetching daily summary data...")
     gc = gspread.authorize(creds)
     sh = gc.open_by_key(SHEET_ID)
     
     # Get Date Logic (Today vs Yesterday if run early)
-    # We prefer today's data if available, else yesterday.
     today = datetime.now()
     today_str = today.strftime('%m/%d/%y')
     yesterday_str = (today - timedelta(days=1)).strftime('%m/%d/%y')
+    print(f"Target Date (Today): {today_str}")
     
-    # 1. Fetch Activity Time Analysis (for Start/End/Duration)
+    # 1. Fetch Activity Time Analysis
     try:
+        print("  Reading 'Activity Time Analysis'...")
         ws_time = sh.worksheet('Activity Time Analysis')
         time_data = ws_time.get_all_records()
-        # Check both dates
         today_time = [r for r in time_data if r.get('Date') == today_str]
         yesterday_time = [r for r in time_data if r.get('Date') == yesterday_str]
         
-        # Select best dataset (prefer Today if it has substantial data, else Yesterday)
-        # Threshold: if > 0 records for today, use today.
         target_date = today_str if today_time else yesterday_str
         target_time_data = today_time if today_time else yesterday_time
+        print(f"    Found {len(target_time_data)} time records for {target_date}")
         
     except Exception as e:
-        print(f"Error fetching Time Analysis: {e}")
+        print(f"    [WARN] Error fetching Time Analysis: {e}")
         target_date = today_str
         target_time_data = []
 
-    # 2. Fetch Daily Audit (for Platform breakdown and total counts)
+    # 2. Fetch Daily Audit
     try:
+        print("  Reading 'Daily Audit'...")
         ws_audit = sh.worksheet('Daily Audit')
         audit_data = ws_audit.get_all_records()
         target_audit_data = [r for r in audit_data if r.get('Activity Date') == target_date]
+        print(f"    Found {len(target_audit_data)} audit records for {target_date}")
     except Exception as e:
-        print(f"Error fetching Daily Audit: {e}")
+        print(f"    [WARN] Error fetching Daily Audit: {e}")
         target_audit_data = []
 
     # 3. Process Per-Member Stats
@@ -87,51 +105,55 @@ def get_daily_summary(creds):
             'name': name,
             'start': r.get('First Activity (PST)', '-'),
             'end': r.get('Last Activity (PST)', '-'),
-            'hours': float(r.get('Active Window (Hours)', 0)),
-            'break': int(r.get('Longest Break (Minutes)', 0)),
-            'events': int(r.get('Total Events', 0)),
+            'hours': safe_float(r.get('Active Window (Hours)')),
+            'break': safe_int(r.get('Longest Break (Minutes)')),
+            'events': safe_int(r.get('Total Events')),
             'top_platform': '-'
         }
 
     # From Daily Audit (Platform & Count verification)
     platform_counts = defaultdict(lambda: defaultdict(int)) # Member -> Platform -> Count
+    global_plat_counts = defaultdict(int)
     total_activities = 0
     
     for r in target_audit_data:
         name = r.get('Team Member')
         plat = r.get('Platform')
-        count = int(r.get('Count', 0))
+        count = safe_int(r.get('Count'))
+        
         if count > 0:
-            platform_counts[name][plat] += count
+            if name: platform_counts[name][plat] += count
+            if plat: global_plat_counts[plat] += count
             total_activities += count
             
-            # Ensure member exists in stats (if they missed Time Analysis somehow)
-            if name not in member_stats:
+            # Ensure member exists in stats
+            if name and name not in member_stats:
                 member_stats[name] = {
-                    'name': name, 'start': '-', 'end': '-', 'hours': 0, 'break': 0, 'events': 0, 'top_platform': '-'
+                    'name': name, 'start': '-', 'end': '-', 'hours': 0.0, 'break': 0, 'events': 0, 'top_platform': '-'
                 }
 
     # Calculate Top Platform per member
     for name, plats in platform_counts.items():
-        if not plats: continue
+        if not plats or name not in member_stats: continue
         top_plat = max(plats.items(), key=lambda x: x[1])[0]
         member_stats[name]['top_platform'] = top_plat
-        # Sync event count just in case
+        # Sync event count if missing
         if member_stats[name]['events'] == 0:
              member_stats[name]['events'] = sum(plats.values())
 
-    # Sort members by Active Hours (desc) then Event Count
+    # Sort members
     sorted_members = sorted(member_stats.values(), key=lambda x: (x['hours'], x['events']), reverse=True)
     
     # Aggregate Metrics
-    active_members_count = len([m for m in sorted_members if m['events'] > 0])
-    avg_hours = sum(m['hours'] for m in sorted_members) / active_members_count if active_members_count else 0
-    avg_break = sum(m['break'] for m in sorted_members) / active_members_count if active_members_count else 0
+    active_mems_list = [m for m in sorted_members if m['events'] > 0]
+    active_members_count = len(active_mems_list)
     
-    # Global Platform Breakdown
-    global_plat_counts = defaultdict(int)
-    for r in target_audit_data:
-        global_plat_counts[r.get('Platform')] += int(r.get('Count', 0))
+    if active_members_count > 0:
+        avg_hours = sum(m['hours'] for m in active_mems_list) / active_members_count
+        avg_break = sum(m['break'] for m in active_mems_list) / active_members_count
+    else:
+        avg_hours = 0.0
+        avg_break = 0
 
     return {
         'date': target_date,
