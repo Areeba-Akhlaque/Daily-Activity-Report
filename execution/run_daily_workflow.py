@@ -42,14 +42,14 @@ def run_script(script_name, description):
 def main():
     start_time = datetime.now()
     print("\n" + "=" * 60)
-    print("🚀 PVRAGON DAILY ACTIVITY AUDIT")
+    print("  PVRAGON DAILY ACTIVITY AUDIT")
     print(f"Started: {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
     
     results = {}
     
     # Step 1: Fetch platform data
-    print("\n📡 STEP 1: FETCHING PLATFORM DATA")
+    print("\n[STEP 1] FETCHING PLATFORM DATA")
     results['clickup'] = run_script('fetch_clickup.py', 'ClickUp Activity')
     results['github'] = run_script('fetch_github.py', 'GitHub Activity')
     results['google'] = run_script('fetch_google_workspace.py', 'Google Workspace Activity')
@@ -57,15 +57,15 @@ def main():
     results['backendless'] = run_script('fetch_backendless.py', 'Backendless Activity')
     
     # Step 1.5: Generate Reports (Daily Audit + Activity Time Analysis)
-    print("\n📊 STEP 1.5: GENERATING REPORTS")
+    print("\n[STEP 1.5] GENERATING REPORTS")
     results['reports'] = run_script('generate_reports.py', 'Daily Audit & Time Analysis')
     
     # Step 2: Refresh dashboard
-    print("\n📈 STEP 2: REFRESHING DASHBOARD")
+    print("\n[STEP 2] REFRESHING DASHBOARD")
     results['dashboard'] = run_script('refresh_dashboard.py', 'Dashboard Data Export')
     
     # Step 3: Send email summary
-    print("\n📧 STEP 3: SENDING EMAIL SUMMARY")
+    print("\n[STEP 3] SENDING EMAIL SUMMARY")
     results['email'] = run_script('send_daily_email.py', 'Daily Summary Email')
     
     # Summary
@@ -73,14 +73,14 @@ def main():
     duration = (end_time - start_time).total_seconds()
     
     print("\n" + "=" * 60)
-    print("📋 WORKFLOW SUMMARY")
+    print("WORKFLOW SUMMARY")
     print("=" * 60)
     
     success_count = sum(1 for v in results.values() if v)
     total_count = len(results)
     
     for step, success in results.items():
-        status = "✅" if success else "❌"
+        status = "[OK]" if success else "[FAIL]"
         print(f"  {status} {step}")
     
     print(f"\nCompleted: {success_count}/{total_count} steps successful")
@@ -88,10 +88,10 @@ def main():
     print(f"Finished: {end_time.strftime('%Y-%m-%d %H:%M:%S')}")
     
     if success_count < total_count:
-        print("\n⚠️ Some steps failed. Check logs above for details.")
+        print("\n[WARN] Some steps failed. Check logs above for details.")
         sys.exit(1)
     else:
-        print("\n🎉 All steps completed successfully!")
+        print("\n[SUCCESS] All steps completed successfully!")
         sys.exit(0)
 
 
