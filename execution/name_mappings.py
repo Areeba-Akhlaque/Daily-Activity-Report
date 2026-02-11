@@ -10,7 +10,7 @@ NAME_MAP = {
     'alexander@pvragon.com': 'Alexander Pavelko',
     'areeba@pvragon.com': 'Areeba Akhlaque',
     'bilal@pvragon.com': 'Bilal Munir',
-    'bradd@pvragon.com': 'Bradd Konert',
+    'bradd@pvragon.com': 'Bradd Schofield',
     'cherry@pvragon.com': 'Cherry Aznar',
     'cristina@pvragon.com': 'Cristina Villarreal',
     'farhan@pvragon.com': 'Muhammad Farhan',
@@ -50,7 +50,7 @@ NAME_MAP = {
     
     # === External Consultants ===
     'michel@davidrobertsconsulting.com': 'Michel',
-    'bradd@alphadesign.us': 'Bradd Konert',
+    'bradd@alphadesign.us': 'Bradd Schofield',
     'davidz5@uw.edu': 'David',
     
     # === GitHub Usernames ===
@@ -108,7 +108,7 @@ NAME_MAP = {
     'Tara Yowell': 'Tara Yowell',
     'Victor Cheung': 'Victor Cheung',
     'Mariana': 'Mariana Gracia Salgado',
-    'Bradd': 'Bradd Konert',
+    'Bradd': 'Bradd Schofield',
 }
 
 # Exclusion patterns - accounts to skip
