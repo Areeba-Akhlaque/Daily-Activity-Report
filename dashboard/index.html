@@ -668,26 +668,37 @@
         }
 
         function updateLeaderboard(data) {
+            // Stacked Chart Logic: Member vs Event Type
             const memberTotals = {};
             data.forEach(r => memberTotals[r.member] = (memberTotals[r.member] || 0) + r.count);
+            // Sort members by total activity
             const sortedMembers = Object.entries(memberTotals)
                 .filter(x => x[1] > 0)
                 .sort((a, b) => b[1] - a[1])
                 .map(x => x[0]);
 
-            const platforms = ['ClickUp', 'GitHub', 'Google Workspace', 'Figma', 'Backendless App'];
+            // Get Top Event Types (limit to top 15 to avoid messy chart, or dynamic)
+            // Actually, let's get all types present in the filtered data
+            const typeCounts = {};
+            data.forEach(r => typeCounts[r.type] = (typeCounts[r.type] || 0) + r.count);
 
-            const datasets = platforms.map(plat => {
+            // Sort types by frequency to put most common ones first (better stacking)
+            const sortedTypes = Object.keys(typeCounts).sort((a, b) => typeCounts[b] - typeCounts[a]);
+
+            const datasets = sortedTypes.map(type => {
                 const dataPoints = sortedMembers.map(mem => {
-                    const rows = data.filter(r => r.member === mem && r.platform === plat);
+                    const rows = data.filter(r => r.member === mem && r.type === type);
                     return rows.reduce((acc, curr) => acc + curr.count, 0);
                 });
 
+                // Color Generator for Types
+                const color = getStringColor(type);
+
                 return {
-                    label: plat,
+                    label: type,
                     data: dataPoints,
-                    backgroundColor: PLATFORM_COLORS[plat] || '#777',
-                    borderRadius: 2
+                    backgroundColor: color,
+                    borderRadius: 1
                 };
             });
 
