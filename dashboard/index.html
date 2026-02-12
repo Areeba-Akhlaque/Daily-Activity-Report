@@ -82,6 +82,8 @@
             gap: 20px;
             flex-wrap: wrap;
             align-items: flex-end;
+            position: relative;
+            z-index: 100;
         }
 
         .filter-group {
@@ -705,7 +707,7 @@
                 data: { labels: [], datasets: [] },
                 options: {
                     ...commonOpts,
-                    interaction: { mode: 'index', intersect: false },
+                    interaction: { mode: 'nearest', axis: 'x', intersect: true },
                     plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 10, color: '#94a3b8' } } },
                     scales: {
                         x: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
