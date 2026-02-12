@@ -205,21 +205,15 @@ def fetch_all_google_workspace(creds):
     start_dt = pd.to_datetime(START_DATE_STR).replace(tzinfo=timezone.utc)
     end_dt = datetime.now(timezone.utc)
     
-    # 1. GMAIL FETCH (Sequential user iteration)
-    print(f"\n[Gmail] Scanning users individually ({start_dt.strftime('%Y-%m-%d')} - {end_dt.strftime('%Y-%m-%d')})...")
-    
-    target_users = [u for u in NAME_MAP.keys() if '@pvragon.com' in u and not should_exclude(u)]
-    print(f"  Target Users: {len(target_users)}")
-    
-    for i, user in enumerate(target_users):
-        print(f"  [{i+1}/{len(target_users)}] Scanning: {user} ... ", end='', flush=True)
-        try:
-            # CALL THE CHUNKED FUNCTION
-            events = fetch_logs_in_windows(service, user, 'gmail', start_dt, end_dt)
-            print(f"Found {len(events)} events.")
-            all_events.extend(events)
-        except Exception as e:
-            print(f"Failed: {e}")
+    # 1. GMAIL FETCH (Unified 'all' scan)
+    print(f"\\n[Gmail] Scanning 'all' users ({start_dt.strftime('%Y-%m-%d')} - {end_dt.strftime('%Y-%m-%d')})...")
+    try:
+        # Fetching for 'all' users is more robust and mirrors generate_activity_time.py success
+        events = fetch_logs_in_windows(service, 'all', 'gmail', start_dt, end_dt)
+        print(f"  Found {len(events)} Gmail events.")
+        all_events.extend(events)
+    except Exception as e:
+        print(f"  [Gmail Error] {e}")
             
     # 2. DRIVE FETCH 
     print(f"\n[Drive] Scanning 'all' users...")

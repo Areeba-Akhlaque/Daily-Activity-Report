@@ -38,6 +38,17 @@ def load_env():
 load_env()
 
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
+
+def get_credentials():
+    """Get Google OAuth credentials."""
+    token_path = os.path.join(ROOT_DIR, 'token.json')
+    creds = Credentials.from_authorized_user_file(token_path)
+    if not creds.valid and creds.refresh_token:
+        creds.refresh(Request())
+        with open(token_path, 'w') as f:
+            f.write(creds.to_json())
+    return creds
+
 def safe_int(val):
     """Safely convert to int, defaulting to 0."""
     try:
