@@ -382,10 +382,12 @@
 
         <div class="grid-2">
             <div class="card" style="grid-column: 1 / -1;">
-                <div class="card-header"><span class="card-title">Team Leaderboard (Event Count)</span></div>
+                <div class="card-header"><span class="card-title">Activity Breakdown by Platform</span></div>
                 <div class="chart-wrap" style="height: 600px;"><canvas id="leaderboardChart"></canvas></div>
             </div>
+
         </div>
+    </div>
     </div>
 
     <script>
@@ -668,47 +670,34 @@
         }
 
         function updateLeaderboard(data) {
-            // Stacked Chart Logic: Member vs Event Type
-            const memberTotals = {};
-            data.forEach(r => memberTotals[r.member] = (memberTotals[r.member] || 0) + r.count);
-            // Sort members by total activity
-            const sortedMembers = Object.entries(memberTotals)
-                .filter(x => x[1] > 0)
-                .sort((a, b) => b[1] - a[1])
-                .map(x => x[0]);
+            // Pivot: Platform (X) vs Event Type (Stack)
+            const platforms = ['ClickUp', 'GitHub', 'Google Workspace', 'Figma', 'Backendless App'];
 
-            // Get Top Event Types (limit to top 15 to avoid messy chart, or dynamic)
-            // Actually, let's get all types present in the filtered data
+            // Get Event Types
             const typeCounts = {};
             data.forEach(r => typeCounts[r.type] = (typeCounts[r.type] || 0) + r.count);
-
-            // Sort types by frequency to put most common ones first (better stacking)
             const sortedTypes = Object.keys(typeCounts).sort((a, b) => typeCounts[b] - typeCounts[a]);
 
             const datasets = sortedTypes.map(type => {
-                const dataPoints = sortedMembers.map(mem => {
-                    const rows = data.filter(r => r.member === mem && r.type === type);
+                const dataPoints = platforms.map(plat => {
+                    const rows = data.filter(r => r.platform === plat && r.type === type);
                     return rows.reduce((acc, curr) => acc + curr.count, 0);
                 });
-
-                // Color Generator for Types
-                const color = getStringColor(type);
 
                 return {
                     label: type,
                     data: dataPoints,
-                    backgroundColor: color,
+                    backgroundColor: getStringColor(type),
                     borderRadius: 1
                 };
             });
 
-            charts.leaderboard.data.labels = sortedMembers;
+            charts.leaderboard.data.labels = platforms;
             charts.leaderboard.data.datasets = datasets;
             charts.leaderboard.update();
         }
 
         function initCharts() {
-            // Register plugin if available
             if (typeof ChartDataLabels !== 'undefined') {
                 Chart.register(ChartDataLabels);
             }
@@ -718,7 +707,7 @@
                 maintainAspectRatio: false,
                 plugins: {
                     legend: { display: true, position: 'bottom', labels: { boxWidth: 10, color: '#94a3b8' } },
-                    datalabels: { display: false } // Default hide
+                    datalabels: { display: false }
                 }
             };
 
@@ -747,8 +736,8 @@
                 data: { labels: [], datasets: [] },
                 options: {
                     ...commonOpts,
-                    indexAxis: 'y',
-                    interaction: { mode: 'y' },
+                    indexAxis: 'x',
+                    interaction: { mode: 'x' },
                     plugins: {
                         legend: { display: true, position: 'bottom', labels: { boxWidth: 10, color: '#94a3b8' } },
                         datalabels: {
