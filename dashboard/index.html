@@ -7,6 +7,7 @@
     <title>Pvragon Team Activity Dashboard</title>
     <link rel="icon" type="image/png" href="Logo.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -696,10 +697,18 @@
         }
 
         function initCharts() {
+            // Register plugin if available
+            if (typeof ChartDataLabels !== 'undefined') {
+                Chart.register(ChartDataLabels);
+            }
+
             const commonOpts = {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 10, color: '#94a3b8' } } }
+                plugins: {
+                    legend: { display: true, position: 'bottom', labels: { boxWidth: 10, color: '#94a3b8' } },
+                    datalabels: { display: false } // Default hide
+                }
             };
 
             charts.trend = new Chart(document.getElementById('trendChart'), {
@@ -708,7 +717,7 @@
                 options: {
                     ...commonOpts,
                     interaction: { mode: 'nearest', axis: 'x', intersect: true },
-                    plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 10, color: '#94a3b8' } } },
+                    plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 10, color: '#94a3b8' } }, datalabels: { display: false } },
                     scales: {
                         x: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
                         y: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }
@@ -719,7 +728,7 @@
             charts.platform = new Chart(document.getElementById('platformChart'), {
                 type: 'doughnut',
                 data: { labels: [], datasets: [{ data: [], borderWidth: 0 }] },
-                options: { ...commonOpts, plugins: { legend: { position: 'right', labels: { color: '#94a3b8' } } } }
+                options: { ...commonOpts, plugins: { legend: { position: 'right', labels: { color: '#94a3b8' } }, datalabels: { display: false } } }
             });
 
             charts.leaderboard = new Chart(document.getElementById('leaderboardChart'), {
@@ -729,6 +738,15 @@
                     ...commonOpts,
                     indexAxis: 'y',
                     interaction: { mode: 'y' },
+                    plugins: {
+                        legend: { display: true, position: 'bottom', labels: { boxWidth: 10, color: '#94a3b8' } },
+                        datalabels: {
+                            display: true,
+                            color: 'white',
+                            font: { weight: 'bold', size: 10 },
+                            formatter: (value) => value > 0 ? value : ''
+                        }
+                    },
                     scales: {
                         x: { stacked: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
                         y: { stacked: true, grid: { display: false }, ticks: { color: '#94a3b8' } }
