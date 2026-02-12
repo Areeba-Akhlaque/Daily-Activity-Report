@@ -38,6 +38,11 @@ def load_env():
 load_env()
 
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
+EMAIL_USER = os.environ.get('EMAIL_USER')
+EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+EMAIL_RECIPIENTS = os.environ.get('EMAIL_RECIPIENTS', 'areeba@pvragon.com').split(',')
+DASHBOARD_URL = os.environ.get('DASHBOARD_URL', 'https://Areeba-Akhlaque.github.io/Daily-Activity-Report/dashboard/index.html')
+SHEET_URL = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}"
 
 def get_credentials():
     """Get Google OAuth credentials."""
