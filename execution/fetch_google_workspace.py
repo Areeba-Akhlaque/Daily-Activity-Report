@@ -141,7 +141,7 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
             response = service.activities().list(**params).execute()
             items = response.get('items', [])
             if application_name == 'gmail' and items:
-                 print(f"    DEBUG: Fetched {len(items)} items. Sample Event Names: {[ev.get('name') for i in items[:5] for ev in i.get('events', [])]}")
+                 print(f"    DEBUG: Fetched {len(items)} items from Gmail API.")
             
             for item in items:
                 actor_email = item.get('actor', {}).get('email', '')
@@ -158,15 +158,7 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
                         if event_name == 'send':
                             keep = True
                             mapped_type = "Gmail Send"
-                        elif event_name == 'delivery':
-                             # Attribute 'delivery' events to the RECIPIENT
-                             for param in ev.get('parameters', []):
-                                 if param.get('name') == 'recipient':
-                                     effective_email = param.get('value')
-                                     keep = True
-                                     mapped_type = "Gmail Received"
-                                     break
-
+                            
                     elif application_name == 'drive':
                          if event_name in ['edit', 'create', 'upload']:
                              keep = True
@@ -251,6 +243,20 @@ def process_and_upload(events):
     if df.empty:
         print("  No events left after mapping/exclusion.")
         return
+
+    # DEBUG: Print Per-User Breakdown
+    print("\n=== GMAIL ACTIVITY SUMMARY (Per User) ===")
+    try:
+        # Filter for Gmail events only for clarity
+        gmail_df = df[df['Platform'] == 'Google Workspace']
+        if not gmail_df.empty:
+             summary_table = gmail_df.groupby(['Name', 'Event Type']).size().unstack(fill_value=0)
+             print(summary_table.to_string())
+        else:
+             print("No Google Workspace events found.")
+    except Exception as e:
+        print(f"Error printing summary: {e}")
+    print("=========================================\n")
         
     summary = df.groupby(['Name', 'Date', 'Platform', 'Event Type']).size().reset_index(name='Quantity')
     summary['sort_dt'] = pd.to_datetime(summary['Date'], format='%m/%d/%y')
