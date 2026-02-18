@@ -39,7 +39,22 @@ def run_script(script_name, description):
         return False
 
 
+def load_env():
+    """Load environment variables from .env file manually."""
+    env_path = os.path.join(ROOT_DIR, '.env')
+    if os.path.exists(env_path):
+        print(f"Loading environment from {env_path}")
+        with open(env_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#') and '=' in line:
+                    key, value = line.split('=', 1)
+                    os.environ[key] = value
+                    if 'BACKENDLESS' in key:
+                         print(f"Loaded {key} from .env")
+
 def main():
+    load_env()
     start_time = datetime.now()
     print("\n" + "=" * 60)
     print("  PVRAGON DAILY ACTIVITY AUDIT")
@@ -48,8 +63,17 @@ def main():
     
     results = {}
     
-    # Step 1: Fetch platform data
+    # Step 1: Platform Data
     print("\n[STEP 1] FETCHING PLATFORM DATA")
+    try:
+        # Try running Node script for Backendless first (matches GitHub workflow)
+        node_script = os.path.join(SCRIPT_DIR, 'fetch_backendless_node.js')
+        if os.path.exists(node_script):
+            print(f"  Running Node.js fetcher: {node_script}")
+            subprocess.run(['node', node_script], cwd=ROOT_DIR, check=False)
+    except Exception as e:
+        print(f"  [WARN] Node script failed: {e}")
+
     results['clickup'] = run_script('fetch_clickup.py', 'ClickUp Activity')
     results['github'] = run_script('fetch_github.py', 'GitHub Activity')
     results['google'] = run_script('fetch_google_workspace.py', 'Google Workspace Activity')

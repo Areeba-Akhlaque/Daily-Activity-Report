@@ -123,6 +123,7 @@ def fetch_logs_in_windows(service, user_key, application_name, start_dt, end_dt)
 def fetch_logs_for_user(service, user_key, application_name, start_time, end_time):
     """Fetch logs for a specific user using official client (single window)."""
     events = []
+    seen_events = set()
     page_token = None
     
     params = {
@@ -140,8 +141,7 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
                 
             response = service.activities().list(**params).execute()
             items = response.get('items', [])
-            if application_name == 'gmail' and items:
-                 print(f"    DEBUG: Fetched {len(items)} items from Gmail API.")
+
             
             for item in items:
                 actor_email = item.get('actor', {}).get('email', '')
@@ -149,6 +149,7 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
                 
                 for ev in item.get('events', []):
                     event_name = ev.get('name', '')
+                    if application_name == 'gmail': seen_events.add(event_name)
                     keep = False
                     mapped_type = ""
                     
@@ -194,6 +195,8 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
             # print(f"    [Error] {e}")
             break
             
+    if application_name == 'gmail' and seen_events:
+        print(f"    DEBUG: Gmail Event Names found in window: {seen_events}")
     return events
 
 def fetch_all_google_workspace(creds):
