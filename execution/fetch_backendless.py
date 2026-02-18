@@ -121,26 +121,60 @@ def fetch_logs_internal_api():
         print(f"[API] Exception: {e}")
         return []
 
+import subprocess
+
+def fetch_logs_node_wrapper():
+    """Fetch logs by invoking the Node.js script with --json flag."""
+    print("[API] invoking fetch_backendless_node.js --json...")
+    node_script = os.path.join(SCRIPT_DIR, 'fetch_backendless_node.js')
+    
+    if not os.path.exists(node_script):
+        print(f"[API] Error: Node script not found at {node_script}")
+        return []
+        
+    try:
+        # Check if node is available
+        result = subprocess.run(
+            ['node', node_script, '--json'], 
+            cwd=SCRIPT_DIR, 
+            capture_output=True, 
+            text=True,
+            encoding='utf-8'
+        )
+        
+        if result.returncode != 0:
+            print(f"[API] Node script failed: {result.stderr}")
+            return []
+            
+        output = result.stdout.strip()
+        if not output:
+            return []
+            
+        try:
+            return json.loads(output)
+        except json.JSONDecodeError:
+            return []
+    except Exception as e:
+        print(f"[API] Error running Node script: {e}")
+        return []
+
 def main():
     print("="*60)
-    print("Backendless Activity Fetch (Python Recipe)")
+    print("Backendless Activity Fetch (Node.js SDK via Python)")
     print("="*60)
     
-    logs = fetch_logs_internal_api()
-    source = 'API'
+    # Priority: Node.js (Official SDK)
+    logs = fetch_logs_node_wrapper()
+    source = 'Node API'
+    
+    # Fallback to Python Internal API (Legacy)
+    if not logs:
+        print("[WARN] Node fetch failed/empty. Trying direct Python API...")
+        logs = fetch_logs_internal_api()
+        source = 'Python API'
     
     if not logs:
-        print("[WARN] API returned no logs. Checking local CSV...")
-        csv_path = os.path.join(ROOT_DIR, 'console_audit_logs.csv')
-        if os.path.exists(csv_path):
-             try:
-                 logs = pd.read_csv(csv_path).to_dict('records')
-                 source = 'CSV'
-                 print(f"[CSV] Loaded {len(logs)} rows.")
-             except: pass
-    
-    if not logs:
-        print("[ERROR] No data found.")
+        print("[ERROR] No data found via API. (CSV fallback DISABLED).")
         return # Exit gracefully
 
     # Process

@@ -9,7 +9,7 @@ const APP_ID = process.env.BACKENDLESS_APP_ID;
 const CONSOLE_HOST = process.env.BACKENDLESS_API_URL || 'https://develop.backendless.com';
 
 async function main() {
-    console.log("Starting Backendless Console Audit Fetch (Node.js)...");
+    console.error("Starting Backendless Console Audit Fetch (Node.js)...");
 
     if (!LOGIN || !PASSWORD) {
         console.error("❌ ERROR: BACKENDLESS_DEV_LOGIN or BACKENDLESS_DEV_PASSWORD is missing.");
@@ -17,14 +17,14 @@ async function main() {
     }
 
     try {
-        console.log(`Connecting to Console Host: ${CONSOLE_HOST}`);
+        console.error(`Connecting to Console Host: ${CONSOLE_HOST}`);
         const client = createClient(CONSOLE_HOST);
 
-        console.log(`Logging in as ${LOGIN}...`);
+        console.error(`Logging in as ${LOGIN}...`);
         const user = await client.user.login(LOGIN, PASSWORD);
-        console.log(`✅ Login Successful. User ID: ${user.objectId}`);
+        console.error(`✅ Login Successful. User ID: ${user.objectId}`);
 
-        console.log(`Fetching Audit Logs for App ID: ${APP_ID}...`);
+        console.error(`Fetching Audit Logs for App ID: ${APP_ID}...`);
         const result = await client.security.loadAuditLogs(APP_ID);
 
         let logs = [];
@@ -38,17 +38,17 @@ async function main() {
             console.warn("⚠️  Warning: Unexpected log format:", result);
         }
 
-        console.log(`Fetched ${logs.length} log entries.`);
+        console.error(`Fetched ${logs.length} log entries.`);
 
-        if (logs.length > 0) {
+        if (process.argv.includes('--json')) {
+            process.stdout.write(JSON.stringify(logs));
+        } else if (logs.length > 0) {
             const csvLines = [];
-            // Python script expects: developer,event,timestamp
-            // timestamp matches 'created' (ms)
             csvLines.push('developer,event,timestamp');
 
             logs.forEach(log => {
                 const timestamp = log.created || log.timestamp || 0;
-                const event = (log.action || log.event || 'Unknown').replace(/,/g, ' '); // Escape commas
+                const event = (log.action || log.event || 'Unknown').replace(/,/g, ' ');
 
                 let dev = 'Unknown';
                 if (log.developer && typeof log.developer === 'string') dev = log.developer;
@@ -61,15 +61,14 @@ async function main() {
 
             const csvPath = path.join(__dirname, '../console_audit_logs.csv');
             fs.writeFileSync(csvPath, csvLines.join('\n'));
-            console.log(`✅ Saved ${logs.length} logs to ${csvPath}`);
+            console.error(`✅ Saved ${logs.length} logs to ${csvPath}`);
         } else {
-            console.log("ℹ️  No logs found.");
+            if (process.argv.includes('--json')) process.stdout.write("[]");
+            else console.error("ℹ️  No logs found.");
         }
 
     } catch (err) {
         console.error("❌ Fatal Error in Node Script:", err);
-        // Don't exit 1 to avoid failing the whole workflow, just log error so Python uses fallback?
-        // But this IS the fallback.
         process.exit(1);
     }
 }
