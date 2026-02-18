@@ -112,8 +112,8 @@ def fetch_logs_in_windows(service, user_key, application_name, start_dt, end_dt)
         
     for w_start, w_end in windows:
         # print(f"    - Window: {w_start.strftime('%m-%d')} to {w_end.strftime('%m-%d')}")
-        start_str = w_start.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
-        end_str = w_end.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+        start_str = w_start.strftime('%Y-%m-%dT%H:%M:%SZ')
+        end_str = w_end.strftime('%Y-%m-%dT%H:%M:%SZ')
         
         events = fetch_logs_for_user(service, user_key, application_name, start_str, end_str)
         all_events.extend(events)
@@ -140,6 +140,8 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
                 
             response = service.activities().list(**params).execute()
             items = response.get('items', [])
+            if application_name == 'gmail' and items:
+                 print(f"    DEBUG: Fetched {len(items)} items. Sample Event Names: {[ev.get('name') for i in items[:5] for ev in i.get('events', [])]}")
             
             for item in items:
                 actor_email = item.get('actor', {}).get('email', '')
