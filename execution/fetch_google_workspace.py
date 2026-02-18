@@ -150,23 +150,31 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
                     keep = False
                     mapped_type = ""
                     
+                    effective_email = actor_email
+
                     if application_name == 'gmail':
                         if event_name == 'send':
                             keep = True
                             mapped_type = "Gmail Send"
-                        # Explicitly excluding 'delivery' events as they are passive/received
-                        # and user wants strictly 'Send' activity only.
-                                
+                        elif event_name == 'delivery':
+                             # Attribute 'delivery' events to the RECIPIENT
+                             for param in ev.get('parameters', []):
+                                 if param.get('name') == 'recipient':
+                                     effective_email = param.get('value')
+                                     keep = True
+                                     mapped_type = "Gmail Received"
+                                     break
+
                     elif application_name == 'drive':
                          if event_name in ['edit', 'create', 'upload']:
                              keep = True
                              mapped_type = f"Drive {event_name.capitalize()}"
                     
-                    if keep and actor_email:
+                    if keep and effective_email:
                         try:
                             dt = pd.to_datetime(timestamp)
                             events.append({
-                                "Name": map_name(actor_email),
+                                "Name": map_name(effective_email),
                                 "Date": dt.strftime('%m/%d/%y'),
                                 "timestamp_dt": dt,
                                 "Platform": "Google Workspace",
