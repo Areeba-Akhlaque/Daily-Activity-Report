@@ -120,10 +120,9 @@ def update_daily_audit(gc, sh):
     """
     Regenerate Daily Audit from all source tabs.
     
-    IMPORTANT: Creates a COMPLETE MATRIX with ALL combinations:
-    - Every Person × Every Date × Every Platform × Every Event Type
-    - Missing combinations get Count = 0
-    - This standardizes the pivot table output and makes comparison easier.
+    Aggregate actual activity data.
+    Note: Previously generated a complete matrix (including 0s), but this hit Google Sheet cell limits.
+    Now only stores existing activity rows (sparse).
     """
     print("\n=== [2/3] Updating Daily Audit (Complete Matrix) ===")
     
@@ -188,39 +187,26 @@ def update_daily_audit(gc, sh):
     
     print(f"  Found: {len(all_persons)} persons, {len(all_dates)} dates, {len(all_event_types)} event types")
     
-    # Create lookup dictionary for existing counts
+    # Use sparse data (only existing records) to avoid 10M cell limit
+    print("  Aggregating existing data (Sparse Matrix)...")
+    
     df = pd.DataFrame(all_data)
-    existing = df.groupby(['Team Member', 'Activity Date', 'Platform', 'Activity Type'])['Count'].sum().to_dict()
-    
-    # Generate COMPLETE MATRIX (all combinations including 0s)
-    print("  Generating complete matrix with all combinations...")
-    matrix_rows = []
-    
-    for person in sorted(all_persons):
-        for date in sorted(all_dates, key=lambda d: datetime.strptime(d, '%m/%d/%y'), reverse=True):
-            for (platform, event_type) in sorted(all_event_types):
-                key = (person, date, platform, event_type)
-                count = existing.get(key, 0)  # 0 if not found
-                
-                matrix_rows.append({
-                    'Team Member': person,
-                    'Activity Date': date,
-                    'Platform': platform,
-                    'Activity Type': event_type,
-                    'Count': count
-                })
-    
-    result = pd.DataFrame(matrix_rows)
+    if df.empty:
+        print("  [SKIP] No data found.")
+        return
+
+    # Group by key and sum counts
+    summary = df.groupby(['Team Member', 'Activity Date', 'Platform', 'Activity Type'])['Count'].sum().reset_index()
     
     # Sort: Date (newest first), then Platform, then Activity Type, then Person
-    result['sort_dt'] = pd.to_datetime(result['Activity Date'], format='%m/%d/%y', errors='coerce')
-    result = result.sort_values(
+    summary['sort_dt'] = pd.to_datetime(summary['Activity Date'], format='%m/%d/%y', errors='coerce')
+    result = summary.sort_values(
         by=['sort_dt', 'Platform', 'Activity Type', 'Team Member'], 
         ascending=[False, True, True, True]
     )
     result = result.drop(columns=['sort_dt'])
     
-    print(f"  Total matrix rows: {len(result)} (includes 0s for all combinations)")
+    print(f"  Total sparse rows: {len(result)}")
     
     # Upload in chunks (may be large)
     try:
