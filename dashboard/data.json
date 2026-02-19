@@ -197,6 +197,13 @@
       "Count": 4
     },
     {
+      "Team Member": "Cherry Aznar",
+      "Activity Date": "02/19/26",
+      "Platform": "ClickUp",
+      "Activity Type": "Comment Posted",
+      "Count": 1
+    },
+    {
       "Team Member": "James Hereford",
       "Activity Date": "02/19/26",
       "Platform": "ClickUp",
@@ -246,6 +253,13 @@
       "Count": 2
     },
     {
+      "Team Member": "Cherry Aznar",
+      "Activity Date": "02/19/26",
+      "Platform": "ClickUp",
+      "Activity Type": "task created",
+      "Count": 1
+    },
+    {
       "Team Member": "Areeba Akhlaque",
       "Activity Date": "02/19/26",
       "Platform": "ClickUp",
@@ -264,7 +278,7 @@
       "Activity Date": "02/19/26",
       "Platform": "ClickUp",
       "Activity Type": "task updated",
-      "Count": 4
+      "Count": 6
     },
     {
       "Team Member": "Jeniffer Rosa",
@@ -306,7 +320,7 @@
       "Activity Date": "02/19/26",
       "Platform": "Google Workspace",
       "Activity Type": "Drive Edit",
-      "Count": 16
+      "Count": 19
     },
     {
       "Team Member": "Bradd Schofield",
@@ -334,7 +348,7 @@
       "Activity Date": "02/19/26",
       "Platform": "Google Workspace",
       "Activity Type": "Gmail Send",
-      "Count": 8
+      "Count": 9
     },
     {
       "Team Member": "Bradd Schofield",
@@ -2483,7 +2497,7 @@
       "Activity Date": "02/12/26",
       "Platform": "ClickUp",
       "Activity Type": "task updated",
-      "Count": 9
+      "Count": 8
     },
     {
       "Team Member": "James Hereford",
@@ -6137,28 +6151,21 @@
       "Activity Date": "01/30/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 18
-    },
-    {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "01/30/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
+      "Count": 2
     },
     {
       "Team Member": "Saymond Montoya",
       "Activity Date": "01/30/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 6
+      "Count": 1
     },
     {
       "Team Member": "Victor Cheung",
       "Activity Date": "01/30/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 19
+      "Count": 1
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -6469,42 +6476,14 @@
       "Count": 1
     },
     {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "01/29/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
-    },
-    {
-      "Team Member": "Bilal Munir",
-      "Activity Date": "01/29/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 2
-    },
-    {
       "Team Member": "James Hereford",
       "Activity Date": "01/29/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 4
-    },
-    {
-      "Team Member": "Muhammad Farhan",
-      "Activity Date": "01/29/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 2
+      "Count": 3
     },
     {
       "Team Member": "Saymond Montoya",
-      "Activity Date": "01/29/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 2
-    },
-    {
-      "Team Member": "Victor Cheung",
       "Activity Date": "01/29/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
@@ -6872,7 +6851,7 @@
       "Activity Date": "01/28/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 2
+      "Count": 1
     },
     {
       "Team Member": "Bradd Schofield",
@@ -6886,7 +6865,7 @@
       "Activity Date": "01/28/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 42
+      "Count": 12
     },
     {
       "Team Member": "Jeniffer Rosa",
@@ -6896,25 +6875,11 @@
       "Count": 1
     },
     {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "01/28/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 9
-    },
-    {
-      "Team Member": "Saymond Montoya",
-      "Activity Date": "01/28/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 8
-    },
-    {
       "Team Member": "Victor Cheung",
       "Activity Date": "01/28/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 13
+      "Count": 1
     },
     {
       "Team Member": "Adriane Barredo",
@@ -7320,7 +7285,7 @@
       "Activity Date": "01/27/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 12
+      "Count": 7
     },
     {
       "Team Member": "Saymond Montoya",
@@ -7328,13 +7293,6 @@
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
       "Count": 2
-    },
-    {
-      "Team Member": "Victor Cheung",
-      "Activity Date": "01/27/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -7625,13 +7583,6 @@
     },
     {
       "Team Member": "Areeba Akhlaque",
-      "Activity Date": "01/26/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
-    },
-    {
-      "Team Member": "Bilal Munir",
       "Activity Date": "01/26/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
@@ -8461,7 +8412,7 @@
       "Activity Date": "01/22/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 2
+      "Count": 1
     },
     {
       "Team Member": "Bradd Schofield",
@@ -8475,7 +8426,7 @@
       "Activity Date": "01/22/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 14
+      "Count": 7
     },
     {
       "Team Member": "Jeniffer Rosa",
@@ -8492,25 +8443,11 @@
       "Count": 3
     },
     {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "01/22/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 2
-    },
-    {
       "Team Member": "Saymond Montoya",
       "Activity Date": "01/22/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 2
-    },
-    {
-      "Team Member": "Victor Cheung",
-      "Activity Date": "01/22/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 7
+      "Count": 1
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -9301,7 +9238,7 @@
       "Activity Date": "01/20/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 9
+      "Count": 4
     },
     {
       "Team Member": "Lena Klapper",
@@ -9309,20 +9246,6 @@
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
       "Count": 1
-    },
-    {
-      "Team Member": "Saymond Montoya",
-      "Activity Date": "01/20/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 3
-    },
-    {
-      "Team Member": "Victor Cheung",
-      "Activity Date": "01/20/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 4
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -9875,7 +9798,7 @@
       "Activity Date": "01/16/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 12
+      "Count": 10
     },
     {
       "Team Member": "Jeniffer Rosa",
@@ -9883,27 +9806,6 @@
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
       "Count": 2
-    },
-    {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "01/16/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
-    },
-    {
-      "Team Member": "Saymond Montoya",
-      "Activity Date": "01/16/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 4
-    },
-    {
-      "Team Member": "Victor Cheung",
-      "Activity Date": "01/16/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -10162,28 +10064,7 @@
       "Activity Date": "01/15/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 7
-    },
-    {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "01/15/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 2
-    },
-    {
-      "Team Member": "Saymond Montoya",
-      "Activity Date": "01/15/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 2
-    },
-    {
-      "Team Member": "Victor Cheung",
-      "Activity Date": "01/15/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
+      "Count": 5
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -10491,7 +10372,7 @@
       "Activity Date": "01/14/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 30
+      "Count": 6
     },
     {
       "Team Member": "Jeniffer Rosa",
@@ -10501,25 +10382,11 @@
       "Count": 5
     },
     {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "01/14/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 10
-    },
-    {
       "Team Member": "Saymond Montoya",
       "Activity Date": "01/14/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 15
-    },
-    {
-      "Team Member": "Victor Cheung",
-      "Activity Date": "01/14/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 14
+      "Count": 1
     },
     {
       "Team Member": "Bradd Schofield",
@@ -10820,7 +10687,7 @@
       "Activity Date": "01/13/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 18
+      "Count": 15
     },
     {
       "Team Member": "Jeniffer Rosa",
@@ -10835,27 +10702,6 @@
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
       "Count": 2
-    },
-    {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "01/13/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 2
-    },
-    {
-      "Team Member": "Saymond Montoya",
-      "Activity Date": "01/13/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
-    },
-    {
-      "Team Member": "Victor Cheung",
-      "Activity Date": "01/13/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -11121,7 +10967,7 @@
       "Activity Date": "01/12/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 8
+      "Count": 5
     },
     {
       "Team Member": "Jeniffer Rosa",
@@ -11132,13 +10978,6 @@
     },
     {
       "Team Member": "Lena Klapper",
-      "Activity Date": "01/12/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 3
-    },
-    {
-      "Team Member": "Victor Cheung",
       "Activity Date": "01/12/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
@@ -11821,14 +11660,7 @@
       "Activity Date": "01/08/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 26
-    },
-    {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "01/08/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 3
+      "Count": 20
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -12073,7 +11905,7 @@
       "Activity Date": "01/07/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 11
+      "Count": 8
     },
     {
       "Team Member": "Lena Klapper",
@@ -12328,25 +12160,11 @@
       "Count": 7
     },
     {
-      "Team Member": "James Hereford",
-      "Activity Date": "01/06/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
-    },
-    {
       "Team Member": "Lena Klapper",
       "Activity Date": "01/06/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
       "Count": 3
-    },
-    {
-      "Team Member": "Saymond Montoya",
-      "Activity Date": "01/06/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -12661,21 +12479,7 @@
       "Activity Date": "01/05/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 6
-    },
-    {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "01/05/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
-    },
-    {
-      "Team Member": "Saymond Montoya",
-      "Activity Date": "01/05/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
+      "Count": 5
     },
     {
       "Team Member": "Victor Cheung",
@@ -13777,13 +13581,6 @@
       "Count": 35
     },
     {
-      "Team Member": "James Hereford",
-      "Activity Date": "12/23/25",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
-    },
-    {
       "Team Member": "Bradd Schofield",
       "Activity Date": "12/23/25",
       "Platform": "ClickUp",
@@ -13915,20 +13712,6 @@
       "Platform": "Backendless App",
       "Activity Type": "Update UI Page Handler Logic",
       "Count": 8
-    },
-    {
-      "Team Member": "James Hereford",
-      "Activity Date": "12/22/25",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 2
-    },
-    {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "12/22/25",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -14132,20 +13915,6 @@
       "Platform": "Backendless App",
       "Activity Type": "Update Page UI",
       "Count": 9
-    },
-    {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "12/19/25",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
-    },
-    {
-      "Team Member": "Saymond Montoya",
-      "Activity Date": "12/19/25",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -14356,20 +14125,6 @@
       "Platform": "Backendless App",
       "Activity Type": "Update Page UI",
       "Count": 17
-    },
-    {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "12/18/25",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
-    },
-    {
-      "Team Member": "Victor Cheung",
-      "Activity Date": "12/18/25",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
     },
     {
       "Team Member": "Bradd Schofield",
@@ -14671,20 +14426,6 @@
       "Platform": "Backendless App",
       "Activity Type": "Update UI Page Handler Logic",
       "Count": 15
-    },
-    {
-      "Team Member": "James Hereford",
-      "Activity Date": "12/17/25",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
-    },
-    {
-      "Team Member": "Saymond Montoya",
-      "Activity Date": "12/17/25",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
     },
     {
       "Team Member": "Bradd Schofield",
@@ -49624,10 +49365,10 @@
       "Team Member": "Areeba Akhlaque",
       "Date": "02/19/26",
       "First Activity (PST)": "07:19 AM",
-      "Last Activity (PST)": "01:37 PM",
-      "Active Window (Hours)": 6.3,
+      "Last Activity (PST)": "01:56 PM",
+      "Active Window (Hours)": 6.6,
       "Longest Break (Minutes)": 105,
-      "Total Events": 196
+      "Total Events": 232
     },
     {
       "Team Member": "Bilal Munir",
@@ -49651,10 +49392,10 @@
       "Team Member": "Cherry Aznar",
       "Date": "02/19/26",
       "First Activity (PST)": "12:08 AM",
-      "Last Activity (PST)": "01:26 PM",
-      "Active Window (Hours)": 13.3,
+      "Last Activity (PST)": "01:42 PM",
+      "Active Window (Hours)": 13.6,
       "Longest Break (Minutes)": 470,
-      "Total Events": 192
+      "Total Events": 194
     },
     {
       "Team Member": "James Hereford",
@@ -49727,6 +49468,15 @@
       "Active Window (Hours)": 8.9,
       "Longest Break (Minutes)": 531,
       "Total Events": 2
+    },
+    {
+      "Team Member": "nicole.trodrigues@gmail.com",
+      "Date": "02/19/26",
+      "First Activity (PST)": "01:52 PM",
+      "Last Activity (PST)": "01:52 PM",
+      "Active Window (Hours)": 0,
+      "Longest Break (Minutes)": 0,
+      "Total Events": 3
     },
     {
       "Team Member": "Alexander Pavelko",
@@ -49817,15 +49567,6 @@
       "Active Window (Hours)": 1,
       "Longest Break (Minutes)": 61,
       "Total Events": 2
-    },
-    {
-      "Team Member": "Saifullah Khan",
-      "Date": "02/18/26",
-      "First Activity (PST)": "08:24 AM",
-      "Last Activity (PST)": "09:18 AM",
-      "Active Window (Hours)": 0.9,
-      "Longest Break (Minutes)": 21,
-      "Total Events": 5
     },
     {
       "Team Member": "Saymond Montoya",
@@ -50080,15 +49821,6 @@
       "Total Events": 221
     },
     {
-      "Team Member": "Saifullah Khan",
-      "Date": "02/16/26",
-      "First Activity (PST)": "06:21 AM",
-      "Last Activity (PST)": "01:28 PM",
-      "Active Window (Hours)": 7.1,
-      "Longest Break (Minutes)": 138,
-      "Total Events": 13
-    },
-    {
       "Team Member": "Saymond Montoya",
       "Date": "02/16/26",
       "First Activity (PST)": "10:09 AM",
@@ -50341,15 +50073,6 @@
       "Total Events": 3
     },
     {
-      "Team Member": "Saifullah Khan",
-      "Date": "02/13/26",
-      "First Activity (PST)": "05:25 AM",
-      "Last Activity (PST)": "05:33 AM",
-      "Active Window (Hours)": 0.1,
-      "Longest Break (Minutes)": 7,
-      "Total Events": 2
-    },
-    {
       "Team Member": "Saymond Montoya",
       "Date": "02/13/26",
       "First Activity (PST)": "09:01 AM",
@@ -50478,11 +50201,11 @@
     {
       "Team Member": "Saifullah Khan",
       "Date": "02/12/26",
-      "First Activity (PST)": "04:04 AM",
+      "First Activity (PST)": "09:23 AM",
       "Last Activity (PST)": "09:23 AM",
-      "Active Window (Hours)": 5.3,
-      "Longest Break (Minutes)": 204,
-      "Total Events": 4
+      "Active Window (Hours)": 0,
+      "Longest Break (Minutes)": 0,
+      "Total Events": 1
     },
     {
       "Team Member": "Saymond Montoya",
@@ -50554,7 +50277,7 @@
       "Last Activity (PST)": "11:40 PM",
       "Active Window (Hours)": 22,
       "Longest Break (Minutes)": 208,
-      "Total Events": 190
+      "Total Events": 187
     },
     {
       "Team Member": "Jeniffer Rosa",
@@ -50721,19 +50444,10 @@
     {
       "Team Member": "Muhammad Farhan",
       "Date": "02/10/26",
-      "First Activity (PST)": "05:41 AM",
-      "Last Activity (PST)": "06:46 AM",
-      "Active Window (Hours)": 1.1,
-      "Longest Break (Minutes)": 44,
-      "Total Events": 11
-    },
-    {
-      "Team Member": "Pvragon",
-      "Date": "02/10/26",
-      "First Activity (PST)": "04:35 AM",
-      "Last Activity (PST)": "06:26 AM",
-      "Active Window (Hours)": 1.8,
-      "Longest Break (Minutes)": 110,
+      "First Activity (PST)": "06:39 AM",
+      "Last Activity (PST)": "06:42 AM",
+      "Active Window (Hours)": 0.1,
+      "Longest Break (Minutes)": 3,
       "Total Events": 2
     },
     {
@@ -50824,7 +50538,7 @@
       "Last Activity (PST)": "11:24 PM",
       "Active Window (Hours)": 23.4,
       "Longest Break (Minutes)": 180,
-      "Total Events": 99
+      "Total Events": 97
     },
     {
       "Team Member": "Jeniffer Rosa",
@@ -50866,10 +50580,10 @@
       "Team Member": "Saifullah Khan",
       "Date": "02/09/26",
       "First Activity (PST)": "09:37 AM",
-      "Last Activity (PST)": "11:35 AM",
-      "Active Window (Hours)": 2,
-      "Longest Break (Minutes)": 116,
-      "Total Events": 3
+      "Last Activity (PST)": "09:37 AM",
+      "Active Window (Hours)": 0,
+      "Longest Break (Minutes)": 0,
+      "Total Events": 1
     },
     {
       "Team Member": "Saymond Montoya",
@@ -50991,11 +50705,11 @@
     {
       "Team Member": "James Hereford",
       "Date": "02/07/26",
-      "First Activity (PST)": "12:43 AM",
+      "First Activity (PST)": "03:21 AM",
       "Last Activity (PST)": "08:46 PM",
-      "Active Window (Hours)": 20.1,
-      "Longest Break (Minutes)": 212,
-      "Total Events": 17
+      "Active Window (Hours)": 17.4,
+      "Longest Break (Minutes)": 321,
+      "Total Events": 11
     },
     {
       "Team Member": "Lena Klapper",
@@ -51058,16 +50772,16 @@
       "Last Activity (PST)": "10:11 PM",
       "Active Window (Hours)": 19.6,
       "Longest Break (Minutes)": 104,
-      "Total Events": 105
+      "Total Events": 101
     },
     {
       "Team Member": "Juan Vidal",
       "Date": "02/06/26",
-      "First Activity (PST)": "05:43 AM",
+      "First Activity (PST)": "12:48 PM",
       "Last Activity (PST)": "04:55 PM",
-      "Active Window (Hours)": 11.2,
-      "Longest Break (Minutes)": 421,
-      "Total Events": 13
+      "Active Window (Hours)": 4.1,
+      "Longest Break (Minutes)": 125,
+      "Total Events": 11
     },
     {
       "Team Member": "Keeko Villaveces",
@@ -51184,7 +50898,7 @@
       "Last Activity (PST)": "09:17 PM",
       "Active Window (Hours)": 8.2,
       "Longest Break (Minutes)": 447,
-      "Total Events": 6
+      "Total Events": 5
     },
     {
       "Team Member": "Keeko Villaveces",
@@ -51313,15 +51027,6 @@
       "Total Events": 45
     },
     {
-      "Team Member": "Juan Vidal",
-      "Date": "02/04/26",
-      "First Activity (PST)": "12:22 PM",
-      "Last Activity (PST)": "12:33 PM",
-      "Active Window (Hours)": 0.2,
-      "Longest Break (Minutes)": 9,
-      "Total Events": 6
-    },
-    {
       "Team Member": "Keeko Villaveces",
       "Date": "02/04/26",
       "First Activity (PST)": "08:40 AM",
@@ -51432,11 +51137,11 @@
     {
       "Team Member": "Juan Vidal",
       "Date": "02/03/26",
-      "First Activity (PST)": "06:58 AM",
+      "First Activity (PST)": "01:08 PM",
       "Last Activity (PST)": "05:24 PM",
-      "Active Window (Hours)": 10.4,
-      "Longest Break (Minutes)": 370,
-      "Total Events": 3
+      "Active Window (Hours)": 4.3,
+      "Longest Break (Minutes)": 255,
+      "Total Events": 2
     },
     {
       "Team Member": "Keeko Villaveces",
@@ -51517,7 +51222,7 @@
       "Last Activity (PST)": "10:24 PM",
       "Active Window (Hours)": 14.9,
       "Longest Break (Minutes)": 150,
-      "Total Events": 212
+      "Total Events": 202
     },
     {
       "Team Member": "Bradd Schofield",
@@ -51700,15 +51405,6 @@
       "Total Events": 29
     },
     {
-      "Team Member": "Juan Vidal",
-      "Date": "01/31/26",
-      "First Activity (PST)": "07:54 AM",
-      "Last Activity (PST)": "07:56 AM",
-      "Active Window (Hours)": 0,
-      "Longest Break (Minutes)": 1,
-      "Total Events": 5
-    },
-    {
       "Team Member": "Lena Klapper",
       "Date": "01/31/26",
       "First Activity (PST)": "01:26 PM",
@@ -51751,7 +51447,7 @@
       "Last Activity (PST)": "08:47 PM",
       "Active Window (Hours)": 20,
       "Longest Break (Minutes)": 275,
-      "Total Events": 206
+      "Total Events": 186
     },
     {
       "Team Member": "Bradd Schofield",
@@ -51774,11 +51470,11 @@
     {
       "Team Member": "James Hereford",
       "Date": "01/30/26",
-      "First Activity (PST)": "12:41 AM",
+      "First Activity (PST)": "03:23 AM",
       "Last Activity (PST)": "11:05 PM",
-      "Active Window (Hours)": 22.4,
-      "Longest Break (Minutes)": 160,
-      "Total Events": 81
+      "Active Window (Hours)": 19.7,
+      "Longest Break (Minutes)": 134,
+      "Total Events": 74
     },
     {
       "Team Member": "Juan Vidal",
@@ -51815,15 +51511,6 @@
       "Active Window (Hours)": 0,
       "Longest Break (Minutes)": 0,
       "Total Events": 1
-    },
-    {
-      "Team Member": "Saifullah Khan",
-      "Date": "01/30/26",
-      "First Activity (PST)": "12:32 AM",
-      "Last Activity (PST)": "11:09 AM",
-      "Active Window (Hours)": 10.6,
-      "Longest Break (Minutes)": 368,
-      "Total Events": 25
     },
     {
       "Team Member": "Saymond Montoya",
@@ -51877,7 +51564,7 @@
       "Last Activity (PST)": "08:28 PM",
       "Active Window (Hours)": 19.6,
       "Longest Break (Minutes)": 390,
-      "Total Events": 222
+      "Total Events": 203
     },
     {
       "Team Member": "Bradd Schofield",
@@ -51901,10 +51588,10 @@
       "Team Member": "James Hereford",
       "Date": "01/29/26",
       "First Activity (PST)": "12:09 AM",
-      "Last Activity (PST)": "11:55 PM",
-      "Active Window (Hours)": 23.8,
+      "Last Activity (PST)": "11:22 PM",
+      "Active Window (Hours)": 23.2,
       "Longest Break (Minutes)": 299,
-      "Total Events": 101
+      "Total Events": 100
     },
     {
       "Team Member": "Jeniffer Rosa",
@@ -51914,15 +51601,6 @@
       "Active Window (Hours)": 0,
       "Longest Break (Minutes)": 0,
       "Total Events": 2
-    },
-    {
-      "Team Member": "Juan Vidal",
-      "Date": "01/29/26",
-      "First Activity (PST)": "02:33 PM",
-      "Last Activity (PST)": "02:33 PM",
-      "Active Window (Hours)": 0,
-      "Longest Break (Minutes)": 0,
-      "Total Events": 1
     },
     {
       "Team Member": "Keeko Villaveces",
@@ -51964,10 +51642,10 @@
       "Team Member": "Saifullah Khan",
       "Date": "01/29/26",
       "First Activity (PST)": "09:23 AM",
-      "Last Activity (PST)": "11:36 PM",
-      "Active Window (Hours)": 14.2,
-      "Longest Break (Minutes)": 849,
-      "Total Events": 3
+      "Last Activity (PST)": "09:23 AM",
+      "Active Window (Hours)": 0,
+      "Longest Break (Minutes)": 0,
+      "Total Events": 1
     },
     {
       "Team Member": "Saymond Montoya",
@@ -52021,7 +51699,7 @@
       "Last Activity (PST)": "08:52 PM",
       "Active Window (Hours)": 13.6,
       "Longest Break (Minutes)": 145,
-      "Total Events": 141
+      "Total Events": 110
     },
     {
       "Team Member": "Bradd Schofield",
@@ -52062,11 +51740,11 @@
     {
       "Team Member": "Juan Vidal",
       "Date": "01/28/26",
-      "First Activity (PST)": "07:22 AM",
+      "First Activity (PST)": "07:28 AM",
       "Last Activity (PST)": "12:12 PM",
-      "Active Window (Hours)": 4.8,
-      "Longest Break (Minutes)": 178,
-      "Total Events": 13
+      "Active Window (Hours)": 4.7,
+      "Longest Break (Minutes)": 182,
+      "Total Events": 8
     },
     {
       "Team Member": "Keeko Villaveces",
@@ -52103,15 +51781,6 @@
       "Active Window (Hours)": 8.7,
       "Longest Break (Minutes)": 522,
       "Total Events": 3
-    },
-    {
-      "Team Member": "Saifullah Khan",
-      "Date": "01/28/26",
-      "First Activity (PST)": "09:45 AM",
-      "Last Activity (PST)": "10:30 AM",
-      "Active Window (Hours)": 0.8,
-      "Longest Break (Minutes)": 22,
-      "Total Events": 8
     },
     {
       "Team Member": "Saymond Montoya",
@@ -52168,15 +51837,6 @@
       "Total Events": 206
     },
     {
-      "Team Member": "Bilal Munir",
-      "Date": "01/27/26",
-      "First Activity (PST)": "05:06 AM",
-      "Last Activity (PST)": "05:06 AM",
-      "Active Window (Hours)": 0,
-      "Longest Break (Minutes)": 0,
-      "Total Events": 1
-    },
-    {
       "Team Member": "Bradd Schofield",
       "Date": "01/27/26",
       "First Activity (PST)": "09:13 AM",
@@ -52201,7 +51861,7 @@
       "Last Activity (PST)": "11:47 PM",
       "Active Window (Hours)": 23.1,
       "Longest Break (Minutes)": 123,
-      "Total Events": 136
+      "Total Events": 135
     },
     {
       "Team Member": "Jeniffer Rosa",
@@ -52215,11 +51875,11 @@
     {
       "Team Member": "Juan Vidal",
       "Date": "01/27/26",
-      "First Activity (PST)": "07:32 AM",
-      "Last Activity (PST)": "06:11 PM",
-      "Active Window (Hours)": 10.7,
-      "Longest Break (Minutes)": 317,
-      "Total Events": 13
+      "First Activity (PST)": "08:08 AM",
+      "Last Activity (PST)": "08:39 AM",
+      "Active Window (Hours)": 0.5,
+      "Longest Break (Minutes)": 25,
+      "Total Events": 9
     },
     {
       "Team Member": "Keeko Villaveces",
@@ -52238,15 +51898,6 @@
       "Active Window (Hours)": 13.9,
       "Longest Break (Minutes)": 445,
       "Total Events": 192
-    },
-    {
-      "Team Member": "Saifullah Khan",
-      "Date": "01/27/26",
-      "First Activity (PST)": "09:14 AM",
-      "Last Activity (PST)": "09:14 AM",
-      "Active Window (Hours)": 0,
-      "Longest Break (Minutes)": 0,
-      "Total Events": 1
     },
     {
       "Team Member": "Saymond Montoya",
@@ -52297,10 +51948,10 @@
       "Team Member": "Bilal Munir",
       "Date": "01/26/26",
       "First Activity (PST)": "06:09 AM",
-      "Last Activity (PST)": "09:17 AM",
-      "Active Window (Hours)": 3.1,
-      "Longest Break (Minutes)": 139,
-      "Total Events": 5
+      "Last Activity (PST)": "06:11 AM",
+      "Active Window (Hours)": 0,
+      "Longest Break (Minutes)": 2,
+      "Total Events": 3
     },
     {
       "Team Member": "Bradd Schofield",
@@ -52328,15 +51979,6 @@
       "Active Window (Hours)": 12.3,
       "Longest Break (Minutes)": 499,
       "Total Events": 64
-    },
-    {
-      "Team Member": "Juan Vidal",
-      "Date": "01/26/26",
-      "First Activity (PST)": "04:12 PM",
-      "Last Activity (PST)": "04:20 PM",
-      "Active Window (Hours)": 0.1,
-      "Longest Break (Minutes)": 8,
-      "Total Events": 2
     },
     {
       "Team Member": "Keeko Villaveces",
@@ -52588,7 +52230,7 @@
       "Last Activity (PST)": "02:11 PM",
       "Active Window (Hours)": 6.6,
       "Longest Break (Minutes)": 374,
-      "Total Events": 11
+      "Total Events": 10
     },
     {
       "Team Member": "Lena Klapper",
@@ -52654,15 +52296,6 @@
       "Total Events": 162
     },
     {
-      "Team Member": "Bilal Munir",
-      "Date": "01/22/26",
-      "First Activity (PST)": "08:31 AM",
-      "Last Activity (PST)": "08:31 AM",
-      "Active Window (Hours)": 0,
-      "Longest Break (Minutes)": 0,
-      "Total Events": 1
-    },
-    {
       "Team Member": "Bradd Schofield",
       "Date": "01/22/26",
       "First Activity (PST)": "09:17 AM",
@@ -52704,8 +52337,8 @@
       "First Activity (PST)": "03:29 AM",
       "Last Activity (PST)": "09:43 AM",
       "Active Window (Hours)": 6.2,
-      "Longest Break (Minutes)": 207,
-      "Total Events": 4
+      "Longest Break (Minutes)": 373,
+      "Total Events": 3
     },
     {
       "Team Member": "Keeko Villaveces",
@@ -52733,15 +52366,6 @@
       "Active Window (Hours)": 0,
       "Longest Break (Minutes)": 0,
       "Total Events": 1
-    },
-    {
-      "Team Member": "Saifullah Khan",
-      "Date": "01/22/26",
-      "First Activity (PST)": "08:23 PM",
-      "Last Activity (PST)": "08:40 PM",
-      "Active Window (Hours)": 0.3,
-      "Longest Break (Minutes)": 16,
-      "Total Events": 2
     },
     {
       "Team Member": "Saymond Montoya",
@@ -52852,15 +52476,6 @@
       "Total Events": 3
     },
     {
-      "Team Member": "Saifullah Khan",
-      "Date": "01/21/26",
-      "First Activity (PST)": "11:38 AM",
-      "Last Activity (PST)": "12:28 PM",
-      "Active Window (Hours)": 0.8,
-      "Longest Break (Minutes)": 41,
-      "Total Events": 3
-    },
-    {
       "Team Member": "Saymond Montoya",
       "Date": "01/21/26",
       "First Activity (PST)": "08:51 AM",
@@ -52936,10 +52551,10 @@
       "Team Member": "Juan Vidal",
       "Date": "01/20/26",
       "First Activity (PST)": "06:36 AM",
-      "Last Activity (PST)": "02:25 PM",
-      "Active Window (Hours)": 7.8,
-      "Longest Break (Minutes)": 222,
-      "Total Events": 7
+      "Last Activity (PST)": "06:36 AM",
+      "Active Window (Hours)": 0,
+      "Longest Break (Minutes)": 0,
+      "Total Events": 2
     },
     {
       "Team Member": "Keeko Villaveces",
@@ -54472,17 +54087,17 @@
       "Total Events": 1
     }
   ],
-  "lastUpdated": "2026-02-19 13:38:36 PST",
+  "lastUpdated": "2026-02-19 13:57:57 PST",
   "stats": {
-    "totalAuditRows": 7087,
-    "totalTimeRows": 540,
+    "totalAuditRows": 7050,
+    "totalTimeRows": 526,
     "uniqueMembers": 36,
     "platforms": [
       "Google Workspace",
-      "ClickUp",
       "Figma",
-      "Backendless App",
-      "GitHub"
+      "ClickUp",
+      "GitHub",
+      "Backendless App"
     ]
   }
 }
