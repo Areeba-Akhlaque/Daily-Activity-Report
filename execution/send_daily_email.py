@@ -210,8 +210,9 @@ def get_chart_color(label, index):
     
     # Use a fixed palette to pick from based on hash
     palette = [
-        '#6366f1', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', 
-        '#ec4899', '#14b8a6', '#f97316', '#06b6d4', '#84cc16'
+        '#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', 
+        '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#008080', 
+        '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3'
     ]
     color = palette[abs(h) % len(palette)]
     return color
@@ -242,7 +243,12 @@ def generate_stacked_bar_chart(summary):
         'options': {
             'title': { 'display': True, 'text': 'Activity Breakdown by Member & Activity Type' },
             'tooltips': { 'mode': 'index', 'intersect': False },
-            'legend': { 'display': True, 'position': 'top', 'align': 'center' },
+            'legend': { 
+                'display': True, 
+                'position': 'top', 
+                'align': 'center',
+                'labels': { 'usePointStyle': False, 'boxWidth': 12 }
+            },
             'responsive': False,
             'scales': {
                 'xAxes': [{ 'stacked': True, 'ticks': { 'beginAtZero': True } }],
@@ -278,7 +284,7 @@ def generate_email_html(summary, chart_url=None):
             <td style="padding: 12px; border-bottom: 1px solid #eee;"><b>{m['name']}</b></td>
             <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;">{m['start']}</td>
             <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;">{m['end']}</td>
-            <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center; color: #277d5d; font-weight: bold;">{m['hours']}h</td>
+            <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center; color: #244d5d; font-weight: bold;">{m['hours']}h</td>
             <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;">{m['break']}m</td>
         </tr>
         """
@@ -303,7 +309,7 @@ def generate_email_html(summary, chart_url=None):
         <style>
             body {{ font-family: 'Lato', 'Segoe UI', Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 20px; }}
             .container {{ max-width: 800px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }}
-            .header {{ background: #277d5d; color: white; padding: 30px; text-align: center; }}
+            .header {{ background: #244d5d; color: white; padding: 30px; text-align: center; }}
             .header h1 {{ margin: 0; font-size: 26px; font-weight: 700; }}
             .header p {{ margin: 10px 0 0; opacity: 0.9; font-size: 14px; }}
             
@@ -319,9 +325,9 @@ def generate_email_html(summary, chart_url=None):
             th {{ text-align: center; padding: 12px; background: #f1f5f9; color: #475569; font-weight: 600; font-size: 11px; text-transform: uppercase; }}
             th:first-child {{ text-align: left; }}
             
-            .links {{ text-align: center; padding: 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: center; gap: 15px; }}
-            .button {{ display: inline-block; padding: 12px 24px; background: #277d5d; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px; transition: background 0.2s; }}
-            .button:hover {{ background: #1f664a; }}
+            .links {{ text-align: center; padding: 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: center; gap: 10px; }}
+            .button {{ display: inline-block; padding: 12px 24px; background: #244d5d; color: white !important; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px; transition: background 0.2s; }}
+            .button:hover {{ background: #1a3c4a; }}
             
             .footer {{ text-align: center; padding: 20px; color: #94a3b8; font-size: 12px; }}
             
@@ -341,7 +347,7 @@ def generate_email_html(summary, chart_url=None):
                 {chart_html}
                 
                 <!-- Expanded Activity Table -->
-                <h3 style="margin: 0 0 16px; font-size: 16px; color: #1e293b; border-left: 4px solid #277d5d; padding-left: 10px;">Daily Highlights Leaderboard</h3>
+                <h3 style="margin: 0 0 16px; font-size: 16px; color: #1e293b; border-left: 4px solid #244d5d; padding-left: 10px;">Daily Highlights Leaderboard</h3>
                 <div class="table-container">
                     <table>
                         <thead>
@@ -368,11 +374,11 @@ def generate_email_html(summary, chart_url=None):
             
             <div class="links">
                 <a href="{DASHBOARD_URL}" class="button">📊 Open Full Dashboard</a>
-                <a href="{SHEET_URL}" class="button">📅 View Source Spreadsheet</a>
+                <a href="{SHEET_URL}" class="button">📗 View Source Spreadsheet</a>
             </div>
             
             <div class="footer">
-                Generated automatically by Pvragon Bot • {datetime.now().strftime('%I:%M %p')} • v2.0 (Teal Theme)
+                Generated automatically by Pvragon Bot • {datetime.now().strftime('%I:%M %p')} • v2.1 (Pvragon Teal)
             </div>
         </div>
     </body>
@@ -449,7 +455,7 @@ def main():
     html = generate_email_html(summary, chart_url)
     
     # Send Email
-    subject = f"[v2.0] Daily Activity Audit - {summary['date']}"
+    subject = f"[v2.1] Daily Activity Audit - {summary['date']}"
     if summary.get('time_range'):
         subject += f" ({summary['time_range']})"
         
