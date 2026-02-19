@@ -159,7 +159,13 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
                         if event_name == 'send':
                             keep = True
                             mapped_type = "Gmail Send"
-                            
+                        elif event_name in ['delivery', 'receive']:
+                             for param in ev.get('parameters', []):
+                                 if param.get('name') == 'recipient':
+                                     effective_email = param.get('value')
+                                     keep = True
+                                     mapped_type = "Gmail Received"
+                                     break
                     elif application_name == 'drive':
                          if event_name in ['edit', 'create', 'upload']:
                              keep = True
