@@ -15,6 +15,7 @@ from email.mime.multipart import MIMEMultipart
 import smtplib
 import requests
 from email.mime.image import MIMEImage
+import pytz
 
 from collections import defaultdict
 import gspread
@@ -78,27 +79,32 @@ def get_daily_summary(creds):
     gc = gspread.authorize(creds)
     sh = gc.open_by_key(SHEET_ID)
     
-    # Get Date Logic (Today vs Yesterday if run early)
-    today = datetime.now()
-    today_str = today.strftime('%m/%d/%y')
-    yesterday_str = (today - timedelta(days=1)).strftime('%m/%d/%y')
-    print(f"Target Date (Today): {today_str}")
+    # Get Date Logic (PST-aware)
+    # If currently morning in PST (< 12 PM), default to YESTERDAY to capture full previous day.
+    pst = pytz.timezone('America/Los_Angeles')
+    now_pst = datetime.now(pst)
+    
+    if now_pst.hour < 12:
+        target_date_dt = now_pst - timedelta(days=1)
+        print(f"Morning Run (PST {now_pst.strftime('%H:%M')}): Targeting Yesterday ({target_date_dt.strftime('%m/%d/%y')})")
+    else:
+        target_date_dt = now_pst
+        print(f"Afternoon/Evening Run (PST {now_pst.strftime('%H:%M')}): Targeting Today ({target_date_dt.strftime('%m/%d/%y')})")
+        
+    target_date = target_date_dt.strftime('%m/%d/%y')
+    print(f"Target Date: {target_date}")
     
     # 1. Fetch Activity Time Analysis
     try:
         print("  Reading 'Activity Time Analysis'...")
         ws_time = sh.worksheet('Activity Time Analysis')
         time_data = ws_time.get_all_records()
-        today_time = [r for r in time_data if r.get('Date') == today_str]
-        yesterday_time = [r for r in time_data if r.get('Date') == yesterday_str]
-        
-        target_date = today_str if today_time else yesterday_str
-        target_time_data = today_time if today_time else yesterday_time
+        # Filter for target date
+        target_time_data = [r for r in time_data if r.get('Date') == target_date]
         print(f"    Found {len(target_time_data)} time records for {target_date}")
         
     except Exception as e:
         print(f"    [WARN] Error fetching Time Analysis: {e}")
-        target_date = today_str
         target_time_data = []
 
     # 2. Fetch Daily Audit
