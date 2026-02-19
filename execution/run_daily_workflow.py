@@ -51,7 +51,7 @@ def load_env():
                     key, value = line.split('=', 1)
                     os.environ[key] = value
                     if 'BACKENDLESS' in key:
-                         print(f"Loaded {key} from .env")
+                         print(f"Loaded {key} (len={len(value)}) from .env")
 
 def main():
     load_env()
