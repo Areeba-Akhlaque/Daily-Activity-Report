@@ -168,9 +168,19 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
                         # msg_id = next((p['value'] for p in ev.get('parameters', []) if p['name'] == 'message_id'), None)
 
                     elif application_name == 'drive':
-                         if event_name in ['edit', 'create', 'upload']:
+                         if event_name in ['edit', 'create', 'upload', 'view', 'download', 'preview', 'rename', 'move', 'delete']:
                              keep = True
                              mapped_type = f"Drive {event_name.capitalize()}"
+                    
+                    elif application_name == 'calendar':
+                        if event_name in ['create_event', 'edit_event', 'delete_event', 'respond_event']:
+                            keep = True
+                            mapped_type = "Calendar Activity"
+                            
+                    elif application_name == 'meet':
+                        if event_name in ['call_end', 'join_meeting']:
+                            keep = True
+                            mapped_type = "Meet Activity"
                     
                     if keep and effective_email:
                         # DEDUPLICATION
@@ -260,6 +270,16 @@ def fetch_all_google_workspace(creds):
         all_events.extend(events)
     except Exception as e:
         print(f"  [Drive Error] {e}")
+
+    # 3. CALENDAR & MEET FETCH
+    for app in ['calendar', 'meet']:
+        print(f"\n[{app.capitalize()}] Scanning 'all' users...")
+        try:
+            events = fetch_logs_in_windows(service, 'all', app, start_dt, end_dt)
+            print(f"  Found {len(events)} {app.capitalize()} events.")
+            all_events.extend(events)
+        except Exception as e:
+            print(f"  [{app.capitalize()} Error] {e}")
 
     return all_events
 

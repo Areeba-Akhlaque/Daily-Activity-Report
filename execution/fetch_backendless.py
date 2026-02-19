@@ -265,7 +265,7 @@ def fetch_backendless_events_raw():
             
             # UTC to PST
             dt = pd.to_datetime(ts, unit='s').tz_localize('UTC').tz_convert('America/Los_Angeles')
-            events.append({'raw_name': email, 'timestamp': dt})
+            events.append({'raw_name': email, 'timestamp': dt, 'app': 'Backendless'})
         except: continue
     return events
 

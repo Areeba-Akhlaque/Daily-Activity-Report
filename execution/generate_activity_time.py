@@ -71,7 +71,7 @@ def fetch_google_workspace_events(creds):
     events = []
     headers = {'Authorization': f'Bearer {creds.token}'}
     
-    for app in ['drive', 'gmail']:
+    for app in ['drive', 'gmail', 'calendar', 'meet']:
         start_dt = datetime.strptime(START_DATE, '%Y-%m-%d').replace(tzinfo=timezone.utc)
         now_dt = datetime.now(timezone.utc)
         current_start = start_dt
@@ -111,7 +111,7 @@ def fetch_google_workspace_events(creds):
                         if ts:
                             try:
                                 dt = pd.to_datetime(ts).tz_convert(PST)
-                                events.append({'raw_name': email, 'timestamp': dt})
+                                events.append({'raw_name': email, 'timestamp': dt, 'app': f"GW:{app.capitalize()}"})
                             except:
                                 pass
                     
@@ -163,7 +163,7 @@ def fetch_github_events():
                             # Strict PST conversion
                             dt = pd.to_datetime(created).tz_convert(PST)
                             if dt >= start_dt_pst:
-                                events.append({'raw_name': actor, 'timestamp': dt})
+                                events.append({'raw_name': actor, 'timestamp': dt, 'app': 'GitHub'})
                         except:
                             pass
             except:
@@ -205,7 +205,7 @@ def fetch_clickup_events_wrapped():
             ts = e.get('timestamp') # ms
             try:
                 dt = pd.to_datetime(ts, unit='ms').tz_localize('UTC').tz_convert(PST)
-                processed.append({'raw_name': raw_n, 'timestamp': dt})
+                processed.append({'raw_name': raw_n, 'timestamp': dt, 'app': 'ClickUp'})
             except: pass
         print(f'  ClickUp: {len(processed)} events')
         return processed
@@ -227,7 +227,7 @@ def fetch_figma_events_wrapped():
             dt = e.get('timestamp')
             name = e.get('Name')
             if dt and name:
-                 processed.append({'raw_name': name, 'timestamp': dt})
+                 processed.append({'raw_name': name, 'timestamp': dt, 'app': 'Figma'})
         print(f'  Figma: {len(processed)} events')
         return processed
     except Exception as e:
@@ -336,7 +336,8 @@ def generate_activity_time_analysis(creds):
             'Last Activity (PST)': last.strftime('%I:%M %p'),
             'Active Window (Hours)': round(active_duration_hours, 1), # Now Duration
             'Longest Break (Minutes)': int(longest_gap),
-            'Total Events': len(times)
+            'Total Events': len(times),
+            'Platform Distribution': ", ".join(group['app'].unique() if 'app' in group.columns else group['Platform'].unique() if 'Platform' in group.columns else ['Unknown'])
         })
     
     result_df = pd.DataFrame(results)

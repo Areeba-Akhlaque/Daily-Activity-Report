@@ -111,12 +111,13 @@ def fetch_task_activity():
                 # 3. task updated (based on last update)
                 d_u = int(t.get('date_updated') or 0)
                 if d_u >= START_TS_MS:
-                    # Avoid double counting exact same timestamp as creation or completion?
-                    # Actually, if date_updated > date_created, it's an update event.
-                    if d_u > d_c and d_u != (int(d_done or 0)):
-                        assignees = t.get('assignees', [])
-                        uid = str(assignees[0].get('id')) if assignees else str(t.get('creator', {}).get('id', ''))
-                        events.append({"user_id": uid, "timestamp": d_u, "event_type": "task updated"})
+                    # ONLY count if assignee is explicitly the user who triggered the update?
+                    # ClickUp V2 API doesn't show 'updated_by' in list view.
+                    # We will REDUCE weight of these events or rely more on comments/chat for precise time.
+                    assignees = t.get('assignees', [])
+                    uid = str(assignees[0].get('id')) if assignees else str(t.get('creator', {}).get('id', ''))
+                    # We add a flag 'is_uncertain_attribution' if needed, but for now we keep as is but note it.
+                    events.append({"user_id": uid, "timestamp": d_u, "event_type": "task updated"})
 
                 # 4. Comments (These are always attributed correctly)
                 # Note: We still fetch comments as they are reliable user-attributed logs.
