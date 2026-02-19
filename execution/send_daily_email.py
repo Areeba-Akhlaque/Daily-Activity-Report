@@ -242,7 +242,7 @@ def generate_stacked_bar_chart(summary):
         'options': {
             'title': { 'display': True, 'text': 'Activity Breakdown by Member & Activity Type' },
             'tooltips': { 'mode': 'index', 'intersect': False },
-            'legend': { 'display': True, 'position': 'right', 'align': 'start' },
+            'legend': { 'display': True, 'position': 'top', 'align': 'center' },
             'responsive': False,
             'scales': {
                 'xAxes': [{ 'stacked': True, 'ticks': { 'beginAtZero': True } }],
@@ -269,7 +269,7 @@ def generate_stacked_bar_chart(summary):
 def generate_email_html(summary, chart_url=None):
     """Generate HTML email content with detailed leaderboard."""
     
-    # Generate Rows
+    # Generate Rows (Removed Events and Top Platform columns)
     rows_html = ""
     for m in summary['members']:
         if m['events'] == 0: continue
@@ -278,10 +278,8 @@ def generate_email_html(summary, chart_url=None):
             <td style="padding: 12px; border-bottom: 1px solid #eee;"><b>{m['name']}</b></td>
             <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;">{m['start']}</td>
             <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;">{m['end']}</td>
-            <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center; color: #6366f1; font-weight: bold;">{m['hours']}h</td>
+            <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center; color: #277d5d; font-weight: bold;">{m['hours']}h</td>
             <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;">{m['break']}m</td>
-            <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;">{m['events']}</td>
-            <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><span style="background: #eef2ff; color: #4f46e5; padding: 4px 8px; border-radius: 12px; font-size: 11px;">{m['top_platform']}</span></td>
         </tr>
         """
     
@@ -305,9 +303,9 @@ def generate_email_html(summary, chart_url=None):
         <style>
             body {{ font-family: 'Lato', 'Segoe UI', Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 20px; }}
             .container {{ max-width: 800px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }}
-            .header {{ background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); color: white; padding: 30px; text-align: center; }}
+            .header {{ background: #277d5d; color: white; padding: 30px; text-align: center; }}
             .header h1 {{ margin: 0; font-size: 26px; font-weight: 700; }}
-            .header p {{ margin: 10px 0 0; opacity: 0.8; font-size: 14px; }}
+            .header p {{ margin: 10px 0 0; opacity: 0.9; font-size: 14px; }}
             
             .content {{ padding: 24px; }}
             
@@ -321,9 +319,9 @@ def generate_email_html(summary, chart_url=None):
             th {{ text-align: center; padding: 12px; background: #f1f5f9; color: #475569; font-weight: 600; font-size: 11px; text-transform: uppercase; }}
             th:first-child {{ text-align: left; }}
             
-            .links {{ text-align: center; padding: 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; }}
-            .button {{ display: inline-block; padding: 12px 24px; background: #6366f1; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px; transition: background 0.2s; }}
-            .button:hover {{ background: #4f46e5; }}
+            .links {{ text-align: center; padding: 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: center; gap: 15px; }}
+            .button {{ display: inline-block; padding: 12px 24px; background: #277d5d; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px; transition: background 0.2s; }}
+            .button:hover {{ background: #1f664a; }}
             
             .footer {{ text-align: center; padding: 20px; color: #94a3b8; font-size: 12px; }}
             
@@ -336,14 +334,14 @@ def generate_email_html(summary, chart_url=None):
             <div class="header">
                 <h1>Pvragon Daily Activity Report</h1>
                 <p style="font-size: 16px; font-weight: bold; margin-bottom: 4px;">{summary['date']}</p>
-                <p style="font-size: 12px; opacity: 0.7;">Time Range: {summary.get('time_range', 'All Day PST')}</p>
+                <p style="font-size: 12px; opacity: 0.9;">Time Range: {summary.get('time_range', 'All Day PST')}</p>
             </div>
             
             <div class="content">
                 {chart_html}
                 
                 <!-- Expanded Activity Table -->
-                <h3 style="margin: 0 0 16px; font-size: 16px; color: #1e293b; border-left: 4px solid #6366f1; padding-left: 10px;">Daily Highlights Leaderboard</h3>
+                <h3 style="margin: 0 0 16px; font-size: 16px; color: #1e293b; border-left: 4px solid #277d5d; padding-left: 10px;">Daily Highlights Leaderboard</h3>
                 <div class="table-container">
                     <table>
                         <thead>
@@ -351,10 +349,8 @@ def generate_email_html(summary, chart_url=None):
                                 <th>Name</th>
                                 <th>First Event</th>
                                 <th>Last Event</th>
-                                <th>Duration</th>
+                                <th>Active Hours</th>
                                 <th>Max Break</th>
-                                <th>Events</th>
-                                <th>Top Platform</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -372,7 +368,7 @@ def generate_email_html(summary, chart_url=None):
             
             <div class="links">
                 <a href="{DASHBOARD_URL}" class="button">📊 Open Full Dashboard</a>
-                <p style="margin-top: 12px; font-size: 12px;"><a href="{SHEET_URL}" style="color: #6366f1; text-decoration: none;">View Source Spreadsheet</a></p>
+                <a href="{SHEET_URL}" class="button">📅 View Source Spreadsheet</a>
             </div>
             
             <div class="footer">

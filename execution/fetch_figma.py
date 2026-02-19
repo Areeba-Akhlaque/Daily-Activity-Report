@@ -90,6 +90,7 @@ def fetch_files_for_projects(projects):
                         user_name = c.get('user', {}).get('handle', 'Unknown')
                         all_events.append({
                             "Name": user_name, "Date": created_dt.strftime('%m/%d/%y'),
+                            "timestamp": created_dt,
                             "Event Type": "Comment Posted", "Platform": "Figma"
                         })
                         pass
@@ -112,6 +113,7 @@ def fetch_files_for_projects(projects):
                              if user.lower() != 'figma':
                                  all_events.append({
                                      "Name": user, "Date": v_dt.strftime('%m/%d/%y'),
+                                     "timestamp": v_dt,
                                      "Event Type": "File Created", "Platform": "Figma"
                                  })
 
@@ -125,6 +127,7 @@ def fetch_files_for_projects(projects):
                             if user.lower() != 'figma':
                                  all_events.append({
                                      "Name": user, "Date": v_dt.strftime('%m/%d/%y'),
+                                     "timestamp": v_dt,
                                      "Event Type": "File Edited", "Platform": "Figma"
                                  })
             

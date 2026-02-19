@@ -32,6 +32,8 @@ ROOT_DIR = os.path.dirname(SCRIPT_DIR)
 # Import name mappings
 sys.path.insert(0, SCRIPT_DIR)
 from name_mappings import map_name, should_exclude
+import fetch_clickup
+import fetch_figma
 
 SHEET_ID = '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo'
 PST = pytz.timezone('America/Los_Angeles')
@@ -64,7 +66,7 @@ def get_creds():
 
 def fetch_google_workspace_events(creds):
     """Fetch events from Google Workspace (Drive, Gmail) with timestamps."""
-    print('[1/2] Fetching Google Workspace events...')
+    print('[1/5] Fetching Google Workspace events...')
     events = []
     headers = {'Authorization': f'Bearer {creds.token}'}
     
@@ -104,12 +106,6 @@ def fetch_google_workspace_events(creds):
                         if not email or actor.get('callerType') == 'KEY':
                             continue
                         
-                        # Filter Gmail: 'delivery' with mail_event_type==1 means SEND
-                        if app == 'gmail':
-                            # We trust the API filter, but good to verify event name presence
-                            # Pass through 'delivery' events
-                            pass
-
                         ts = item.get('id', {}).get('time', '')
                         if ts:
                             try:
@@ -133,7 +129,7 @@ def fetch_google_workspace_events(creds):
 
 def fetch_github_events():
     """Fetch events from GitHub with timestamps."""
-    print('[2/2] Fetching GitHub events...')
+    print('[2/5] Fetching GitHub events...')
     events = []
     
     github_token = os.environ.get('GITHUB_TOKEN', os.environ.get('GH_PAT', ''))
@@ -163,6 +159,7 @@ def fetch_github_events():
                     actor = ev.get('actor', {}).get('login', '')
                     if created and actor:
                         try:
+                            # Strict PST conversion
                             dt = pd.to_datetime(created).tz_convert(PST)
                             if dt >= start_dt_pst:
                                 events.append({'raw_name': actor, 'timestamp': dt})
@@ -180,7 +177,7 @@ def fetch_github_events():
 
 def fetch_backendless_events():
     """Fetch events from Backendless CSV with timestamps."""
-    print('[3/3] Fetching Backendless events...')
+    print('[3/5] Fetching Backendless events...')
     events = []
     
     csv_path = os.path.join(ROOT_DIR, 'console_audit_logs.csv')
@@ -190,12 +187,21 @@ def fetch_backendless_events():
         
     try:
         df = pd.read_csv(csv_path)
-        # Parse timestamps
         if 'timestamp' in df.columns:
-            # Backendless timestamps are milliseconds
-            df['dt'] = pd.to_datetime(df['timestamp'], unit='ms').dt.tz_localize(timezone.utc).dt.tz_convert(PST)
+            # Backendless timestamps are milliseconds or seconds
+            # Use same logic as fetch_backendless.py: strict PST
             
-            # Parse developer email
+            # Helper to convert safely
+            def to_pst(ts):
+                try:
+                    ts = float(ts)
+                    if ts > 9999999999: ts = ts / 1000.0
+                    return pd.to_datetime(ts, unit='s').tz_localize('UTC').tz_convert(PST)
+                except: return None
+                
+            df['dt'] = df['timestamp'].apply(to_pst)
+            df = df.dropna(subset=['dt'])
+            
             def get_email(dev_str):
                 s = str(dev_str).strip()
                 if not s or s == 'nan' or s == 'None': return ''
@@ -206,13 +212,9 @@ def fetch_backendless_events():
                 return s
             
             df['email'] = df['developer'].apply(get_email)
-            
             start_dt = pd.to_datetime(START_DATE).tz_localize(PST)
             
-            # Filter
-            cutoff = df['dt'] >= start_dt
-            
-            for _, row in df[cutoff].iterrows():
+            for _, row in df[df['dt'] >= start_dt].iterrows():
                 if row['email']:
                     events.append({'raw_name': row['email'], 'timestamp': row['dt']})
                     
@@ -221,6 +223,53 @@ def fetch_backendless_events():
         
     print(f'  Backendless: {len(events)} events')
     return events
+
+
+def fetch_clickup_events_wrapped():
+    """Fetch ClickUp events via fetch_clickup module."""
+    print('[4/5] Fetching ClickUp events...')
+    try:
+        fetch_clickup.fetch_users()
+        tasks, tids = fetch_clickup.fetch_task_activity()
+        comments = fetch_clickup.fetch_comments_for_active_tasks(tids)
+        chats = fetch_clickup.fetch_chat_activity()
+        
+        processed = []
+        raw_events = tasks + comments + chats
+        for e in raw_events:
+            uid = e.get('user_id')
+            raw_n = fetch_clickup.USER_CACHE.get(str(uid), f"User {uid}")
+            ts = e.get('timestamp') # ms
+            try:
+                dt = pd.to_datetime(ts, unit='ms').tz_localize('UTC').tz_convert(PST)
+                processed.append({'raw_name': raw_n, 'timestamp': dt})
+            except: pass
+        print(f'  ClickUp: {len(processed)} events')
+        return processed
+    except Exception as e:
+        print(f'  ClickUp Fetch Error: {e}')
+        return []
+
+
+def fetch_figma_events_wrapped():
+    """Fetch Figma events via fetch_figma module."""
+    print('[5/5] Fetching Figma events...')
+    try:
+        projects = fetch_figma.fetch_projects()
+        raw_events = fetch_figma.fetch_files_for_projects(projects)
+        
+        processed = []
+        for e in raw_events:
+            # We updated fetch_figma to include 'timestamp' (PST-aware)
+            dt = e.get('timestamp')
+            name = e.get('Name')
+            if dt and name:
+                 processed.append({'raw_name': name, 'timestamp': dt})
+        print(f'  Figma: {len(processed)} events')
+        return processed
+    except Exception as e:
+        print(f'  Figma Fetch Error: {e}')
+        return []
 
 
 def generate_activity_time_analysis(creds):
@@ -234,8 +283,10 @@ def generate_activity_time_analysis(creds):
     gw_events = fetch_google_workspace_events(creds)
     gh_events = fetch_github_events()
     bl_events = fetch_backendless_events()
+    cu_events = fetch_clickup_events_wrapped()
+    fi_events = fetch_figma_events_wrapped()
     
-    all_events = gw_events + gh_events + bl_events
+    all_events = gw_events + gh_events + bl_events + cu_events + fi_events
     
     if not all_events:
         print('[SKIP] No events found')
@@ -248,7 +299,7 @@ def generate_activity_time_analysis(creds):
     
     # Filter exclusions
     all_events = [e for e in all_events if not should_exclude(e['name'])]
-    print(f'After filtering: {len(all_events)} events')
+    print(f'After filtering and mapping: {len(all_events)} events')
     
     if not all_events:
         print('[SKIP] No events after filtering')
@@ -260,12 +311,53 @@ def generate_activity_time_analysis(creds):
     
     # Group by NAME + DATE and calculate metrics
     results = []
+    
+    SESSION_GAP_MINUTES = 30 # Gap > 30 mins starts new session
+    
     for (name, date), group in df.groupby(['name', 'date']):
         times = sorted(group['timestamp'].tolist())
         first = times[0]
         last = times[-1]
         
-        # Calculate longest break
+        # Calculate Duration (Sum of Sessions)
+        # Start first session with minimum 5 mins
+        total_work_seconds = 0
+        current_session_start = first
+        current_session_end = first
+        
+        # If single event
+        if len(times) == 1:
+            total_work_seconds = 5 * 60 # 5 minutes credit
+        else:
+            # Iterate
+            for i in range(1, len(times)):
+                t_prev = times[i-1]
+                t_curr = times[i]
+                gap = (t_curr - t_prev).total_seconds() / 60.0
+                
+                if gap > SESSION_GAP_MINUTES:
+                    # Session Break
+                    # Add duration of previous session
+                    # Min credit for session? E.g. at least 5 mins?
+                    session_len = (t_prev - current_session_start).total_seconds()
+                    
+                    if session_len < (5*60): session_len = (5*60) # Min 5 mins per block
+                    total_work_seconds += session_len
+                    
+                    # Start new session
+                    current_session_start = t_curr
+                
+                # Update current session end
+                current_session_end = t_curr
+            
+            # Add final session
+            session_len = (current_session_end - current_session_start).total_seconds()
+            if session_len < (5*60): session_len = (5*60)
+            total_work_seconds += session_len
+
+        active_duration_hours = total_work_seconds / 3600.0
+        
+        # Calculate longest break (same as before)
         longest_gap = 0
         if len(times) > 1:
             for i in range(1, len(times)):
@@ -273,20 +365,12 @@ def generate_activity_time_analysis(creds):
                 if gap > longest_gap:
                     longest_gap = gap
         
-        # Active window
-        active_window = (last - first).total_seconds() / 3600
-        
-        # Data Integrity: If multiple events exist but duration is 0 (same minute), 
-        # set minimum 0.1 hours (6 mins) to reflect activity burst.
-        if active_window == 0 and len(times) > 1:
-            active_window = 0.1
-        
         results.append({
             'Team Member': name,
             'Date': date,
             'First Activity (PST)': first.strftime('%I:%M %p'),
             'Last Activity (PST)': last.strftime('%I:%M %p'),
-            'Active Window (Hours)': round(active_window, 1),
+            'Active Window (Hours)': round(active_duration_hours, 1), # Now Duration
             'Longest Break (Minutes)': int(longest_gap),
             'Total Events': len(times)
         })
