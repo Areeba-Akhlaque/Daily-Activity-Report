@@ -13,6 +13,8 @@ from datetime import datetime, timedelta
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import smtplib
+import requests
+from email.mime.image import MIMEImage
 
 from collections import defaultdict
 import gspread
@@ -129,16 +131,20 @@ def get_daily_summary(creds):
 
     # From Daily Audit (Platform & Count verification)
     platform_counts = defaultdict(lambda: defaultdict(int)) # Member -> Platform -> Count
+    type_counts = defaultdict(lambda: defaultdict(int))     # Member -> Type -> Count
     global_plat_counts = defaultdict(int)
     total_activities = 0
     
     for r in target_audit_data:
         name = r.get('Team Member')
         plat = r.get('Platform')
+        act_type = r.get('Activity Type') 
         count = safe_int(r.get('Count'))
         
         if count > 0:
-            if name: platform_counts[name][plat] += count
+            if name: 
+                platform_counts[name][plat] += count
+                if act_type: type_counts[name][act_type] += count
             if plat: global_plat_counts[plat] += count
             total_activities += count
             
@@ -148,7 +154,7 @@ def get_daily_summary(creds):
                     'name': name, 'start': '-', 'end': '-', 'hours': 0.0, 'break': 0, 'events': 0, 'top_platform': '-'
                 }
 
-    # Calculate Top Platform per member
+    # Calculate Top Platform per member & Add Type Counts
     for name, plats in platform_counts.items():
         if not plats or name not in member_stats: continue
         top_plat = max(plats.items(), key=lambda x: x[1])[0]
@@ -156,11 +162,15 @@ def get_daily_summary(creds):
         # Sync event count if missing
         if member_stats[name]['events'] == 0:
              member_stats[name]['events'] = sum(plats.values())
+        
+        # Add detailed breakdowns
+        member_stats[name]['platform_breakdown'] = dict(plats)
+        member_stats[name]['type_breakdown'] = dict(type_counts[name])
 
     # Sort members
     sorted_members = sorted(member_stats.values(), key=lambda x: (x['hours'], x['events']), reverse=True)
     
-    # Aggregate Metrics
+    # Aggregate Metrics (User requested removal from email, but still useful in structure)
     active_mems_list = [m for m in sorted_members if m['events'] > 0]
     active_members_count = len(active_mems_list)
     
@@ -178,8 +188,73 @@ def get_daily_summary(creds):
         'avg_hours': round(avg_hours, 1),
         'avg_break': round(avg_break),
         'members': sorted_members,
-        'platform_counts': dict(global_plat_counts)
+        'platform_counts': dict(global_plat_counts),
+        'all_types': list(set(t for m in type_counts.values() for t in m.keys())) # For chart labels
     }
+
+
+
+def get_chart_color(label, index):
+    """Generate consistent color based on label hash. Matches dashboard style consistently."""
+    # Dashboard palette logic: simple hash
+    h = 0
+    for char in label:
+        h = ord(char) + ((h << 5) - h)
+    
+    # Use a fixed palette to pick from based on hash
+    palette = [
+        '#6366f1', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', 
+        '#ec4899', '#14b8a6', '#f97316', '#06b6d4', '#84cc16'
+    ]
+    color = palette[abs(h) % len(palette)]
+    return color
+
+def generate_stacked_bar_chart(summary):
+    """Generate a stacked horizontal bar chart for Activity Types per Member using QuickChart.io."""
+    active_members = [m for m in summary['members'] if m['events'] > 0]
+    if not active_members: return None
+        
+    names = [m['name'] for m in active_members]
+    # Get all unique types present in active members
+    types = sorted(list(set(t for m in active_members for t in m.get('type_breakdown', {}).keys())))
+    
+    datasets = []
+    for idx, t in enumerate(types):
+        data = [m.get('type_breakdown', {}).get(t, 0) for m in active_members]
+        datasets.append({
+            'label': t,
+            'data': data,
+            'backgroundColor': get_chart_color(t, idx),
+            # Stack all in one group to mimic Dashboard 'stacked' mode
+            # Chart.js 2 (QuickChart default) uses 'xAxes/yAxes: stacked: true' options
+        })
+        
+    chart_config = {
+        'type': 'horizontalBar',
+        'data': { 'labels': names, 'datasets': datasets },
+        'options': {
+            'title': { 'display': True, 'text': 'Activity Breakdown by Member & Activity Type' },
+            'tooltips': { 'mode': 'index', 'intersect': False },
+            'responsive': False,
+            'scales': {
+                'xAxes': [{ 'stacked': True, 'ticks': { 'beginAtZero': True } }],
+                'yAxes': [{ 'stacked': True }]
+            },
+            'plugins': { 'datalabels': { 'display': False } }
+        }
+    }
+    
+    try:
+        # Dynamic height based on number of members
+        total_height = max(400, len(names) * 30 + 100)
+        resp = requests.post(
+            'https://quickchart.io/chart', 
+            json={'chart': chart_config, 'width': 800, 'height': total_height, 'backgroundColor': 'white'}
+        )
+        if resp.status_code == 200: return resp.content
+    except:
+        pass
+    return None
 
 
 def generate_email_html(summary):
@@ -244,21 +319,9 @@ def generate_email_html(summary):
                 <p>{summary['date']}</p>
             </div>
             
-            <div class="content">
-                <!-- Summary Metrics -->
-                <div class="metrics-grid">
-                    <div class="metric">
-                        <div class="metric-value">{summary['total_activities']:,}</div>
-                        <div class="metric-label">Total Events</div>
-                    </div>
-                    <div class="metric">
-                        <div class="metric-value">{summary['active_members']}</div>
-                        <div class="metric-label">Active Members</div>
-                    </div>
-                    <div class="metric">
-                        <div class="metric-value">{summary['avg_hours']}h</div>
-                        <div class="metric-label">Avg Hours</div>
-                    </div>
+                <!-- Chart Image (CID embedded) -->
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <img src="cid:daily_chart" alt="Daily Activity Chart" style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 8px;">
                 </div>
                 
                 <!-- Expanded Activity Table -->
@@ -304,15 +367,25 @@ def generate_email_html(summary):
     return html
 
 
-def send_email_smtp(user, password, recipients, subject, html_content):
-    """Send email using SMTP (App Password)."""
+def send_email_smtp(user, password, recipients, subject, html_content, image_bytes=None):
+    """Send email using SMTP (App Password) with optional inline image."""
     try:
-        msg = MIMEMultipart('alternative')
+        msg = MIMEMultipart('related')
         msg['Subject'] = subject
         msg['From'] = f"Pvragon Activity Bot <{user}>"
         msg['To'] = ', '.join(recipients)
         
-        msg.attach(MIMEText(html_content, 'html'))
+        msg_alternative = MIMEMultipart('alternative')
+        msg.attach(msg_alternative)
+        
+        msg_alternative.attach(MIMEText(html_content, 'html'))
+        
+        # Attach Image if provided
+        if image_bytes:
+            img = MIMEImage(image_bytes)
+            img.add_header('Content-ID', '<daily_chart>')
+            img.add_header('Content-Disposition', 'inline', filename='chart.png')
+            msg.attach(img)
         
         # Connect to Gmail SMTP (SSL)
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
@@ -326,18 +399,24 @@ def send_email_smtp(user, password, recipients, subject, html_content):
         return False
 
 
-def send_email(creds, recipients, subject, html_content):
-    """Send email using Gmail API."""
+def send_email(creds, recipients, subject, html_content, image_bytes=None):
+    """Send email using Gmail API with optional inline image."""
     service = build('gmail', 'v1', credentials=creds)
     
-    message = MIMEMultipart('alternative')
+    message = MIMEMultipart('related')
     message['Subject'] = subject
     message['From'] = 'me'
     message['To'] = ', '.join(recipients)
     
-    # Attach HTML content
-    html_part = MIMEText(html_content, 'html')
-    message.attach(html_part)
+    msg_alternative = MIMEMultipart('alternative')
+    message.attach(msg_alternative)
+    msg_alternative.attach(MIMEText(html_content, 'html'))
+    
+    if image_bytes:
+        img = MIMEImage(image_bytes)
+        img.add_header('Content-ID', '<daily_chart>')
+        img.add_header('Content-Disposition', 'inline', filename='chart.png')
+        message.attach(img)
     
     # Encode and send
     raw = base64.urlsafe_b64encode(message.as_bytes()).decode()
@@ -365,6 +444,11 @@ def main():
     
     # Generate email
     print("[2/3] Generating email...")
+    
+    # Generate Chart Logic
+    print("  Generating daily chart image...")
+    chart_img = generate_stacked_bar_chart(summary)
+    
     html = generate_email_html(summary)
     subject = f"📊 Daily Activity Report - {summary['date']}"
     
@@ -373,10 +457,10 @@ def main():
     
     if EMAIL_USER and EMAIL_PASSWORD:
         print(f"  Using SMTP (App Password)...")
-        success = send_email_smtp(EMAIL_USER, EMAIL_PASSWORD, EMAIL_RECIPIENTS, subject, html)
+        success = send_email_smtp(EMAIL_USER, EMAIL_PASSWORD, EMAIL_RECIPIENTS, subject, html, chart_img)
     else:
         print(f"  Using Gmail API (OAuth)...")
-        success = send_email(creds, EMAIL_RECIPIENTS, subject, html)
+        success = send_email(creds, EMAIL_RECIPIENTS, subject, html, chart_img)
     
     if success:
         print("\n[COMPLETE] Daily summary email sent successfully!")
