@@ -372,7 +372,7 @@ def generate_email_html(summary, chart_url=None):
             </div>
             
             <div class="footer">
-                Generated automatically by Pvragon Bot • {datetime.now().strftime('%I:%M %p')}
+                Generated automatically by Pvragon Bot • {datetime.now().strftime('%I:%M %p')} • v2.0 (Teal Theme)
             </div>
         </div>
     </body>
