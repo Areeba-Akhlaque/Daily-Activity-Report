@@ -2,9 +2,8 @@ name: Daily Activity Audit
 
 on:
   schedule:
-    # Run at 3:00 AM UTC = 7:00 PM PST (during standard time)
-    # Run at 2:00 AM UTC = 7:00 PM PDT (during daylight saving)
-    - cron: '0 3 * * *'
+    # Run at 13:00 UTC = 5:00 AM PST (capture FULL previous day)
+    - cron: '0 13 * * *'
   workflow_dispatch:
     # Allow manual trigger from GitHub Actions UI
 
