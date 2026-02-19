@@ -99,8 +99,11 @@ def fetch_events_for_repos(repos):
             if not events: break
             
             for ev in events:
-                created_dt = datetime.strptime(ev['created_at'], "%Y-%m-%dT%H:%M:%SZ")
-                if created_dt < START_DATE_DT:
+                # Parse and convert to PST
+                ts_utc = pd.to_datetime(ev['created_at'])
+                ts_pst = ts_utc.tz_convert('America/Los_Angeles')
+                
+                if ts_pst < pd.to_datetime(START_DATE_STR).tz_localize('America/Los_Angeles'):
                     repo_active = False
                     break
                 
@@ -112,8 +115,8 @@ def fetch_events_for_repos(repos):
                 if readable_type:
                     all_events.append({
                         "User": actor,
-                        "Date": created_dt.strftime('%m/%d/%y'),
-                        "timestamp": created_dt,
+                        "Date": ts_pst.strftime('%m/%d/%y'), # PST Date
+                        "timestamp": ts_pst,
                         "Event Type": readable_type
                     })
             

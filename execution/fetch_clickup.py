@@ -229,7 +229,8 @@ def process_and_upload(events):
     
     # Filter out "User ..." (unidentified generic users)
     df = df[~df['Name'].str.startswith('User')]
-    df['Date'] = pd.to_datetime(df['timestamp'], unit='ms').dt.strftime('%m/%d/%y')
+    # Convert ms timestamp to PST
+    df['Date'] = pd.to_datetime(df['timestamp'], unit='ms').dt.tz_localize('UTC').dt.tz_convert('America/Los_Angeles').dt.strftime('%m/%d/%y')
     
     summary = df.groupby(['Name', 'Date', 'event_type']).size().reset_index(name='Quantity')
     summary['sort_dt'] = pd.to_datetime(summary['Date'], format='%m/%d/%y')

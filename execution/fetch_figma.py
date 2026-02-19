@@ -37,7 +37,7 @@ FIGMA_TOKEN = os.environ.get('FIGMA_TOKEN', '')
 FIGMA_TEAM_ID = os.environ.get('FIGMA_TEAM_ID', '')
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
 START_DATE_STR = os.environ.get('START_DATE', '2026-01-01')
-START_DATE_DT = datetime.strptime(START_DATE_STR, "%Y-%m-%d")
+START_DATE_DT = pd.to_datetime(START_DATE_STR).tz_localize('America/Los_Angeles')
 SCOPES = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/admin.reports.audit.readonly'
@@ -85,7 +85,7 @@ def fetch_files_for_projects(projects):
                 comments = c_resp.json().get('comments', [])
                 for c in comments:
                     if 'created_at' not in c: continue
-                    created_dt = pd.to_datetime(c['created_at']).tz_localize(None)
+                    created_dt = pd.to_datetime(c['created_at']).tz_convert('America/Los_Angeles')
                     if created_dt >= START_DATE_DT:
                         user_name = c.get('user', {}).get('handle', 'Unknown')
                         all_events.append({
@@ -106,7 +106,7 @@ def fetch_files_for_projects(projects):
                     # Process Creation (Oldest Version)
                     oldest_v = versions[-1]
                     if 'created_at' in oldest_v:
-                         v_dt = pd.to_datetime(oldest_v['created_at']).tz_localize(None)
+                         v_dt = pd.to_datetime(oldest_v['created_at']).tz_convert('America/Los_Angeles')
                          if v_dt >= START_DATE_DT:
                              user = oldest_v.get('user', {}).get('handle', 'Unknown')
                              if user.lower() != 'figma':
@@ -118,7 +118,7 @@ def fetch_files_for_projects(projects):
                     # Process Edits (All other versions)
                     for v in versions[:-1]:
                         if 'created_at' not in v: continue
-                        v_dt = pd.to_datetime(v['created_at']).tz_localize(None)
+                        v_dt = pd.to_datetime(v['created_at']).tz_convert('America/Los_Angeles')
                         
                         if v_dt >= START_DATE_DT:
                             user = v.get('user', {}).get('handle', 'Unknown')

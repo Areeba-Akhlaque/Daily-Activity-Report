@@ -193,12 +193,20 @@ def main():
             ts = log.get('created') or log.get('timestamp')
             if not ts: continue
             
-            ts = float(ts)
             if ts > 9999999999: ts = ts / 1000.0
-            dt = datetime.fromtimestamp(ts)
             
-            date_str = dt.strftime('%m/%d/%y') # For Sheet Match
-            if date_str < '01/01/26': continue # Start Date filter
+            # Convert to PST
+            dt_utc = datetime.fromtimestamp(ts, timezone.utc)
+            # Need strict PST conversion. Importing pytz inside function or reusing if available?
+            # fetch_backendless.py does NOT import pytz. But pandas does via .dt accessor.
+            # Let's rely on pandas for calculation or do simplistic -8h for now?
+            # Better to use pandas to convert since we already imported it.
+            dt_pst = pd.to_datetime(ts, unit='s').tz_localize('UTC').tz_convert('America/Los_Angeles')
+            
+            date_str = dt_pst.strftime('%m/%d/%y') # For Sheet Match
+            
+            # Start Date filter (naive string comparison works if format matches)
+            if date_str < '01/01/26': continue
             
             # Event
             event = log.get('action') or log.get('event') or 'Unknown'
