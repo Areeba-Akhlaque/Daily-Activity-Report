@@ -195,7 +195,8 @@ def get_daily_summary(creds):
         'avg_break': round(avg_break),
         'members': sorted_members,
         'platform_counts': dict(global_plat_counts),
-        'all_types': list(set(t for m in type_counts.values() for t in m.keys())) # For chart labels
+        'all_types': list(set(t for m in type_counts.values() for t in m.keys())), # For chart labels
+        'time_range': "12:00 AM - 11:59 PM PST" if target_date_dt.date() < now_pst.date() else f"12:00 AM - {now_pst.strftime('%I:%M %p')} PST"
     }
 
 
@@ -334,7 +335,8 @@ def generate_email_html(summary, chart_url=None):
         <div class="container">
             <div class="header">
                 <h1>Pvragon Daily Activity Report</h1>
-                <p>{summary['date']}</p>
+                <p style="font-size: 16px; font-weight: bold; margin-bottom: 4px;">{summary['date']}</p>
+                <p style="font-size: 12px; opacity: 0.7;">Time Range: {summary.get('time_range', 'All Day PST')}</p>
             </div>
             
             <div class="content">
