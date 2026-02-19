@@ -65,14 +65,7 @@ def main():
     
     # Step 1: Platform Data
     print("\n[STEP 1] FETCHING PLATFORM DATA")
-    try:
-        # Try running Node script for Backendless first (matches GitHub workflow)
-        node_script = os.path.join(SCRIPT_DIR, 'fetch_backendless_node.js')
-        if os.path.exists(node_script):
-            print(f"  Running Node.js fetcher: {node_script}")
-            subprocess.run(['node', node_script], cwd=ROOT_DIR, check=False)
-    except Exception as e:
-        print(f"  [WARN] Node script failed: {e}")
+
 
     results['clickup'] = run_script('fetch_clickup.py', 'ClickUp Activity')
     results['github'] = run_script('fetch_github.py', 'GitHub Activity')

@@ -10,7 +10,8 @@ __pycache__/
 *.pyc
 
 # Data files (generated, not tracked)
-# console_audit_logs.csv # Edited to allow tracking
+# Data files (generated, not tracked)
+console_audit_logs.csv
 # *.csv # Edited to allow tracking
 
 # OS files
