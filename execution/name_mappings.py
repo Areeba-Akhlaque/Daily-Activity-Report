@@ -118,6 +118,9 @@ EXCLUDE_PATTERNS = [
     
     # System accounts
     'build@pvragon.com', 'careers@pvragon.com', 'employees@pvragon.com',
+    'pvragon llc',
+    'hello@pvragon.com',
+    'nicole.trodrigues@gmail.com', # Excluded
     'david@pvragon.com', # Excluded
     'support@pvragon.com', 'gcp-organization-admins@pvragon.com',
     'rc-eng-notifications@', 'service-admins@', 'softstackers@',
