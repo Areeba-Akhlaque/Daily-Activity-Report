@@ -139,6 +139,7 @@ EXCLUDE_PATTERNS = [
     'David', 'David Roberts', # Exclude David
     'Mariana', 'Mariana Gracia Salgado', # Exclude Mari
     'camlammers@gmail.com', # Excluded
+    'info@pvragon.com', # Excluded
 ]
 
 

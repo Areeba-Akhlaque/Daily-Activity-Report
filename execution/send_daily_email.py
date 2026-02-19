@@ -245,19 +245,20 @@ def generate_stacked_bar_chart(summary):
     }
     
     try:
-        # Dynamic height based on number of members
+        # Create Short URL
         total_height = max(400, len(names) * 30 + 100)
         resp = requests.post(
-            'https://quickchart.io/chart', 
+            'https://quickchart.io/chart/create', 
             json={'chart': chart_config, 'width': 800, 'height': total_height, 'backgroundColor': 'white'}
         )
-        if resp.status_code == 200: return resp.content
-    except:
-        pass
+        if resp.status_code == 200: 
+            return resp.json().get('url') # Return Short URL
+    except Exception as e:
+        print(f"[WARN] Chart URL generation failed: {e}")
     return None
 
 
-def generate_email_html(summary):
+def generate_email_html(summary, chart_url=None):
     """Generate HTML email content with detailed leaderboard."""
     
     # Generate Rows
@@ -278,6 +279,16 @@ def generate_email_html(summary):
     
     # Platform Global
     platform_html = ''.join([f"<li>{p}: {c:,}</li>" for p, c in sorted(summary['platform_counts'].items(), key=lambda x: x[1], reverse=True)])
+    
+    # Chart HTML
+    chart_html = ""
+    if chart_url:
+        chart_html = f"""
+        <!-- Chart Image (QuickChart URL) -->
+        <div style="text-align: center; margin-bottom: 30px;">
+            <img src="{chart_url}" alt="Daily Activity Breakdown" style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 8px;">
+        </div>
+        """
     
     html = f"""
     <!DOCTYPE html>
@@ -320,10 +331,7 @@ def generate_email_html(summary):
             </div>
             
             <div class="content">
-                <!-- Chart Image (CID embedded) -->
-                <div style="text-align: center; margin-bottom: 30px;">
-                    <img src="cid:daily_chart" alt="Daily Activity Chart" style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 8px;">
-                </div>
+                {chart_html}
                 
                 <!-- Expanded Activity Table -->
                 <h3 style="margin: 0 0 16px; font-size: 16px; color: #1e293b; border-left: 4px solid #6366f1; padding-left: 10px;">Daily Highlights Leaderboard</h3>
@@ -368,25 +376,15 @@ def generate_email_html(summary):
     return html
 
 
-def send_email_smtp(user, password, recipients, subject, html_content, image_bytes=None):
-    """Send email using SMTP (App Password) with optional inline image."""
+def send_email_smtp(user, password, recipients, subject, html_content):
+    """Send email using SMTP (App Password)."""
     try:
-        msg = MIMEMultipart('related')
+        msg = MIMEMultipart('alternative')
         msg['Subject'] = subject
         msg['From'] = f"Pvragon Activity Bot <{user}>"
         msg['To'] = ', '.join(recipients)
         
-        msg_alternative = MIMEMultipart('alternative')
-        msg.attach(msg_alternative)
-        
-        msg_alternative.attach(MIMEText(html_content, 'html'))
-        
-        # Attach Image if provided
-        if image_bytes:
-            img = MIMEImage(image_bytes)
-            img.add_header('Content-ID', '<daily_chart>')
-            img.add_header('Content-Disposition', 'inline', filename='chart.png')
-            msg.attach(img)
+        msg.attach(MIMEText(html_content, 'html'))
         
         # Connect to Gmail SMTP (SSL)
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
@@ -400,24 +398,18 @@ def send_email_smtp(user, password, recipients, subject, html_content, image_byt
         return False
 
 
-def send_email(creds, recipients, subject, html_content, image_bytes=None):
-    """Send email using Gmail API with optional inline image."""
+def send_email(creds, recipients, subject, html_content):
+    """Send email using Gmail API."""
     service = build('gmail', 'v1', credentials=creds)
     
-    message = MIMEMultipart('related')
+    message = MIMEMultipart('alternative')
     message['Subject'] = subject
     message['From'] = 'me'
     message['To'] = ', '.join(recipients)
     
-    msg_alternative = MIMEMultipart('alternative')
-    message.attach(msg_alternative)
-    msg_alternative.attach(MIMEText(html_content, 'html'))
-    
-    if image_bytes:
-        img = MIMEImage(image_bytes)
-        img.add_header('Content-ID', '<daily_chart>')
-        img.add_header('Content-Disposition', 'inline', filename='chart.png')
-        message.attach(img)
+    # Attach HTML content
+    html_part = MIMEText(html_content, 'html')
+    message.attach(html_part)
     
     # Encode and send
     raw = base64.urlsafe_b64encode(message.as_bytes()).decode()
@@ -443,14 +435,13 @@ def main():
     print(f"  Total activities: {summary['total_activities']:,}")
     print(f"  Active members: {summary['active_members']}")
     
+    # Generate Chart URL
+    print("  Generating daily chart URL...")
+    chart_url = generate_stacked_bar_chart(summary)
+    
     # Generate email
     print("[2/3] Generating email...")
-    
-    # Generate Chart Logic
-    print("  Generating daily chart image...")
-    chart_img = generate_stacked_bar_chart(summary)
-    
-    html = generate_email_html(summary)
+    html = generate_email_html(summary, chart_url)
     subject = f"📊 Daily Activity Report - {summary['date']}"
     
     # Send email
@@ -458,10 +449,10 @@ def main():
     
     if EMAIL_USER and EMAIL_PASSWORD:
         print(f"  Using SMTP (App Password)...")
-        success = send_email_smtp(EMAIL_USER, EMAIL_PASSWORD, EMAIL_RECIPIENTS, subject, html, chart_img)
+        success = send_email_smtp(EMAIL_USER, EMAIL_PASSWORD, EMAIL_RECIPIENTS, subject, html)
     else:
         print(f"  Using Gmail API (OAuth)...")
-        success = send_email(creds, EMAIL_RECIPIENTS, subject, html, chart_img)
+        success = send_email(creds, EMAIL_RECIPIENTS, subject, html)
     
     if success:
         print("\n[COMPLETE] Daily summary email sent successfully!")
