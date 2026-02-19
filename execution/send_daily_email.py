@@ -235,6 +235,7 @@ def generate_stacked_bar_chart(summary):
         'options': {
             'title': { 'display': True, 'text': 'Activity Breakdown by Member & Activity Type' },
             'tooltips': { 'mode': 'index', 'intersect': False },
+            'legend': { 'display': False },
             'responsive': False,
             'scales': {
                 'xAxes': [{ 'stacked': True, 'ticks': { 'beginAtZero': True } }],
