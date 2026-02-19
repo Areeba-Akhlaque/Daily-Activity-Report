@@ -447,15 +447,18 @@ def main():
     # Generate email
     print("[2/3] Generating email...")
     html = generate_email_html(summary, chart_url)
-    subject = f"📊 Daily Activity Report - {summary['date']}"
     
+    # Send Email
+    subject = f"[v2.0] Daily Activity Audit - {summary['date']}"
+    if summary.get('time_range'):
+        subject += f" ({summary['time_range']})"
+        
     # Determine recipients (allow override via CLI)
     recipients = EMAIL_RECIPIENTS
     if len(sys.argv) > 1:
         recipients = [sys.argv[1]]
         print(f"[Override] Sending test email to: {recipients[0]}")
     
-    # Send email
     print(f"[3/3] Sending to: {', '.join(recipients)}")
     
     if EMAIL_USER and EMAIL_PASSWORD:
