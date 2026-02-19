@@ -381,10 +381,16 @@
         </div>
 
         <div class="grid-2">
-            <div class="card" style="grid-column: 1 / -1;">
-                <div class="card-header"><span class="card-title">Activity Breakdown by Member & Activity Type</span>
+            <div class="card" style="grid-column: 1 / -1; margin-bottom: 20px;">
+                <div class="card-header"><span class="card-title">Activity Breakdown by Member & Activity Type (Detailed)</span>
                 </div>
                 <div class="chart-wrap" style="height: 600px;"><canvas id="leaderboardChart"></canvas></div>
+            </div>
+            
+            <div class="card" style="grid-column: 1 / -1;">
+                <div class="card-header"><span class="card-title">Activity Breakdown by Member & Category (Grouped)</span>
+                </div>
+                <div class="chart-wrap" style="height: 600px;"><canvas id="categoryChart"></canvas></div>
             </div>
 
             /* ... skipping to updateLeaderboard ... */
@@ -404,7 +410,7 @@
             types: new Set(),
             platform: 'all'
         };
-        let charts = { trend: null, platform: null, leaderboard: null };
+        let charts = { trend: null, platform: null, leaderboard: null, category: null };
 
         // Colors
         const PLATFORM_COLORS = {
@@ -415,7 +421,25 @@
             'Backendless App': '#32D74B',
             'Other': '#777'
         };
+        const CATEGORY_COLORS = {
+            'Communication': '#EAB308', // Yellow
+            'Coding': '#22C55E', // Green
+            'Project Mgmt': '#3B82F6', // Blue
+            'Design': '#F97316', // Orange
+            'File Mgmt': '#A855F7', // Purple
+            'Other': '#64748B' // Slate
+        };
         const PIE_COLORS = ['#6366f1', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444'];
+
+        function getCategory(type) {
+            const t = type.toLowerCase();
+            if (t.includes('gmail') || t.includes('mail') || t.includes('message') || t.includes('t_chat')) return 'Communication';
+            if (t.includes('git') || t.includes('push') || t.includes('commit') || t.includes('pull') || t.includes('review') || t.includes('repo')) return 'Coding';
+            if (t.includes('clickup') || t.includes('task') || t.includes('status') || t.includes('issue') || t.includes('comment')) return 'Project Mgmt';
+            if (t.includes('figma') || t.includes('design') || t.includes('layer')) return 'Design';
+            if (t.includes('drive') || t.includes('file') || t.includes('upload') || t.includes('edit') || t.includes('create document')) return 'File Mgmt';
+            return 'Other';
+        }
 
         async function init() {
             try {
@@ -625,6 +649,7 @@
             updateTrend(data, activeMembers);
             updatePlatform(platCounts);
             updateLeaderboard(data);
+            updateCategoryChart(data);
         }
 
         function updateTrend(data, activeMembers) {
@@ -708,6 +733,35 @@
             charts.leaderboard.options.indexAxis = 'y'; // Horizontal bars
             charts.leaderboard.update();
         }
+        
+        function updateCategoryChart(data) {
+            // Aggregate by Member + Category
+            const memberTotals = {};
+            data.forEach(r => memberTotals[r.member] = (memberTotals[r.member] || 0) + r.count);
+            const sortedMembers = Object.entries(memberTotals).filter(x => x[1] > 0).sort((a, b) => b[1] - a[1]).map(x => x[0]);
+            
+            // Fixed set of categories
+            const categories = Object.keys(CATEGORY_COLORS);
+            
+            const datasets = categories.map(cat => {
+                const dataPoints = sortedMembers.map(mem => {
+                    // Filter data for this member AND this category
+                    const rows = data.filter(r => r.member === mem && getCategory(r.type) === cat);
+                    return rows.reduce((acc, curr) => acc + curr.count, 0);
+                });
+                
+                return {
+                    label: cat,
+                    data: dataPoints,
+                    backgroundColor: CATEGORY_COLORS[cat],
+                    borderRadius: 1
+                };
+            });
+            
+            charts.category.data.labels = sortedMembers;
+            charts.category.data.datasets = datasets;
+            charts.category.update();
+        }
 
         function initCharts() {
             if (typeof ChartDataLabels !== 'undefined') {
@@ -743,27 +797,35 @@
                 options: { ...commonOpts, plugins: { legend: { position: 'right', labels: { color: '#94a3b8' } }, datalabels: { display: false } } }
             });
 
+            const barOpts = {
+                ...commonOpts,
+                indexAxis: 'y',
+                interaction: { mode: 'y' },
+                plugins: {
+                    legend: { display: true, position: 'bottom', labels: { boxWidth: 10, color: '#94a3b8' } },
+                    datalabels: {
+                        display: true,
+                        color: 'white',
+                        font: { weight: 'bold', size: 10 },
+                        formatter: (value) => value > 0 ? value : ''
+                    }
+                },
+                scales: {
+                    x: { stacked: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
+                    y: { stacked: true, grid: { display: false }, ticks: { color: '#94a3b8' } }
+                }
+            };
+
             charts.leaderboard = new Chart(document.getElementById('leaderboardChart'), {
                 type: 'bar',
                 data: { labels: [], datasets: [] },
-                options: {
-                    ...commonOpts,
-                    indexAxis: 'y',
-                    interaction: { mode: 'y' },
-                    plugins: {
-                        legend: { display: true, position: 'bottom', labels: { boxWidth: 10, color: '#94a3b8' } },
-                        datalabels: {
-                            display: true,
-                            color: 'white',
-                            font: { weight: 'bold', size: 10 },
-                            formatter: (value) => value > 0 ? value : ''
-                        }
-                    },
-                    scales: {
-                        x: { stacked: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
-                        y: { stacked: true, grid: { display: false }, ticks: { color: '#94a3b8' } }
-                    }
-                }
+                options: barOpts
+            });
+            
+            charts.category = new Chart(document.getElementById('categoryChart'), {
+                type: 'bar',
+                data: { labels: [], datasets: [] },
+                options: barOpts
             });
         }
 
