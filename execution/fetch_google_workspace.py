@@ -134,6 +134,11 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
         'maxResults': 1000
     }
     
+    if application_name == 'gmail':
+        # USER RECIPE: eventName=delivery AND filters=event_info.mail_event_type==1
+        params['eventName'] = 'delivery'
+        params['filters'] = 'event_info.mail_event_type==1'
+    
     while True:
         try:
             if page_token:
@@ -149,23 +154,18 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
                 
                 for ev in item.get('events', []):
                     event_name = ev.get('name', '')
-                    if application_name == 'gmail': seen_events.add(event_name)
                     keep = False
                     mapped_type = ""
-                    
                     effective_email = actor_email
 
                     if application_name == 'gmail':
-                        if event_name == 'send':
-                            keep = True
-                            mapped_type = "Gmail Send"
-                        elif event_name in ['delivery', 'receive']:
-                             for param in ev.get('parameters', []):
-                                 if param.get('name') == 'recipient':
-                                     effective_email = param.get('value')
-                                     keep = True
-                                     mapped_type = "Gmail Received"
-                                     break
+                        # Validated by API Filter: All returned items are SEND events
+                        keep = True
+                        mapped_type = "Gmail Send"
+                        
+                        # Extract Message ID for dedup if needed (future proofing)
+                        # msg_id = next((p['value'] for p in ev.get('parameters', []) if p['name'] == 'message_id'), None)
+
                     elif application_name == 'drive':
                          if event_name in ['edit', 'create', 'upload']:
                              keep = True
