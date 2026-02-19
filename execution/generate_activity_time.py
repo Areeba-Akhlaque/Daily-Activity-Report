@@ -34,6 +34,7 @@ sys.path.insert(0, SCRIPT_DIR)
 from name_mappings import map_name, should_exclude
 import fetch_clickup
 import fetch_figma
+import fetch_backendless
 
 SHEET_ID = '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo'
 PST = pytz.timezone('America/Los_Angeles')
@@ -175,54 +176,16 @@ def fetch_github_events():
     return events
 
 
-def fetch_backendless_events():
-    """Fetch events from Backendless CSV with timestamps."""
+def fetch_backendless_events_wrapped():
+    """Fetch events from Backendless API with timestamps."""
     print('[3/5] Fetching Backendless events...')
-    events = []
-    
-    csv_path = os.path.join(ROOT_DIR, 'console_audit_logs.csv')
-    if not os.path.exists(csv_path):
-        print('  [SKIP] console_audit_logs.csv not found')
-        return events
-        
     try:
-        df = pd.read_csv(csv_path)
-        if 'timestamp' in df.columns:
-            # Backendless timestamps are milliseconds or seconds
-            # Use same logic as fetch_backendless.py: strict PST
-            
-            # Helper to convert safely
-            def to_pst(ts):
-                try:
-                    ts = float(ts)
-                    if ts > 9999999999: ts = ts / 1000.0
-                    return pd.to_datetime(ts, unit='s').tz_localize('UTC').tz_convert(PST)
-                except: return None
-                
-            df['dt'] = df['timestamp'].apply(to_pst)
-            df = df.dropna(subset=['dt'])
-            
-            def get_email(dev_str):
-                s = str(dev_str).strip()
-                if not s or s == 'nan' or s == 'None': return ''
-                try:
-                    if s.startswith('{'):
-                        return json.loads(s).get('email', '')
-                except: pass
-                return s
-            
-            df['email'] = df['developer'].apply(get_email)
-            start_dt = pd.to_datetime(START_DATE).tz_localize(PST)
-            
-            for _, row in df[df['dt'] >= start_dt].iterrows():
-                if row['email']:
-                    events.append({'raw_name': row['email'], 'timestamp': row['dt']})
-                    
+        events = fetch_backendless.fetch_backendless_events_raw()
+        print(f'  Backendless: {len(events)} events')
+        return events
     except Exception as e:
-        print(f'  Warning parsing Backendless CSV: {e}')
-        
-    print(f'  Backendless: {len(events)} events')
-    return events
+        print(f'  Backendless Fetch Error: {e}')
+        return []
 
 
 def fetch_clickup_events_wrapped():
@@ -282,7 +245,7 @@ def generate_activity_time_analysis(creds):
     # Fetch events
     gw_events = fetch_google_workspace_events(creds)
     gh_events = fetch_github_events()
-    bl_events = fetch_backendless_events()
+    bl_events = fetch_backendless_events_wrapped()
     cu_events = fetch_clickup_events_wrapped()
     fi_events = fetch_figma_events_wrapped()
     
@@ -312,7 +275,8 @@ def generate_activity_time_analysis(creds):
     # Group by NAME + DATE and calculate metrics
     results = []
     
-    SESSION_GAP_MINUTES = 30 # Gap > 30 mins starts new session
+    SESSION_GAP_MINUTES = 45 # Increased to 45 mins to better catch dev work patterns
+    MIN_SESSION_CREDIT = 10  # Minimum 10 mins credit per activity session
     
     for (name, date), group in df.groupby(['name', 'date']):
         times = sorted(group['timestamp'].tolist())
@@ -327,7 +291,7 @@ def generate_activity_time_analysis(creds):
         
         # If single event
         if len(times) == 1:
-            total_work_seconds = 5 * 60 # 5 minutes credit
+            total_work_seconds = MIN_SESSION_CREDIT * 60 # 10 minutes credit
         else:
             # Iterate
             for i in range(1, len(times)):
@@ -341,7 +305,7 @@ def generate_activity_time_analysis(creds):
                     # Min credit for session? E.g. at least 5 mins?
                     session_len = (t_prev - current_session_start).total_seconds()
                     
-                    if session_len < (5*60): session_len = (5*60) # Min 5 mins per block
+                    if session_len < (MIN_SESSION_CREDIT*60): session_len = (MIN_SESSION_CREDIT*60) # Min credit per block
                     total_work_seconds += session_len
                     
                     # Start new session
@@ -352,7 +316,7 @@ def generate_activity_time_analysis(creds):
             
             # Add final session
             session_len = (current_session_end - current_session_start).total_seconds()
-            if session_len < (5*60): session_len = (5*60)
+            if session_len < (MIN_SESSION_CREDIT*60): session_len = (MIN_SESSION_CREDIT*60)
             total_work_seconds += session_len
 
         active_duration_hours = total_work_seconds / 3600.0

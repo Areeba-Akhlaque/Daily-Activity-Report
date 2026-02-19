@@ -245,5 +245,29 @@ def main():
     ws.update(values=values, range_name='A1')
     print("[SUCCESS] Done.")
 
+def fetch_backendless_events_raw():
+    """Wrapper for activity time analysis."""
+    logs = fetch_logs_node_wrapper()
+    if not logs:
+        logs = fetch_logs_internal_api()
+    
+    events = []
+    if not logs: return []
+    
+    from datetime import timezone
+    for log in logs:
+        try:
+            dev_raw = log.get('developer')
+            email = clean_developer_email(dev_raw)
+            ts = log.get('created') or log.get('timestamp')
+            if not ts: continue
+            if ts > 9999999999: ts = ts / 1000.0
+            
+            # UTC to PST
+            dt = pd.to_datetime(ts, unit='s').tz_localize('UTC').tz_convert('America/Los_Angeles')
+            events.append({'raw_name': email, 'timestamp': dt})
+        except: continue
+    return events
+
 if __name__ == "__main__":
     main()

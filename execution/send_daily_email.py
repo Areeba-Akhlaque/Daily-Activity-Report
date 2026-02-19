@@ -43,7 +43,7 @@ load_env()
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
 EMAIL_USER = os.environ.get('EMAIL_USER')
 EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
-EMAIL_RECIPIENTS = os.environ.get('EMAIL_RECIPIENTS', 'areeba@pvragon.com').split(',')
+EMAIL_RECIPIENTS = os.environ.get('EMAIL_RECIPIENTS', 'areeba@pvragon.com,jaime@pvragon.com').split(',')
 DASHBOARD_URL = os.environ.get('DASHBOARD_URL', 'https://Areeba-Akhlaque.github.io/Daily-Activity-Report/dashboard/index.html')
 SHEET_URL = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}"
 
@@ -209,10 +209,10 @@ def get_chart_color(label, index):
         h = ord(char) + ((h << 5) - h)
     
     # Use a fixed palette to pick from based on hash
+    # Tableau 10 Professional Palette
     palette = [
-        '#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', 
-        '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#008080', 
-        '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3'
+        '#4e79a7', '#f28e2c', '#e15759', '#76b7b2', '#59a14f', 
+        '#edc949', '#af7aa1', '#ff9da7', '#9c755f', '#bab0ab'
     ]
     color = palette[abs(h) % len(palette)]
     return color
@@ -325,8 +325,9 @@ def generate_email_html(summary, chart_url=None):
             th {{ text-align: center; padding: 12px; background: #f1f5f9; color: #475569; font-weight: 600; font-size: 11px; text-transform: uppercase; }}
             th:first-child {{ text-align: left; }}
             
-            .links {{ text-align: center; padding: 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: center; gap: 10px; }}
-            .button {{ display: inline-block; padding: 12px 24px; background: #244d5d; color: white !important; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px; transition: background 0.2s; }}
+            .links {{ text-align: center; padding: 25px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; }}
+            .button {{ display: inline-block; padding: 12px 24px; background: #244d5d; color: #ffffff !important; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px; margin: 5px; }}
+            .button-text {{ color: #ffffff !important; text-decoration: none !important; }}
             .button:hover {{ background: #1a3c4a; }}
             
             .footer {{ text-align: center; padding: 20px; color: #94a3b8; font-size: 12px; }}
@@ -373,12 +374,25 @@ def generate_email_html(summary, chart_url=None):
             </div>
             
             <div class="links">
-                <a href="{DASHBOARD_URL}" class="button">📊 Open Full Dashboard</a>
-                <a href="{SHEET_URL}" class="button">📗 View Source Spreadsheet</a>
+                <!-- Centered Buttons Table for Email Client Compatibility -->
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin: auto;">
+                    <tr>
+                        <td align="center" style="padding: 0 5px;">
+                            <a href="{DASHBOARD_URL}" class="button" style="background-color: #244d5d; color: #ffffff !important; display: inline-block;">
+                                <span class="button-text">📊 Open Full Dashboard</span>
+                            </a>
+                        </td>
+                        <td align="center" style="padding: 0 5px;">
+                            <a href="{SHEET_URL}" class="button" style="background-color: #244d5d; color: #ffffff !important; display: inline-block;">
+                                <span class="button-text">📗 View Source Spreadsheet</span>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
             </div>
             
             <div class="footer">
-                Generated automatically by Pvragon Bot • {datetime.now().strftime('%I:%M %p')} • v2.1 (Pvragon Teal)
+                Generated automatically by Pvragon Bot • {datetime.now().strftime('%I:%M %p')} • v2.2 (Standard)
             </div>
         </div>
     </body>
@@ -455,7 +469,7 @@ def main():
     html = generate_email_html(summary, chart_url)
     
     # Send Email
-    subject = f"[v2.1] Daily Activity Audit - {summary['date']}"
+    subject = f"[v2.2] Daily Activity Audit - {summary['date']}"
     if summary.get('time_range'):
         subject += f" ({summary['time_range']})"
         
