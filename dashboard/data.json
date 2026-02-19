@@ -152,21 +152,21 @@
       "Activity Date": "02/19/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 5
+      "Count": 8
     },
     {
       "Team Member": "James Hereford",
       "Activity Date": "02/19/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 7
+      "Count": 6
     },
     {
       "Team Member": "Saifullah Khan",
       "Activity Date": "02/19/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 15
+      "Count": 13
     },
     {
       "Team Member": "Saymond Montoya",
@@ -223,34 +223,6 @@
       "Platform": "ClickUp",
       "Activity Type": "Comment Posted",
       "Count": 1
-    },
-    {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "02/19/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 16
-    },
-    {
-      "Team Member": "Cherry Aznar",
-      "Activity Date": "02/19/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 8
-    },
-    {
-      "Team Member": "Muhammad Farhan",
-      "Activity Date": "02/19/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 5
-    },
-    {
-      "Team Member": "Saymond Montoya",
-      "Activity Date": "02/19/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 2
     },
     {
       "Team Member": "Adriane Barredo",
@@ -334,7 +306,7 @@
       "Activity Date": "02/19/26",
       "Platform": "Google Workspace",
       "Activity Type": "Drive Edit",
-      "Count": 13
+      "Count": 16
     },
     {
       "Team Member": "Bradd Schofield",
@@ -348,35 +320,42 @@
       "Activity Date": "02/19/26",
       "Platform": "Google Workspace",
       "Activity Type": "Drive Edit",
-      "Count": 58
+      "Count": 64
     },
     {
       "Team Member": "James Hereford",
       "Activity Date": "02/19/26",
       "Platform": "Google Workspace",
       "Activity Type": "Drive Edit",
-      "Count": 25
+      "Count": 26
     },
     {
       "Team Member": "Areeba Akhlaque",
       "Activity Date": "02/19/26",
       "Platform": "Google Workspace",
       "Activity Type": "Gmail Send",
-      "Count": 7
+      "Count": 8
     },
     {
       "Team Member": "Bradd Schofield",
       "Activity Date": "02/19/26",
       "Platform": "Google Workspace",
       "Activity Type": "Gmail Send",
-      "Count": 11
+      "Count": 14
+    },
+    {
+      "Team Member": "Cherry Aznar",
+      "Activity Date": "02/19/26",
+      "Platform": "Google Workspace",
+      "Activity Type": "Gmail Send",
+      "Count": 1
     },
     {
       "Team Member": "James Hereford",
       "Activity Date": "02/19/26",
       "Platform": "Google Workspace",
       "Activity Type": "Gmail Send",
-      "Count": 21
+      "Count": 37
     },
     {
       "Team Member": "Roman Naidenko",
@@ -523,7 +502,7 @@
       "Activity Date": "02/18/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 20
+      "Count": 19
     },
     {
       "Team Member": "Keeko Villaveces",
@@ -621,34 +600,6 @@
       "Activity Date": "02/18/26",
       "Platform": "ClickUp",
       "Activity Type": "Comment Posted",
-      "Count": 1
-    },
-    {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "02/18/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 17
-    },
-    {
-      "Team Member": "Cherry Aznar",
-      "Activity Date": "02/18/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 2
-    },
-    {
-      "Team Member": "James Hereford",
-      "Activity Date": "02/18/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 2
-    },
-    {
-      "Team Member": "Saymond Montoya",
-      "Activity Date": "02/18/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
       "Count": 1
     },
     {
@@ -1082,27 +1033,6 @@
       "Team Member": "Areeba Akhlaque",
       "Activity Date": "02/17/26",
       "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 43
-    },
-    {
-      "Team Member": "Cherry Aznar",
-      "Activity Date": "02/17/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 17
-    },
-    {
-      "Team Member": "James Hereford",
-      "Activity Date": "02/17/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 5
-    },
-    {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "02/17/26",
-      "Platform": "ClickUp",
       "Activity Type": "task completed",
       "Count": 11
     },
@@ -1476,20 +1406,6 @@
       "Platform": "ClickUp",
       "Activity Type": "Comment Posted",
       "Count": 1
-    },
-    {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "02/16/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 13
-    },
-    {
-      "Team Member": "Cherry Aznar",
-      "Activity Date": "02/16/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 12
     },
     {
       "Team Member": "Adriane Barredo",
@@ -1993,7 +1909,7 @@
       "Activity Date": "02/13/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 4
+      "Count": 5
     },
     {
       "Team Member": "James Hereford",
@@ -2078,34 +1994,6 @@
       "Platform": "ClickUp",
       "Activity Type": "Comment Posted",
       "Count": 4
-    },
-    {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "02/13/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 27
-    },
-    {
-      "Team Member": "Cherry Aznar",
-      "Activity Date": "02/13/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 3
-    },
-    {
-      "Team Member": "James Hereford",
-      "Activity Date": "02/13/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 5
-    },
-    {
-      "Team Member": "Muhammad Farhan",
-      "Activity Date": "02/13/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 3
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -2528,34 +2416,6 @@
       "Count": 4
     },
     {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "02/12/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 21
-    },
-    {
-      "Team Member": "Cherry Aznar",
-      "Activity Date": "02/12/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 11
-    },
-    {
-      "Team Member": "James Hereford",
-      "Activity Date": "02/12/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 5
-    },
-    {
-      "Team Member": "Muhammad Farhan",
-      "Activity Date": "02/12/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 3
-    },
-    {
       "Team Member": "Cherry Aznar",
       "Activity Date": "02/12/26",
       "Platform": "ClickUp",
@@ -2924,7 +2784,7 @@
       "Activity Date": "02/11/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 8
+      "Count": 7
     },
     {
       "Team Member": "Roman Naidenko",
@@ -3009,27 +2869,6 @@
       "Platform": "ClickUp",
       "Activity Type": "Comment Posted",
       "Count": 4
-    },
-    {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "02/11/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 2
-    },
-    {
-      "Team Member": "James Hereford",
-      "Activity Date": "02/11/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 1
-    },
-    {
-      "Team Member": "Muhammad Farhan",
-      "Activity Date": "02/11/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 2
     },
     {
       "Team Member": "Bilal Munir",
@@ -3415,20 +3254,6 @@
       "Platform": "ClickUp",
       "Activity Type": "Comment Posted",
       "Count": 1
-    },
-    {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "02/10/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 6
-    },
-    {
-      "Team Member": "Cherry Aznar",
-      "Activity Date": "02/10/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 5
     },
     {
       "Team Member": "Bradd Schofield",
@@ -4233,7 +4058,7 @@
       "Activity Date": "02/06/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 4
+      "Count": 3
     },
     {
       "Team Member": "Alexander Pavelko",
@@ -4269,27 +4094,6 @@
       "Platform": "ClickUp",
       "Activity Type": "Comment Posted",
       "Count": 1
-    },
-    {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "02/06/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 7
-    },
-    {
-      "Team Member": "Cherry Aznar",
-      "Activity Date": "02/06/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 2
-    },
-    {
-      "Team Member": "James Hereford",
-      "Activity Date": "02/06/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 3
     },
     {
       "Team Member": "Alexander Pavelko",
@@ -4593,25 +4397,25 @@
       "Count": 4
     },
     {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "02/05/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 3
-    },
-    {
       "Team Member": "Bradd Schofield",
       "Activity Date": "02/05/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 6
+      "Count": 5
     },
     {
       "Team Member": "James Hereford",
       "Activity Date": "02/05/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 17
+      "Count": 14
+    },
+    {
+      "Team Member": "Jeniffer Rosa",
+      "Activity Date": "02/05/26",
+      "Platform": "ClickUp",
+      "Activity Type": "Channels messages",
+      "Count": 1
     },
     {
       "Team Member": "Roman Naidenko",
@@ -4682,20 +4486,6 @@
       "Platform": "ClickUp",
       "Activity Type": "Comment Posted",
       "Count": 3
-    },
-    {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "02/05/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 2
-    },
-    {
-      "Team Member": "James Hereford",
-      "Activity Date": "02/05/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 2
     },
     {
       "Team Member": "Alexander Pavelko",
@@ -5087,14 +4877,14 @@
       "Activity Date": "02/04/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 3
+      "Count": 2
     },
     {
       "Team Member": "James Hereford",
       "Activity Date": "02/04/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 9
+      "Count": 7
     },
     {
       "Team Member": "Roman Naidenko",
@@ -5151,13 +4941,6 @@
       "Platform": "ClickUp",
       "Activity Type": "Comment Posted",
       "Count": 4
-    },
-    {
-      "Team Member": "James Hereford",
-      "Activity Date": "02/04/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 1
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -5465,7 +5248,7 @@
       "Activity Date": "02/03/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 3
+      "Count": 4
     },
     {
       "Team Member": "James Hereford",
@@ -5473,6 +5256,20 @@
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
       "Count": 7
+    },
+    {
+      "Team Member": "Jeniffer Rosa",
+      "Activity Date": "02/03/26",
+      "Platform": "ClickUp",
+      "Activity Type": "Channels messages",
+      "Count": 2
+    },
+    {
+      "Team Member": "Lena Klapper",
+      "Activity Date": "02/03/26",
+      "Platform": "ClickUp",
+      "Activity Type": "Channels messages",
+      "Count": 1
     },
     {
       "Team Member": "Roman Naidenko",
@@ -5529,27 +5326,6 @@
       "Platform": "ClickUp",
       "Activity Type": "Comment Posted",
       "Count": 3
-    },
-    {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "02/03/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 9
-    },
-    {
-      "Team Member": "James Hereford",
-      "Activity Date": "02/03/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 8
-    },
-    {
-      "Team Member": "Muhammad Farhan",
-      "Activity Date": "02/03/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 1
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -5914,27 +5690,6 @@
       "Platform": "ClickUp",
       "Activity Type": "Comment Posted",
       "Count": 1
-    },
-    {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "02/02/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 6
-    },
-    {
-      "Team Member": "James Hereford",
-      "Activity Date": "02/02/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 2
-    },
-    {
-      "Team Member": "Muhammad Farhan",
-      "Activity Date": "02/02/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 4
     },
     {
       "Team Member": "Adriane Barredo",
@@ -6460,20 +6215,6 @@
       "Platform": "ClickUp",
       "Activity Type": "Comment Posted",
       "Count": 1
-    },
-    {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "01/30/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 10
-    },
-    {
-      "Team Member": "James Hereford",
-      "Activity Date": "01/30/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 9
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -7145,7 +6886,14 @@
       "Activity Date": "01/28/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 44
+      "Count": 42
+    },
+    {
+      "Team Member": "Jeniffer Rosa",
+      "Activity Date": "01/28/26",
+      "Platform": "ClickUp",
+      "Activity Type": "Channels messages",
+      "Count": 1
     },
     {
       "Team Member": "Roman Naidenko",
@@ -7201,20 +6949,6 @@
       "Activity Date": "01/28/26",
       "Platform": "ClickUp",
       "Activity Type": "Comment Posted",
-      "Count": 1
-    },
-    {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "01/28/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 2
-    },
-    {
-      "Team Member": "James Hereford",
-      "Activity Date": "01/28/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
       "Count": 1
     },
     {
@@ -7631,27 +7365,6 @@
       "Count": 13
     },
     {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "01/27/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 8
-    },
-    {
-      "Team Member": "James Hereford",
-      "Activity Date": "01/27/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 4
-    },
-    {
-      "Team Member": "Saymond Montoya",
-      "Activity Date": "01/27/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 2
-    },
-    {
       "Team Member": "Bilal Munir",
       "Activity Date": "01/27/26",
       "Platform": "ClickUp",
@@ -7943,13 +7656,6 @@
       "Activity Date": "01/26/26",
       "Platform": "ClickUp",
       "Activity Type": "Comment Posted",
-      "Count": 1
-    },
-    {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "01/26/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
       "Count": 1
     },
     {
@@ -8762,14 +8468,28 @@
       "Activity Date": "01/22/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 1
+      "Count": 2
     },
     {
       "Team Member": "James Hereford",
       "Activity Date": "01/22/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 12
+      "Count": 14
+    },
+    {
+      "Team Member": "Jeniffer Rosa",
+      "Activity Date": "01/22/26",
+      "Platform": "ClickUp",
+      "Activity Type": "Channels messages",
+      "Count": 3
+    },
+    {
+      "Team Member": "Lena Klapper",
+      "Activity Date": "01/22/26",
+      "Platform": "ClickUp",
+      "Activity Type": "Channels messages",
+      "Count": 3
     },
     {
       "Team Member": "Roman Naidenko",
@@ -8826,13 +8546,6 @@
       "Platform": "ClickUp",
       "Activity Type": "Comment Posted",
       "Count": 4
-    },
-    {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "01/22/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 1
     },
     {
       "Team Member": "A.S. Johan",
@@ -9206,6 +8919,13 @@
       "Count": 2
     },
     {
+      "Team Member": "Lena Klapper",
+      "Activity Date": "01/21/26",
+      "Platform": "ClickUp",
+      "Activity Type": "Channels messages",
+      "Count": 2
+    },
+    {
       "Team Member": "Bilal Munir",
       "Activity Date": "01/21/26",
       "Platform": "ClickUp",
@@ -9239,13 +8959,6 @@
       "Platform": "ClickUp",
       "Activity Type": "Comment Posted",
       "Count": 2
-    },
-    {
-      "Team Member": "Saymond Montoya",
-      "Activity Date": "01/21/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 1
     },
     {
       "Team Member": "Roman Naidenko",
@@ -9589,6 +9302,13 @@
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
       "Count": 9
+    },
+    {
+      "Team Member": "Lena Klapper",
+      "Activity Date": "01/20/26",
+      "Platform": "ClickUp",
+      "Activity Type": "Channels messages",
+      "Count": 1
     },
     {
       "Team Member": "Saymond Montoya",
@@ -10148,7 +9868,7 @@
       "Activity Date": "01/16/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 9
+      "Count": 11
     },
     {
       "Team Member": "James Hereford",
@@ -10156,6 +9876,13 @@
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
       "Count": 12
+    },
+    {
+      "Team Member": "Jeniffer Rosa",
+      "Activity Date": "01/16/26",
+      "Platform": "ClickUp",
+      "Activity Type": "Channels messages",
+      "Count": 2
     },
     {
       "Team Member": "Roman Naidenko",
@@ -10753,11 +10480,25 @@
       "Count": 6
     },
     {
+      "Team Member": "Bradd Schofield",
+      "Activity Date": "01/14/26",
+      "Platform": "ClickUp",
+      "Activity Type": "Channels messages",
+      "Count": 8
+    },
+    {
       "Team Member": "James Hereford",
       "Activity Date": "01/14/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
       "Count": 30
+    },
+    {
+      "Team Member": "Jeniffer Rosa",
+      "Activity Date": "01/14/26",
+      "Platform": "ClickUp",
+      "Activity Type": "Channels messages",
+      "Count": 5
     },
     {
       "Team Member": "Roman Naidenko",
@@ -11072,7 +10813,7 @@
       "Activity Date": "01/13/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 8
+      "Count": 9
     },
     {
       "Team Member": "James Hereford",
@@ -11080,6 +10821,20 @@
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
       "Count": 18
+    },
+    {
+      "Team Member": "Jeniffer Rosa",
+      "Activity Date": "01/13/26",
+      "Platform": "ClickUp",
+      "Activity Type": "Channels messages",
+      "Count": 3
+    },
+    {
+      "Team Member": "Lena Klapper",
+      "Activity Date": "01/13/26",
+      "Platform": "ClickUp",
+      "Activity Type": "Channels messages",
+      "Count": 2
     },
     {
       "Team Member": "Roman Naidenko",
@@ -11359,7 +11114,7 @@
       "Activity Date": "01/12/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 2
+      "Count": 3
     },
     {
       "Team Member": "James Hereford",
@@ -11369,11 +11124,18 @@
       "Count": 8
     },
     {
+      "Team Member": "Jeniffer Rosa",
+      "Activity Date": "01/12/26",
+      "Platform": "ClickUp",
+      "Activity Type": "Channels messages",
+      "Count": 1
+    },
+    {
       "Team Member": "Lena Klapper",
       "Activity Date": "01/12/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 2
+      "Count": 3
     },
     {
       "Team Member": "Victor Cheung",
@@ -11772,7 +11534,7 @@
       "Activity Date": "01/09/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 7
+      "Count": 9
     },
     {
       "Team Member": "James Hereford",
@@ -11780,6 +11542,13 @@
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
       "Count": 15
+    },
+    {
+      "Team Member": "Jeniffer Rosa",
+      "Activity Date": "01/09/26",
+      "Platform": "ClickUp",
+      "Activity Type": "Channels messages",
+      "Count": 1
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -12052,21 +11821,14 @@
       "Activity Date": "01/08/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 27
+      "Count": 26
     },
     {
       "Team Member": "Roman Naidenko",
       "Activity Date": "01/08/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 4
-    },
-    {
-      "Team Member": "Victor Cheung",
-      "Activity Date": "01/08/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 2
+      "Count": 3
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -12315,20 +12077,6 @@
     },
     {
       "Team Member": "Lena Klapper",
-      "Activity Date": "01/07/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
-    },
-    {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "01/07/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
-    },
-    {
-      "Team Member": "Saymond Montoya",
       "Activity Date": "01/07/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
@@ -12913,14 +12661,14 @@
       "Activity Date": "01/05/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 13
+      "Count": 6
     },
     {
       "Team Member": "Roman Naidenko",
       "Activity Date": "01/05/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 6
+      "Count": 1
     },
     {
       "Team Member": "Saymond Montoya",
@@ -12933,21 +12681,7 @@
       "Team Member": "Victor Cheung",
       "Activity Date": "01/05/26",
       "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 4
-    },
-    {
-      "Team Member": "Victor Cheung",
-      "Activity Date": "01/05/26",
-      "Platform": "ClickUp",
       "Activity Type": "Comment Posted",
-      "Count": 1
-    },
-    {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "01/05/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
       "Count": 1
     },
     {
@@ -13147,13 +12881,6 @@
       "Count": 1
     },
     {
-      "Team Member": "Saymond Montoya",
-      "Activity Date": "01/04/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
-      "Count": 1
-    },
-    {
       "Team Member": "James Hereford",
       "Activity Date": "01/04/26",
       "Platform": "Google Workspace",
@@ -13228,13 +12955,6 @@
       "Activity Date": "01/02/26",
       "Platform": "ClickUp",
       "Activity Type": "Comment Posted",
-      "Count": 1
-    },
-    {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "01/02/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Direct chats messages",
       "Count": 1
     },
     {
@@ -14061,14 +13781,7 @@
       "Activity Date": "12/23/25",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 2
-    },
-    {
-      "Team Member": "Saymond Montoya",
-      "Activity Date": "12/23/25",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 2
+      "Count": 1
     },
     {
       "Team Member": "Bradd Schofield",
@@ -14212,13 +13925,6 @@
     },
     {
       "Team Member": "Roman Naidenko",
-      "Activity Date": "12/22/25",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
-    },
-    {
-      "Team Member": "Saymond Montoya",
       "Activity Date": "12/22/25",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
@@ -14428,28 +14134,14 @@
       "Count": 9
     },
     {
-      "Team Member": "James Hereford",
+      "Team Member": "Roman Naidenko",
       "Activity Date": "12/19/25",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
       "Count": 1
     },
     {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "12/19/25",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 2
-    },
-    {
       "Team Member": "Saymond Montoya",
-      "Activity Date": "12/19/25",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 2
-    },
-    {
-      "Team Member": "Victor Cheung",
       "Activity Date": "12/19/25",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
@@ -14670,21 +14362,14 @@
       "Activity Date": "12/18/25",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 3
-    },
-    {
-      "Team Member": "Saymond Montoya",
-      "Activity Date": "12/18/25",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 2
+      "Count": 1
     },
     {
       "Team Member": "Victor Cheung",
       "Activity Date": "12/18/25",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 3
+      "Count": 1
     },
     {
       "Team Member": "Bradd Schofield",
@@ -14992,13 +14677,6 @@
       "Activity Date": "12/17/25",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 2
-    },
-    {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "12/17/25",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
       "Count": 1
     },
     {
@@ -15006,14 +14684,7 @@
       "Activity Date": "12/17/25",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 3
-    },
-    {
-      "Team Member": "Victor Cheung",
-      "Activity Date": "12/17/25",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 5
+      "Count": 1
     },
     {
       "Team Member": "Bradd Schofield",
@@ -49953,10 +49624,10 @@
       "Team Member": "Areeba Akhlaque",
       "Date": "02/19/26",
       "First Activity (PST)": "07:19 AM",
-      "Last Activity (PST)": "12:55 PM",
-      "Active Window (Hours)": 5.6,
+      "Last Activity (PST)": "01:37 PM",
+      "Active Window (Hours)": 6.3,
       "Longest Break (Minutes)": 105,
-      "Total Events": 158
+      "Total Events": 196
     },
     {
       "Team Member": "Bilal Munir",
@@ -49971,28 +49642,28 @@
       "Team Member": "Bradd Schofield",
       "Date": "02/19/26",
       "First Activity (PST)": "08:43 AM",
-      "Last Activity (PST)": "12:45 PM",
-      "Active Window (Hours)": 4,
+      "Last Activity (PST)": "01:32 PM",
+      "Active Window (Hours)": 4.8,
       "Longest Break (Minutes)": 194,
-      "Total Events": 36
+      "Total Events": 39
     },
     {
       "Team Member": "Cherry Aznar",
       "Date": "02/19/26",
       "First Activity (PST)": "12:08 AM",
-      "Last Activity (PST)": "12:53 PM",
-      "Active Window (Hours)": 12.8,
+      "Last Activity (PST)": "01:26 PM",
+      "Active Window (Hours)": 13.3,
       "Longest Break (Minutes)": 470,
-      "Total Events": 183
+      "Total Events": 192
     },
     {
       "Team Member": "James Hereford",
       "Date": "02/19/26",
       "First Activity (PST)": "12:06 AM",
-      "Last Activity (PST)": "12:54 PM",
-      "Active Window (Hours)": 12.8,
+      "Last Activity (PST)": "01:37 PM",
+      "Active Window (Hours)": 13.5,
       "Longest Break (Minutes)": 229,
-      "Total Events": 61
+      "Total Events": 81
     },
     {
       "Team Member": "Jeniffer Rosa",
@@ -50034,10 +49705,19 @@
       "Team Member": "Saymond Montoya",
       "Date": "02/19/26",
       "First Activity (PST)": "04:04 AM",
-      "Last Activity (PST)": "08:53 AM",
-      "Active Window (Hours)": 4.8,
-      "Longest Break (Minutes)": 169,
-      "Total Events": 5
+      "Last Activity (PST)": "01:10 PM",
+      "Active Window (Hours)": 9.1,
+      "Longest Break (Minutes)": 256,
+      "Total Events": 6
+    },
+    {
+      "Team Member": "Tara Yowell",
+      "Date": "02/19/26",
+      "First Activity (PST)": "01:07 PM",
+      "Last Activity (PST)": "01:07 PM",
+      "Active Window (Hours)": 0,
+      "Longest Break (Minutes)": 0,
+      "Total Events": 3
     },
     {
       "Team Member": "Victor Cheung",
@@ -54792,16 +54472,16 @@
       "Total Events": 1
     }
   ],
-  "lastUpdated": "2026-02-19 12:56:35 PST",
+  "lastUpdated": "2026-02-19 13:38:36 PST",
   "stats": {
-    "totalAuditRows": 7134,
-    "totalTimeRows": 539,
+    "totalAuditRows": 7087,
+    "totalTimeRows": 540,
     "uniqueMembers": 36,
     "platforms": [
-      "ClickUp",
-      "Backendless App",
-      "Figma",
       "Google Workspace",
+      "ClickUp",
+      "Figma",
+      "Backendless App",
       "GitHub"
     ]
   }
