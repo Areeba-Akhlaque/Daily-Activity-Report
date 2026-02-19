@@ -319,6 +319,7 @@ def generate_email_html(summary):
                 <p>{summary['date']}</p>
             </div>
             
+            <div class="content">
                 <!-- Chart Image (CID embedded) -->
                 <div style="text-align: center; margin-bottom: 30px;">
                     <img src="cid:daily_chart" alt="Daily Activity Chart" style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 8px;">
