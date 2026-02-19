@@ -123,6 +123,7 @@ def fetch_logs_in_windows(service, user_key, application_name, start_dt, end_dt)
 def fetch_logs_for_user(service, user_key, application_name, start_time, end_time):
     """Fetch logs for a specific user using official client (single window)."""
     events = []
+    processed_ids = set()
     seen_events = set()
     page_token = None
     
@@ -172,17 +173,42 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
                              mapped_type = f"Drive {event_name.capitalize()}"
                     
                     if keep and effective_email:
+                        # DEDUPLICATION
+                        uniq_id = item.get('id', {}).get('uniqueQualifier')
+                        if not uniq_id:
+                             # Fallback composite key
+                             msg_id = next((p['value'] for p in ev.get('parameters', []) if p['name'] == 'message_id'), 'no_msg_id')
+                             uniq_id = f"{timestamp}_{actor_email}_{event_name}_{msg_id}"
+                        
+                        if uniq_id in processed_ids:
+                            continue
+                        processed_ids.add(uniq_id)
+
                         try:
-                            dt = pd.to_datetime(timestamp)
+                            # PST TIMEZONE CONVERSION
+                            # Ensure timestamp is parsed as UTC aware
+                            if str(timestamp).endswith('Z'):
+                                ts_str = str(timestamp).replace('Z', '+00:00')
+                            else:
+                                ts_str = str(timestamp)
+                                
+                            dt_utc = pd.to_datetime(ts_str)
+                            if dt_utc.tz is None:
+                                dt_utc = dt_utc.tz_localize('UTC')
+                                
+                            dt_pst = dt_utc.tz_convert('America/Los_Angeles')
+                            
                             events.append({
                                 "Name": map_name(effective_email),
-                                "Date": dt.strftime('%m/%d/%y'),
-                                "timestamp_dt": dt,
+                                "Date": dt_pst.strftime('%m/%d/%y'),
+                                "timestamp_dt": dt_pst,
                                 "Platform": "Google Workspace",
                                 "Event Type": mapped_type,
                                 "Quantity": 1
                             })
-                        except: pass
+                        except Exception as e:
+                            # print(f"Date error: {e}")
+                            pass
 
             page_token = response.get('nextPageToken')
             if not page_token:
