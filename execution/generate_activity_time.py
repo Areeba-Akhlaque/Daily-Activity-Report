@@ -83,6 +83,9 @@ def fetch_google_workspace_events(creds):
                 'endTime': current_end.strftime('%Y-%m-%dT%H:%M:%SZ'),
                 'maxResults': 1000
             }
+            if app == 'gmail':
+                params['eventName'] = 'delivery'
+                params['filters'] = 'event_info.mail_event_type==1'
             url = f'https://admin.googleapis.com/admin/reports/v1/activity/users/all/applications/{app}'
             
             while True:
@@ -101,14 +104,11 @@ def fetch_google_workspace_events(creds):
                         if not email or actor.get('callerType') == 'KEY':
                             continue
                         
-                        # Filter Gmail: Only count 'send' events (strict User Activity)
+                        # Filter Gmail: 'delivery' with mail_event_type==1 means SEND
                         if app == 'gmail':
-                            has_send = False
-                            for ev in item.get('events', []):
-                                if ev.get('name') == 'send':
-                                    has_send = True
-                                    break
-                            if not has_send: continue
+                            # We trust the API filter, but good to verify event name presence
+                            # Pass through 'delivery' events
+                            pass
 
                         ts = item.get('id', {}).get('time', '')
                         if ts:

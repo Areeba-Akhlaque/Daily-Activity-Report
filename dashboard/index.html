@@ -292,7 +292,7 @@
     <div class="container" id="dashboard" style="display: none;">
         <header>
             <div class="header-left">
-                <h1>Pvragon Activity Dashboard</h1>
+                <h1>Pvragon Activity Dashboard - V2</h1>
                 <p id="page-subtitle">Realtime Monitoring</p>
             </div>
             <div><span id="lastUpdated" style="font-size: 12px; color: var(--text-secondary);"></span></div>
@@ -382,15 +382,17 @@
 
         <div class="grid-2">
             <div class="card" style="grid-column: 1 / -1; margin-bottom: 20px;">
-                <div class="card-header"><span class="card-title">Activity Breakdown by Member & Activity Type (Detailed)</span>
+                <div class="card-header"><span class="card-title">Activity Breakdown by Member & Activity Type
+                        (Detailed)</span>
                 </div>
                 <div class="chart-wrap" style="height: 600px;"><canvas id="leaderboardChart"></canvas></div>
             </div>
-            
+
             <div class="card" style="grid-column: 1 / -1;">
-                <div class="card-header"><span class="card-title">Activity Breakdown by Member & Category (Grouped)</span>
+                <div class="card-header"><span class="card-title">Daily Activity Range & Longest Break (Avg over
+                        selected period)</span>
                 </div>
-                <div class="chart-wrap" style="height: 600px;"><canvas id="categoryChart"></canvas></div>
+                <div class="chart-wrap" style="height: 500px;"><canvas id="rangeChart"></canvas></div>
             </div>
 
             /* ... skipping to updateLeaderboard ... */
@@ -403,6 +405,7 @@
 
     <script>
         let rawData = [];
+        let timeData = [];
         let state = {
             startDate: null,
             endDate: null,
@@ -410,7 +413,7 @@
             types: new Set(),
             platform: 'all'
         };
-        let charts = { trend: null, platform: null, leaderboard: null, category: null };
+        let charts = { trend: null, platform: null, leaderboard: null, range: null };
 
         // Colors
         const PLATFORM_COLORS = {
@@ -421,25 +424,7 @@
             'Backendless App': '#32D74B',
             'Other': '#777'
         };
-        const CATEGORY_COLORS = {
-            'Communication': '#EAB308', // Yellow
-            'Coding': '#22C55E', // Green
-            'Project Mgmt': '#3B82F6', // Blue
-            'Design': '#F97316', // Orange
-            'File Mgmt': '#A855F7', // Purple
-            'Other': '#64748B' // Slate
-        };
         const PIE_COLORS = ['#6366f1', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444'];
-
-        function getCategory(type) {
-            const t = type.toLowerCase();
-            if (t.includes('gmail') || t.includes('mail') || t.includes('message') || t.includes('t_chat')) return 'Communication';
-            if (t.includes('git') || t.includes('push') || t.includes('commit') || t.includes('pull') || t.includes('review') || t.includes('repo')) return 'Coding';
-            if (t.includes('clickup') || t.includes('task') || t.includes('status') || t.includes('issue') || t.includes('comment')) return 'Project Mgmt';
-            if (t.includes('figma') || t.includes('design') || t.includes('layer')) return 'Design';
-            if (t.includes('drive') || t.includes('file') || t.includes('upload') || t.includes('edit') || t.includes('create document')) return 'File Mgmt';
-            return 'Other';
-        }
 
         async function init() {
             try {
@@ -461,9 +446,11 @@
                         type: r['Activity Type'],
                         count: parseInt(r['Count'] || 0)
                     }));
+                    timeData = json.timeAnalysis || [];
                 } else {
                     rawData = json;
                 }
+                timeData = json.timeAnalysis || [];
 
                 // Parse dates and set defaults
                 const dates = rawData.map(r => parseDate(r.date)).filter(Boolean).sort((a, b) => a - b);
@@ -649,7 +636,7 @@
             updateTrend(data, activeMembers);
             updatePlatform(platCounts);
             updateLeaderboard(data);
-            updateCategoryChart(data);
+            updateRangeChart(activeMembers);
         }
 
         function updateTrend(data, activeMembers) {
@@ -733,34 +720,87 @@
             charts.leaderboard.options.indexAxis = 'y'; // Horizontal bars
             charts.leaderboard.update();
         }
-        
-        function updateCategoryChart(data) {
-            // Aggregate by Member + Category
-            const memberTotals = {};
-            data.forEach(r => memberTotals[r.member] = (memberTotals[r.member] || 0) + r.count);
-            const sortedMembers = Object.entries(memberTotals).filter(x => x[1] > 0).sort((a, b) => b[1] - a[1]).map(x => x[0]);
-            
-            // Fixed set of categories
-            const categories = Object.keys(CATEGORY_COLORS);
-            
-            const datasets = categories.map(cat => {
-                const dataPoints = sortedMembers.map(mem => {
-                    // Filter data for this member AND this category
-                    const rows = data.filter(r => r.member === mem && getCategory(r.type) === cat);
-                    return rows.reduce((acc, curr) => acc + curr.count, 0);
-                });
-                
-                return {
-                    label: cat,
-                    data: dataPoints,
-                    backgroundColor: CATEGORY_COLORS[cat],
-                    borderRadius: 1
-                };
+
+        function updateRangeChart(activeMembers) {
+            // Filter timeData based on selected dates and members
+            const relevant = timeData.filter(r => {
+                const d = parseDate(r['Date']);
+                if (state.startDate && d < state.startDate) return false;
+                if (state.endDate && d > state.endDate) return false;
+                return activeMembers.has(r['Team Member']);
             });
-            
-            charts.category.data.labels = sortedMembers;
-            charts.category.data.datasets = datasets;
-            charts.category.update();
+
+            // Aggregation: Calc Avg Start, Avg End, Max Break per member
+            const memberStats = {};
+
+            relevant.forEach(r => {
+                const mem = r['Team Member'];
+                if (!memberStats[mem]) memberStats[mem] = { starts: [], ends: [], breaks: [] };
+
+                // Parse "09:00 AM" to decimal hours
+                const parseTime = (tStr) => {
+                    if (!tStr) return null;
+                    const [time, period] = tStr.split(' ');
+                    let [h, m] = time.split(':').map(Number);
+                    if (period === 'PM' && h !== 12) h += 12;
+                    if (period === 'AM' && h === 12) h = 0;
+                    return h + (m / 60);
+                };
+
+                const s = parseTime(r['First Activity (PST)']);
+                const e = parseTime(r['Last Activity (PST)']);
+                const b = parseInt(r['Longest Break (Minutes)'] || 0);
+
+                if (s !== null) memberStats[mem].starts.push(s);
+                if (e !== null) memberStats[mem].ends.push(e);
+                memberStats[mem].breaks.push(b);
+            });
+
+            const members = Object.keys(memberStats).sort();
+            const ranges = members.map(m => {
+                const s = memberStats[m].starts;
+                const e = memberStats[m].ends;
+                const b = memberStats[m].breaks;
+
+                // Calculate Average
+                const avgStart = s.length ? s.reduce((a, b) => a + b, 0) / s.length : 0;
+                const avgEnd = e.length ? e.reduce((a, b) => a + b, 0) / e.length : 0;
+                const maxBreak = b.length ? Math.max(...b) : 0;
+
+                return { avgStart, avgEnd, maxBreak };
+            });
+
+            // Format for Chart.js floating bars: [start, end]
+            const dataPoints = ranges.map(r => [r.avgStart, r.avgEnd]);
+            const backgroundColors = ranges.map(r => r.maxBreak > 180 ? '#ef4444' : r.maxBreak > 60 ? '#f59e0b' : '#10b981'); // Red if >3h break, Orange >1h
+
+            charts.range.data.labels = members;
+            charts.range.data.datasets = [{
+                label: 'Activity Window',
+                data: dataPoints,
+                backgroundColor: backgroundColors,
+                borderWidth: 0,
+                barPercentage: 0.5
+            }];
+
+            // Update Tooltip to show text times and break
+            charts.range.options.plugins.tooltip.callbacks.label = (ctx) => {
+                const raw = ctx.raw; // [start, end]
+                const idx = ctx.dataIndex;
+                const stat = ranges[idx];
+
+                const fmt = (h) => {
+                    const ampm = h >= 12 ? 'PM' : 'AM';
+                    let hr = Math.floor(h) % 12;
+                    if (hr === 0) hr = 12;
+                    let min = Math.round((h % 1) * 60);
+                    return `${hr}:${min.toString().padStart(2, '0')} ${ampm}`;
+                };
+
+                return ` ${fmt(raw[0])} - ${fmt(raw[1])} (Max Break: ${stat.maxBreak}m)`;
+            };
+
+            charts.range.update();
         }
 
         function initCharts() {
@@ -821,11 +861,35 @@
                 data: { labels: [], datasets: [] },
                 options: barOpts
             });
-            
-            charts.category = new Chart(document.getElementById('categoryChart'), {
+
+            charts.range = new Chart(document.getElementById('rangeChart'), {
                 type: 'bar',
                 data: { labels: [], datasets: [] },
-                options: barOpts
+                options: {
+                    ...commonOpts,
+                    indexAxis: 'y',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: true },
+                        datalabels: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            min: 0, max: 24,
+                            grid: { color: '#334155' },
+                            ticks: {
+                                color: '#94a3b8',
+                                stepSize: 2,
+                                callback: function (val) {
+                                    if (val === 0 || val === 24) return '12 AM';
+                                    if (val === 12) return '12 PM';
+                                    return val > 12 ? (val - 12) + ' PM' : val + ' AM';
+                                }
+                            }
+                        },
+                        y: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                    }
+                }
             });
         }
 
