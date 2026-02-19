@@ -444,15 +444,21 @@ def main():
     html = generate_email_html(summary, chart_url)
     subject = f"📊 Daily Activity Report - {summary['date']}"
     
+    # Determine recipients (allow override via CLI)
+    recipients = EMAIL_RECIPIENTS
+    if len(sys.argv) > 1:
+        recipients = [sys.argv[1]]
+        print(f"[Override] Sending test email to: {recipients[0]}")
+    
     # Send email
-    print(f"[3/3] Sending to: {', '.join(EMAIL_RECIPIENTS)}")
+    print(f"[3/3] Sending to: {', '.join(recipients)}")
     
     if EMAIL_USER and EMAIL_PASSWORD:
         print(f"  Using SMTP (App Password)...")
-        success = send_email_smtp(EMAIL_USER, EMAIL_PASSWORD, EMAIL_RECIPIENTS, subject, html)
+        success = send_email_smtp(EMAIL_USER, EMAIL_PASSWORD, recipients, subject, html)
     else:
         print(f"  Using Gmail API (OAuth)...")
-        success = send_email(creds, EMAIL_RECIPIENTS, subject, html)
+        success = send_email(creds, recipients, subject, html)
     
     if success:
         print("\n[COMPLETE] Daily summary email sent successfully!")
