@@ -129,7 +129,21 @@ def fetch_google_workspace_events(creds):
                                 # Apply specific filters
                                 keep = False
                                 if app == 'gmail': 
-                                    keep = True # Filtered by API
+                                    # FILTER: Exclude auto-generated emails
+                                    is_auto = False
+                                    events_in_item = item.get('events', [])
+                                    for ev in events_in_item:
+                                        params_list = ev.get('parameters', [])
+                                        for p in params_list:
+                                            if p.get('name') == 'message_info' and 'messageValue' in p:
+                                                inner_params = p['messageValue'].get('parameter', [])
+                                                for ip in inner_params:
+                                                    if ip.get('name') in ['is_auto_response', 'auto_reply'] and ip.get('boolValue') is True:
+                                                        is_auto = True
+                                                        break
+                                    if is_auto:
+                                        continue
+                                    keep = True # Filtered by API mail_event_type:1
                                 elif app == 'drive':
                                     # We only want edits
                                     events_in_item = item.get('events', [])

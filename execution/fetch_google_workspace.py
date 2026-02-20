@@ -160,6 +160,22 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
 
                     if application_name == 'gmail':
                         # The API filter filters by mail_event_type==1 (Message Sent)
+                        
+                        # FILTER: Exclude auto-generated emails
+                        is_auto = False
+                        params_list = ev.get('parameters', [])
+                        for p in params_list:
+                            if p.get('name') == 'message_info' and 'messageValue' in p:
+                                inner_params = p['messageValue'].get('parameter', [])
+                                for ip in inner_params:
+                                    # Common flags for automated emails
+                                    if ip.get('name') in ['is_auto_response', 'auto_reply'] and ip.get('boolValue') is True:
+                                        is_auto = True
+                                        break
+                        
+                        if is_auto:
+                            continue
+
                         keep = True
                         mapped_type = "Gmail Send"
 
