@@ -148,9 +148,6 @@ EXCLUDE_PATTERNS = [
     'alex.gramajo@softstackers.com', 'lucas.acosta@softstackers.com', 
     'ml@zipdev.com',
     'User -1', 'User -', 'User ',  # Generic backendless system users
-    'Bogdan', # Exclude Bogdan as requested
-    'David', 'David Roberts', # Exclude David
-    'Mariana', 'Mariana Gracia Salgado', # Exclude Mari
     'camlammers@gmail.com', # Excluded
     'info@pvragon.com', # Excluded
     'Jeniffer Rosa', 'Keeko Villaveces', 'Lena Klapper', 'A.S. Johan', 'Johan',
@@ -159,6 +156,13 @@ EXCLUDE_PATTERNS = [
     'System/Group',
     'info@conformationalaesthetics.com', 'conformational',
     'Backendless Support', 'Kinney', 'Michel', 'Ricardo', 'Xingran Du',
+    'Andriy Konoz', 'Dmytro Vakuliuk', 'Oleg', 'Sergey Androsov', 'Sergey', 
+    'Serhiy Melnychuk', 'Stanislaw Grin', 'Vladimir Upirov',
+    'andriy.konoz@backendlessmail.com', 'dmytro.vakuliuk@backendlessmail.com',
+    'oleg@backendlessmail.com', 'sergey.androsov@backendlessmail.com',
+    'sergey@backendlessmail.com', 'serhiy.melnychuk@backendlessmail.com',
+    'stanislaw.grin@backendlessmail.com', 'vladimir.upirov@backendlessmail.com',
+    'alex.pavelko@backendlessmail.com', # Alex's backendless mail should be excluded if it's not him
     'backendlessmail.com', # Exclude all backendless internal support emails
     'Figma', # System user
 ]
@@ -240,16 +244,17 @@ def map_name(identifier):
     return identifier
 
 
-def should_exclude(name):
-    """Check if a name/email should be excluded from reports."""
-    if not name:
-        return True
+def should_exclude(name, identifier=None):
+    """Check if a name or identifier (email) should be excluded from reports."""
+    inputs = [str(name or "")]
+    if identifier:
+        inputs.append(str(identifier))
     
-    name_lower = name.lower().strip()
-    
-    for pattern in EXCLUDE_PATTERNS:
-        if pattern.lower() in name_lower:
-            return True
+    for val in inputs:
+        val_lower = val.lower().strip()
+        for pattern in EXCLUDE_PATTERNS:
+            if pattern.lower() in val_lower:
+                return True
     
     return False
     

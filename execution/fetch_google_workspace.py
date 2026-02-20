@@ -135,8 +135,7 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
         'maxResults': 1000
     }
     
-    if application_name == 'gmail':
-        params['eventName'] = 'send'
+    # Removed strict eventName='send' to catch 'delivery' events that represent sends
     
     while True:
         try:
@@ -146,7 +145,6 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
             response = service.activities().list(**params).execute()
             items = response.get('items', [])
 
-            
             for item in items:
                 actor_email = item.get('actor', {}).get('email', '')
                 timestamp = item.get('id', {}).get('time', '')
@@ -158,12 +156,26 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
                     effective_email = actor_email
 
                     if application_name == 'gmail':
-                        # Validated by API Filter: All returned items are SEND events
-                        keep = True
-                        mapped_type = "Gmail Send"
-                        
-                        # Extract Message ID for dedup if needed (future proofing)
-                        # msg_id = next((p['value'] for p in ev.get('parameters', []) if p['name'] == 'message_id'), None)
+                        # Check for 'send' OR 'delivery' with mail_event_type '2'
+                        if event_name == 'send':
+                            keep = True
+                            mapped_type = "Gmail Send"
+                        elif event_name == 'delivery':
+                            # Check mail_event_type parameter
+                            params_list = ev.get('parameters', [])
+                            # Deep nesting in JSON
+                            # {'name': 'event_info', 'messageValue': {'parameter': [{'name': 'mail_event_type', 'intValue': '2'}]}}
+                            found_send = False
+                            for p in params_list:
+                                if p.get('name') == 'event_info' and 'messageValue' in p:
+                                     inner_params = p['messageValue'].get('parameter', [])
+                                     for ip in inner_params:
+                                         if ip.get('name') == 'mail_event_type' and str(ip.get('intValue')) == '2':
+                                             found_send = True
+                                             break
+                            if found_send:
+                                keep = True
+                                mapped_type = "Gmail Send"
 
                     elif application_name == 'drive':
                          if event_name == 'edit':
@@ -273,7 +285,7 @@ def process_and_upload(events):
         return
 
     df = pd.DataFrame(events)
-    # Ensure mapping is clean
+    # Mapping is already done in fetch_logs_for_user, but we double check here
     df['Name'] = df['Name'].apply(map_name)
     df = df[~df['Name'].apply(should_exclude)]
     

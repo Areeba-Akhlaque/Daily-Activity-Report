@@ -187,7 +187,7 @@ def main():
             dev_raw = log.get('developer')
             email = clean_developer_email(dev_raw)
             name = map_name(email)
-            if should_exclude(name): continue
+            if should_exclude(name, email): continue
             
             # Timestamp (ms -> date)
             ts = log.get('created') or log.get('timestamp')
@@ -195,18 +195,14 @@ def main():
             
             if ts > 9999999999: ts = ts / 1000.0
             
-            # Convert to PST
+            # UTC to PST
             dt_utc = datetime.fromtimestamp(ts, timezone.utc)
-            # Need strict PST conversion. Importing pytz inside function or reusing if available?
-            # fetch_backendless.py does NOT import pytz. But pandas does via .dt accessor.
-            # Let's rely on pandas for calculation or do simplistic -8h for now?
-            # Better to use pandas to convert since we already imported it.
+            
+            # Start Date filter (2026 onwards)
+            if dt_utc < datetime(2026, 1, 1, tzinfo=timezone.utc): continue
+            
             dt_pst = pd.to_datetime(ts, unit='s').tz_localize('UTC').tz_convert('America/Los_Angeles')
-            
             date_str = get_audit_date(dt_pst) # 7PM PST Rolling Window
-            
-            # Start Date filter (naive string comparison works if format matches)
-            if date_str < '01/01/26': continue
             
             # Event
             event = log.get('action') or log.get('event') or 'Unknown'

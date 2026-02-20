@@ -95,42 +95,63 @@ def fetch_files_for_projects(projects):
                         })
                         pass
 
-            # 2. Fetch versions (as "File Updated" events)
-            v_url = f"https://api.figma.com/v1/files/{fkey}/versions"
-            v_resp = requests.get(v_url, headers=get_headers())
-            if v_resp.status_code == 200:
-                versions = v_resp.json().get('versions', [])
-                if versions:
-                    # Sort just in case (API usually returns newest first)
-                    # We need oldest last to detect creation
-                    
-                    # Process Creation (Oldest Version)
-                    oldest_v = versions[-1]
-                    if 'created_at' in oldest_v:
-                         v_dt = pd.to_datetime(oldest_v['created_at']).tz_convert('America/Los_Angeles')
-                         if v_dt >= START_DATE_DT:
-                             user = oldest_v.get('user', {}).get('handle', 'Unknown')
-                             if user.lower() != 'figma':
-                                 all_events.append({
-                                     "Name": user, "Date": get_audit_date(v_dt),
-                                     "timestamp": v_dt,
-                                     "Event Type": "File Created", "Platform": "Figma"
-                                 })
+            # 2. Fetch versions (as "File Edited" events) - Paginated to find all users
+            v_page_token = None
+            all_versions = []
+            while True:
+                v_url = f"https://api.figma.com/v1/files/{fkey}/versions"
+                v_params = {'page_token': v_page_token} if v_page_token else {}
+                v_resp = requests.get(v_url, headers=get_headers(), params=v_params)
+                if v_resp.status_code != 200: break
+                
+                v_data = v_resp.json()
+                batch = v_data.get('versions', [])
+                if not batch: break
+                
+                all_versions.extend(batch)
+                
+                # Check if we should stop (oldest in batch is before START_DATE_DT)
+                oldest_in_batch_dt = pd.to_datetime(batch[-1]['created_at']).tz_convert('America/Los_Angeles')
+                if oldest_in_batch_dt < START_DATE_DT:
+                    break
+                
+                v_page_token = v_data.get('pagination', {}).get('next_page_token')
+                if not v_page_token: break
+                time.sleep(0.5)
 
-                    # Process Edits (All other versions)
-                    for v in versions[:-1]:
-                        if 'created_at' not in v: continue
-                        v_dt = pd.to_datetime(v['created_at']).tz_convert('America/Los_Angeles')
-                        
-                        if v_dt >= START_DATE_DT:
-                            user = v.get('user', {}).get('handle', 'Unknown')
-                            if user.lower() != 'figma':
-                                 all_events.append({
-                                     "Name": user, "Date": get_audit_date(v_dt),
-                                     "timestamp": v_dt,
-                                     "Event Type": "File Edited", "Platform": "Figma"
-                                 })
-            
+            if all_versions:
+                # Process Creation (Oldest Version across all pages)
+                oldest_v = all_versions[-1]
+                if 'created_at' in oldest_v:
+                     v_dt = pd.to_datetime(oldest_v['created_at']).tz_convert('America/Los_Angeles')
+                     if v_dt >= START_DATE_DT:
+                         user = oldest_v.get('user', {}).get('handle', 'Unknown')
+                         if user.lower() != 'figma':
+                             all_events.append({
+                                 "Name": user, "Date": get_audit_date(v_dt),
+                                 "timestamp": v_dt,
+                                 "Event Type": "File Created", "Platform": "Figma"
+                             })
+
+                # Process Edits (All versions except oldest)
+                seen_v_hashes = set() # Dedup if pagination overlaps
+                for v in all_versions[:-1]:
+                    if 'created_at' not in v or not v.get('id'): continue
+                    if v['id'] in seen_v_hashes: continue
+                    seen_v_hashes.add(v['id'])
+                    
+                    v_dt = pd.to_datetime(v['created_at']).tz_convert('America/Los_Angeles')
+                    
+                    if v_dt >= START_DATE_DT:
+                        user = v.get('user', {}).get('handle', 'Unknown')
+                        if user.lower() != 'figma':
+                             all_events.append({
+                                 "Name": user, "Date": get_audit_date(v_dt),
+                                 "timestamp": v_dt,
+                                 "Event Type": "File Edited", "Platform": "Figma"
+                             })
+                    else:
+                        break # We are going backwards in time
             time.sleep(1) # More generous rate limit for versions + comments
             
     return all_events
