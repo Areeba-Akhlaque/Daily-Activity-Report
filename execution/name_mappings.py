@@ -160,6 +160,7 @@ EXCLUDE_PATTERNS = [
     'info@conformationalaesthetics.com', 'conformational',
     'Backendless Support', 'Kinney', 'Michel', 'Ricardo', 'Xingran Du',
     'backendlessmail.com', # Exclude all backendless internal support emails
+    'Figma', # System user
 ]
 
 def map_name(identifier):
