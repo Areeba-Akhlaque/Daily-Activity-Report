@@ -144,8 +144,10 @@ EXCLUDE_PATTERNS = [
     'camlammers@gmail.com', # Excluded
     'info@pvragon.com', # Excluded
     'Jeniffer Rosa', 'Keeko Villaveces', 'Lena Klapper', 'A.S. Johan', 'Johan',
+    'Kristi Bergeron', 'kristi@pvragon.com', # Inactive as requested
+    'Tara Yowell', 'tara@pvragon.com', # Off period
+    'System/Group',
 ]
-
 
 def map_name(identifier):
     """
@@ -155,6 +157,12 @@ def map_name(identifier):
     if not identifier or identifier == 'Unknown':
         return 'Unknown'
     
+    # SYSTEM ID DETECTION: Catch IDs like /v/002e/... or hex-heavy strings
+    # Usually these are Google Groups or Service Accounts
+    import re
+    if identifier.startswith('/v/') or len(re.findall(r'[a-f0-9]', identifier)) > 20:
+        return 'System/Group'
+
     identifier_lower = identifier.lower().strip()
     
     # Direct lookup

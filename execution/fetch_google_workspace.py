@@ -171,7 +171,8 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
                              mapped_type = f"Drive {event_name.capitalize()}"
                     
                     elif application_name == 'calendar':
-                        if event_name in ['create_event', 'edit_event', 'delete_event', 'respond_event']:
+                        # ONLY Count active creation/editing, ignore passive 'respond' (often automated)
+                        if event_name in ['create_event', 'edit_event', 'delete_event']:
                             keep = True
                             mapped_type = "Calendar Activity"
                             
@@ -181,6 +182,9 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
                             mapped_type = "Meet Activity"
                     
                     if keep and effective_email:
+                        # SAFEGUARD: Skip IDs starting with /v/ or missing @ symbols that look like system ids
+                        if effective_email.startswith('/v/') or ('@' not in effective_email and len(effective_email) > 15):
+                             continue
                         # DEDUPLICATION
                         uniq_id = item.get('id', {}).get('uniqueQualifier')
                         if not uniq_id:
