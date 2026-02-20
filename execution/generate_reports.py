@@ -194,14 +194,15 @@ def update_daily_audit(gc, sh):
     summary_existing = df_existing.groupby(['Team Member', 'Activity Date', 'Platform', 'Activity Type'])['Count'].sum().to_dict()
     
     matrix_rows = []
-    # Sort dates newest first for the final report
+    # Sort order: 1. Date (Newest), 2. Platform (A-Z), 3. Event Type (A-Z), 4. Person (A-Z)
     sorted_dates = sorted(list(all_dates), key=lambda x: pd.to_datetime(x, format='%m/%d/%y'), reverse=True)
-    sorted_persons = sorted(list(all_persons))
     sorted_event_types = sorted(list(all_event_types)) # (Platform, Activity Type) pairs
+    sorted_persons = sorted(list(all_persons))
     
+    print("  Organizing rows by Date and Platform Groupings...")
     for date in sorted_dates:
-        for person in sorted_persons:
-            for plat, etype in sorted_event_types:
+        for (plat, etype) in sorted_event_types:
+            for person in sorted_persons:
                 key = (person, date, plat, etype)
                 count = summary_existing.get(key, 0)
                 
