@@ -31,7 +31,7 @@ load_env()
 
 # Import name mappings
 sys.path.insert(0, SCRIPT_DIR)
-from name_mappings import map_name, should_exclude
+from name_mappings import map_name, should_exclude, get_audit_date
 
 FIGMA_TOKEN = os.environ.get('FIGMA_TOKEN', '')
 FIGMA_TEAM_ID = os.environ.get('FIGMA_TEAM_ID', '')
@@ -112,7 +112,7 @@ def fetch_files_for_projects(projects):
                              user = oldest_v.get('user', {}).get('handle', 'Unknown')
                              if user.lower() != 'figma':
                                  all_events.append({
-                                     "Name": user, "Date": v_dt.strftime('%m/%d/%y'),
+                                     "Name": user, "Date": get_audit_date(v_dt),
                                      "timestamp": v_dt,
                                      "Event Type": "File Created", "Platform": "Figma"
                                  })
@@ -126,7 +126,7 @@ def fetch_files_for_projects(projects):
                             user = v.get('user', {}).get('handle', 'Unknown')
                             if user.lower() != 'figma':
                                  all_events.append({
-                                     "Name": user, "Date": v_dt.strftime('%m/%d/%y'),
+                                     "Name": user, "Date": get_audit_date(v_dt),
                                      "timestamp": v_dt,
                                      "Event Type": "File Edited", "Platform": "Figma"
                                  })

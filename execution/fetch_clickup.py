@@ -31,7 +31,7 @@ load_env()
 
 # Import name mappings
 sys.path.insert(0, SCRIPT_DIR)
-from name_mappings import map_name, should_exclude
+from name_mappings import map_name, should_exclude, get_audit_date
 
 CLICKUP_API_KEY = os.environ.get('CLICKUP_API_KEY', '')
 WORKSPACE_ID = os.environ.get('CLICKUP_WORKSPACE_ID', '9011906822')
@@ -230,8 +230,9 @@ def process_and_upload(events):
     
     # Filter out "User ..." (unidentified generic users)
     df = df[~df['Name'].str.startswith('User')]
-    # Convert ms timestamp to PST
-    df['Date'] = pd.to_datetime(df['timestamp'], unit='ms').dt.tz_localize('UTC').dt.tz_convert('America/Los_Angeles').dt.strftime('%m/%d/%y')
+    # Convert ms timestamp to PST and apply Audit Date logic
+    df['dt_pst'] = pd.to_datetime(df['timestamp'], unit='ms').dt.tz_localize('UTC').dt.tz_convert('America/Los_Angeles')
+    df['Date'] = df['dt_pst'].apply(get_audit_date)
     
     summary = df.groupby(['Name', 'Date', 'event_type']).size().reset_index(name='Quantity')
     summary['sort_dt'] = pd.to_datetime(summary['Date'], format='%m/%d/%y')

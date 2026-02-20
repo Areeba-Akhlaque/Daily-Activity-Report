@@ -269,7 +269,9 @@ def generate_activity_time_analysis(creds):
     
     # Build DataFrame
     df = pd.DataFrame(all_events)
-    df['date'] = df['timestamp'].dt.strftime('%m/%d/%y')
+    # Apply 7PM Rolling Window Logic
+    from name_mappings import get_audit_date
+    df['date'] = df['timestamp'].apply(get_audit_date)
     
     # Group by NAME + DATE and calculate metrics
     results = []

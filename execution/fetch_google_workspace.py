@@ -28,7 +28,7 @@ ROOT_DIR = os.path.dirname(SCRIPT_DIR)
 
 # Load helper modules
 sys.path.insert(0, SCRIPT_DIR)
-from name_mappings import map_name, should_exclude, NAME_MAP
+from name_mappings import map_name, should_exclude, NAME_MAP, get_audit_date
 
 # Configuration
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
@@ -212,7 +212,7 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
                             
                             events.append({
                                 "Name": map_name(effective_email),
-                                "Date": dt_pst.strftime('%m/%d/%y'),
+                                "Date": get_audit_date(dt_pst),
                                 "timestamp_dt": dt_pst,
                                 "Platform": "Google Workspace",
                                 "Event Type": mapped_type,

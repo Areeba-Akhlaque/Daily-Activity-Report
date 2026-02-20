@@ -31,7 +31,7 @@ load_env()
 
 # Import name mappings
 sys.path.insert(0, SCRIPT_DIR)
-from name_mappings import map_name, should_exclude
+from name_mappings import map_name, should_exclude, get_audit_date
 
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN', '')
 GITHUB_ORG = os.environ.get('GITHUB_ORG', 'Pvragon')
@@ -115,7 +115,7 @@ def fetch_events_for_repos(repos):
                 if readable_type:
                     all_events.append({
                         "User": actor,
-                        "Date": ts_pst.strftime('%m/%d/%y'), # PST Date
+                        "Date": get_audit_date(ts_pst), # 7PM PST Window Date
                         "timestamp": ts_pst,
                         "Event Type": readable_type
                     })

@@ -14,7 +14,7 @@ import time
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(SCRIPT_DIR)
 sys.path.insert(0, SCRIPT_DIR)
-from name_mappings import map_name, should_exclude
+from name_mappings import map_name, should_exclude, get_audit_date
 
 BASE_URL = os.environ.get('BACKENDLESS_API_URL', "https://develop.backendless.com")
 # Remove trailing slash if present
@@ -203,7 +203,7 @@ def main():
             # Better to use pandas to convert since we already imported it.
             dt_pst = pd.to_datetime(ts, unit='s').tz_localize('UTC').tz_convert('America/Los_Angeles')
             
-            date_str = dt_pst.strftime('%m/%d/%y') # For Sheet Match
+            date_str = get_audit_date(dt_pst) # 7PM PST Rolling Window
             
             # Start Date filter (naive string comparison works if format matches)
             if date_str < '01/01/26': continue

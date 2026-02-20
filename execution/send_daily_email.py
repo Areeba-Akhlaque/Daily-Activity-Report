@@ -84,13 +84,9 @@ def get_daily_summary(creds):
     pst = pytz.timezone('America/Los_Angeles')
     now_pst = datetime.now(pst)
     
-    if now_pst.hour < 12:
-        target_date_dt = now_pst - timedelta(days=1)
-        print(f"Morning Run (PST {now_pst.strftime('%H:%M')}): Targeting Yesterday ({target_date_dt.strftime('%m/%d/%y')})")
-    else:
-        target_date_dt = now_pst
-        print(f"Afternoon/Evening Run (PST {now_pst.strftime('%H:%M')}): Targeting Today ({target_date_dt.strftime('%m/%d/%y')})")
-        
+    # If running at 7 PM PST, we target "Today" which now includes activity 
+    # from 7 PM Yesterday to 7 PM Today due to the rolling window logic.
+    target_date_dt = now_pst
     target_date = target_date_dt.strftime('%m/%d/%y')
     print(f"Target Date: {target_date}")
     

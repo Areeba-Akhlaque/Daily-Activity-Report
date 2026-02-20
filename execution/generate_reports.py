@@ -21,7 +21,7 @@ ROOT_DIR = os.path.dirname(SCRIPT_DIR)
 
 # Import name mappings
 sys.path.insert(0, SCRIPT_DIR)
-from name_mappings import map_name, should_exclude
+from name_mappings import map_name, should_exclude, get_audit_date
 
 # Load .env explicitly if needed (duplicated from other scripts for fallback)
 def load_env():
@@ -88,8 +88,8 @@ def update_console_audit_logs(gc, sh):
     df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
     df = df[df['timestamp'] >= '2026-01-01']
     
-    # Format
-    df['Date'] = df['timestamp'].dt.strftime('%m/%d/%y')
+    # Format with 7PM Rolling Window
+    df['Date'] = df['timestamp'].apply(get_audit_date)
     df['Event Type'] = df['event'].fillna('Unknown')
     df['Platform'] = 'Backendless App'
     

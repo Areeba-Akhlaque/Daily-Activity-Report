@@ -238,3 +238,16 @@ def should_exclude(name):
             return True
     
     return False
+    
+def get_audit_date(dt):
+    """
+    Returns the audit date (string MM/DD/YY) for a given datetime object (must be PST).
+    Pvragon Logic: 7:00 PM PST (19:00) starts the next audit day.
+    Example: Feb 19 8:00 PM -> Feb 20.
+    """
+    from datetime import timedelta
+    if dt.hour >= 19:
+        audit_dt = dt + timedelta(days=1)
+    else:
+        audit_dt = dt
+    return audit_dt.strftime('%m/%d/%y')
