@@ -142,6 +142,7 @@ def process_and_upload(events):
         return
         
     df = pd.DataFrame(events)
+    print(f"  Raw users found: {df['Name'].unique().tolist()}")
     # Map names
     df['Name'] = df['Name'].apply(map_name)
     

@@ -71,7 +71,7 @@ def fetch_google_workspace_events(creds):
     events = []
     headers = {'Authorization': f'Bearer {creds.token}'}
     
-    for app in ['drive', 'gmail', 'calendar', 'meet']:
+    for app in ['drive', 'gmail']:
         start_dt = datetime.strptime(START_DATE, '%Y-%m-%d').replace(tzinfo=timezone.utc)
         now_dt = datetime.now(timezone.utc)
         current_start = start_dt
@@ -109,8 +109,19 @@ def fetch_google_workspace_events(creds):
                         ts = item.get('id', {}).get('time', '')
                         if ts:
                             try:
-                                dt = pd.to_datetime(ts).tz_convert(PST)
-                                events.append({'raw_name': email, 'timestamp': dt, 'app': f"GW:{app.capitalize()}"})
+                                # Apply specific filters
+                                keep = False
+                                if app == 'gmail': 
+                                    keep = True # Already filtered by eventName=send in API
+                                elif app == 'drive':
+                                    # We only want edits
+                                    events_in_item = item.get('events', [])
+                                    if any(e.get('name') == 'edit' for e in events_in_item):
+                                        keep = True
+                                
+                                if keep:
+                                    dt = pd.to_datetime(ts).tz_convert(PST)
+                                    events.append({'raw_name': email, 'timestamp': dt, 'app': f"GW:{app.capitalize()}"})
                             except:
                                 pass
                     

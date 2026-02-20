@@ -254,7 +254,9 @@ def fetch_backendless_events_raw():
     events = []
     if not logs: return []
     
-    from datetime import timezone
+    from name_mappings import get_audit_date
+    start_filter = pd.to_datetime('2026-01-01').tz_localize('UTC')
+    
     for log in logs:
         try:
             dev_raw = log.get('developer')
@@ -263,9 +265,13 @@ def fetch_backendless_events_raw():
             if not ts: continue
             if ts > 9999999999: ts = ts / 1000.0
             
-            # UTC to PST
-            dt = pd.to_datetime(ts, unit='s').tz_localize('UTC').tz_convert('America/Los_Angeles')
-            events.append({'raw_name': email, 'timestamp': dt, 'app': 'Backendless'})
+            # UTC timestamp to filter
+            dt_utc = pd.to_datetime(ts, unit='s').tz_localize('UTC')
+            if dt_utc < start_filter: continue
+            
+            # PST for reporting/analysis
+            dt_pst = dt_utc.tz_convert('America/Los_Angeles')
+            events.append({'raw_name': email, 'timestamp': dt_pst, 'app': 'Backendless'})
         except: continue
     return events
 

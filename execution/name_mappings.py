@@ -39,14 +39,24 @@ NAME_MAP = {
     'saifullahkhan.dev@gmail.com': 'Saifullah Khan',
     'saif72437': 'Saifullah Khan',
     'KristiBergeron17@gmail.com': 'Kristi Bergeron',
-    'roman.naidenko@gmail.com': 'Roman',
-    'xingrandu@gmail.com': 'Xingran Du',
-    'kinneybraxton@gmail.com': 'Kinney',
+    'roman.naidenko@gmail.com': 'Roman Naidenko',
+    'roman': 'Roman Naidenko',
+    
     
     # === Backendless Emails ===
     'alex.pavelko@backendlessmail.com': 'Alexander Pavelko',
     'bogdan@backendless.consulting': 'Bogdan',
     'mark@backendless.com': 'Backendless Support',
+    'andriy.konoz@backendlessmail.com': 'Andriy Konoz',
+    'dmytro.vakuliuk@backendlessmail.com': 'Dmytro Vakuliuk',
+    'oleg@backendlessmail.com': 'Oleg',
+    'sergey.androsov@backendlessmail.com': 'Sergey Androsov',
+    'sergey@backendlessmail.com': 'Sergey',
+    'serhiy.melnychuk@backendlessmail.com': 'Serhiy Melnychuk',
+    'stanislaw.grin@backendlessmail.com': 'Stanislaw Grin',
+    'vladimir.upirov@backendlessmail.com': 'Vladimir Upirov',
+    'xingrandu@gmail.com': 'Xingran Du',
+    'kinneybraxton@gmail.com': 'Kinney',
     
     # === External Consultants ===
     'michel@davidrobertsconsulting.com': 'Michel',
@@ -148,6 +158,8 @@ EXCLUDE_PATTERNS = [
     'Tara Yowell', 'tara@pvragon.com', # Off period
     'System/Group',
     'info@conformationalaesthetics.com', 'conformational',
+    'Backendless Support', 'Kinney', 'Michel', 'Ricardo', 'Xingran Du',
+    'backendlessmail.com', # Exclude all backendless internal support emails
 ]
 
 def map_name(identifier):
