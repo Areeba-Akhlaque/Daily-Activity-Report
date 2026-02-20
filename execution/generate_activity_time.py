@@ -75,6 +75,7 @@ def fetch_google_workspace_events(creds):
         start_dt = datetime.strptime(START_DATE, '%Y-%m-%d').replace(tzinfo=timezone.utc)
         now_dt = datetime.now(timezone.utc)
         current_start = start_dt
+        processed_ids = set()
         
         while current_start < now_dt:
             current_end = current_start + timedelta(days=30)
@@ -87,7 +88,8 @@ def fetch_google_workspace_events(creds):
                 'maxResults': 1000
             }
             if app == 'gmail':
-                params['eventName'] = 'send'
+                params['eventName'] = 'delivery'
+                params['filters'] = 'event_info.mail_event_type==1'
             url = f'https://admin.googleapis.com/admin/reports/v1/activity/users/all/applications/{app}'
             
             while True:
@@ -105,6 +107,21 @@ def fetch_google_workspace_events(creds):
                         email = actor.get('email', '')
                         if not email or actor.get('callerType') == 'KEY':
                             continue
+
+                        # SAFEGUARD: Skip IDs starting with /v/ or missing @ symbols that look like system ids
+                        if email.startswith('/v/') or ('@' not in email and len(email) > 15):
+                             continue
+                        
+                        # Deduplication
+                        uniq_id = item.get('id', {}).get('uniqueQualifier')
+                        if not uniq_id:
+                             # Fallback composite key
+                             ts = item.get('id', {}).get('time', '')
+                             uniq_id = f"{ts}_{email}_{app}"
+                        
+                        if uniq_id in processed_ids:
+                            continue
+                        processed_ids.add(uniq_id)
                         
                         ts = item.get('id', {}).get('time', '')
                         if ts:
@@ -112,7 +129,7 @@ def fetch_google_workspace_events(creds):
                                 # Apply specific filters
                                 keep = False
                                 if app == 'gmail': 
-                                    keep = True # Already filtered by eventName=send in API
+                                    keep = True # Filtered by API
                                 elif app == 'drive':
                                     # We only want edits
                                     events_in_item = item.get('events', [])

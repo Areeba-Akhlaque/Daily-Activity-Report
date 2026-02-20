@@ -101,6 +101,7 @@ def get_creds():
 def fetch_logs_in_windows(service, user_key, application_name, start_dt, end_dt):
     """Fetch logs respecting 30-day API limit."""
     all_events = []
+    processed_ids = set()
     
     # Generate 30-day windows
     windows = []
@@ -115,16 +116,16 @@ def fetch_logs_in_windows(service, user_key, application_name, start_dt, end_dt)
         start_str = w_start.strftime('%Y-%m-%dT%H:%M:%SZ')
         end_str = w_end.strftime('%Y-%m-%dT%H:%M:%SZ')
         
-        events = fetch_logs_for_user(service, user_key, application_name, start_str, end_str)
+        events = fetch_logs_for_user(service, user_key, application_name, start_str, end_str, processed_ids)
         all_events.extend(events)
         
     return all_events
 
-def fetch_logs_for_user(service, user_key, application_name, start_time, end_time):
+def fetch_logs_for_user(service, user_key, application_name, start_time, end_time, processed_ids=None):
     """Fetch logs for a specific user using official client (single window)."""
     events = []
-    processed_ids = set()
-    seen_events = set()
+    if processed_ids is None:
+        processed_ids = set()
     page_token = None
     
     params = {
@@ -135,7 +136,9 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
         'maxResults': 1000
     }
     
-    # Removed strict eventName='send' to catch 'delivery' events that represent sends
+    if application_name == 'gmail':
+        params['eventName'] = 'delivery'
+        params['filters'] = 'event_info.mail_event_type==1'
     
     while True:
         try:
@@ -156,26 +159,9 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
                     effective_email = actor_email
 
                     if application_name == 'gmail':
-                        # Check for 'send' OR 'delivery' with mail_event_type '2'
-                        if event_name == 'send':
-                            keep = True
-                            mapped_type = "Gmail Send"
-                        elif event_name == 'delivery':
-                            # Check mail_event_type parameter
-                            params_list = ev.get('parameters', [])
-                            # Deep nesting in JSON
-                            # {'name': 'event_info', 'messageValue': {'parameter': [{'name': 'mail_event_type', 'intValue': '2'}]}}
-                            found_send = False
-                            for p in params_list:
-                                if p.get('name') == 'event_info' and 'messageValue' in p:
-                                     inner_params = p['messageValue'].get('parameter', [])
-                                     for ip in inner_params:
-                                         if ip.get('name') == 'mail_event_type' and str(ip.get('intValue')) == '2':
-                                             found_send = True
-                                             break
-                            if found_send:
-                                keep = True
-                                mapped_type = "Gmail Send"
+                        # The API filter filters by mail_event_type==1 (Message Sent)
+                        keep = True
+                        mapped_type = "Gmail Send"
 
                     elif application_name == 'drive':
                          if event_name == 'edit':
@@ -241,8 +227,6 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
             # print(f"    [Error] {e}")
             break
             
-    if application_name == 'gmail' and seen_events:
-        print(f"    DEBUG: Gmail Event Names found in window: {seen_events}")
     return events
 
 def fetch_all_google_workspace(creds):

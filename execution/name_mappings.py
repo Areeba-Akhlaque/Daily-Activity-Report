@@ -165,6 +165,8 @@ EXCLUDE_PATTERNS = [
     'alex.pavelko@backendlessmail.com', # Alex's backendless mail should be excluded if it's not him
     'backendlessmail.com', # Exclude all backendless internal support emails
     'Figma', # System user
+    'abiel@pvragon.com', 'alejandra@pvragon.com', 'arinaldi@launchfactory.com',
+    'mari@pvragon.com', 'sergio@pvragon.com', 'trent@pvragon.com', 'David',
 ]
 
 def map_name(identifier):
