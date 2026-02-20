@@ -74,21 +74,24 @@ def safe_float(val):
     except (ValueError, TypeError):
         return 0.0
 
-def get_daily_summary(creds):
+def get_daily_summary(creds, target_date_override=None):
     """Fetch summary data from Google Sheet with detailed daily breakdown."""
     print("Fetching daily summary data...")
     gc = gspread.authorize(creds)
     sh = gc.open_by_key(SHEET_ID)
     
     # Get Date Logic (PST-aware)
-    # If currently morning in PST (< 12 PM), default to YESTERDAY to capture full previous day.
     pst = pytz.timezone('America/Los_Angeles')
     now_pst = datetime.now(pst)
     
-    # If running at 7 PM PST, we target "Today" which now includes activity 
-    # from 7 PM Yesterday to 7 PM Today due to the rolling window logic.
-    target_date_dt = now_pst
-    target_date = target_date_dt.strftime('%m/%d/%y')
+    if target_date_override:
+        target_date = target_date_override
+    else:
+        # ALWAYS target "Yesterday" (The last fully completed 24h cycle)
+        # This ensures reports always cover a full 12:00 AM - 11:59 PM window.
+        target_date_dt = now_pst - timedelta(days=1)
+        target_date = target_date_dt.strftime('%m/%d/%y')
+        
     print(f"Target Date: {target_date}")
     
     # 1. Fetch Activity Time Analysis
@@ -475,12 +478,21 @@ def send_email(creds, recipients, subject, html_content):
 def main():
     print("=== Sending Daily Activity Summary Email ===")
     
+    # Process Arguments
+    target_date = None
+    override_email = None
+    for arg in sys.argv:
+        if arg.startswith('--date='):
+            target_date = arg.split('=')[1]
+        elif '@' in arg:
+            override_email = [arg]
+
     # Get credentials
     creds = get_credentials()
     
     # Get summary data
     print("[1/3] Fetching summary data...")
-    summary = get_daily_summary(creds)
+    summary = get_daily_summary(creds, target_date_override=target_date)
     print(f"  Total activities: {summary['total_activities']:,}")
     print(f"  Active members: {summary['active_members']}")
     
@@ -497,11 +509,8 @@ def main():
     if summary.get('time_range'):
         subject += f" ({summary['time_range']})"
         
-    # Determine recipients (allow override via CLI)
-    recipients = EMAIL_RECIPIENTS
-    if len(sys.argv) > 1:
-        recipients = [sys.argv[1]]
-        print(f"[Override] Sending test email to: {recipients[0]}")
+    # Recipients
+    recipients = override_email if override_email else EMAIL_RECIPIENTS
     
     print(f"[3/3] Sending to: {', '.join(recipients)}")
     
