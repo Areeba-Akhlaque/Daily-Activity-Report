@@ -147,6 +147,7 @@ EXCLUDE_PATTERNS = [
     'Kristi Bergeron', 'kristi@pvragon.com', # Inactive as requested
     'Tara Yowell', 'tara@pvragon.com', # Off period
     'System/Group',
+    'info@conformationalaesthetics.com', 'conformational',
 ]
 
 def map_name(identifier):
