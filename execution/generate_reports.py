@@ -187,28 +187,36 @@ def update_daily_audit(gc, sh):
     
     print(f"  Found: {len(all_persons)} persons, {len(all_dates)} dates, {len(all_event_types)} event types")
     
-    # Use sparse data (only existing records) to avoid 10M cell limit
-    print("  Aggregating existing data (Sparse Matrix)...")
+    # Create the Full Matrix with 0s
+    print("  Creating Full Matrix (including 0s)...")
+    df_existing = pd.DataFrame(all_data)
+    # Sum up existing counts first
+    summary_existing = df_existing.groupby(['Team Member', 'Activity Date', 'Platform', 'Activity Type'])['Count'].sum().to_dict()
     
-    df = pd.DataFrame(all_data)
-    if df.empty:
-        print("  [SKIP] No data found.")
-        return
-
-    # Group by key and sum counts
-    summary = df.groupby(['Team Member', 'Activity Date', 'Platform', 'Activity Type'])['Count'].sum().reset_index()
+    matrix_rows = []
+    # Sort dates newest first for the final report
+    sorted_dates = sorted(list(all_dates), key=lambda x: pd.to_datetime(x, format='%m/%d/%y'), reverse=True)
+    sorted_persons = sorted(list(all_persons))
+    sorted_event_types = sorted(list(all_event_types)) # (Platform, Activity Type) pairs
     
-    # Sort: Date (newest first), then Platform, then Activity Type, then Person
-    summary['sort_dt'] = pd.to_datetime(summary['Activity Date'], format='%m/%d/%y', errors='coerce')
-    result = summary.sort_values(
-        by=['sort_dt', 'Platform', 'Activity Type', 'Team Member'], 
-        ascending=[False, True, True, True]
-    )
-    result = result.drop(columns=['sort_dt'])
+    for date in sorted_dates:
+        for person in sorted_persons:
+            for plat, etype in sorted_event_types:
+                key = (person, date, plat, etype)
+                count = summary_existing.get(key, 0)
+                
+                matrix_rows.append({
+                    'Team Member': person,
+                    'Activity Date': date,
+                    'Platform': plat,
+                    'Activity Type': etype,
+                    'Count': count
+                })
     
-    print(f"  Total sparse rows: {len(result)}")
+    result = pd.DataFrame(matrix_rows)
+    print(f"  Total matrix rows: {len(result)}")
     
-    # Upload in chunks (may be large)
+    # Upload in chunks (Full matrix can be very large)
     try:
         ws = sh.worksheet('Daily Audit')
         ws.clear()
@@ -219,17 +227,17 @@ def update_daily_audit(gc, sh):
     headers = result.columns.tolist()
     rows_to_upload = [headers] + result.values.tolist()
     
-    # Upload in chunks of 10000 rows
-    CHUNK_SIZE = 10000
+    # Chunked upload to avoid timeouts
+    CHUNK_SIZE = 5000 
     for i in range(0, len(rows_to_upload), CHUNK_SIZE):
         chunk = rows_to_upload[i:i + CHUNK_SIZE]
         if i == 0:
             ws.update(values=chunk, range_name='A1')
         else:
-            ws.append_rows(chunk[1:] if i > 0 else chunk)  # Skip header on subsequent chunks
+            ws.append_rows(chunk[1:] if i > 0 else chunk)
         print(f"    Uploaded rows {i} to {min(i + CHUNK_SIZE, len(rows_to_upload))}")
     
-    print(f"  [SUCCESS] Uploaded {len(result)} rows (complete matrix)")
+    print(f"  [SUCCESS] Uploaded {len(result)} rows (Full Matrix)")
 
 
 # Import generator for Activity Time Analysis
