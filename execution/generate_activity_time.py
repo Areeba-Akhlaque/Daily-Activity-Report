@@ -87,8 +87,7 @@ def fetch_google_workspace_events(creds):
                 'maxResults': 1000
             }
             if app == 'gmail':
-                params['eventName'] = 'delivery'
-                params['filters'] = 'event_info.mail_event_type==1'
+                params['eventName'] = 'send'
             url = f'https://admin.googleapis.com/admin/reports/v1/activity/users/all/applications/{app}'
             
             while True:

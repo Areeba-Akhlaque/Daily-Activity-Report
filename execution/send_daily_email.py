@@ -377,7 +377,7 @@ def generate_email_html(summary, chart_url=None):
                 <!-- Centered Buttons Table for Email Client Compatibility -->
                 <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin: auto;">
                     <tr>
-                        <td align="center" style="padding: 0 3px;">
+                        <td align="center" style="padding: 0 1px;">
                             <a href="{DASHBOARD_URL}" class="button" style="background-color: #244d5d; color: #ffffff !important; display: inline-block;">
                                 <span class="button-text">📊 Open Full Dashboard</span>
                             </a>
@@ -392,7 +392,7 @@ def generate_email_html(summary, chart_url=None):
             </div>
             
             <div class="footer">
-                Generated automatically by Pvragon Bot • {datetime.now().strftime('%I:%M %p')} • v2.3 (Standard)
+                Generated automatically by Pvragon Bot • {datetime.now().strftime('%I:%M %p')} • v2.4 (Standard)
             </div>
         </div>
     </body>
@@ -469,7 +469,7 @@ def main():
     html = generate_email_html(summary, chart_url)
     
     # Send Email
-    subject = f"[v2.3] Daily Activity Audit - {summary['date']}"
+    subject = f"[v2.4] Daily Activity Audit - {summary['date']}"
     if summary.get('time_range'):
         subject += f" ({summary['time_range']})"
         

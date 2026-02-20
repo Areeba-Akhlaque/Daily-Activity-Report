@@ -136,9 +136,7 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
     }
     
     if application_name == 'gmail':
-        # USER RECIPE: eventName=delivery AND filters=event_info.mail_event_type==1
-        params['eventName'] = 'delivery'
-        params['filters'] = 'event_info.mail_event_type==1'
+        params['eventName'] = 'send'
     
     while True:
         try:
