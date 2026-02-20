@@ -167,6 +167,19 @@ EXCLUDE_PATTERNS = [
     'Figma', # System user
     'abiel@pvragon.com', 'alejandra@pvragon.com', 'arinaldi@launchfactory.com',
     'mari@pvragon.com', 'sergio@pvragon.com', 'trent@pvragon.com', 'David',
+    
+    # Machine-generated / Auto-emails
+    'errors-rc@pvragon.com', 'emailparser@okridecare.com',
+    'drive-shares-dm-noreply@google.com', 'rc-eng-notifications@pvragon.com',
+    'noreply@medium.com', 'chrisl1315@att.net',
+]
+
+# Strict team list for Gmail sent events (Only these users' sends are counted)
+STRICT_TEAM_GMAIL = [
+    'Adriane Barredo', 'Alexander Pavelko', 'Areeba Akhlaque', 'Bilal Munir',
+    'Bradd Schofield', 'Cherry Aznar', 'James Hereford', 'Juan Vidal',
+    'Mariana Gracia Salgado', 'Muhammad Farhan', 'Roman Naidenko',
+    'Saifullah Khan', 'Saymond Montoya', 'Victor Cheung'
 ]
 
 def map_name(identifier):

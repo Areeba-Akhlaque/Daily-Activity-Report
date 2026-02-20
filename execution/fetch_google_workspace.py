@@ -28,7 +28,7 @@ ROOT_DIR = os.path.dirname(SCRIPT_DIR)
 
 # Load helper modules
 sys.path.insert(0, SCRIPT_DIR)
-from name_mappings import map_name, should_exclude, NAME_MAP, get_audit_date
+from name_mappings import map_name, should_exclude, NAME_MAP, get_audit_date, STRICT_TEAM_GMAIL
 
 # Configuration
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
@@ -161,7 +161,12 @@ def fetch_logs_for_user(service, user_key, application_name, start_time, end_tim
                     if application_name == 'gmail':
                         # The API filter filters by mail_event_type==1 (Message Sent)
                         
-                        # FILTER: Exclude auto-generated emails
+                        # 1. Map name to check strict inclusion
+                        mapped_nm = map_name(actor_email)
+                        if mapped_nm not in STRICT_TEAM_GMAIL:
+                             continue
+
+                        # 2. FILTER: Exclude auto-generated emails
                         is_auto = False
                         params_list = ev.get('parameters', [])
                         for p in params_list:

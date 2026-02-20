@@ -31,7 +31,7 @@ ROOT_DIR = os.path.dirname(SCRIPT_DIR)
 
 # Import name mappings
 sys.path.insert(0, SCRIPT_DIR)
-from name_mappings import map_name, should_exclude
+from name_mappings import map_name, should_exclude, STRICT_TEAM_GMAIL
 import fetch_clickup
 import fetch_figma
 import fetch_backendless
@@ -129,7 +129,12 @@ def fetch_google_workspace_events(creds):
                                 # Apply specific filters
                                 keep = False
                                 if app == 'gmail': 
-                                    # FILTER: Exclude auto-generated emails
+                                    # 1. Map name to check strict inclusion
+                                    mapped_nm = map_name(email)
+                                    if mapped_nm not in STRICT_TEAM_GMAIL:
+                                         continue
+
+                                    # 2. FILTER: Exclude auto-generated emails
                                     is_auto = False
                                     events_in_item = item.get('events', [])
                                     for ev in events_in_item:
