@@ -22,6 +22,7 @@ import gspread
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
+from name_mappings import map_name, should_exclude, STRICT_TEAM_GMAIL
 
 # Configuration
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -117,7 +118,21 @@ def get_daily_summary(creds):
     # 3. Process Per-Member Stats
     member_stats = {}
     
-    # From Time Analysis
+    # Pre-populate with all core employees to ensure they appear even with 0 events
+    for name in STRICT_TEAM_GMAIL:
+        member_stats[name] = {
+            'name': name,
+            'start': '-',
+            'end': '-',
+            'hours': 0.0,
+            'break': 0,
+            'events': 0,
+            'top_platform': '-',
+            'platform_breakdown': {},
+            'type_breakdown': {}
+        }
+    
+    # Update with actual Time Analysis data
     for r in target_time_data:
         name = r.get('Team Member')
         if not name: continue
@@ -192,26 +207,31 @@ def get_daily_summary(creds):
         'members': sorted_members,
         'platform_counts': dict(global_plat_counts),
         'all_types': list(set(t for m in type_counts.values() for t in m.keys())), # For chart labels
-        'time_range': "12:00 AM - 11:59 PM PST" if target_date_dt.date() < now_pst.date() else f"12:00 AM - {now_pst.strftime('%I:%M %p')} PST"
+        'time_range': "12:00 AM - 11:59 PM PST"
     }
 
 
 
 def get_chart_color(label, index):
-    """Generate consistent color based on label hash. Matches dashboard style consistently."""
-    # Dashboard palette logic: simple hash
+    """Generate consistent and unique color based on label. Ensures maximum distinction."""
     h = 0
     for char in label:
         h = ord(char) + ((h << 5) - h)
     
-    # Use a fixed palette to pick from based on hash
-    # Tableau 10 Professional Palette
+    # 1. Start with a high-contrast palette
     palette = [
         '#4e79a7', '#f28e2c', '#e15759', '#76b7b2', '#59a14f', 
-        '#edc949', '#af7aa1', '#ff9da7', '#9c755f', '#bab0ab'
+        '#edc949', '#af7aa1', '#ff9da7', '#9c755f', '#bab0ab',
+        '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd',
+        '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'
     ]
-    color = palette[abs(h) % len(palette)]
-    return color
+    
+    if index < len(palette):
+        return palette[index]
+    
+    # 2. Fallback to unique HSL for additional items
+    hue = abs(h) % 360
+    return f'hsl({hue}, 60%, 65%)'
 
 def generate_stacked_bar_chart(summary):
     """Generate a stacked horizontal bar chart for Activity Types per Member using QuickChart.io."""
@@ -271,17 +291,25 @@ def generate_stacked_bar_chart(summary):
 def generate_email_html(summary, chart_url=None):
     """Generate HTML email content with detailed leaderboard."""
     
-    # Generate Rows (Removed Events and Top Platform columns)
+    # Generate Rows (Include all employees)
     rows_html = ""
     for m in summary['members']:
-        if m['events'] == 0: continue
+        # Styles for this row
+        base_s = "padding: 12px; border-bottom: 1px solid #eee;"
+        if m['events'] == 0: base_s += " color: #999;"
+        
+        name_s = base_s
+        ctr_s = base_s + " text-align: center;"
+        hours_s = ctr_s + " color: #244d5d; font-weight: bold;"
+        if m['events'] == 0: hours_s = ctr_s + " color: #ccc;"
+
         rows_html += f"""
         <tr>
-            <td style="padding: 12px; border-bottom: 1px solid #eee;"><b>{m['name']}</b></td>
-            <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;">{m['start']}</td>
-            <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;">{m['end']}</td>
-            <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center; color: #244d5d; font-weight: bold;">{m['hours']}h</td>
-            <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;">{m['break']}m</td>
+            <td style="{name_s}"><b>{m['name']}</b></td>
+            <td style="{ctr_s}">{m['start']}</td>
+            <td style="{ctr_s}">{m['end']}</td>
+            <td style="{hours_s}">{m['hours']}h</td>
+            <td style="{ctr_s}">{m['break']}m</td>
         </tr>
         """
     

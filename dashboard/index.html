@@ -465,7 +465,8 @@
                     state.startDate = first;
                     state.endDate = last;
 
-                    document.getElementById('lastUpdated').innerText = 'Last Updated: ' + new Date().toLocaleString();
+                    document.getElementById('lastUpdated').innerText = 'Last Updated: ' + new Date().toLocaleString() + ' (PST)';
+                    document.getElementById('page-subtitle').innerText = 'Time Range: 12:00 AM - 11:59 PM PST (Rolling Audit Window)';
                 }
 
                 initCharts();
@@ -609,10 +610,16 @@
         };
 
         function getStringColor(str) {
-            let hash = 0;
-            for (let i = 0; i < str.length; i++) hash = str.charCodeAt(i) + ((hash << 5) - hash);
-            const c = (hash & 0x00FFFFFF).toString(16).toUpperCase();
-            return '#' + '00000'.substring(0, 6 - c.length) + c;
+            // Enhanced hash-based color palette for better differentiation
+            let h = 0;
+            for (let i = 0; i < str.length; i++) {
+                h = str.charCodeAt(i) + ((h << 5) - h);
+            }
+            // Use HSL for more vibrant and distinct colors
+            const hue = Math.abs(h) % 360;
+            const saturation = 50 + (Math.abs(h * 13) % 40); // 50-90%
+            const lightness = 60 + (Math.abs(h * 17) % 15);  // 60-75%
+            return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
 
         function updateDashboard(data) {
@@ -765,14 +772,14 @@
                 // Calculate Average
                 const avgStart = s.length ? s.reduce((a, b) => a + b, 0) / s.length : 0;
                 const avgEnd = e.length ? e.reduce((a, b) => a + b, 0) / e.length : 0;
-                const maxBreak = b.length ? Math.max(...b) : 0;
+                const avgMaxBreak = b.length ? b.reduce((a, b) => a + b, 0) / b.length : 0; // Updated to Average of Max Daily Breaks
 
-                return { avgStart, avgEnd, maxBreak };
+                return { avgStart, avgEnd, avgMaxBreak };
             });
 
             // Format for Chart.js floating bars: [start, end]
             const dataPoints = ranges.map(r => [r.avgStart, r.avgEnd]);
-            const backgroundColors = ranges.map(r => r.maxBreak > 180 ? '#ef4444' : r.maxBreak > 60 ? '#f59e0b' : '#10b981'); // Red if >3h break, Orange >1h
+            const backgroundColors = ranges.map(r => r.avgMaxBreak > 180 ? '#ef4444' : r.avgMaxBreak > 60 ? '#f59e0b' : '#10b981'); // Red if >3h break, Orange >1h
 
             charts.range.data.labels = members;
             charts.range.data.datasets = [{
@@ -797,7 +804,7 @@
                     return `${hr}:${min.toString().padStart(2, '0')} ${ampm}`;
                 };
 
-                return ` ${fmt(raw[0])} - ${fmt(raw[1])} (Max Break: ${stat.maxBreak}m)`;
+                return ` ${fmt(raw[0])} - ${fmt(raw[1])} (Avg Max Break: ${Math.round(stat.avgMaxBreak)}m)`;
             };
 
             charts.range.update();

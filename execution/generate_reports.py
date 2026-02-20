@@ -250,6 +250,40 @@ except ImportError:
     from generate_activity_time import generate_activity_time_analysis
 
 
+def update_event_references(gc, sh):
+    """Update 'Event Type References' by scanning all unique (Platform, Event Type) pairs in Daily Audit."""
+    print("\n=== [4/4] Updating Event Type References ===")
+    try:
+        ws_audit = sh.worksheet('Daily Audit')
+        data = ws_audit.get_all_records()
+        
+        # Collect unique pairs
+        pairs = set()
+        for r in data:
+            plat = r.get('Platform')
+            etype = r.get('Activity Type') or r.get('Event Type')
+            if plat and etype:
+                pairs.add((plat, etype))
+        
+        if not pairs:
+            print("  [SKIP] No event pairs found.")
+            return
+
+        df = pd.DataFrame(list(pairs), columns=['Platform', 'Event Type'])
+        df = df.sort_values(['Platform', 'Event Type'])
+        
+        try:
+            ws_ref = sh.worksheet('Event Type References')
+            ws_ref.clear()
+        except:
+            ws_ref = sh.add_worksheet('Event Type References', 1000, 5)
+            
+        ws_ref.update(values=[df.columns.tolist()] + df.values.tolist(), range_name='A1')
+        print(f"  [SUCCESS] Updated {len(df)} unique event types.")
+        
+    except Exception as e:
+        print(f"  [ERROR] Failed to update Event Type References: {e}")
+
 def update_activity_time_analysis(gc, sh):
     """
     Update Activity Time Analysis using robust timestamp-based logic.
@@ -290,6 +324,7 @@ def main():
     # Update all tabs
     update_console_audit_logs(gc, sh)
     update_daily_audit(gc, sh)
+    update_event_references(gc, sh) # Added this step
     update_activity_time_analysis(gc, sh)
     
     print("\n" + "=" * 60)

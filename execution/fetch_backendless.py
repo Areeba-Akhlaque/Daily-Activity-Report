@@ -16,6 +16,18 @@ ROOT_DIR = os.path.dirname(SCRIPT_DIR)
 sys.path.insert(0, SCRIPT_DIR)
 from name_mappings import map_name, should_exclude, get_audit_date
 
+# Load .env file
+def load_env():
+    env_path = os.path.join(ROOT_DIR, '.env')
+    if os.path.exists(env_path):
+        with open(env_path) as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#') and '=' in line:
+                    key, value = line.split('=', 1)
+                    os.environ[key] = value
+load_env()
+
 BASE_URL = os.environ.get('BACKENDLESS_API_URL', "https://develop.backendless.com")
 # Remove trailing slash if present
 if BASE_URL.endswith('/'): BASE_URL = BASE_URL[:-1]
@@ -102,7 +114,7 @@ def fetch_logs_internal_api():
         
         # 3. Fetch Audit Logs
         # URL: https://develop.backendless.com/{APP_ID}/console/security/audit-logs
-        audit_url = f"https://develop.backendless.com/{APP_ID}/console/security/audit-logs"
+        audit_url = f"{BASE_URL}/{APP_ID}/console/security/audit-logs"
         headers = {'auth-key': auth_key}
         
         print(f"[API] Fetching Logs from {audit_url}...")
@@ -223,6 +235,12 @@ def main():
     # Aggregate
     df = pd.DataFrame(processed)
     summary = df.groupby(['Name', 'Date', 'Platform', 'Event Type']).size().reset_index(name='Count')
+    
+    # Sort: Date (Newest), then Name (A-Z)
+    summary['sort_dt'] = pd.to_datetime(summary['Date'], format='%m/%d/%y')
+    summary = summary.sort_values(by=['sort_dt', 'Name'], ascending=[False, True])
+    summary = summary.drop(columns=['sort_dt'])
+    
     rows = summary.to_dict('records')
     
     # Upload
