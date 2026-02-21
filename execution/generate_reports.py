@@ -269,17 +269,53 @@ def update_event_references(gc, sh):
             print("  [SKIP] No event pairs found.")
             return
 
-        df = pd.DataFrame(list(pairs), columns=['Platform', 'Event Type'])
-        df = df.sort_values(['Platform', 'Event Type'])
-        
+        # Try to fetch existing descriptions to preserve them
+        desc_map = {}
         try:
             ws_ref = sh.worksheet('Event Type References')
-            ws_ref.clear()
-        except:
+            existing_data = ws_ref.get_all_records()
+            for r in existing_data:
+                # Key on (Platform, Event Type)
+                key = (str(r.get('Platform', '')), str(r.get('Event Type', '')))
+                if key[0] and key[1]:
+                    desc_map[key] = r.get('Description', '')
+        except Exception as e:
+            print(f"  [INFO] Creating new 'Event Type References' tab: {e}")
             ws_ref = sh.add_worksheet('Event Type References', 1000, 5)
+
+        # Default descriptions for common event types
+        defaults = {
+            ('ClickUp', 'task created'): "User created a new task to track specific work items.",
+            ('ClickUp', 'task completed'): "User successfully finalized and closed an assigned task.",
+            ('ClickUp', 'Comment Posted'): "User added a note, update, or feedback to an existing task.",
+            ('ClickUp', 'Channels messages'): "User participated in team discussion via ClickUp Channel chat.",
+            ('ClickUp', 'Direct chats messages'): "User sent a direct message for direct communication.",
+            ('GitHub', 'PushEvent'): "User pushed code updates or new features to the GitHub repository.",
+            ('GitHub', 'PullRequestEvent'): "User initiated or updated a PR for code review/merging.",
+            ('Google Workspace', 'Drive Edit'): "User modified a document, spreadsheet, or file in Google Drive.",
+            ('Google Workspace', 'Gmail Send'): "User sent an outgoing email from their professional account.",
+            ('Figma', 'Design Page Create'): "User created a new workspace or design canvas in Figma.",
+            ('Figma', 'Version Create'): "User saved a named version of the design file.",
+            ('Backendless App', 'API/Console Access'): "User interacted with the Backendless management console or API."
+        }
+
+        # Build merged dataset
+        merged_data = []
+        for plat, etype in sorted(pairs):
+            desc = desc_map.get((plat, etype), "")
+            if not desc:
+                desc = defaults.get((plat, etype), "")
             
-        ws_ref.update(values=[df.columns.tolist()] + df.values.tolist(), range_name='A1')
-        print(f"  [SUCCESS] Updated {len(df)} unique event types.")
+            merged_data.append({
+                'Platform': plat,
+                'Event Type': etype,
+                'Description': desc
+            })
+
+        df_final = pd.DataFrame(merged_data)
+        ws_ref.clear()
+        ws_ref.update(values=[df_final.columns.tolist()] + df_final.values.tolist(), range_name='A1')
+        print(f"  [SUCCESS] Updated {len(df_final)} event types (Preserved existing descriptions).")
         
     except Exception as e:
         print(f"  [ERROR] Failed to update Event Type References: {e}")

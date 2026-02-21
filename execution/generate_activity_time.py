@@ -376,6 +376,9 @@ def generate_activity_time_analysis(creds):
                 if gap > longest_gap:
                     longest_gap = gap
         
+        first = times[0]
+        last = times[-1]
+        
         results.append({
             'Team Member': name,
             'Date': date,

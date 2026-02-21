@@ -763,7 +763,15 @@
                 memberStats[mem].breaks.push(b);
             });
 
-            const members = Object.keys(memberStats).sort();
+            const members = Object.keys(memberStats).sort((a, b) => {
+                const statA = memberStats[a];
+                const statB = memberStats[b];
+                const durA = (statA.ends.reduce((sum, v) => sum + v, 0) / statA.ends.length) -
+                    (statA.starts.reduce((sum, v) => sum + v, 0) / statA.starts.length);
+                const durB = (statB.ends.reduce((sum, v) => sum + v, 0) / statB.ends.length) -
+                    (statB.starts.reduce((sum, v) => sum + v, 0) / statB.starts.length);
+                return durB - durA; // Descending duration
+            });
             const ranges = members.map(m => {
                 const s = memberStats[m].starts;
                 const e = memberStats[m].ends;

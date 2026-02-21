@@ -172,6 +172,8 @@ EXCLUDE_PATTERNS = [
     'errors-rc@pvragon.com', 'emailparser@okridecare.com',
     'drive-shares-dm-noreply@google.com', 'rc-eng-notifications@pvragon.com',
     'noreply@medium.com', 'chrisl1315@att.net',
+    # JP (External/Not an employee)
+    'JP', 'hola@jpcasabianca.com',
 ]
 
 # Strict team list for Gmail sent events (Only these users' sends are counted)
