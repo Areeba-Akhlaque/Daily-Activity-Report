@@ -323,49 +323,48 @@ def generate_activity_time_analysis(creds):
     # Group by NAME + DATE and calculate metrics
     results = []
     
-    SESSION_GAP_MINUTES = 45 # Increased to 45 mins to better catch dev work patterns
-    MIN_SESSION_CREDIT = 10  # Minimum 10 mins credit per activity session
+    SESSION_GAP_MINUTES = 120 # 2-hour threshold for identifying meaningful breaks
+    BUFFER_MINUTES = 30       # 30-minute total buffer (15m before/15m after) for each session
     
     for (name, date), group in df.groupby(['name', 'date']):
-        times = sorted(group['timestamp'].tolist())
-        first = times[0]
-        last = times[-1]
+        # Get all unique timestamps for the user on this date, sorted
+        times = sorted(group['timestamp'].unique())
         
-        # Calculate Duration (Sum of Sessions)
-        # Start first session with minimum 5 mins
-        total_work_seconds = 0
-        current_session_start = first
-        current_session_end = first
-        
-        # If single event
-        if len(times) == 1:
-            total_work_seconds = MIN_SESSION_CREDIT * 60 # 10 minutes credit
-        else:
-            # Iterate
-            for i in range(1, len(times)):
-                t_prev = times[i-1]
-                t_curr = times[i]
-                gap = (t_curr - t_prev).total_seconds() / 60.0
-                
-                if gap > SESSION_GAP_MINUTES:
-                    # Session Break
-                    # Add duration of previous session
-                    # Min credit for session? E.g. at least 5 mins?
-                    session_len = (t_prev - current_session_start).total_seconds()
-                    
-                    if session_len < (MIN_SESSION_CREDIT*60): session_len = (MIN_SESSION_CREDIT*60) # Min credit per block
-                    total_work_seconds += session_len
-                    
-                    # Start new session
-                    current_session_start = t_curr
-                
-                # Update current session end
-                current_session_end = t_curr
+        if not times:
+            continue
             
-            # Add final session
-            session_len = (current_session_end - current_session_start).total_seconds()
-            if session_len < (MIN_SESSION_CREDIT*60): session_len = (MIN_SESSION_CREDIT*60)
-            total_work_seconds += session_len
+        sessions = []
+        current_session = [times[0]]
+        
+        # 1. Group events into distinct sessions (Active -> Break -> Active)
+        for i in range(1, len(times)):
+            t_prev = times[i-1]
+            t_curr = times[i]
+            gap = (t_curr - t_prev).total_seconds() / 60.0
+            
+            if gap > SESSION_GAP_MINUTES:
+                # Gap is too long -> finalize current session and start new one
+                sessions.append(current_session)
+                current_session = [t_curr]
+            else:
+                current_session.append(t_curr)
+        
+        sessions.append(current_session)
+        
+        # 2. Calculate Total Active Time by summing session durations + buffers
+        total_work_seconds = 0
+        for session in sessions:
+            s_start = session[0]
+            s_end = session[-1]
+            
+            # Raw duration from first click to last click
+            raw_duration_sec = (s_end - s_start).total_seconds()
+            
+            # Add the productivity buffer (setup + wrap-up)
+            # This ensures even a single event gets 30 mins credit
+            session_total_sec = raw_duration_sec + (BUFFER_MINUTES * 60)
+            
+            total_work_seconds += session_total_sec
 
         active_duration_hours = total_work_seconds / 3600.0
         
