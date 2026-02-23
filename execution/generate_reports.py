@@ -50,70 +50,57 @@ def get_creds():
 
 
 def update_console_audit_logs(gc, sh):
-    """Update Console_Audit_Logs from CSV with proper mappings."""
-    print("\n=== [1/3] Updating Console_Audit_Logs ===")
+    """Update Console_Audit_Logs from the live worksheet (synced by fetch_backendless.py)."""
+    print("\n=== [1/3] Updating Console_Audit_Logs (Virtual) ===")
     
-    csv_path = os.path.join(ROOT_DIR, 'console_audit_logs.csv')
-    if not os.path.exists(csv_path):
-        print("  [SKIP] console_audit_logs.csv not found")
-        return
-    
-    df = pd.read_csv(csv_path)
-    print(f"  Loaded {len(df)} raw records")
-    
-    # Parse developer column
-    def get_email(dev_str):
-        s = str(dev_str).strip()
-        if not s or s == 'nan' or s == 'None': return 'Unknown'
-        
-        # Try JSON first (legacy compatibility)
-        try:
-            if s.startswith('{'):
-                d = json.loads(s)
-                if isinstance(d, dict): return d.get('email', 'Unknown')
-        except:
-            pass
-            
-        # Fallback: Assume it's an email string
-        return s
-    
-    df['Email'] = df['developer'].apply(get_email)
-    df['Name'] = df['Email'].apply(map_name)
-    
-    # Filter exclusions
-    df = df[~df['Name'].apply(should_exclude)]
-    df = df[~df['Email'].apply(should_exclude)]
-    
-    # Filter for 2026
-    df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
-    df = df[df['timestamp'] >= '2026-01-01']
-    
-    # Format with 7PM Rolling Window
-    df['Date'] = df['timestamp'].apply(get_audit_date)
-    df['Event Type'] = df['event'].fillna('Unknown')
-    df['Platform'] = 'Backendless App'
-    
-    # Aggregate
-    summary = df.groupby(['Name', 'Date', 'Platform', 'Event Type']).size().reset_index(name='Count')
-    
-    # Sort newest first
-    summary['sort_dt'] = pd.to_datetime(summary['Date'], format='%m/%d/%y')
-    summary = summary.sort_values(by=['sort_dt', 'Name'], ascending=[False, True])
-    summary = summary.drop(columns=['sort_dt'])
-    
-    print(f"  Aggregated to {len(summary)} rows")
-    print(f"  Team members: {sorted(summary['Name'].unique())}")
-    
-    # Upload
     try:
         ws = sh.worksheet('Console_Audit_Logs')
-        ws.clear()
-    except:
-        ws = sh.add_worksheet(title='Console_Audit_Logs', rows=5000, cols=10)
-    
-    final = summary[['Name', 'Date', 'Platform', 'Event Type', 'Count']]
-    ws.update(values=[final.columns.tolist()] + final.values.tolist(), range_name='A1')
-    print(f"  [SUCCESS] Uploaded {len(final)} rows")
+        data = ws.get_all_records()
+        if not data:
+            print("  [SKIP] Console_Audit_Logs is empty.")
+            return
+
+        df = pd.DataFrame(data)
+        print(f"  Loaded {len(df)} records from worksheet")
+        
+        # Ensure we have consistent column names
+        if 'Email' in df.columns:
+            df['Name'] = df['Email'].apply(map_name)
+        elif 'Name' in df.columns:
+            # Already mapped by fetch_backendless.py
+            pass
+        
+        # Filter exclusions
+        df = df[~df['Name'].apply(should_exclude)]
+        
+        # The 'Date' is already formatted by fetch_backendless.py
+        # We just need to ensure the columns match the Daily Audit expectation
+        df['Event Type'] = df.get('Activity Type') or df.get('Event Type') or 'Unknown'
+        df['Platform'] = 'Backendless App'
+        
+        # Aggregate to ensure uniqueness for Daily Audit
+        summary = df.groupby(['Name', 'Date', 'Platform', 'Event Type']).size().reset_index(name='Count')
+        
+        # Sort newest first
+        summary['sort_dt'] = pd.to_datetime(summary['Date'], format='%m/%d/%y')
+        summary = summary.sort_values(by=['sort_dt', 'Name'], ascending=[False, True])
+        summary = summary.drop(columns=['sort_dt'])
+        
+        print(f"  Aggregated to {len(summary)} rows")
+        
+        # Upload
+        try:
+            ws = sh.worksheet('Console_Audit_Logs')
+            ws.clear()
+        except:
+            ws = sh.add_worksheet(title='Console_Audit_Logs', rows=5000, cols=10)
+        
+        final = summary[['Name', 'Date', 'Platform', 'Event Type', 'Count']]
+        ws.update(values=[final.columns.tolist()] + final.values.tolist(), range_name='A1')
+        print(f"  [SUCCESS] Uploaded {len(final)} Backendless rows")
+
+    except Exception as e:
+        print(f"  [ERROR] Failed to update Console_Audit_Logs: {e}")
 
 
 def update_daily_audit(gc, sh):
@@ -290,13 +277,24 @@ def update_event_references(gc, sh):
             ('ClickUp', 'Comment Posted'): "User added a note, update, or feedback to an existing task.",
             ('ClickUp', 'Channels messages'): "User participated in team discussion via ClickUp Channel chat.",
             ('ClickUp', 'Direct chats messages'): "User sent a direct message for direct communication.",
+            ('ClickUp', 'task updated'): "User modified task details like due dates, priority, or status.",
             ('GitHub', 'PushEvent'): "User pushed code updates or new features to the GitHub repository.",
             ('GitHub', 'PullRequestEvent'): "User initiated or updated a PR for code review/merging.",
+            ('GitHub', 'IssueCommentEvent'): "User added a comment to a GitHub issue or PR.",
+            ('GitHub', 'CreateEvent'): "User created a new branch or tag in the repository.",
+            ('GitHub', 'DeleteEvent'): "User deleted a branch or tag from the repository.",
             ('Google Workspace', 'Drive Edit'): "User modified a document, spreadsheet, or file in Google Drive.",
             ('Google Workspace', 'Gmail Send'): "User sent an outgoing email from their professional account.",
+            ('Google Workspace', 'Meet'): "User attended a virtual meeting via Google Meet.",
+            ('Figma', 'File Edited'): "User worked on or made changes to a Figma design file.",
+            ('Figma', 'File Created'): "User created a new design file in the project.",
+            ('Figma', 'Comment Posted'): "User added a design comment or feedback in Figma.",
             ('Figma', 'Design Page Create'): "User created a new workspace or design canvas in Figma.",
             ('Figma', 'Version Create'): "User saved a named version of the design file.",
-            ('Backendless App', 'API/Console Access'): "User interacted with the Backendless management console or API."
+            ('Backendless App', 'API/Console Access'): "User interacted with the Backendless management console or API.",
+            ('Backendless App', 'Update Page UI'): "User modified a UI page or container in the Backendless console.",
+            ('Backendless App', 'Modify table record'): "User edited data directly within a Backendless database table.",
+            ('Backendless App', 'Create UI Container'): "User added a new UI element or container to the application."
         }
 
         # Build merged dataset
@@ -305,6 +303,10 @@ def update_event_references(gc, sh):
             desc = desc_map.get((plat, etype), "")
             if not desc:
                 desc = defaults.get((plat, etype), "")
+            
+            # Intelligent fallback if still empty
+            if not desc:
+                desc = f"User performed a '{etype}' action on the {plat} platform."
             
             merged_data.append({
                 'Platform': plat,

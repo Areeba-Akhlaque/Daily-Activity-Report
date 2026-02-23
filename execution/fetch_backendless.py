@@ -1,7 +1,7 @@
 import requests
 import json
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timezone
 import os
 import sys
 import gspread

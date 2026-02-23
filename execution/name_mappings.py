@@ -242,6 +242,7 @@ def map_name(identifier):
         'bradd': 'Bradd Schofield',
         'megha': 'Megha Sharma',
         'adriane': 'Adriane Barredo',
+        'adriana': 'Adriane Barredo',
         'mariana': 'Mariana Gracia Salgado',
         'cristina': 'Cristina Villarreal',
         'maz': 'Maz Tayebi',
