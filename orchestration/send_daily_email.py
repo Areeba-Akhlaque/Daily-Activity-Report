@@ -22,13 +22,13 @@ import gspread
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
-# Add execution dir to path for name_mappings
-sys.path.insert(0, os.path.join(ROOT_DIR, 'execution'))
-from name_mappings import map_name, should_exclude, STRICT_TEAM_GMAIL
-
 # Configuration
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(SCRIPT_DIR)
+
+# Add execution dir to path for name_mappings
+sys.path.insert(0, os.path.join(ROOT_DIR, 'execution'))
+from name_mappings import map_name, should_exclude, STRICT_TEAM_GMAIL
 
 # Load from .env if exists
 def load_env():

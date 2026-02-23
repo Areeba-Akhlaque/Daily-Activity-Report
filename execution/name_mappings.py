@@ -151,11 +151,11 @@ EXCLUDE_PATTERNS = [
     'camlammers@gmail.com', # Excluded
     'info@pvragon.com', # Excluded
     'Jeniffer Rosa', 'Keeko Villaveces', 'Lena Klapper', 'A.S. Johan', 'Johan',
-    'Kristi Bergeron', 'kristi@pvragon.com', # Inactive as requested
-    'Tara Yowell', 'tara@pvragon.com', # Off period
+    'Kristi Bergeron', 'kristi@pvragon.com', # Inactive
+    'Sunnat Choriev', 'Megha Sharma', 'Maz Tayebi', 'Jerry Miller', 'Cristina Villarreal', 'Ricardo', # Not part of us
     'System/Group',
     'info@conformationalaesthetics.com', 'conformational',
-    'Backendless Support', 'Kinney', 'Michel', 'Ricardo', 'Xingran Du',
+    'Backendless Support', 'Kinney', 'Michel', 'Xingran Du',
     'Andriy Konoz', 'Dmytro Vakuliuk', 'Oleg', 'Sergey Androsov', 'Sergey', 
     'Serhiy Melnychuk', 'Stanislaw Grin', 'Vladimir Upirov',
     'andriy.konoz@backendlessmail.com', 'dmytro.vakuliuk@backendlessmail.com',
@@ -166,7 +166,9 @@ EXCLUDE_PATTERNS = [
     'backendlessmail.com', # Exclude all backendless internal support emails
     'Figma', # System user
     'abiel@pvragon.com', 'alejandra@pvragon.com', 'arinaldi@launchfactory.com',
-    'mari@pvragon.com', 'sergio@pvragon.com', 'trent@pvragon.com', 'David',
+    'mari@pvragon.com', 'sergio@pvragon.com', 'trent@pvragon.com', 'David', 
+    ' Mari ', # Specific name with spaces to avoid 'Mariana' match
+    'Mari' # I will change the logic below to handle exact matches for some patterns
     
     # Machine-generated / Auto-emails
     'errors-rc@pvragon.com', 'emailparser@okridecare.com',
@@ -181,7 +183,7 @@ STRICT_TEAM_GMAIL = [
     'Adriane Barredo', 'Alexander Pavelko', 'Areeba Akhlaque', 'Bilal Munir',
     'Bradd Schofield', 'Cherry Aznar', 'James Hereford', 'Juan Vidal',
     'Mariana Gracia Salgado', 'Muhammad Farhan', 'Roman Naidenko',
-    'Saifullah Khan', 'Saymond Montoya', 'Victor Cheung'
+    'Saifullah Khan', 'Saymond Montoya', 'Victor Cheung', 'Tara Yowell'
 ]
 
 def map_name(identifier):
@@ -268,10 +270,21 @@ def should_exclude(name, identifier=None):
     if identifier:
         inputs.append(str(identifier))
     
+    # Exact match exclusion for specific tricky names
+    EXACT_EXCLUDES = ['Mari', 'Kristi Bergeron', 'Johan', 'Ricardo']
+    
     for val in inputs:
-        val_lower = val.lower().strip()
+        val_strip = val.strip()
+        val_lower = val_strip.lower()
+        
+        # Check exact matches first
+        if val_strip in EXACT_EXCLUDES:
+            return True
+            
         for pattern in EXCLUDE_PATTERNS:
-            if pattern.lower() in val_lower:
+            p_lower = pattern.lower()
+            if p_lower == 'mari': continue # Handle via exact match
+            if p_lower in val_lower:
                 return True
     
     return False
