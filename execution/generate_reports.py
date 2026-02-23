@@ -320,6 +320,33 @@ def update_event_references(gc, sh):
     except Exception as e:
         print(f"  [ERROR] Failed to update Event Type References: {e}")
 
+
+def update_system_architecture(gc, sh):
+    """Update 'System Architecture' tab with technical metadata and logic definitions."""
+    print("\n=== [5/5] Updating System Architecture ===")
+    try:
+        data = [
+            ["Tab Name", "Data Source", "Timezone", "Update Frequency", "Accuracy Level", "Key Logic/Scope"],
+            ["Clickup_Activity", "ClickUp API (V2/V3)", "PST", "Daily (4 AM PST)", "High (90%)", "Tracks tasks, comments, and chats. Attribute based on user ID."],
+            ["Github_Activity", "GitHub Events API", "PST", "Daily (4 AM PST)", "Perfect (100%)", "Tracks pushes, PRs, and reviews across organization repos."],
+            ["Figma_Activity", "Figma Plugin/API", "PST", "Daily (4 AM PST)", "High (95%)", "Tracks version creation and file edits."],
+            ["GoogleWorkspace_Activity", "Google Admin SDK", "PST", "Daily (4 AM PST)", "High (98%)", "Tracks Drive edits, Sent emails, and Meets. Received emails excluded."],
+            ["Backendless_Activity", "Backendless Logs", "PST", "Daily (4 AM PST)", "Perfect (100%)", "Tracks console actions and database modifications."],
+            ["Daily Audit", "Internal Logic", "PST", "Daily (4 AM PST)", "High", "Unified matrix of all activities. 0-fill for days with no activity."],
+            ["Activity Time Analysis", "Timestamp Logic", "PST", "Daily (4 AM PST)", "High (Strict)", "Calculated Work Day metrics. Strictly uses First/Last activity timestamps with 0 buffer."]
+        ]
+        
+        try:
+            ws = sh.worksheet('System Architecture')
+            ws.clear()
+        except:
+            ws = sh.add_worksheet('System Architecture', 100, 10)
+            
+        ws.update(values=data, range_name='A1')
+        print("  [SUCCESS] Updated System Architecture definitions.")
+    except Exception as e:
+        print(f"  [ERROR] Failed to update System Architecture: {e}")
+
 def update_activity_time_analysis(gc, sh):
     """
     Update Activity Time Analysis using robust timestamp-based logic.
@@ -362,6 +389,7 @@ def main():
     update_daily_audit(gc, sh)
     update_event_references(gc, sh) # Added this step
     update_activity_time_analysis(gc, sh)
+    update_system_architecture(gc, sh) # Added this step
     
     print("\n" + "=" * 60)
     print("[COMPLETE] All tabs updated successfully!")

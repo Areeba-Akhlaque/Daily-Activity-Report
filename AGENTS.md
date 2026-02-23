@@ -40,6 +40,7 @@ Data flows to a Google Sheet with these tabs:
 - `Daily Audit` - Unified matrix of all activity
 - `Activity Time Analysis` - Work hours and break analysis
 - `Event Types Reference` - Glossary of all event types
+- `System Architecture` - Technical metadata and logic definitions (PST-based)
 
 ## Operating Principles
 
