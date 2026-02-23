@@ -150,7 +150,7 @@ EXCLUDE_PATTERNS = [
     'User -1', 'User -', 'User ',  # Generic backendless system users
     'camlammers@gmail.com', # Excluded
     'info@pvragon.com', # Excluded
-    'Jeniffer Rosa', 'Keeko Villaveces', 'Lena Klapper', 'A.S. Johan', 'Johan',
+    'Jeniffer Rosa', # Keeping J Rosa excluded as not requested
     'Kristi Bergeron', 'kristi@pvragon.com', # Inactive
     'Sunnat Choriev', 'Megha Sharma', 'Maz Tayebi', 'Jerry Miller', 'Cristina Villarreal', 'Ricardo', # Not part of us
     'System/Group',
@@ -183,7 +183,8 @@ STRICT_TEAM_GMAIL = [
     'Adriane Barredo', 'Alexander Pavelko', 'Areeba Akhlaque', 'Bilal Munir',
     'Bradd Schofield', 'Cherry Aznar', 'James Hereford', 'Juan Vidal',
     'Mariana Gracia Salgado', 'Muhammad Farhan', 'Roman Naidenko',
-    'Saifullah Khan', 'Saymond Montoya', 'Victor Cheung', 'Tara Yowell'
+    'Saifullah Khan', 'Saymond Montoya', 'Victor Cheung', 'Tara Yowell',
+    'A.S. Johan', 'Keeko Villaveces', 'Lena Klapper'
 ]
 
 def map_name(identifier):
@@ -271,7 +272,7 @@ def should_exclude(name, identifier=None):
         inputs.append(str(identifier))
     
     # Exact match exclusion for specific tricky names
-    EXACT_EXCLUDES = ['Mari', 'Kristi Bergeron', 'Johan', 'Ricardo']
+    EXACT_EXCLUDES = ['Mari', 'Kristi Bergeron', 'Ricardo']
     
     for val in inputs:
         val_strip = val.strip()
