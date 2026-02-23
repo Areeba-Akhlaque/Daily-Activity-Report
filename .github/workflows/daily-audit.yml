@@ -65,7 +65,7 @@ jobs:
           EOF
       
       - name: Run daily workflow
-        run: python execution/run_daily_workflow.py
+        run: python orchestration/run_daily_workflow.py
       
       - name: Commit and Push Dashboard Data
         run: |
