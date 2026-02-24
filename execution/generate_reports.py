@@ -73,9 +73,11 @@ def update_console_audit_logs(gc, sh):
         # Filter exclusions
         df = df[~df['Name'].apply(should_exclude)]
         
-        # The 'Date' is already formatted by fetch_backendless.py
-        # We just need to ensure the columns match the Daily Audit expectation
-        df['Event Type'] = df.get('Activity Type') or df.get('Event Type') or 'Unknown'
+        if 'Activity Type' in df.columns:
+            df['Event Type'] = df['Activity Type']
+        elif 'Event Type' not in df.columns:
+            df['Event Type'] = 'Unknown'
+        
         df['Platform'] = 'Backendless App'
         
         # Aggregate to ensure uniqueness for Daily Audit
