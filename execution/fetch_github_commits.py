@@ -225,18 +225,9 @@ def process_and_upload_commits(commits):
         print(f"  [ERROR] {e}")
 
 if __name__ == "__main__":
-    from name_mappings import NAME_MAP
-    # Extract unique GitHub handles from NAME_MAP (They are keys that don't look like emails)
-    all_handles = set()
-    for key in NAME_MAP.keys():
-        if '@' not in key and not any(s in key for s in [' ', '.']): # Simple heuristic for handles
-            all_handles.add(key)
+    from name_mappings import GITHUB_TEAM_HANDLES
     
-    # Manual list of known handles just in case
-    team_handles = ['Bilal-Munir-Mughal', 'mfarhan0304', 'Areeba-Akhlaque', 'Cherry-Aznar', 
-                    'codingbreeze', 'jkhereford', 'juan-vidal-pvragon', 'KBergeron17', 
-                    'SaifullahCICT', 'SunnatChoriyev', 'alex-pvragon', 'adriane-pvragon']
-    all_handles.update(team_handles)
+    all_handles = GITHUB_TEAM_HANDLES
 
     all_repos = fetch_repos() # Org repos
     

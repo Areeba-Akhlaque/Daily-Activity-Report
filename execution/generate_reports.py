@@ -132,6 +132,7 @@ def update_daily_audit(gc, sh):
     
     for tab_name in source_tabs:
         try:
+            print(f"  - Fetching {tab_name}...")
             ws = sh.worksheet(tab_name)
             data = ws.get_all_records()
             print(f"  {tab_name}: {len(data)} rows")
@@ -177,18 +178,46 @@ def update_daily_audit(gc, sh):
     
     print(f"  Found: {len(all_persons)} persons, {len(all_dates)} dates, {len(all_event_types)} event types")
     
-    # Use only existing activity rows (Sparse Matrix) to save space
-    print("  Creating Sparse Matrix (Activity rows only)...")
-    df_result = pd.DataFrame(all_data)
+    # 1. Aggregate existing counts to sum up duplicates (like multiple commits in a day)
+    df_existing = pd.DataFrame(all_data)
+    summary_existing = df_existing.groupby(['Team Member', 'Activity Date', 'Platform', 'Activity Type'])['Count'].sum().to_dict()
     
-    # Sort order: 1. Date (Newest), 2. Platform (A-Z), 3. Event Type (A-Z), 4. Person (A-Z)
-    df_result['sort_dt'] = pd.to_datetime(df_result['Activity Date'], format='%m/%d/%y')
-    df_result = df_result.sort_values(by=['sort_dt', 'Team Member'], ascending=[False, True])
-    df_result = df_result.drop(columns=['sort_dt'])
+    # 2. Define Matrix Scope (Last 45 days to avoid cell limit)
+    # Convert dates to datetime objects for filtering
+    dt_objects = sorted([pd.to_datetime(d, format='%m/%d/%y') for d in all_dates], reverse=True)
+    if dt_objects:
+        latest = dt_objects[0]
+        cutoff = latest - pd.Timedelta(days=45)
+        filtered_dates = [d.strftime('%m/%d/%y') for d in dt_objects if d >= cutoff]
+    else:
+        filtered_dates = list(all_dates)
+
+    print(f"  Matrix will cover {len(filtered_dates)} dates (last 45 days).")
     
-    print(f"  Total activity rows: {len(df_result)}")
+    # 3. Create the Full Matrix with 0s
+    matrix_rows = []
+    sorted_event_types = sorted(list(all_event_types))
+    sorted_persons = sorted(list(all_persons))
     
-    # Upload in chunks (Full matrix can be very large)
+    print("  Organizing rows by Date and Platform Groupings...")
+    for date in filtered_dates:
+        for (plat, etype) in sorted_event_types:
+            for person in sorted_persons:
+                key = (person, date, plat, etype)
+                count = summary_existing.get(key, 0)
+                
+                matrix_rows.append({
+                    'Team Member': person,
+                    'Activity Date': date,
+                    'Platform': plat,
+                    'Activity Type': etype,
+                    'Count': count
+                })
+    
+    df_result = pd.DataFrame(matrix_rows)
+    print(f"  Total matrix rows: {len(df_result)}")
+    
+    # Upload in chunks
     try:
         ws = sh.worksheet('Daily Audit')
         ws.clear()
@@ -199,7 +228,7 @@ def update_daily_audit(gc, sh):
     headers = df_result.columns.tolist()
     rows_to_upload = [headers] + df_result.values.tolist()
     
-    # Chunked upload to avoid timeouts
+    # Chunked upload
     CHUNK_SIZE = 5000 
     for i in range(0, len(rows_to_upload), CHUNK_SIZE):
         chunk = rows_to_upload[i:i + CHUNK_SIZE]
@@ -209,7 +238,7 @@ def update_daily_audit(gc, sh):
             ws.append_rows(chunk[1:] if i > 0 else chunk)
         print(f"    Uploaded rows {i} to {min(i + CHUNK_SIZE, len(rows_to_upload))}")
     
-    print(f"  [SUCCESS] Uploaded {len(df_result)} rows (Sparse Matrix)")
+    print(f"  [SUCCESS] Uploaded {len(df_result)} rows (Full Matrix)")
 
 
 # Import generator for Activity Time Analysis

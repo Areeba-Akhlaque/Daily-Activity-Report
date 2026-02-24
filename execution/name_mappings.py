@@ -64,17 +64,22 @@ NAME_MAP = {
     'davidz5@uw.edu': 'David',
     
     # === GitHub Usernames ===
-    'Bilal-Munir-Mughal': 'Bilal Munir',
-    'mfarhan0304': 'Muhammad Farhan',
+    'AdrianeBarredo': 'Adriane Barredo',
     'Areeba-Akhlaque': 'Areeba Akhlaque',
-    'Cherry-Aznar': 'Cherry Aznar',
-    'codingbreeze': 'Megha Sharma',
+    'bilalmunir985-oss': 'Bilal Munir',
+    'bilalmunir985': 'Bilal Munir',
+    'Bradd Schofield': 'Bradd Schofield',
+    'Muhammad Farhan': 'Muhammad Farhan',
+    'Alexander Pavelko': 'Alexander Pavelko',
     'jkhereford': 'James Hereford',
-    'juan-vidal-pvragon': 'Juan Vidal',
-    'KBergeron17': 'Kristi Bergeron',
+    'keekov2': 'Keeko Villaveces',
+    'raz0r-b1ade': 'Roman Naidenko',
+    'Saifullah Khan': 'Saifullah Khan',
+    'Saymond02': 'Saymond Montoya',
+    'Victor Cheung': 'Victor Cheung',
+    'mfarhan0304': 'Muhammad Farhan',
     'SaifullahCICT': 'Saifullah Khan',
-    'SunnatChoriyev': 'Sunnat Choriev',
-    'sunnatcorp': 'Sunnat Choriev',
+    'juan-vidal-pvragon': 'Juan Vidal',
     'alex-pvragon': 'Alexander Pavelko',
     'adriane-pvragon': 'Adriane Barredo',
     
@@ -82,55 +87,46 @@ NAME_MAP = {
     'alexanderpavelko': 'Alexander Pavelko',
     'reebaakhlaque': 'Areeba Akhlaque',
     'bilalmughal': 'Bilal Munir',
-    'cherryaznar': 'Cherry Aznar',
     'james hereford': 'James Hereford',
     'jameshereford': 'James Hereford',
     'juanvidal': 'Juan Vidal',
-    'kristibergeron': 'Kristi Bergeron',
     'muhammadfarhan': 'Muhammad Farhan',
     'saifullahkhan': 'Saifullah Khan',
-    'sunnatchoriyev': 'Sunnat Choriev',
     
     # === Figma Handles ===
     'Alexander Pavelko': 'Alexander Pavelko',
     'Areeba Akhlaque': 'Areeba Akhlaque',
     'Bilal Munir': 'Bilal Munir',
-    'Cherry Aznar': 'Cherry Aznar',
     'James Hereford': 'James Hereford',
     'Juan Vidal': 'Juan Vidal',
-    'Kristi Bergeron': 'Kristi Bergeron',
     'Muhammad Farhan': 'Muhammad Farhan',
     'Saifullah Khan': 'Saifullah Khan',
-    'Sunnat Choriev': 'Sunnat Choriev',
-    'Lena Klapper': 'Lena Klapper',
     'Keeko Villaveces': 'Keeko Villaveces',
-    'A.S. Johan': 'A.S. Johan',
-    'Lena': 'Lena Klapper',
     'Keeko': 'Keeko Villaveces',
-    'Johan': 'A.S. Johan',
-    'Tara Yowell': 'Tara Yowell',
-    'Tara': 'Tara Yowell',
-    'TaraYowell': 'Tara Yowell',
-    'LenaKlapper': 'Lena Klapper',
     'KeekoVillaveces': 'Keeko Villaveces',
     
     # === Google Workspace Display Names ===
     # These are how names appear in Google Workspace reports
-    'A.S. Johan': 'A.S. Johan',
     'Adriane Barredo': 'Adriane Barredo',
-    'Alexander': 'Alexander Pavelko',
+    'Alexander Pavelko': 'Alexander Pavelko',
+    'Areeba Akhlaque': 'Areeba Akhlaque',
+    'Bilal Munir': 'Bilal Munir',
     'Bradd Schofield': 'Bradd Schofield',
-    'Jeniffer Rosa': 'Jeniffer Rosa',
+    'James Hereford': 'James Hereford',
     'Keeko Villaveces': 'Keeko Villaveces',
-    'Lena Klapper': 'Lena Klapper',
-    'Mariana Gracia Salgado': 'Mariana Gracia Salgado',
+    'Muhammad Farhan': 'Muhammad Farhan',
     'Roman Naidenko': 'Roman Naidenko',
+    'Saifullah Khan': 'Saifullah Khan',
     'Saymond Montoya': 'Saymond Montoya',
-    'Tara Yowell': 'Tara Yowell',
     'Victor Cheung': 'Victor Cheung',
-    'Mariana': 'Mariana Gracia Salgado',
-    'Bradd': 'Bradd Schofield',
 }
+
+# Strict team list for GitHub (only these handles will be scanned/reported)
+GITHUB_TEAM_HANDLES = [
+    'AdrianeBarredo', 'Areeba-Akhlaque', 'bilalmunir985-oss', 'Bradd Schofield',
+    'Muhammad Farhan', 'Alexander Pavelko', 'jkhereford', 'keekov2',
+    'raz0r-b1ade', 'Saifullah Khan', 'Saymond02', 'Victor Cheung'
+]
 
 # Exclusion patterns - accounts to skip
 EXCLUDE_PATTERNS = [
@@ -189,14 +185,15 @@ EXCLUDE_PATTERNS = [
     'JP', 'hola@jpcasabianca.com',
 ]
 
-# Strict team list for Gmail sent events (Only these users' sends are counted)
-STRICT_TEAM_GMAIL = [
+# Strict core team list (Only these members will be included in the final reports)
+CORE_TEAM = [
     'Adriane Barredo', 'Alexander Pavelko', 'Areeba Akhlaque', 'Bilal Munir',
-    'Bradd Schofield', 'Cherry Aznar', 'James Hereford', 'Juan Vidal',
-    'Mariana Gracia Salgado', 'Muhammad Farhan', 'Roman Naidenko',
-    'Saifullah Khan', 'Saymond Montoya', 'Victor Cheung', 'Tara Yowell',
-    'A.S. Johan', 'Keeko Villaveces', 'Lena Klapper'
+    'Bradd Schofield', 'James Hereford', 'Keeko Villaveces', 'Muhammad Farhan',
+    'Roman Naidenko', 'Saifullah Khan', 'Saymond Montoya', 'Victor Cheung'
 ]
+
+# Strict team list for Gmail sent events
+STRICT_TEAM_GMAIL = CORE_TEAM
 
 def map_name(identifier):
     """
@@ -278,25 +275,24 @@ def map_name(identifier):
 
 def should_exclude(name, identifier=None):
     """Check if a name or identifier (email) should be excluded from reports."""
+    # First, handle the special case of 'System/Group'
+    if name == 'System/Group':
+        return True
+        
+    # Strictly enforce CORE_TEAM
+    # If the name is NOT in CORE_TEAM, exclude it.
+    if name not in CORE_TEAM:
+        return True
+        
+    # Also check against EXCLUDE_PATTERNS just in case
     inputs = [str(name or "")]
     if identifier:
         inputs.append(str(identifier))
     
-    # Exact match exclusion for specific tricky names
-    EXACT_EXCLUDES = ['Mari', 'Kristi Bergeron', 'Ricardo']
-    
     for val in inputs:
-        val_strip = val.strip()
-        val_lower = val_strip.lower()
-        
-        # Check exact matches first
-        if val_strip in EXACT_EXCLUDES:
-            return True
-            
+        val_lower = val.strip().lower()
         for pattern in EXCLUDE_PATTERNS:
-            p_lower = pattern.lower()
-            if p_lower == 'mari': continue # Handle via exact match
-            if p_lower in val_lower:
+            if pattern.lower() in val_lower:
                 return True
     
     return False
