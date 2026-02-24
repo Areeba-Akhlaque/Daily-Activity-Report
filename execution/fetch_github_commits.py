@@ -44,6 +44,18 @@ SCOPES = [
     'https://www.googleapis.com/auth/admin.reports.audit.readonly'
 ]
 
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
+
+def get_session():
+    session = requests.Session()
+    retry = Retry(connect=3, backoff_factor=0.5)
+    adapter = HTTPAdapter(max_retries=retry)
+    session.mount('https://', adapter)
+    return session
+
+session = get_session()
+
 def get_headers():
     return {
         "Authorization": f"Bearer {GITHUB_TOKEN}",
@@ -55,72 +67,115 @@ def fetch_repos():
     print(f"[1/4] Fetching Repositories for org: {GITHUB_ORG}...")
     repos = []
     page = 1
+    recent_count = 0
     while True:
         url = f"https://api.github.com/orgs/{GITHUB_ORG}/repos"
-        resp = requests.get(url, headers=get_headers(), params={"page": page, "per_page": 100})
-        if resp.status_code != 200:
-            print(f"  Error fetching repos: {resp.status_code} {resp.text}")
-            break
+        resp = session.get(url, headers=get_headers(), params={"page": page, "per_page": 100}, timeout=30)
+        if resp.status_code != 200: break
         data = resp.json()
         if not data: break
-        repos.extend(data)
+        for r in data:
+            updated_at = pd.to_datetime(r['updated_at'])
+            if updated_at.tzinfo is None:
+                updated_at = updated_at.tz_localize('UTC')
+            updated_at = updated_at.tz_convert('America/Los_Angeles')
+            
+            if updated_at >= START_DATE_DT:
+                repos.append({"full_name": r['full_name'], "name": r['name'], "owner": GITHUB_ORG})
+                recent_count += 1
         page += 1
-    print(f"  Found {len(repos)} repositories.")
+    print(f"  Found {len(repos)} organization repositories updated since {START_DATE_STR}.")
+    return repos
+
+def fetch_user_repos(username):
+    """Fetch repositories for a specific user updated since target date."""
+    print(f"  Fetching repos for user: {username}...")
+    repos = []
+    page = 1
+    try:
+        while True:
+            url = f"https://api.github.com/users/{username}/repos"
+            resp = session.get(url, headers=get_headers(), params={"page": page, "per_page": 100, "sort": "updated"}, timeout=20)
+            if resp.status_code != 200: break
+            data = resp.json()
+            if not data: break
+            
+            for r in data:
+                updated_at = pd.to_datetime(r['updated_at'])
+                if updated_at.tzinfo is None:
+                    updated_at = updated_at.tz_localize('UTC')
+                updated_at = updated_at.tz_convert('America/Los_Angeles')
+                
+                if updated_at >= START_DATE_DT:
+                    repos.append({"full_name": r['full_name'], "name": r['name'], "owner": username})
+                else: 
+                    # Since we sort by updated desc, we can stop if we hit an old repo
+                    # but only if page=1 and we have enough data. For safety, let's just break for the user.
+                    break 
+            
+            if len(data) < 100: break
+            page += 1
+    except Exception as e:
+        print(f"    - Error for {username}: {e}")
     return repos
 
 def fetch_detailed_commits(repos):
     print(f"[2/4] Fetching Detailed Commits (Timestamps) for {len(repos)} repositories...")
     all_commits = []
-    
-    # We look for commits since START_DATE
     since_iso = START_DATE_DT.isoformat()
 
-    for repo in repos:
-        repo_name = repo['name']
-        print(f"  Fetching commits for: {repo_name}...")
+    # Deduplicate repos by full_name
+    seen_repos = set()
+    unique_repos = []
+    for r in repos:
+        if r['full_name'] not in seen_repos:
+            seen_repos.add(r['full_name'])
+            unique_repos.append(r)
+
+    for repo in unique_repos:
+        full_name = repo['full_name']
+        print(f"  - {full_name}...")
         page = 1
         while True:
-            url = f"https://api.github.com/repos/{GITHUB_ORG}/{repo_name}/commits"
-            params = {"since": since_iso, "page": page, "per_page": 100}
-            resp = requests.get(url, headers=get_headers(), params=params)
-            
-            if resp.status_code != 200:
+            try:
+                url = f"https://api.github.com/repos/{full_name}/commits"
+                params = {"since": since_iso, "page": page, "per_page": 100}
+                resp = session.get(url, headers=get_headers(), params=params, timeout=20)
+                
+                if resp.status_code != 200:
+                    break
+                
+                commits = resp.json()
+                if not commits: break
+                
+                for c in commits:
+                    commit_data = c.get('commit', {})
+                    author_data = commit_data.get('author', {})
+                    author_date_raw = author_data.get('date')
+                    if not author_date_raw: continue
+                    
+                    ts_utc = pd.to_datetime(author_date_raw)
+                    ts_pst = ts_utc.tz_convert('America/Los_Angeles')
+                    
+                    author_name = author_data.get('name', 'Unknown')
+                    github_login = c.get('author', {}).get('login') if c.get('author') else None
+                    identifier = github_login or author_name
+                    
+                    all_commits.append({
+                        "Identifier": identifier,
+                        "Date": get_audit_date(ts_pst),
+                        "Time": ts_pst.strftime('%I:%M %p'),
+                        "timestamp": ts_pst,
+                        "Repo": full_name,
+                        "Message": commit_data.get('message', '')[:100]
+                    })
+                
+                if len(commits) < 100: break
+                page += 1
+                time.sleep(0.05)
+            except Exception as e:
+                print(f"      [Timeout/Error: skipping {full_name}]")
                 break
-            
-            commits = resp.json()
-            if not commits:
-                break
-            
-            for c in commits:
-                commit_data = c.get('commit', {})
-                author_data = commit_data.get('author', {})
-                
-                # This is the "Actual" time the dev committed on their local machine
-                author_date_raw = author_data.get('date')
-                if not author_date_raw: continue
-                
-                ts_utc = pd.to_datetime(author_date_raw)
-                ts_pst = ts_utc.tz_convert('America/Los_Angeles')
-                
-                author_name = author_data.get('name', 'Unknown')
-                # Also check GitHub handle if available
-                github_login = c.get('author', {}).get('login') if c.get('author') else None
-                
-                # We use specific handle or name
-                identifier = github_login or author_name
-                
-                all_commits.append({
-                    "Identifier": identifier,
-                    "Date": get_audit_date(ts_pst),
-                    "Time": ts_pst.strftime('%I:%M %p'),
-                    "timestamp": ts_pst,
-                    "Repo": repo_name,
-                    "Message": commit_data.get('message', '')[:100]
-                })
-            
-            if len(commits) < 100: break
-            page += 1
-            time.sleep(0.1)
             
     return all_commits
 
@@ -131,13 +186,8 @@ def process_and_upload_commits(commits):
         return
         
     df = pd.DataFrame(commits)
-    # Map names using our sophisticated name_mappings.py
     df['Name'] = df['Identifier'].apply(map_name)
-    
-    # Filter exclusions
     df = df[~df['Name'].apply(should_exclude)]
-    
-    # Simple sorting by timestamp to keep chronological order
     df = df.sort_values(by='timestamp', ascending=False)
     
     df['Platform'] = "GitHub"
@@ -175,6 +225,25 @@ def process_and_upload_commits(commits):
         print(f"  [ERROR] {e}")
 
 if __name__ == "__main__":
-    repos = fetch_repos()
-    commits = fetch_detailed_commits(repos)
+    from name_mappings import NAME_MAP
+    # Extract unique GitHub handles from NAME_MAP (They are keys that don't look like emails)
+    all_handles = set()
+    for key in NAME_MAP.keys():
+        if '@' not in key and not any(s in key for s in [' ', '.']): # Simple heuristic for handles
+            all_handles.add(key)
+    
+    # Manual list of known handles just in case
+    team_handles = ['Bilal-Munir-Mughal', 'mfarhan0304', 'Areeba-Akhlaque', 'Cherry-Aznar', 
+                    'codingbreeze', 'jkhereford', 'juan-vidal-pvragon', 'KBergeron17', 
+                    'SaifullahCICT', 'SunnatChoriyev', 'alex-pvragon', 'adriane-pvragon']
+    all_handles.update(team_handles)
+
+    all_repos = fetch_repos() # Org repos
+    
+    print(f"Scanning personal repos for {len(all_handles)} team members...")
+    for handle in all_handles:
+        user_repos = fetch_user_repos(handle)
+        all_repos.extend(user_repos)
+
+    commits = fetch_detailed_commits(all_repos)
     process_and_upload_commits(commits)
