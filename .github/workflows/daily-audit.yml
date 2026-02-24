@@ -68,14 +68,22 @@ jobs:
         run: python orchestration/run_daily_workflow.py
       
       - name: Commit and Push Dashboard Data
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git pull --rebase --autostash origin main
+          
+          # Add the specific data file
           git add dashboard/data.json
-          git diff --staged --quiet || (git commit -m "🔄 Auto-update dashboard data - $(date -u +'%Y-%m-%d %H:%M UTC')" && git push)
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+          # Check for changes, then commit and push with local priority
+          if ! git diff --staged --quiet; then
+            git commit -m "🔄 Auto-update dashboard data - $(date -u +'%Y-%m-%d %H:%M UTC')"
+            # Force take our new data even if history has moved
+            git pull --rebase -X ours origin main
+            git push origin main
+          fi
       
       - name: Workflow summary
         if: always()
