@@ -174,51 +174,35 @@ def fetch_google_workspace_events(creds):
     return events
 
 
-def fetch_github_events():
-    """Fetch events from GitHub with timestamps."""
-    print('[2/5] Fetching GitHub events...')
+def fetch_github_events(creds):
+    """Fetch events from GitHub_Commits worksheet for more detailed analysis."""
+    print('[2/5] Fetching GitHub commits from worksheet...')
     events = []
     
-    github_token = os.environ.get('GITHUB_TOKEN', os.environ.get('GH_PAT', ''))
-    if not github_token:
-        print('  [SKIP] No GitHub token found')
-        return events
-    
-    headers = {'Authorization': f'Bearer {github_token}', 'Accept': 'application/vnd.github+json'}
-    start_dt_pst = pd.to_datetime(START_DATE).tz_localize(PST)
-    
     try:
-        repos_resp = requests.get('https://api.github.com/orgs/Pvragon/repos', headers=headers, params={'per_page': 100})
-        repos = repos_resp.json() if repos_resp.status_code == 200 else []
+        gc = gspread.authorize(creds)
+        sh = gc.open_by_key(SHEET_ID)
+        ws = sh.worksheet('Github_Commits')
+        data = ws.get_all_records()
         
-        for repo in repos:
+        for r in data:
+            dt_str = f"{r['Date']} {r['Time']}"
             try:
-                ev_resp = requests.get(
-                    f"https://api.github.com/repos/Pvragon/{repo['name']}/events",
-                    headers=headers,
-                    params={'per_page': 100}
-                )
-                if ev_resp.status_code != 200:
-                    continue
-                    
-                for ev in ev_resp.json():
-                    created = ev.get('created_at', '')
-                    actor = ev.get('actor', {}).get('login', '')
-                    if created and actor:
-                        try:
-                            # Strict PST conversion
-                            dt = pd.to_datetime(created).tz_convert(PST)
-                            if dt >= start_dt_pst:
-                                events.append({'raw_name': actor, 'timestamp': dt, 'app': 'GitHub'})
-                        except:
-                            pass
-            except:
-                pass
+                # MM/DD/YY HH:MM AM/PM
+                dt = datetime.strptime(dt_str, '%m/%d/%y %I:%M %p')
+                dt = PST.localize(dt)
+                events.append({
+                    'raw_name': r['Name'], 
+                    'timestamp': dt, 
+                    'app': 'GitHub Commit'
+                })
+            except Exception as e:
+                continue
                 
     except Exception as e:
-        print(f'  Warning: {e}')
+        print(f'  GitHub Worksheet Fetch Error: {e}')
     
-    print(f'  GitHub: {len(events)} events')
+    print(f'  GitHub: {len(events)} commit events')
     return events
 
 
@@ -290,7 +274,7 @@ def generate_activity_time_analysis(creds):
     
     # Fetch events
     gw_events = fetch_google_workspace_events(creds)
-    gh_events = fetch_github_events()
+    gh_events = fetch_github_events(creds)
     bl_events = fetch_backendless_events_wrapped()
     cu_events = fetch_clickup_events_wrapped()
     fi_events = fetch_figma_events_wrapped()

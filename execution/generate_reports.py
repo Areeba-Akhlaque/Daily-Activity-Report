@@ -120,6 +120,7 @@ def update_daily_audit(gc, sh):
         'Console_Audit_Logs',
         'Clickup_Activity',
         'Github_Activity',
+        'Github_Commits',
         'Figma_Activity',
         'GoogleWorkspace_Activity'
     ]
@@ -176,35 +177,16 @@ def update_daily_audit(gc, sh):
     
     print(f"  Found: {len(all_persons)} persons, {len(all_dates)} dates, {len(all_event_types)} event types")
     
-    # Create the Full Matrix with 0s
-    print("  Creating Full Matrix (including 0s)...")
-    df_existing = pd.DataFrame(all_data)
-    # Sum up existing counts first
-    summary_existing = df_existing.groupby(['Team Member', 'Activity Date', 'Platform', 'Activity Type'])['Count'].sum().to_dict()
+    # Use only existing activity rows (Sparse Matrix) to save space
+    print("  Creating Sparse Matrix (Activity rows only)...")
+    df_result = pd.DataFrame(all_data)
     
-    matrix_rows = []
     # Sort order: 1. Date (Newest), 2. Platform (A-Z), 3. Event Type (A-Z), 4. Person (A-Z)
-    sorted_dates = sorted(list(all_dates), key=lambda x: pd.to_datetime(x, format='%m/%d/%y'), reverse=True)
-    sorted_event_types = sorted(list(all_event_types)) # (Platform, Activity Type) pairs
-    sorted_persons = sorted(list(all_persons))
+    df_result['sort_dt'] = pd.to_datetime(df_result['Activity Date'], format='%m/%d/%y')
+    df_result = df_result.sort_values(by=['sort_dt', 'Team Member'], ascending=[False, True])
+    df_result = df_result.drop(columns=['sort_dt'])
     
-    print("  Organizing rows by Date and Platform Groupings...")
-    for date in sorted_dates:
-        for (plat, etype) in sorted_event_types:
-            for person in sorted_persons:
-                key = (person, date, plat, etype)
-                count = summary_existing.get(key, 0)
-                
-                matrix_rows.append({
-                    'Team Member': person,
-                    'Activity Date': date,
-                    'Platform': plat,
-                    'Activity Type': etype,
-                    'Count': count
-                })
-    
-    result = pd.DataFrame(matrix_rows)
-    print(f"  Total matrix rows: {len(result)}")
+    print(f"  Total activity rows: {len(df_result)}")
     
     # Upload in chunks (Full matrix can be very large)
     try:
@@ -214,8 +196,8 @@ def update_daily_audit(gc, sh):
         ws = sh.add_worksheet(title='Daily Audit', rows=100000, cols=10)
     
     # Upload header
-    headers = result.columns.tolist()
-    rows_to_upload = [headers] + result.values.tolist()
+    headers = df_result.columns.tolist()
+    rows_to_upload = [headers] + df_result.values.tolist()
     
     # Chunked upload to avoid timeouts
     CHUNK_SIZE = 5000 
@@ -227,7 +209,7 @@ def update_daily_audit(gc, sh):
             ws.append_rows(chunk[1:] if i > 0 else chunk)
         print(f"    Uploaded rows {i} to {min(i + CHUNK_SIZE, len(rows_to_upload))}")
     
-    print(f"  [SUCCESS] Uploaded {len(result)} rows (Full Matrix)")
+    print(f"  [SUCCESS] Uploaded {len(df_result)} rows (Sparse Matrix)")
 
 
 # Import generator for Activity Time Analysis
