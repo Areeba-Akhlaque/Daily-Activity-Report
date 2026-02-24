@@ -339,14 +339,30 @@
             </div>
             <div class="filter-group">
                 <span class="filter-label">Platform</span>
-                <select id="platformFilter" onchange="applyFilters()">
-                    <option value="all">All Platforms</option>
-                    <option value="Google Workspace">Google Workspace</option>
-                    <option value="ClickUp">ClickUp</option>
-                    <option value="GitHub">GitHub</option>
-                    <option value="Figma">Figma</option>
-                    <option value="Backendless App">Backendless App</option>
-                </select>
+                <div class="multi-select-btn" onclick="toggleDropdown('platformDropdown')">
+                    <span id="platformSelectedText">All Platforms</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="dropdown" id="platformDropdown">
+                    <div class="dropdown-item" onclick="selectPlatform('all')">
+                        <span>All Platforms</span>
+                    </div>
+                    <div class="dropdown-item" onclick="selectPlatform('Google Workspace')">
+                        <span>Google Workspace</span>
+                    </div>
+                    <div class="dropdown-item" onclick="selectPlatform('ClickUp')">
+                        <span>ClickUp</span>
+                    </div>
+                    <div class="dropdown-item" onclick="selectPlatform('GitHub')">
+                        <span>GitHub</span>
+                    </div>
+                    <div class="dropdown-item" onclick="selectPlatform('Figma')">
+                        <span>Figma</span>
+                    </div>
+                    <div class="dropdown-item" onclick="selectPlatform('Backendless App')">
+                        <span>Backendless App</span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -571,11 +587,36 @@
         window.filterDropdown = (input) => {
             const term = input.value.toLowerCase();
             const items = input.parentElement.parentElement.querySelectorAll('.dropdown-item');
-            // Skip first one (Select All)
-            for (let i = 1; i < items.length; i++) {
+            // Skip first one (Select All) for member/type filters
+            const isPlatform = input.parentElement.parentElement.id === 'platformDropdown';
+            const startIndex = isPlatform ? 0 : 1;
+            
+            for (let i = startIndex; i < items.length; i++) {
                 const div = items[i];
                 div.style.display = div.innerText.toLowerCase().includes(term) ? 'flex' : 'none';
             }
+        };
+
+        window.selectPlatform = (val) => {
+            state.platform = val;
+            const text = val === 'all' ? 'All Platforms' : val;
+            document.getElementById('platformSelectedText').innerText = text;
+            
+            // Highlight selected item
+            const items = document.getElementById('platformDropdown').querySelectorAll('.dropdown-item');
+            items.forEach(item => {
+                const itemText = item.querySelector('span').innerText;
+                if ((val === 'all' && itemText === 'All Platforms') || itemText === val) {
+                    item.style.background = 'rgba(255, 255, 255, 0.1)';
+                    item.style.color = 'var(--accent)';
+                } else {
+                    item.style.background = 'transparent';
+                    item.style.color = 'white';
+                }
+            });
+            
+            document.getElementById('platformDropdown').classList.remove('show');
+            applyFilters();
         };
 
         function updateButtonText(cat, selected, total) {
@@ -592,7 +633,6 @@
         };
 
         window.applyFilters = () => {
-            state.platform = document.getElementById('platformFilter').value;
 
             const filtered = rawData.filter(r => {
                 if (!state.members.has(r.member)) return false;

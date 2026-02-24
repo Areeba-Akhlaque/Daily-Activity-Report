@@ -102,6 +102,17 @@ NAME_MAP = {
     'Muhammad Farhan': 'Muhammad Farhan',
     'Saifullah Khan': 'Saifullah Khan',
     'Sunnat Choriev': 'Sunnat Choriev',
+    'Lena Klapper': 'Lena Klapper',
+    'Keeko Villaveces': 'Keeko Villaveces',
+    'A.S. Johan': 'A.S. Johan',
+    'Lena': 'Lena Klapper',
+    'Keeko': 'Keeko Villaveces',
+    'Johan': 'A.S. Johan',
+    'Tara Yowell': 'Tara Yowell',
+    'Tara': 'Tara Yowell',
+    'TaraYowell': 'Tara Yowell',
+    'LenaKlapper': 'Lena Klapper',
+    'KeekoVillaveces': 'Keeko Villaveces',
     
     # === Google Workspace Display Names ===
     # These are how names appear in Google Workspace reports

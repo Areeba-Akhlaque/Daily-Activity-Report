@@ -440,11 +440,6 @@ def generate_email_html(summary, chart_url=None):
                                 <span class="button-text">📗 Master Sheet</span>
                             </a>
                         </td>
-                        <td align="center" style="padding: 0 4px;">
-                            <a href="https://github.com/Areeba-Akhlaque/Daily-Activity-Report/blob/main/directives/PROJECT_BLUEPRINT.md" class="button" style="background-color: #64748b; color: #ffffff !important; display: inline-block;">
-                                <span class="button-text">📄 Blueprint</span>
-                            </a>
-                        </td>
                     </tr>
                 </table>
             </div>

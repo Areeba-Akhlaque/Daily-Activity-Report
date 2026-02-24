@@ -81,6 +81,7 @@ def fetch_files_for_projects(projects):
             print(f"    Fetching activity for: {fname}...")
             c_url = f"https://api.figma.com/v1/files/{fkey}/comments"
             c_resp = requests.get(c_url, headers=get_headers())
+            file_commentators = set()
             if c_resp.status_code == 200:
                 comments = c_resp.json().get('comments', [])
                 for c in comments:
@@ -88,31 +89,43 @@ def fetch_files_for_projects(projects):
                     created_dt = pd.to_datetime(c['created_at']).tz_convert('America/Los_Angeles')
                     if created_dt >= START_DATE_DT:
                         user_name = c.get('user', {}).get('handle', 'Unknown')
+                        file_commentators.add(user_name)
                         all_events.append({
                             "Name": user_name, "Date": created_dt.strftime('%m/%d/%y'),
                             "timestamp": created_dt,
                             "Event Type": "Comment Posted", "Platform": "Figma"
                         })
-                        pass
+                if file_commentators:
+                    print(f"      - Found commentators: {list(file_commentators)}")
 
             # 2. Fetch versions (as "File Edited" events) - Paginated to find all users
+            # 2. Fetch versions (as "File Edited" events) - Paginated to find all users
             v_page_token = None
+            v_page_count = 0
             all_versions = []
-            while True:
+            while v_page_count < 10: # Fetch up to 1000 versions (10 pages of 100)
                 v_url = f"https://api.figma.com/v1/files/{fkey}/versions"
-                v_params = {'page_token': v_page_token} if v_page_token else {}
+                v_params = {'page_size': 100}
+                if v_page_token: v_params['page_token'] = v_page_token
+                
                 v_resp = requests.get(v_url, headers=get_headers(), params=v_params)
-                if v_resp.status_code != 200: break
+                if v_resp.status_code != 200: 
+                    print(f"      - Error fetching versions (Page {v_page_count+1}): {v_resp.status_code}")
+                    break
                 
                 v_data = v_resp.json()
                 batch = v_data.get('versions', [])
                 if not batch: break
                 
                 all_versions.extend(batch)
+                v_page_count += 1
                 
-                # Check if we should stop (oldest in batch is before START_DATE_DT)
+                # Check if the oldest in this batch is before START_DATE_DT
+                # Figma versions are returned newest first.
                 oldest_in_batch_dt = pd.to_datetime(batch[-1]['created_at']).tz_convert('America/Los_Angeles')
+                
                 if oldest_in_batch_dt < START_DATE_DT:
+                    # We've reached past our target date
                     break
                 
                 v_page_token = v_data.get('pagination', {}).get('next_page_token')
@@ -120,8 +133,15 @@ def fetch_files_for_projects(projects):
                 time.sleep(0.5)
 
             if all_versions:
+                # Diagnostics: List all unique users found in this file
+                file_users = set(v.get('user', {}).get('handle', 'Unknown') for v in all_versions)
+                print(f"      - Found {len(all_versions)} versions. Authors: {list(file_users)}")
+
                 # Process Creation (Oldest Version across all pages)
-                oldest_v = all_versions[-1]
+                # Note: We sort by time descending, so last item is oldest
+                all_versions_sorted = sorted(all_versions, key=lambda x: x['created_at'])
+                oldest_v = all_versions_sorted[0]
+                
                 if 'created_at' in oldest_v:
                      v_dt = pd.to_datetime(oldest_v['created_at']).tz_convert('America/Los_Angeles')
                      if v_dt >= START_DATE_DT:
@@ -133,40 +153,50 @@ def fetch_files_for_projects(projects):
                                  "Event Type": "File Created", "Platform": "Figma"
                              })
 
-                # Process Edits (All versions except oldest)
-                seen_v_hashes = set() # Dedup if pagination overlaps
-                for v in all_versions[:-1]:
-                    if 'created_at' not in v or not v.get('id'): continue
-                    if v['id'] in seen_v_hashes: continue
-                    seen_v_hashes.add(v['id'])
+                # Process Edits (Any version after creation within range)
+                seen_v_stamps = set() 
+                for v in all_versions:
+                    if 'created_at' not in v: continue
+                    if v.get('id') == oldest_v.get('id'): continue 
                     
                     v_dt = pd.to_datetime(v['created_at']).tz_convert('America/Los_Angeles')
                     
                     if v_dt >= START_DATE_DT:
                         user = v.get('user', {}).get('handle', 'Unknown')
+                        # Deduplicate multiple hits on same minute/user to avoid noise
+                        v_key = (user, v_dt.strftime('%Y-%m-%d %H:%M'))
+                        if v_key in seen_v_stamps: continue
+                        seen_v_stamps.add(v_key)
+                        
                         if user.lower() != 'figma':
                              all_events.append({
                                  "Name": user, "Date": get_audit_date(v_dt),
                                  "timestamp": v_dt,
                                  "Event Type": "File Edited", "Platform": "Figma"
                              })
-                    else:
-                        break # We are going backwards in time
-            time.sleep(1) # More generous rate limit for versions + comments
+            time.sleep(1) 
             
     return all_events
 
 def process_and_upload(events):
     print("[3/4] Processing data...")
     if not events:
-        print("  No Figma events (comments) found since 2026.")
+        print("  No Figma events found since 2026.")
         return
         
     df = pd.DataFrame(events)
-    print(f"  Raw users found: {df['Name'].unique().tolist()}")
+    raw_handles = df['Name'].unique().tolist()
+    print(f"  Raw handles detected: {raw_handles}")
+    
     # Map names
     df['Name'] = df['Name'].apply(map_name)
     
+    # Detailed Trace: Who was found and who was mapped?
+    for handle in raw_handles:
+        mapped = map_name(handle)
+        excluded = should_exclude(mapped)
+        print(f"    - Trace: '{handle}' -> mapped to '{mapped}' (Excluded: {excluded})")
+
     # Filter exclusions
     df = df[~df['Name'].apply(should_exclude)]
     
