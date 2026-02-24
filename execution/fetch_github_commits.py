@@ -112,6 +112,7 @@ def fetch_detailed_commits(repos):
                 all_commits.append({
                     "Identifier": identifier,
                     "Date": get_audit_date(ts_pst),
+                    "Time": ts_pst.strftime('%I:%M %p'),
                     "timestamp": ts_pst,
                     "Repo": repo_name,
                     "Message": commit_data.get('message', '')[:100]
@@ -136,15 +137,13 @@ def process_and_upload_commits(commits):
     # Filter exclusions
     df = df[~df['Name'].apply(should_exclude)]
     
-    # Aggregate by Name, Date, Message (to avoid counting identical commits if they appear somehow)
-    summary = df.groupby(['Name', 'Date', 'Repo', 'Message']).size().reset_index(name='Quantity')
-    summary['sort_dt'] = pd.to_datetime(summary['Date'], format='%m/%d/%y')
-    summary = summary.sort_values(by=['sort_dt', 'Name'], ascending=[False, True])
+    # Simple sorting by timestamp to keep chronological order
+    df = df.sort_values(by='timestamp', ascending=False)
     
-    summary['Platform'] = "GitHub"
-    summary['Event Type'] = "Code Commit"
+    df['Platform'] = "GitHub"
+    df['Event Type'] = "Code Commit"
     
-    final_df = summary[['Name', 'Date', 'Platform', 'Repo', 'Event Type', 'Message']]
+    final_df = df[['Name', 'Date', 'Time', 'Platform', 'Repo', 'Event Type', 'Message']]
     
     print(f"[4/4] Uploading {len(final_df)} commits to Google Sheet (Github_Commits)...")
     
