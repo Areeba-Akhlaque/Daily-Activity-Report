@@ -379,9 +379,9 @@ def generate_email_html(summary, chart_url=None):
             th:first-child {{ text-align: left; }}
             
             .links {{ text-align: center; padding: 25px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; }}
-            .button {{ display: inline-block; padding: 12px 24px; background: #244d5d; color: #ffffff !important; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px; margin: 5px; }}
-            .button-text {{ color: #ffffff !important; text-decoration: none !important; }}
-            .button:hover {{ background: #1a3c4a; }}
+            .button { display: inline-block; padding: 12px 20px; background: #244d5d; color: #ffffff !important; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px; min-width: 160px; text-align: center; }
+            .button-text { color: #ffffff !important; text-decoration: none !important; }
+            .button:hover { background: #1a3c4a; }
             
             .footer {{ text-align: center; padding: 20px; color: #94a3b8; font-size: 12px; }}
             
@@ -430,13 +430,13 @@ def generate_email_html(summary, chart_url=None):
                 <!-- Centered Buttons Table for Email Client Compatibility -->
                 <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin: auto;">
                     <tr>
-                        <td align="center" style="padding: 0 4px;">
-                            <a href="{DASHBOARD_URL}" class="button" style="background-color: #244d5d; color: #ffffff !important; display: inline-block;">
+                        <td align="center" style="padding: 0 10px;">
+                            <a href="{DASHBOARD_URL}" class="button">
                                 <span class="button-text">📊 Full Dashboard</span>
                             </a>
                         </td>
-                        <td align="center" style="padding: 0 4px;">
-                            <a href="{SHEET_URL}" class="button" style="background-color: #244d5d; color: #ffffff !important; display: inline-block;">
+                        <td align="center" style="padding: 0 10px;">
+                            <a href="{SHEET_URL}" class="button">
                                 <span class="button-text">📗 Master Sheet</span>
                             </a>
                         </td>
