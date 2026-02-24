@@ -70,6 +70,7 @@ def main():
 
     results['clickup'] = run_script(os.path.join(EXEC_DIR, 'fetch_clickup.py'), 'ClickUp Activity')
     results['github'] = run_script(os.path.join(EXEC_DIR, 'fetch_github.py'), 'GitHub Activity')
+    results['github_commits'] = run_script(os.path.join(EXEC_DIR, 'fetch_github_commits.py'), 'Detailed GitHub Commits')
     results['google'] = run_script(os.path.join(EXEC_DIR, 'fetch_google_workspace.py'), 'Google Workspace Activity')
     results['figma'] = run_script(os.path.join(EXEC_DIR, 'fetch_figma.py'), 'Figma Activity')
     results['backendless'] = run_script(os.path.join(EXEC_DIR, 'fetch_backendless.py'), 'Backendless Activity')
