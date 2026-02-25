@@ -1162,10 +1162,8 @@
     </div>
 
     <script>
-        // MASTER CONFIGURATION
-        const MASTER_KEY = 'AIzaSyD8ziWrw7XbO0ZVSNtzAmwJG5oUaeIoXQg'.trim();
+        // API Key Management
         let geminiApiKey = localStorage.getItem('gemini_api_key');
-        if (!geminiApiKey || geminiApiKey === 'null' || geminiApiKey.length < 10) { geminiApiKey = MASTER_KEY; }
 
         function toggleSettings() {
             const s = document.getElementById('aiSettings');
