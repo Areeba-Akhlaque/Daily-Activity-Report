@@ -1152,8 +1152,8 @@
 
             <div class="chat-messages" id="chatMessages">
                 <div class="message bot">
-                    Hello Manager Areeba! To unlock analysis, please click the <b>Gear Icon (⚙️)</b> and paste a fresh
-                    <b>Gemini API Key</b>. (The previous one was flagged as public by Google).
+                    Welcome to the <b>Pvragon AI Auditor</b>. I have live access to all audit logs and system logic.
+                    Please ask any questions regarding team activity, work hours, or specific event patterns.
                 </div>
             </div>
             <div class="chat-input-area">
@@ -1268,11 +1268,11 @@
                 User Question: "${userQuery}"
 
                 Instructions:
-                - You have full awareness of the underlying Google Sheet. 
-                - If the user asks for the sheet link, provide ${googleSheetUrl}.
-                - Use PART 3 to explain specific event types if asked what they mean.
-                - If asked about "hours", calculate duration between Start and End times in PART 2.
-                - Answer in Strictly Professional English.
+                - You are the primary Pvragon Data Analyst. Prioritize deep, accurate data analysis over providing links.
+                - Use PART 1-4 to provide definitive, data-backed answers to queries about team performance, hours spent, and system logic.
+                - If asked about "hours", perform a calculation based on the Start/End timestamps in PART 2.
+                - Only provide the Google Sheet URL (${googleSheetUrl}) if the user explicitly asks for "the sheet link" or "raw data access".
+                - Answer in Strictly Professional English. Be decisive and detailed.
             `;
 
             const models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-flash-latest', 'gemini-pro-latest', 'gemini-2.5-pro'];
