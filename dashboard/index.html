@@ -1235,7 +1235,6 @@
         }
 
         async function askGeminiAI(userQuery) {
-            // FORCE provided key to ensure no old/bad keys are used
             const activeKey = PROVIDED_KEY;
 
             const summaryMap = {};
@@ -1252,38 +1251,41 @@
 
             const context = `Activity Logs:\n${logDetails}\n\nQuestion: ${userQuery}\nAssistant Role: Pro Analyst. Answer professionally in English only.`;
 
-            // Most likely working models for 2026
+            // 2026 Active Models
             const models = [
-                'gemini-1.5-flash',
-                'gemini-1.5-flash-latest',
-                'gemini-2.0-flash',
-                'gemini-1.5-pro',
-                'gemini-pro'
+                'gemini-3.1-pro',
+                'gemini-3-flash',
+                'gemini-3-pro',
+                'gemini-2.5-flash',
+                'gemini-1.5-flash'
             ];
 
-            let errors = [];
+            const versions = ['v1beta', 'v1'];
+            let lastErr = "";
             const typingMsg = document.querySelector('.message.bot:last-child');
 
             for (const model of models) {
-                try {
-                    if (typingMsg) typingMsg.innerText = `Testing ${model}...`;
-                    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${activeKey}`;
-                    const res = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ contents: [{ parts: [{ text: context }] }] })
-                    });
-                    const json = await res.json();
+                for (const ver of versions) {
+                    try {
+                        if (typingMsg) typingMsg.innerText = `Connecting via ${model} (${ver})...`;
+                        const url = `https://generativelanguage.googleapis.com/${ver}/models/${model}:generateContent?key=${activeKey}`;
+                        const res = await fetch(url, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ contents: [{ parts: [{ text: context }] }] })
+                        });
+                        const json = await res.json();
 
-                    if (json.candidates && json.candidates[0]) {
-                        return json.candidates[0].content.parts[0].text;
+                        if (json.candidates && json.candidates[0]) {
+                            return json.candidates[0].content.parts[0].text;
+                        }
+                        if (json.error) lastErr = `${model} | ${ver}: ${json.error.message}`;
+                    } catch (e) {
+                        lastErr = e.message;
                     }
-                    if (json.error) errors.push(`${model}: ${json.error.message}`);
-                } catch (e) {
-                    errors.push(`${model}: ${e.message}`);
                 }
             }
-            throw new Error(`All models failed. Last Error: ${errors[errors.length - 1]}`);
+            throw new Error(lastErr || "API Connection Failed. Please ensure Generative Language API is enabled in Cloud Console.");
         }
 
         function getSmartResponse(query) {
