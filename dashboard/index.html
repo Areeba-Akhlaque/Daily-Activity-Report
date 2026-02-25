@@ -1258,8 +1258,12 @@
                 4. Answer in a professional, human-like tone. Use STRICTLY PROFESSIONAL ENGLISH. Do NOT use Urdu or Roman Urdu under any circumstances.
             `;
 
-            // Try modern 2026 model identifiers
-            const modelsToTry = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash', 'gemini-pro'];
+            // Try 2026 generation models (Gemini 3 and 2.5 series)
+            const modelsToTry = [
+                'gemini-3-flash', 'gemini-3-pro',
+                'gemini-2.5-flash', 'gemini-2.5-pro',
+                'gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-pro'
+            ];
             const versions = ['v1beta', 'v1'];
             let lastErr = "";
 
@@ -1275,19 +1279,18 @@
                         const json = await res.json();
 
                         if (json.candidates && json.candidates[0]) {
-                            console.log(`Successfully connected using ${model} on ${ver}`);
+                            console.log(`Success: ${model} on ${ver}`);
                             return json.candidates[0].content.parts[0].text;
                         }
                         if (json.error) {
                             lastErr = json.error.message;
-                            console.warn(`Attempt failed: ${model} on ${ver} -> ${lastErr}`);
                         }
                     } catch (e) {
                         lastErr = e.message;
                     }
                 }
             }
-            throw new Error(lastErr || "All API connection attempts failed. Please verify your key.");
+            throw new Error(lastErr || "All API connection attempts failed. Your key may be restricted or models have changed.");
         }
 
         function getSmartResponse(query) {
