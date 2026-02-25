@@ -1236,55 +1236,44 @@
 
         async function askGeminiAI(userQuery) {
             const activeKey = PROVIDED_KEY;
-
-            // Comprehensive summary for the AI
             const summary = {};
             rawData.forEach(r => {
                 const key = `${r.member} | ${r.date}`;
                 if (!summary[key]) summary[key] = { count: 0, platform: r.platform };
                 summary[key].count += r.count;
             });
-
-            const statsList = Object.entries(summary)
-                .map(([k, v]) => `${k} | ${v.platform} | ${v.count}`)
-                .join('\n');
+            const stats = Object.entries(summary).map(([k, v]) => `${k} | ${v.platform} | ${v.count}`).join('\n');
 
             const context = `
-                Role: Pvragon Auditor. 
-                Data:
-                Member | Date | Platform | Events
-                ${statsList}
-
+                Role: Pvragon Auditor. Analyze this data for Manager Areeba.
                 Feb 2026 Weekends: Feb 1, 7, 8, 14, 15, 21, 22, 28.
+                Data (Member | Date | Platform | Count):
+                ${stats}
+
                 Question: "${userQuery}"
-                
-                Instructions: Answer in professional English. Be specific about dates.
+                Instructions: Answer in professional English. Be exact about who worked on which weekend date.
             `;
 
-            // Start with gemini-pro as we know it works for you
-            const models = ['gemini-pro', 'gemini-1.5-flash', 'gemini-1.5-pro'];
-            const versions = ['v1beta', 'v1'];
+            const models = ['gemini-1.5-flash', 'gemini-1.0-pro', 'gemini-1.5-pro'];
             let lastErr = "";
             const typingMsg = document.querySelector('.message.bot:last-child');
 
             for (const model of models) {
-                for (const ver of versions) {
-                    try {
-                        if (typingMsg) typingMsg.innerText = `Analyzing data via ${model}...`;
-                        const res = await fetch(`https://generativelanguage.googleapis.com/${ver}/models/${model}:generateContent?key=${activeKey}`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ contents: [{ parts: [{ text: context }] }] })
-                        });
-                        const json = await res.json();
-                        if (json.candidates && json.candidates[0]) return json.candidates[0].content.parts[0].text;
-                        if (json.error) lastErr = `${model}: ${json.error.message}`;
-                    } catch (e) {
-                        lastErr = e.message;
-                    }
+                try {
+                    if (typingMsg) typingMsg.innerText = `Connecting via ${model}...`;
+                    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${activeKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ contents: [{ parts: [{ text: context }] }] })
+                    });
+                    const json = await res.json();
+                    if (json.candidates && json.candidates[0]) return json.candidates[0].content.parts[0].text;
+                    if (json.error) lastErr = `${model}: ${json.error.message}`;
+                } catch (e) {
+                    lastErr = e.message;
                 }
             }
-            throw new Error(lastErr || "Request failed.");
+            throw new Error(lastErr || "Connection failed.");
         }
 
         function getSmartResponse(query) {
