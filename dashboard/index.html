@@ -1258,13 +1258,14 @@
                 4. Answer in a professional, human-like tone. Use STRICTLY PROFESSIONAL ENGLISH. Do NOT use Urdu or Roman Urdu under any circumstances.
             `;
 
-            // Try different model identifiers that are active in 2026
-            const modelsToTry = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-pro'];
+            // Try modern 2026 model identifiers
+            const modelsToTry = ['gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-pro'];
             let lastErr = "";
 
             for (const model of modelsToTry) {
                 try {
-                    const url = `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${geminiApiKey}`;
+                    // Use v1beta endpoint for maximum compatibility with 2026 model names
+                    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiApiKey}`;
                     const res = await fetch(url, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -1274,12 +1275,15 @@
                     if (json.candidates && json.candidates[0]) {
                         return json.candidates[0].content.parts[0].text;
                     }
-                    if (json.error) lastErr = json.error.message;
+                    if (json.error) {
+                        lastErr = json.error.message;
+                        console.warn(`Model ${model} failed: ${lastErr}`);
+                    }
                 } catch (e) {
                     lastErr = e.message;
                 }
             }
-            throw new Error(lastErr || "Failed to find a compatible Gemini model.");
+            throw new Error(lastErr || "Failed to find a compatible Gemini model. Please check your API Key settings.");
         }
 
         function getSmartResponse(query) {
