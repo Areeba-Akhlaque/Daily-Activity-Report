@@ -82,6 +82,11 @@ NAME_MAP = {
     'juan-vidal-pvragon': 'Juan Vidal',
     'alex-pvragon': 'Alexander Pavelko',
     'adriane-pvragon': 'Adriane Barredo',
+    'Cherry-Aznar': 'Cherry Aznar',
+    'codingbreeze': 'Megha Sharma',
+    'SunnatChoriyev': 'Sunnat Choriev',
+    'Sunnat-Choriev': 'Sunnat Choriev',
+    'KBergeron17': 'Kristi Bergeron',
     
     # === ClickUp Usernames ===
     'alexanderpavelko': 'Alexander Pavelko',
@@ -92,6 +97,16 @@ NAME_MAP = {
     'juanvidal': 'Juan Vidal',
     'muhammadfarhan': 'Muhammad Farhan',
     'saifullahkhan': 'Saifullah Khan',
+    'cherryaznar': 'Cherry Aznar',
+    'adrianebarredo': 'Adriane Barredo',
+    'saymondmontoya': 'Saymond Montoya',
+    'romannaidenko': 'Roman Naidenko',
+    'victorcheung': 'Victor Cheung',
+    'tarayowell': 'Tara Yowell',
+    'marianagracia': 'Mariana Gracia Salgado',
+    'lenaklapper': 'Lena Klapper',
+    'keekovillaveces': 'Keeko Villaveces',
+    'asjohan': 'A.S. Johan',
     
     # === Figma Handles ===
     'Alexander Pavelko': 'Alexander Pavelko',
@@ -104,9 +119,17 @@ NAME_MAP = {
     'Keeko Villaveces': 'Keeko Villaveces',
     'Keeko': 'Keeko Villaveces',
     'KeekoVillaveces': 'Keeko Villaveces',
+    'Cherry Aznar': 'Cherry Aznar',
+    'Adriane Barredo': 'Adriane Barredo',
+    'Lena Klapper': 'Lena Klapper',
+    'Tara Yowell': 'Tara Yowell',
+    'Mariana Gracia Salgado': 'Mariana Gracia Salgado',
+    'A.S. Johan': 'A.S. Johan',
+    'Saymond Montoya': 'Saymond Montoya',
+    'Victor Cheung': 'Victor Cheung',
+    'Roman Naidenko': 'Roman Naidenko',
     
     # === Google Workspace Display Names ===
-    # These are how names appear in Google Workspace reports
     'Adriane Barredo': 'Adriane Barredo',
     'Alexander Pavelko': 'Alexander Pavelko',
     'Areeba Akhlaque': 'Areeba Akhlaque',
@@ -119,6 +142,12 @@ NAME_MAP = {
     'Saifullah Khan': 'Saifullah Khan',
     'Saymond Montoya': 'Saymond Montoya',
     'Victor Cheung': 'Victor Cheung',
+    'Tara Yowell': 'Tara Yowell',
+    'Lena Klapper': 'Lena Klapper',
+    'Cherry Aznar': 'Cherry Aznar',
+    'Juan Vidal': 'Juan Vidal',
+    'Mariana Gracia Salgado': 'Mariana Gracia Salgado',
+    'A.S. Johan': 'A.S. Johan',
 }
 
 # Strict team list for GitHub (only these handles will be scanned/reported)
@@ -185,11 +214,13 @@ EXCLUDE_PATTERNS = [
     'JP', 'hola@jpcasabianca.com',
 ]
 
-# Strict core team list (Only these members will be included in the final reports)
+# Strict core team list (The official 18 members to be included in all reports)
 CORE_TEAM = [
     'Adriane Barredo', 'Alexander Pavelko', 'Areeba Akhlaque', 'Bilal Munir',
-    'Bradd Schofield', 'James Hereford', 'Keeko Villaveces', 'Muhammad Farhan',
-    'Roman Naidenko', 'Saifullah Khan', 'Saymond Montoya', 'Victor Cheung'
+    'Bradd Schofield', 'Cherry Aznar', 'James Hereford', 'Juan Vidal',
+    'Keeko Villaveces', 'Muhammad Farhan', 'Roman Naidenko', 'Saifullah Khan',
+    'Saymond Montoya', 'Victor Cheung', 'Tara Yowell', 'Mariana Gracia Salgado',
+    'A.S. Johan', 'Lena Klapper'
 ]
 
 # Strict team list for Gmail sent events
