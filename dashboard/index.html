@@ -1237,29 +1237,38 @@
         async function askGeminiAI(userQuery) {
             const activeKey = PROVIDED_KEY;
 
-            const summaryMap = {};
-            rawData.slice(-100).forEach(r => {
-                const key = `${r.member} | ${r.date}`;
-                if (!summaryMap[key]) summaryMap[key] = { count: 0, platforms: new Set() };
-                summaryMap[key].count += r.count;
-                summaryMap[key].platforms.add(r.platform);
+            // Group ALL data by Member and Date for full context
+            const fullSummary = {};
+            rawData.forEach(r => {
+                const dayKey = `${r.member} | ${r.date}`;
+                if (!fullSummary[dayKey]) fullSummary[dayKey] = { count: 0, platform: r.platform };
+                fullSummary[dayKey].count += r.count;
             });
 
-            const logDetails = Object.entries(summaryMap)
-                .map(([key, val]) => `${key} | ${val.count} events`)
+            const statsList = Object.entries(fullSummary)
+                .map(([key, val]) => `${key} | ${val.platform} | ${val.count} events`)
                 .join('\n');
 
-            const context = `Activity Logs:\n${logDetails}\n\nQuestion: ${userQuery}\nAssistant Role: Pro Analyst. Answer professionally in English only.`;
+            const context = `
+                Role: Pvragon Performance Audit Analyst.
+                Objective: Provide precise answers for Manager Areeba.
+                
+                Calendar Context (Feb 2026):
+                - Weekends (Sat/Sun): Feb 1, 7, 8, 14, 15, 21, 22, 28.
+                
+                Activity Logs (Member | Date | Platform | Events):
+                ${statsList}
 
-            // 2026 Active Models
-            const models = [
-                'gemini-3.1-pro',
-                'gemini-3-flash',
-                'gemini-3-pro',
-                'gemini-2.5-flash',
-                'gemini-1.5-flash'
-            ];
+                Manager Question: "${userQuery}"
 
+                Instructions:
+                1. Answer STRICTLY in PROFESSIONAL ENGLISH.
+                2. Use the Activity Logs above to cross-reference dates.
+                3. If asked about weekends, check if the specific member has logs on Feb 1, 7, 8, 14, 15, 21, 22, or 28.
+                4. Be direct and concise.
+            `;
+
+            const models = ['gemini-1.5-flash', 'gemini-pro', 'gemini-3.1-pro', 'gemini-1.5-pro'];
             const versions = ['v1beta', 'v1'];
             let lastErr = "";
             const typingMsg = document.querySelector('.message.bot:last-child');
@@ -1267,7 +1276,7 @@
             for (const model of models) {
                 for (const ver of versions) {
                     try {
-                        if (typingMsg) typingMsg.innerText = `Connecting via ${model} (${ver})...`;
+                        if (typingMsg) typingMsg.innerText = `Analyzing data via ${model}...`;
                         const url = `https://generativelanguage.googleapis.com/${ver}/models/${model}:generateContent?key=${activeKey}`;
                         const res = await fetch(url, {
                             method: 'POST',
@@ -1279,13 +1288,13 @@
                         if (json.candidates && json.candidates[0]) {
                             return json.candidates[0].content.parts[0].text;
                         }
-                        if (json.error) lastErr = `${model} | ${ver}: ${json.error.message}`;
+                        if (json.error) lastErr = `${model}: ${json.error.message}`;
                     } catch (e) {
                         lastErr = e.message;
                     }
                 }
             }
-            throw new Error(lastErr || "API Connection Failed. Please ensure Generative Language API is enabled in Cloud Console.");
+            throw new Error(lastErr || "Analysis failed.");
         }
 
         function getSmartResponse(query) {
@@ -1318,9 +1327,6 @@
 
         window.addEventListener('DOMContentLoaded', init);
     </script>
-</body>
-
-</html>
 </body>
 
 </html>
