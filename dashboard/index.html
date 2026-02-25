@@ -1237,28 +1237,35 @@
             });
 
             const context = `
-                Role: Pvragon Performance Analyst.
-                Current Stats:
-                - Active Members: ${Object.keys(memberStats).length}
-                - Leaders: ${Object.entries(memberStats).sort((a, b) => b[1] - a[1]).slice(0, 5).map(x => `${x[0]} (${x[1]})`).join(', ')}
-                - Total Events: ${rawData.reduce((s, r) => s + r.count, 0)}
+                Role: Pvragon Performance Analyst. Talk to Manager Areeba.
+                Context: Members=${Object.keys(memberStats).length}, Total Events=${rawData.reduce((s, r) => s + r.count, 0)}
+                Leaders: ${Object.entries(memberStats).sort((a, b) => b[1] - a[1]).slice(0, 5).map(x => `${x[0]}: ${x[1]}`).join(', ')}
                 
                 Question: "${userQuery}"
-                
-                Instruction: You are talking to Manager Areeba. Provide a detailed, human-like answer based on the team activity logs. Use Urdu phrases if appropriate.
             `;
 
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${geminiApiKey}`;
+            // Try different model identifiers that are active in 2026
+            const modelsToTry = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-pro'];
+            let lastErr = "";
 
-            const res = await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ contents: [{ parts: [{ text: context }] }] })
-            });
-
-            const json = await res.json();
-            if (json.error) throw new Error(json.error.message);
-            return json.candidates[0].content.parts[0].text;
+            for (const model of modelsToTry) {
+                try {
+                    const url = `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${geminiApiKey}`;
+                    const res = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ contents: [{ parts: [{ text: context }] }] })
+                    });
+                    const json = await res.json();
+                    if (json.candidates && json.candidates[0]) {
+                        return json.candidates[0].content.parts[0].text;
+                    }
+                    if (json.error) lastErr = json.error.message;
+                } catch (e) {
+                    lastErr = e.message;
+                }
+            }
+            throw new Error(lastErr || "Failed to find a compatible Gemini model.");
         }
 
         function getSmartResponse(query) {
