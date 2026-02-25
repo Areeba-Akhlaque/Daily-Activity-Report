@@ -1259,31 +1259,35 @@
             `;
 
             // Try modern 2026 model identifiers
-            const modelsToTry = ['gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-pro'];
+            const modelsToTry = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash', 'gemini-pro'];
+            const versions = ['v1beta', 'v1'];
             let lastErr = "";
 
             for (const model of modelsToTry) {
-                try {
-                    // Use v1beta endpoint for maximum compatibility with 2026 model names
-                    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiApiKey}`;
-                    const res = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ contents: [{ parts: [{ text: context }] }] })
-                    });
-                    const json = await res.json();
-                    if (json.candidates && json.candidates[0]) {
-                        return json.candidates[0].content.parts[0].text;
+                for (const ver of versions) {
+                    try {
+                        const url = `https://generativelanguage.googleapis.com/${ver}/models/${model}:generateContent?key=${geminiApiKey}`;
+                        const res = await fetch(url, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ contents: [{ parts: [{ text: context }] }] })
+                        });
+                        const json = await res.json();
+
+                        if (json.candidates && json.candidates[0]) {
+                            console.log(`Successfully connected using ${model} on ${ver}`);
+                            return json.candidates[0].content.parts[0].text;
+                        }
+                        if (json.error) {
+                            lastErr = json.error.message;
+                            console.warn(`Attempt failed: ${model} on ${ver} -> ${lastErr}`);
+                        }
+                    } catch (e) {
+                        lastErr = e.message;
                     }
-                    if (json.error) {
-                        lastErr = json.error.message;
-                        console.warn(`Model ${model} failed: ${lastErr}`);
-                    }
-                } catch (e) {
-                    lastErr = e.message;
                 }
             }
-            throw new Error(lastErr || "Failed to find a compatible Gemini model. Please check your API Key settings.");
+            throw new Error(lastErr || "All API connection attempts failed. Please verify your key.");
         }
 
         function getSmartResponse(query) {
