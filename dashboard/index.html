@@ -1182,89 +1182,91 @@
         function getSmartResponse(query) {
             const q = query.toLowerCase();
 
-            // 1. Knowledge Base Preparation
+            // --- KNOWLEDGE BASE ---
             const allMembers = [...new Set(rawData.map(r => r.member))];
             const allPlatforms = [...new Set(rawData.map(r => r.platform))];
-            const allTypes = [...new Set(rawData.map(r => r.type))];
 
-            // 2. Identify Intent Filters (Flexible detection)
+            // --- ENTITY DETECTION ---
             const detectedMembers = allMembers.filter(m => {
                 const parts = m.toLowerCase().split(' ');
                 return q.includes(m.toLowerCase()) || (parts[0].length > 2 && q.includes(parts[0]));
             });
-
             const detectedPlatforms = allPlatforms.filter(p => q.includes(p.toLowerCase()));
-            const detectedTypes = allTypes.filter(t => q.includes(t.toLowerCase()));
 
-            // 3. Identify Time Intent
-            let timeFilter = null;
-            const today = new Date();
-            const allDates = [...new Set(rawData.map(r => r.date))];
+            // --- TIME DETECTION ---
+            let timeFilterDesc = "";
+            let filteredDates = [...new Set(rawData.map(r => r.date))];
+            const allDates = [...filteredDates];
 
-            let filteredDates = allDates;
-
-            if (q.includes('weekend')) {
-                timeFilter = 'the weekend';
+            if (q.includes('weekend') || q.includes('sat') || q.includes('sun')) {
+                timeFilterDesc = 'over the weekend';
                 filteredDates = allDates.filter(dStr => {
                     const d = parseDate(dStr);
-                    return d.getDay() === 0 || d.getDay() === 6;
+                    return d && (d.getDay() === 0 || d.getDay() === 6);
                 });
-            } else if (q.includes('today')) {
-                timeFilter = 'today';
-                const todayStr = today.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' });
-                filteredDates = [todayStr];
             } else if (q.includes('yesterday')) {
-                timeFilter = 'yesterday';
+                timeFilterDesc = 'yesterday';
                 const yest = new Date(); yest.setDate(yest.getDate() - 1);
-                const yestStr = yest.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' });
-                filteredDates = [yestStr];
+                filteredDates = [yest.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' })];
+            } else if (q.includes('today')) {
+                timeFilterDesc = 'today';
+                filteredDates = [new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' })];
             } else if (q.includes('last week')) {
-                timeFilter = 'last week';
+                timeFilterDesc = 'last week';
                 const lastWeek = new Date(); lastWeek.setDate(lastWeek.getDate() - 7);
                 filteredDates = allDates.filter(dStr => parseDate(dStr) >= lastWeek);
             }
 
-            // 4. Data Crunching (Live Filter & Aggregate)
-            let dataSlice = rawData;
-            if (detectedMembers.length) dataSlice = dataSlice.filter(r => detectedMembers.includes(r.member));
-            if (detectedPlatforms.length) dataSlice = dataSlice.filter(r => detectedPlatforms.includes(r.platform));
-            if (detectedTypes.length) dataSlice = dataSlice.filter(r => detectedTypes.includes(r.type));
-            dataSlice = dataSlice.filter(r => filteredDates.includes(r.date));
+            // --- INTENT CLASSIFICATION ---
+            const isLeaderboardQuery = q.includes('top') || q.includes('leader') || q.includes('best') || q.includes('most active') || q.includes('rank');
 
-            const totalCount = dataSlice.reduce((sum, r) => sum + r.count, 0);
-
-            // 5. Construct Contextual Response
-            let response = "";
-            const subjects = detectedMembers.length ? detectedMembers.join(', ') : "the team";
-            const timeDesc = timeFilter ? ` during ${timeFilter}` : "";
-            const platDesc = detectedPlatforms.length ? ` on ${detectedPlatforms.join('/')}` : "";
-            const typeDesc = detectedTypes.length ? ` regarding ${detectedTypes.join('/')}` : "activity";
-
-            if (totalCount > 0) {
-                response = `Analysis Result: ${subjects} recorded ${totalCount} ${typeDesc}${platDesc}${timeDesc}. `;
-
-                // Add specific breakdown if it's a small group
-                if (detectedMembers.length === 1 && dataSlice.length > 0) {
-                    const topType = [...dataSlice].sort((a, b) => b.count - a.count)[0];
-                    if (topType && topType.count > 0) {
-                        response += `The primary activity was "${topType.type}" with ${topType.count} logs.`;
-                    }
-                }
-            } else {
-                response = `I checked the records, but I don't see any sign of ${subjects}${platDesc}${timeDesc}. The count is 0 for this specific query.`;
+            // --- DATA ANALYSIS ---
+            let analysisData = rawData.filter(r => filteredDates.includes(r.date));
+            if (detectedMembers.length && !isLeaderboardQuery) {
+                analysisData = analysisData.filter(r => detectedMembers.includes(r.member));
+            }
+            if (detectedPlatforms.length) {
+                analysisData = analysisData.filter(r => detectedPlatforms.includes(r.platform));
             }
 
-            // 6. Comparative Queries
-            if (q.includes('top') || q.includes('leader') || q.includes('best') || q.includes('most')) {
+            const total = analysisData.reduce((sum, r) => sum + r.count, 0);
+
+            // --- RESPONSE GENERATION ---
+
+            // Case 1: Leaderboard / Ranking (Only if specifically asked)
+            if (isLeaderboardQuery) {
                 const leaderboard = {};
-                (dataSlice.length ? dataSlice : rawData).forEach(r => leaderboard[r.member] = (leaderboard[r.member] || 0) + r.count);
-                const top = Object.entries(leaderboard).sort((a, b) => b[1] - a[1]);
-                if (top.length > 0) {
-                    return `Competition Check: ${top[0][0]} is at the top with ${top[0][1]} points, followed by ${top[1] ? top[1][0] : 'others'}.`;
+                analysisData.forEach(r => leaderboard[r.member] = (leaderboard[r.member] || 0) + r.count);
+                const sorted = Object.entries(leaderboard).sort((a, b) => b[1] - a[1]);
+                if (sorted.length > 0) {
+                    return `Analysis Report: ${sorted[0][0]} is leading the team with ${sorted[0][1]} activities ${timeFilterDesc || 'in this view'}. ${sorted[1] ? sorted[1][0] + ' is 2nd.' : ''}`;
                 }
             }
 
-            return response;
+            // Case 2: Specific People Analysis
+            if (detectedMembers.length > 0) {
+                const member = detectedMembers[0];
+                if (total > 0) {
+                    const platCounts = {};
+                    analysisData.forEach(r => platCounts[r.platform] = (platCounts[r.platform] || 0) + r.count);
+                    const topPlat = Object.entries(platCounts).sort((a, b) => b[1] - a[1])[0];
+                    return `Log Data for ${member}: Total ${total} events recorded ${timeFilterDesc}. Most work was done on ${topPlat[0]} (${topPlat[1]} events).`;
+                } else {
+                    return `No Activity: I checked the logs for ${member} ${timeFilterDesc}, but their record shows 0 events for this period.`;
+                }
+            }
+
+            // Case 3: Platform specific without specific person
+            if (detectedPlatforms.length > 0) {
+                return `Platform Check: I found ${total} total events on ${detectedPlatforms.join('/')} ${timeFilterDesc}.`;
+            }
+
+            // Case 4: General Data Summary
+            if (total > 0) {
+                return `Quick Stats: I found ${total} total activities recorded ${timeFilterDesc}. You can ask me about a specific member for a deeper breakdown.`;
+            }
+
+            return "I've analyzed the data, but I couldn't find any specific answer. Tip: To get ChatGPT-like smart answers, please provide a Gemini API Key in the settings (Coming soon)!";
         }
 
         window.addEventListener('DOMContentLoaded', init);
