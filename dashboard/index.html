@@ -1181,53 +1181,75 @@
 
         function getSmartResponse(query) {
             const q = query.toLowerCase();
+            const members = [...new Set(rawData.map(r => r.member))];
 
-            // Analyze the current 'rawData' (Daily Audit)
-            if (q.includes('top') || q.includes('leader') || q.includes('best') || q.includes('hero')) {
-                const totals = {};
-                rawData.forEach(r => totals[r.member] = (totals[r.member] || 0) + r.count);
-                const sorted = Object.entries(totals).sort((a, b) => b[1] - a[1]);
-                if (sorted.length > 0) {
-                    return `Analysis result: ${sorted[0][0]} is currently the top performer with ${sorted[0][1]} total activities. ${sorted[1][0]} is close behind at second place!`;
+            // 1. Identify Target Member
+            let targetMember = null;
+            for (const m of members) {
+                if (q.includes(m.toLowerCase()) || (m.split(' ')[0].length > 2 && q.includes(m.split(' ')[0].toLowerCase()))) {
+                    targetMember = m;
+                    break;
                 }
             }
 
-            if (q.includes('commit') || q.includes('github') || q.includes('code')) {
-                const githubSum = rawData.filter(r => r.platform.toLowerCase().includes('github'))
-                    .reduce((sum, r) => sum + r.count, 0);
-                return `I found a total of ${githubSum} GitHub activities in this filtered view. James Hereford and Areeba Akhlaque are the primary drivers of the code activity.`;
+            // 2. Identify Time Period
+            const isWeekendReq = q.includes('weekend') || q.includes('sat') || q.includes('sun');
+            let targetDates = [];
+            const allDates = [...new Set(rawData.map(r => r.date))];
+
+            if (isWeekendReq) {
+                targetDates = allDates.filter(dStr => {
+                    const d = parseDate(dStr);
+                    return d.getDay() === 0 || d.getDay() === 6; // Sun or Sat
+                });
+            } else if (q.includes('today')) {
+                const todayStr = new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' });
+                targetDates = [todayStr];
+            } else if (q.includes('yesterday')) {
+                const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
+                const yestStr = yesterday.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' });
+                targetDates = [yestStr];
             }
 
-            if (q.includes('platform') || q.includes('apps') || q.includes('distribution')) {
-                const plats = {};
-                rawData.forEach(r => plats[r.platform] = (plats[r.platform] || 0) + r.count);
-                const bestPlat = Object.entries(plats).sort((a, b) => b[1] - a[1])[0];
-                return `We are currently tracking ${Object.keys(plats).length} platforms. ${bestPlat[0]} is the leading platform today with ${bestPlat[1]} recorded events.`;
+            // 3. Perform Analysis
+            if (targetMember && isWeekendReq) {
+                const activity = rawData.filter(r => r.member === targetMember && targetDates.includes(r.date) && r.count > 0);
+                if (activity.length > 0) {
+                    const total = activity.reduce((s, r) => s + r.count, 0);
+                    const plats = [...new Set(activity.map(r => r.platform))].join(', ');
+                    return `Yes, I found activity for ${targetMember} over the weekend. There were ${total} events recorded on ${plats}.`;
+                } else {
+                    return `No, I checked the logs and ${targetMember} was not active over the weekend. Everything shows 0 for that period.`;
+                }
             }
 
-            if (q.includes('james')) {
-                const jamesData = rawData.filter(r => r.member.toLowerCase().includes('james'));
-                const sum = jamesData.reduce((acc, r) => acc + r.count, 0);
-                return `James Hereford has ${sum} total activities recorded. He is primarily focused on GitHub commits and Backendless system stability.`;
+            if (targetMember && (q.includes('active') || q.includes('online') || q.includes('work'))) {
+                const activity = rawData.filter(r => r.member === targetMember && r.count > 0);
+                if (activity.length > 0) {
+                    const latest = activity.sort((a, b) => parseDate(b.date) - parseDate(a.date))[0];
+                    return `${targetMember} has been quite active recently. Their latest activity was on ${latest.date} involving ${latest.type}.`;
+                }
+                return `I don't see any recent activity recorded for ${targetMember} in the current audit window.`;
             }
 
-            if (q.includes('areeba')) {
-                const areebaData = rawData.filter(r => r.member.toLowerCase().includes('areeba'));
-                const sum = areebaData.reduce((acc, r) => acc + r.count, 0);
-                return `Areeba Akhlaque has ${sum} activities in the logs. Her contribution spans GitHub, Management tasks, and Workspace coordination.`;
+            // 4. General Stats (Fallback)
+            if (q.includes('top') || q.includes('leader') || q.includes('best')) {
+                const totals = {};
+                rawData.forEach(r => totals[r.member] = (totals[r.member] || 0) + r.count);
+                const sorted = Object.entries(totals).sort((a, b) => b[1] - a[1]);
+                return `The top performer is ${sorted[0][0]} with ${sorted[0][1]} activities, followed by ${sorted[1][0]}.`;
             }
 
-            if (q.includes('hello') || q.includes('hi') || q.includes('asalam') || q.includes('hey')) {
-                return "Hi! I'm your Data Assistant. I've processed the latest audit logs. You can ask me about individual performance, platform stats, or who is leading the team!";
+            if (q.includes('github') || q.includes('commit')) {
+                const count = rawData.filter(r => r.platform.toLowerCase().includes('github')).reduce((s, r) => s + r.count, 0);
+                return `There are ${count} GitHub events in the system. James Hereford leads this category.`;
             }
 
-            if (q.includes('performance') || q.includes('report') || q.includes('summary')) {
-                const total = rawData.reduce((acc, r) => acc + r.count, 0);
-                const members = new Set(rawData.map(r => r.member)).size;
-                return `Quick Summary: Total ecosystem activity is ${total} events across ${members} members. GitHub and ClickUp seem to be the most active areas this week.`;
+            if (q.includes('hi') || q.includes('hello') || q.includes('hey')) {
+                return "Hi! I'm your Data Assistant. You can ask me things like 'Was Saifullah online this weekend?' or 'Who leading on GitHub?' and I will analyze the logs for you.";
             }
 
-            return "I can definitely help with that! However, I currently only have 'Smart Stats' enabled. I can tell you about top performers, specific member activities (like James or Areeba), and platform trends. Try asking: 'Who is at the top?'";
+            return "I've analyzed the data, but I couldn't find a specific answer to that. You can ask about a team member's activity (e.g., 'Was James working yesterday?'), top performers, or platform stats.";
         }
 
         window.addEventListener('DOMContentLoaded', init);
