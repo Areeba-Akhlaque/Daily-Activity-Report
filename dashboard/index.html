@@ -1248,7 +1248,7 @@
                 Instruction: You are talking to Manager Areeba. Provide a detailed, human-like answer based on the team activity logs. Use Urdu phrases if appropriate.
             `;
 
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`;
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${geminiApiKey}`;
 
             const res = await fetch(url, {
                 method: 'POST',
