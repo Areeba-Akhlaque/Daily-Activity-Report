@@ -1230,18 +1230,32 @@
         }
 
         async function askGeminiAI(userQuery) {
-            const memberStats = {};
-            rawData.forEach(r => {
-                if (!memberStats[r.member]) memberStats[r.member] = 0;
-                memberStats[r.member] += r.count;
+            // Prepare a detailed summary of the recent logs for context
+            // We group by member and date to keep it concise but detailed
+            const summaryMap = {};
+            rawData.slice(-100).forEach(r => {
+                const key = `${r.member} | ${r.date}`;
+                if (!summaryMap[key]) summaryMap[key] = { count: 0, platforms: new Set() };
+                summaryMap[key].count += r.count;
+                summaryMap[key].platforms.add(r.platform);
             });
 
+            const logDetails = Object.entries(summaryMap)
+                .map(([key, val]) => `${key} | ${val.count} events | Platforms: ${Array.from(val.platforms).join(',')}`)
+                .join('\n');
+
             const context = `
-                Role: Pvragon Performance Analyst. Talk to Manager Areeba.
-                Context: Members=${Object.keys(memberStats).length}, Total Events=${rawData.reduce((s, r) => s + r.count, 0)}
-                Leaders: ${Object.entries(memberStats).sort((a, b) => b[1] - a[1]).slice(0, 5).map(x => `${x[0]}: ${x[1]}`).join(', ')}
-                
-                Question: "${userQuery}"
+                You are the Pvragon Performance Analyst. Talk to Manager Areeba.
+                You have access to the following Activity Logs (Member | Date | Events | Platforms):
+                ${logDetails}
+
+                Manager Question: "${userQuery}"
+
+                Instructions:
+                1. Analyze the logs provided carefully.
+                2. Check specific dates. For example, dates like Feb 21/22, 2026 are Saturday/Sunday.
+                3. Be specific. Instead of saying "I don't have data", use the logs above.
+                4. Answer in a professional, human-like tone. Use Roman Urdu phrases if it sounds natural.
             `;
 
             // Try different model identifiers that are active in 2026
