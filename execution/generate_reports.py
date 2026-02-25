@@ -80,8 +80,11 @@ def update_console_audit_logs(gc, sh):
         
         df['Platform'] = 'Backendless App'
         
+        if 'Count' not in df.columns:
+            df['Count'] = 1
+            
         # Aggregate to ensure uniqueness for Daily Audit
-        summary = df.groupby(['Name', 'Date', 'Platform', 'Event Type']).size().reset_index(name='Count')
+        summary = df.groupby(['Name', 'Date', 'Platform', 'Event Type'])['Count'].sum().reset_index()
         
         # Sort newest first
         summary['sort_dt'] = pd.to_datetime(summary['Date'], format='%m/%d/%y')
