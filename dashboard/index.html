@@ -1235,8 +1235,6 @@
         }
 
         async function askGeminiAI(userQuery) {
-            // Prepare a detailed summary of the recent logs for context
-            // We group by member and date to keep it concise but detailed
             const summaryMap = {};
             rawData.slice(-100).forEach(r => {
                 const key = `${r.member} | ${r.date}`;
@@ -1249,56 +1247,32 @@
                 .map(([key, val]) => `${key} | ${val.count} events | Platforms: ${Array.from(val.platforms).join(',')}`)
                 .join('\n');
 
-            const context = `
-                You are the Pvragon Performance Analyst. Talk to Manager Areeba.
-                You have access to the following Activity Logs (Member | Date | Events | Platforms):
-                ${logDetails}
+            const context = `Context Activity Logs:\n${logDetails}\n\nQuestion: ${userQuery}\n\nInstructions: Provide accurate analysis in professional English.`;
 
-                Manager Question: "${userQuery}"
-
-                Instructions:
-                1. Analyze the logs provided carefully.
-                2. Check specific dates. For example, dates like Feb 21/22, 2026 are Saturday/Sunday.
-                3. Be specific. Instead of saying "I don't have data", use the logs data directly.
-                4. Answer in a professional, human-like tone. Use STRICTLY PROFESSIONAL ENGLISH. Do NOT use Urdu or Roman Urdu under any circumstances.
-            `;
-
-            // Try 2026 generation models (most reliable first)
-            const modelsToTry = [
-                'gemini-1.5-flash', 'gemini-1.5-flash-latest',
-                'gemini-pro', 'gemini-2.0-flash',
-                'gemini-1.5-pro', 'gemini-1.5-pro-latest'
-            ];
-            const versions = ['v1beta', 'v1'];
+            const models = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-pro'];
             let lastErr = "";
             const typingMsg = document.querySelector('.message.bot:last-child');
 
-            for (const model of modelsToTry) {
-                for (const ver of versions) {
-                    try {
-                        if (typingMsg) typingMsg.innerText = `Connecting via ${model}...`;
+            for (const model of models) {
+                try {
+                    if (typingMsg) typingMsg.innerText = `Connecting via ${model}...`;
+                    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiApiKey}`;
+                    const res = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ contents: [{ parts: [{ text: context }] }] })
+                    });
+                    const json = await res.json();
 
-                        const url = `https://generativelanguage.googleapis.com/${ver}/models/${model}:generateContent?key=${geminiApiKey}`;
-                        const res = await fetch(url, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ contents: [{ parts: [{ text: context }] }] })
-                        });
-                        const json = await res.json();
-
-                        if (json.candidates && json.candidates[0]) {
-                            console.log(`Working: ${model} on ${ver}`);
-                            return json.candidates[0].content.parts[0].text;
-                        }
-                        if (json.error) {
-                            lastErr = json.error.message;
-                        }
-                    } catch (e) {
-                        lastErr = e.message;
+                    if (json.candidates && json.candidates[0]) {
+                        return json.candidates[0].content.parts[0].text;
                     }
+                    if (json.error) lastErr = `${model}: ${json.error.message}`;
+                } catch (e) {
+                    lastErr = e.message;
                 }
             }
-            throw new Error(lastErr || "API limit reached or key unauthorized.");
+            throw new Error(lastErr || "API Connection Failed.");
         }
 
         function getSmartResponse(query) {
