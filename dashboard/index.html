@@ -1181,75 +1181,90 @@
 
         function getSmartResponse(query) {
             const q = query.toLowerCase();
-            const members = [...new Set(rawData.map(r => r.member))];
 
-            // 1. Identify Target Member
-            let targetMember = null;
-            for (const m of members) {
-                if (q.includes(m.toLowerCase()) || (m.split(' ')[0].length > 2 && q.includes(m.split(' ')[0].toLowerCase()))) {
-                    targetMember = m;
-                    break;
-                }
-            }
+            // 1. Knowledge Base Preparation
+            const allMembers = [...new Set(rawData.map(r => r.member))];
+            const allPlatforms = [...new Set(rawData.map(r => r.platform))];
+            const allTypes = [...new Set(rawData.map(r => r.type))];
 
-            // 2. Identify Time Period
-            const isWeekendReq = q.includes('weekend') || q.includes('sat') || q.includes('sun');
-            let targetDates = [];
+            // 2. Identify Intent Filters (Flexible detection)
+            const detectedMembers = allMembers.filter(m => {
+                const parts = m.toLowerCase().split(' ');
+                return q.includes(m.toLowerCase()) || (parts[0].length > 2 && q.includes(parts[0]));
+            });
+
+            const detectedPlatforms = allPlatforms.filter(p => q.includes(p.toLowerCase()));
+            const detectedTypes = allTypes.filter(t => q.includes(t.toLowerCase()));
+
+            // 3. Identify Time Intent
+            let timeFilter = null;
+            const today = new Date();
             const allDates = [...new Set(rawData.map(r => r.date))];
 
-            if (isWeekendReq) {
-                targetDates = allDates.filter(dStr => {
+            let filteredDates = allDates;
+
+            if (q.includes('weekend')) {
+                timeFilter = 'the weekend';
+                filteredDates = allDates.filter(dStr => {
                     const d = parseDate(dStr);
-                    return d.getDay() === 0 || d.getDay() === 6; // Sun or Sat
+                    return d.getDay() === 0 || d.getDay() === 6;
                 });
             } else if (q.includes('today')) {
-                const todayStr = new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' });
-                targetDates = [todayStr];
+                timeFilter = 'today';
+                const todayStr = today.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' });
+                filteredDates = [todayStr];
             } else if (q.includes('yesterday')) {
-                const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
-                const yestStr = yesterday.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' });
-                targetDates = [yestStr];
+                timeFilter = 'yesterday';
+                const yest = new Date(); yest.setDate(yest.getDate() - 1);
+                const yestStr = yest.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' });
+                filteredDates = [yestStr];
+            } else if (q.includes('last week')) {
+                timeFilter = 'last week';
+                const lastWeek = new Date(); lastWeek.setDate(lastWeek.getDate() - 7);
+                filteredDates = allDates.filter(dStr => parseDate(dStr) >= lastWeek);
             }
 
-            // 3. Perform Analysis
-            if (targetMember && isWeekendReq) {
-                const activity = rawData.filter(r => r.member === targetMember && targetDates.includes(r.date) && r.count > 0);
-                if (activity.length > 0) {
-                    const total = activity.reduce((s, r) => s + r.count, 0);
-                    const plats = [...new Set(activity.map(r => r.platform))].join(', ');
-                    return `Yes, I found activity for ${targetMember} over the weekend. There were ${total} events recorded on ${plats}.`;
-                } else {
-                    return `No, I checked the logs and ${targetMember} was not active over the weekend. Everything shows 0 for that period.`;
+            // 4. Data Crunching (Live Filter & Aggregate)
+            let dataSlice = rawData;
+            if (detectedMembers.length) dataSlice = dataSlice.filter(r => detectedMembers.includes(r.member));
+            if (detectedPlatforms.length) dataSlice = dataSlice.filter(r => detectedPlatforms.includes(r.platform));
+            if (detectedTypes.length) dataSlice = dataSlice.filter(r => detectedTypes.includes(r.type));
+            dataSlice = dataSlice.filter(r => filteredDates.includes(r.date));
+
+            const totalCount = dataSlice.reduce((sum, r) => sum + r.count, 0);
+
+            // 5. Construct Contextual Response
+            let response = "";
+            const subjects = detectedMembers.length ? detectedMembers.join(', ') : "the team";
+            const timeDesc = timeFilter ? ` during ${timeFilter}` : "";
+            const platDesc = detectedPlatforms.length ? ` on ${detectedPlatforms.join('/')}` : "";
+            const typeDesc = detectedTypes.length ? ` regarding ${detectedTypes.join('/')}` : "activity";
+
+            if (totalCount > 0) {
+                response = `Analysis Result: ${subjects} recorded ${totalCount} ${typeDesc}${platDesc}${timeDesc}. `;
+
+                // Add specific breakdown if it's a small group
+                if (detectedMembers.length === 1 && dataSlice.length > 0) {
+                    const topType = [...dataSlice].sort((a, b) => b.count - a.count)[0];
+                    if (topType && topType.count > 0) {
+                        response += `The primary activity was "${topType.type}" with ${topType.count} logs.`;
+                    }
+                }
+            } else {
+                response = `I checked the records, but I don't see any sign of ${subjects}${platDesc}${timeDesc}. The count is 0 for this specific query.`;
+            }
+
+            // 6. Comparative Queries
+            if (q.includes('top') || q.includes('leader') || q.includes('best') || q.includes('most')) {
+                const leaderboard = {};
+                (dataSlice.length ? dataSlice : rawData).forEach(r => leaderboard[r.member] = (leaderboard[r.member] || 0) + r.count);
+                const top = Object.entries(leaderboard).sort((a, b) => b[1] - a[1]);
+                if (top.length > 0) {
+                    return `Competition Check: ${top[0][0]} is at the top with ${top[0][1]} points, followed by ${top[1] ? top[1][0] : 'others'}.`;
                 }
             }
 
-            if (targetMember && (q.includes('active') || q.includes('online') || q.includes('work'))) {
-                const activity = rawData.filter(r => r.member === targetMember && r.count > 0);
-                if (activity.length > 0) {
-                    const latest = activity.sort((a, b) => parseDate(b.date) - parseDate(a.date))[0];
-                    return `${targetMember} has been quite active recently. Their latest activity was on ${latest.date} involving ${latest.type}.`;
-                }
-                return `I don't see any recent activity recorded for ${targetMember} in the current audit window.`;
-            }
-
-            // 4. General Stats (Fallback)
-            if (q.includes('top') || q.includes('leader') || q.includes('best')) {
-                const totals = {};
-                rawData.forEach(r => totals[r.member] = (totals[r.member] || 0) + r.count);
-                const sorted = Object.entries(totals).sort((a, b) => b[1] - a[1]);
-                return `The top performer is ${sorted[0][0]} with ${sorted[0][1]} activities, followed by ${sorted[1][0]}.`;
-            }
-
-            if (q.includes('github') || q.includes('commit')) {
-                const count = rawData.filter(r => r.platform.toLowerCase().includes('github')).reduce((s, r) => s + r.count, 0);
-                return `There are ${count} GitHub events in the system. James Hereford leads this category.`;
-            }
-
-            if (q.includes('hi') || q.includes('hello') || q.includes('hey')) {
-                return "Hi! I'm your Data Assistant. You can ask me things like 'Was Saifullah online this weekend?' or 'Who leading on GitHub?' and I will analyze the logs for you.";
-            }
-
-            return "I've analyzed the data, but I couldn't find a specific answer to that. You can ask about a team member's activity (e.g., 'Was James working yesterday?'), top performers, or platform stats.";
+            return response;
         }
 
         window.addEventListener('DOMContentLoaded', init);
