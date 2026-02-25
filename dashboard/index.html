@@ -1237,38 +1237,32 @@
         async function askGeminiAI(userQuery) {
             const activeKey = PROVIDED_KEY;
 
-            // Group ALL data by Member and Date for full context
-            const fullSummary = {};
+            // Comprehensive summary for the AI
+            const summary = {};
             rawData.forEach(r => {
-                const dayKey = `${r.member} | ${r.date}`;
-                if (!fullSummary[dayKey]) fullSummary[dayKey] = { count: 0, platform: r.platform };
-                fullSummary[dayKey].count += r.count;
+                const key = `${r.member} | ${r.date}`;
+                if (!summary[key]) summary[key] = { count: 0, platform: r.platform };
+                summary[key].count += r.count;
             });
 
-            const statsList = Object.entries(fullSummary)
-                .map(([key, val]) => `${key} | ${val.platform} | ${val.count} events`)
+            const statsList = Object.entries(summary)
+                .map(([k, v]) => `${k} | ${v.platform} | ${v.count}`)
                 .join('\n');
 
             const context = `
-                Role: Pvragon Performance Audit Analyst.
-                Objective: Provide precise answers for Manager Areeba.
-                
-                Calendar Context (Feb 2026):
-                - Weekends (Sat/Sun): Feb 1, 7, 8, 14, 15, 21, 22, 28.
-                
-                Activity Logs (Member | Date | Platform | Events):
+                Role: Pvragon Auditor. 
+                Data:
+                Member | Date | Platform | Events
                 ${statsList}
 
-                Manager Question: "${userQuery}"
-
-                Instructions:
-                1. Answer STRICTLY in PROFESSIONAL ENGLISH.
-                2. Use the Activity Logs above to cross-reference dates.
-                3. If asked about weekends, check if the specific member has logs on Feb 1, 7, 8, 14, 15, 21, 22, or 28.
-                4. Be direct and concise.
+                Feb 2026 Weekends: Feb 1, 7, 8, 14, 15, 21, 22, 28.
+                Question: "${userQuery}"
+                
+                Instructions: Answer in professional English. Be specific about dates.
             `;
 
-            const models = ['gemini-1.5-flash', 'gemini-pro', 'gemini-3.1-pro', 'gemini-1.5-pro'];
+            // Start with gemini-pro as we know it works for you
+            const models = ['gemini-pro', 'gemini-1.5-flash', 'gemini-1.5-pro'];
             const versions = ['v1beta', 'v1'];
             let lastErr = "";
             const typingMsg = document.querySelector('.message.bot:last-child');
@@ -1277,24 +1271,20 @@
                 for (const ver of versions) {
                     try {
                         if (typingMsg) typingMsg.innerText = `Analyzing data via ${model}...`;
-                        const url = `https://generativelanguage.googleapis.com/${ver}/models/${model}:generateContent?key=${activeKey}`;
-                        const res = await fetch(url, {
+                        const res = await fetch(`https://generativelanguage.googleapis.com/${ver}/models/${model}:generateContent?key=${activeKey}`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ contents: [{ parts: [{ text: context }] }] })
                         });
                         const json = await res.json();
-
-                        if (json.candidates && json.candidates[0]) {
-                            return json.candidates[0].content.parts[0].text;
-                        }
+                        if (json.candidates && json.candidates[0]) return json.candidates[0].content.parts[0].text;
                         if (json.error) lastErr = `${model}: ${json.error.message}`;
                     } catch (e) {
                         lastErr = e.message;
                     }
                 }
             }
-            throw new Error(lastErr || "Analysis failed.");
+            throw new Error(lastErr || "Request failed.");
         }
 
         function getSmartResponse(query) {
@@ -1313,16 +1303,16 @@
                 const leaderboard = {};
                 filtered.forEach(r => leaderboard[r.member] = (leaderboard[r.member] || 0) + r.count);
                 const sorted = Object.entries(leaderboard).sort((a, b) => b[1] - a[1]);
-                return `Top results ${timeDesc}: ${sorted[0][0]} is #1 with ${sorted[0][1]} events.`;
+                if (sorted.length > 0) return `${sorted[0][0]} is #1 with ${sorted[0][1]} events ${timeDesc}.`;
             }
 
             if (detectedMembers.length > 0) {
                 const name = detectedMembers[detectedMembers.length - 1];
                 const count = filtered.filter(r => r.member === name).reduce((s, r) => s + r.count, 0);
-                return `Analysis for ${name}: Found ${count} activities ${timeDesc}.`;
+                return `Analysis for ${name}: ${count} activities found ${timeDesc}.`;
             }
 
-            return "To get high-level expert answers, please click the gear icon above and enter your Gemini API Key!";
+            return "Please provide your Gemini API Key in settings to get professional analyst insights.";
         }
 
         window.addEventListener('DOMContentLoaded', init);
