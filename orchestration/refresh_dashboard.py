@@ -42,7 +42,7 @@ DASHBOARD_DIR = os.path.join(ROOT_DIR, 'dashboard')
 os.makedirs(DASHBOARD_DIR, exist_ok=True)
 
 # Auth
-print("[1/3] Authenticating...")
+print("[1/5] Authenticating...")
 creds = Credentials.from_authorized_user_file(os.path.join(ROOT_DIR, 'token.json'))
 if not creds.valid and creds.refresh_token:
     creds.refresh(Request())
@@ -53,7 +53,7 @@ gc = gspread.authorize(creds)
 sh = gc.open_by_key(SHEET_ID)
 
 # Fetch Daily Audit Report
-print("[2/3] Fetching Daily Audit Report...")
+print("[2/5] Fetching Daily Audit Report...")
 try:
     ws1 = sh.worksheet('Daily Audit')
     data1 = ws1.get_all_records()
@@ -63,7 +63,7 @@ except Exception as e:
     data1 = []
 
 # Fetch Activity Time Analysis
-print("[3/3] Fetching Activity Time Analysis...")
+print("[3/5] Fetching Activity Time Analysis...")
 try:
     ws2 = sh.worksheet('Activity Time Analysis')
     data2 = ws2.get_all_records()
@@ -72,14 +72,38 @@ except Exception as e:
     print(f"  Error: {e}")
     data2 = []
 
+# Fetch Event Type References
+print("[4/5] Fetching Event Type References...")
+try:
+    ws3 = sh.worksheet('Event Type References')
+    data3 = ws3.get_all_records()
+    print(f"  Loaded {len(data3)} records")
+except Exception as e:
+    print(f"  Error: {e}")
+    data3 = []
+
+# Fetch System Architecture
+print("[5/5] Fetching System Architecture...")
+try:
+    ws4 = sh.worksheet('System Architecture')
+    data4 = ws4.get_all_records()
+    print(f"  Loaded {len(data4)} records")
+except Exception as e:
+    print(f"  Error: {e}")
+    data4 = []
+
 # Build dashboard data
 dashboard_data = {
     'dailyAudit': data1,
     'timeAnalysis': data2,
+    'eventReferences': data3,
+    'systemArchitecture': data4,
     'lastUpdated': now_pst.strftime('%Y-%m-%d %H:%M:%S %Z'),
+    'googleSheetUrl': f"https://docs.google.com/spreadsheets/d/{SHEET_ID}",
     'stats': {
         'totalAuditRows': len(data1),
         'totalTimeRows': len(data2),
+        'totalEventRefs': len(data3),
         'uniqueMembers': len(set(r.get('Team Member', '') for r in data1)),
         'platforms': list(set(r.get('Platform', '') for r in data1 if r.get('Platform')))
     }

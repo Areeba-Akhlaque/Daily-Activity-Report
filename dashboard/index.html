@@ -581,6 +581,10 @@
     <script>
         let rawData = [];
         let timeData = [];
+        let eventReferences = [];
+        let systemArchitecture = [];
+        let googleSheetUrl = "";
+
         let state = {
             startDate: null,
             endDate: null,
@@ -612,7 +616,6 @@
                 if (!response.ok) throw new Error('Failed to load data');
                 const json = await response.json();
 
-                // DATA STRUCTURE ADAPTER
                 if (json.dailyAudit) {
                     rawData = json.dailyAudit.map(r => ({
                         member: r['Team Member'],
@@ -622,10 +625,13 @@
                         count: parseInt(r['Count'] || 0)
                     }));
                     timeData = json.timeAnalysis || [];
+                    eventReferences = json.eventReferences || [];
+                    systemArchitecture = json.systemArchitecture || [];
+                    googleSheetUrl = json.googleSheetUrl || "";
                 } else {
                     rawData = json;
+                    timeData = json.timeAnalysis || [];
                 }
-                timeData = json.timeAnalysis || [];
 
                 // Parse dates and set defaults
                 const dates = rawData.map(r => parseDate(r.date)).filter(Boolean).sort((a, b) => a - b);
@@ -1232,10 +1238,20 @@
                 `${t['Team Member']} | ${t['Date']} | Split: ${t['First Activity (PST)']} to ${t['Last Activity (PST)']} (Break: ${t['Longest Break (Minutes)']}m)`
             ).join('\n');
 
+            // 3. Prepare Sheet-level knowledge
+            const refSummary = eventReferences.slice(0, 30).map(r =>
+                `${r['Platform']} | ${r['Event Type']}: ${r['Description']}`
+            ).join('\n');
+
+            const archSummary = systemArchitecture.map(a =>
+                `${a['Tab Name']}: ${a['Key Logic/Scope']}`
+            ).join('\n');
+
             const context = `
                 Role: Pvragon Auditor Analyst. 
                 Reference Date (Today): Wednesday, February 25, 2026.
                 Feb 2026 Weekends: Feb 1, 7, 8, 14, 15, 21, 22, 28.
+                Live Google Sheet URL: ${googleSheetUrl}
 
                 PART 1: Activity Logs (Member | Date | Platform | Event Count)
                 ${stats}
@@ -1243,12 +1259,19 @@
                 PART 2: Time Window Logs (Member | Date | Start/End Window)
                 ${timeStats}
 
+                PART 3: Sheet Definitions & Descriptions
+                ${refSummary}
+
+                PART 4: System Logic (How tabs are calculated)
+                ${archSummary}
+
                 User Question: "${userQuery}"
 
                 Instructions:
-                - If asked about "hours", calculate the duration between Start and End times in PART 2, subtracting any long breaks.
-                - Be specific about platforms (ClickUp, GitHub, Figma, etc.) listed in PART 1.
-                - If data is missing for a specific platform/date combination, state it clearly.
+                - You have full awareness of the underlying Google Sheet. 
+                - If the user asks for the sheet link, provide ${googleSheetUrl}.
+                - Use PART 3 to explain specific event types if asked what they mean.
+                - If asked about "hours", calculate duration between Start and End times in PART 2.
                 - Answer in Strictly Professional English.
             `;
 

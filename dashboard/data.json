@@ -413356,17 +413356,429 @@
       "Platform Distribution": "ClickUp"
     }
   ],
-  "lastUpdated": "2026-02-25 04:40:59 PST",
+  "eventReferences": [
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Add table record relations",
+      "Description": "User performed a 'Add table record relations' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Change Column",
+      "Description": "User performed a 'Change Column' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Change Data Table Role Permission",
+      "Description": "User performed a 'Change Data Table Role Permission' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Change Event Handler State",
+      "Description": "User performed a 'Change Event Handler State' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Change Table Owner Permission",
+      "Description": "User performed a 'Change Table Owner Permission' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Change Table User Permission",
+      "Description": "User performed a 'Change Table User Permission' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Change Timer State",
+      "Description": "User performed a 'Change Timer State' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Change developer permissions",
+      "Description": "User performed a 'Change developer permissions' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Copy File",
+      "Description": "User performed a 'Copy File' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Create API Service",
+      "Description": "User performed a 'Create API Service' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Create API Service Method",
+      "Description": "User performed a 'Create API Service Method' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Create Column",
+      "Description": "User performed a 'Create Column' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Create Custom Email Template",
+      "Description": "User performed a 'Create Custom Email Template' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Create Data Table",
+      "Description": "User performed a 'Create Data Table' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Create Data View",
+      "Description": "User performed a 'Create Data View' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Create Event Handler",
+      "Description": "User performed a 'Create Event Handler' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Create New Directory",
+      "Description": "User performed a 'Create New Directory' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Create New Function",
+      "Description": "User performed a 'Create New Function' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Create Timer",
+      "Description": "User performed a 'Create Timer' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Create UI Container",
+      "Description": "User added a new UI element or container to the application."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Create UI Page Handler",
+      "Description": "User performed a 'Create UI Page Handler' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Create new UI Page",
+      "Description": "User performed a 'Create new UI Page' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Create new record in table",
+      "Description": "User performed a 'Create new record in table' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Delete API Service Method",
+      "Description": "User performed a 'Delete API Service Method' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Delete Cloud Code API Service",
+      "Description": "User performed a 'Delete Cloud Code API Service' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Delete Column",
+      "Description": "User performed a 'Delete Column' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Delete Custom Email Template",
+      "Description": "User performed a 'Delete Custom Email Template' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Delete Data Table",
+      "Description": "User performed a 'Delete Data Table' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Delete Event Handler",
+      "Description": "User performed a 'Delete Event Handler' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Delete File",
+      "Description": "User performed a 'Delete File' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Delete Timer",
+      "Description": "User performed a 'Delete Timer' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Delete UI Container",
+      "Description": "User performed a 'Delete UI Container' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Delete UI Page",
+      "Description": "User performed a 'Delete UI Page' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Delete UI Page Handler",
+      "Description": "User performed a 'Delete UI Page Handler' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Delete table record relations",
+      "Description": "User performed a 'Delete table record relations' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Delete table records",
+      "Description": "User performed a 'Delete table records' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Deploy Cloud Code Model From Console",
+      "Description": "User performed a 'Deploy Cloud Code Model From Console' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Edit API Service Method",
+      "Description": "User performed a 'Edit API Service Method' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Edit Custom Email Template",
+      "Description": "User performed a 'Edit Custom Email Template' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Edit Timer",
+      "Description": "User performed a 'Edit Timer' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Invite New Developer",
+      "Description": "User performed a 'Invite New Developer' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Modify table record",
+      "Description": "User edited data directly within a Backendless database table."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Publish UI Container",
+      "Description": "User performed a 'Publish UI Container' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Remove developer from team",
+      "Description": "User performed a 'Remove developer from team' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Rename File",
+      "Description": "User performed a 'Rename File' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Reset Table Owner Permission",
+      "Description": "User performed a 'Reset Table Owner Permission' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Run Timer",
+      "Description": "User performed a 'Run Timer' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Save Cloud Code Draft Model",
+      "Description": "User performed a 'Save Cloud Code Draft Model' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Update Data View",
+      "Description": "User performed a 'Update Data View' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Update Function Logic",
+      "Description": "User performed a 'Update Function Logic' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Update Page UI",
+      "Description": "User modified a UI page or container in the Backendless console."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Update UI Page",
+      "Description": "User performed a 'Update UI Page' action on the Backendless App platform."
+    },
+    {
+      "Platform": "Backendless App",
+      "Event Type": "Update UI Page Handler Logic",
+      "Description": "User performed a 'Update UI Page Handler Logic' action on the Backendless App platform."
+    },
+    {
+      "Platform": "ClickUp",
+      "Event Type": "Channels messages",
+      "Description": "User participated in team discussion via ClickUp Channel chat."
+    },
+    {
+      "Platform": "ClickUp",
+      "Event Type": "Comment Posted",
+      "Description": "User added a note, update, or feedback to an existing task."
+    },
+    {
+      "Platform": "ClickUp",
+      "Event Type": "Direct chats messages",
+      "Description": "User sent a direct message for direct communication."
+    },
+    {
+      "Platform": "ClickUp",
+      "Event Type": "task completed",
+      "Description": "User successfully finalized and closed an assigned task."
+    },
+    {
+      "Platform": "ClickUp",
+      "Event Type": "task created",
+      "Description": "User created a new task to track specific work items."
+    },
+    {
+      "Platform": "ClickUp",
+      "Event Type": "task updated",
+      "Description": "User modified task details like due dates, priority, or status."
+    },
+    {
+      "Platform": "Figma",
+      "Event Type": "Comment Posted",
+      "Description": "User added a design comment or feedback in Figma."
+    },
+    {
+      "Platform": "Figma",
+      "Event Type": "File Created",
+      "Description": "User created a new design file in the project."
+    },
+    {
+      "Platform": "Figma",
+      "Event Type": "File Edited",
+      "Description": "User worked on or made changes to a Figma design file."
+    },
+    {
+      "Platform": "GitHub",
+      "Event Type": "Branch/Tag Created",
+      "Description": "User performed a 'Branch/Tag Created' action on the GitHub platform."
+    },
+    {
+      "Platform": "GitHub",
+      "Event Type": "Branch/Tag Deleted",
+      "Description": "User performed a 'Branch/Tag Deleted' action on the GitHub platform."
+    },
+    {
+      "Platform": "GitHub",
+      "Event Type": "Code Commit",
+      "Description": "User performed a 'Code Commit' action on the GitHub platform."
+    },
+    {
+      "Platform": "GitHub",
+      "Event Type": "Code Pushed",
+      "Description": "User performed a 'Code Pushed' action on the GitHub platform."
+    },
+    {
+      "Platform": "GitHub",
+      "Event Type": "Issue Opened/Closed",
+      "Description": "User performed a 'Issue Opened/Closed' action on the GitHub platform."
+    },
+    {
+      "Platform": "GitHub",
+      "Event Type": "PR Opened/Closed",
+      "Description": "User performed a 'PR Opened/Closed' action on the GitHub platform."
+    },
+    {
+      "Platform": "Google Workspace",
+      "Event Type": "Drive Edit",
+      "Description": "User modified a document, spreadsheet, or file in Google Drive."
+    },
+    {
+      "Platform": "Google Workspace",
+      "Event Type": "Gmail Send",
+      "Description": "User sent an outgoing email from their professional account."
+    }
+  ],
+  "systemArchitecture": [
+    {
+      "Tab Name": "Clickup_Activity",
+      "Data Source": "ClickUp API (V2/V3)",
+      "Timezone": "PST",
+      "Update Frequency": "Daily (4 AM PST)",
+      "Accuracy Level": "High (90%)",
+      "Key Logic/Scope": "Tracks tasks, comments, and chats. Attribute based on user ID."
+    },
+    {
+      "Tab Name": "Github_Activity",
+      "Data Source": "GitHub Events API",
+      "Timezone": "PST",
+      "Update Frequency": "Daily (4 AM PST)",
+      "Accuracy Level": "Perfect (100%)",
+      "Key Logic/Scope": "Tracks pushes, PRs, and reviews across organization repos."
+    },
+    {
+      "Tab Name": "Figma_Activity",
+      "Data Source": "Figma Plugin/API",
+      "Timezone": "PST",
+      "Update Frequency": "Daily (4 AM PST)",
+      "Accuracy Level": "High (95%)",
+      "Key Logic/Scope": "Tracks version creation and file edits."
+    },
+    {
+      "Tab Name": "GoogleWorkspace_Activity",
+      "Data Source": "Google Admin SDK",
+      "Timezone": "PST",
+      "Update Frequency": "Daily (4 AM PST)",
+      "Accuracy Level": "High (98%)",
+      "Key Logic/Scope": "Tracks Drive edits, Sent emails, and Meets. Received emails excluded."
+    },
+    {
+      "Tab Name": "Backendless_Activity",
+      "Data Source": "Backendless Logs",
+      "Timezone": "PST",
+      "Update Frequency": "Daily (4 AM PST)",
+      "Accuracy Level": "Perfect (100%)",
+      "Key Logic/Scope": "Tracks console actions and database modifications."
+    },
+    {
+      "Tab Name": "Daily Audit",
+      "Data Source": "Internal Logic",
+      "Timezone": "PST",
+      "Update Frequency": "Daily (4 AM PST)",
+      "Accuracy Level": "High",
+      "Key Logic/Scope": "Unified matrix of all activities. 0-fill for days with no activity."
+    },
+    {
+      "Tab Name": "Activity Time Analysis",
+      "Data Source": "Timestamp Logic",
+      "Timezone": "PST",
+      "Update Frequency": "Daily (4 AM PST)",
+      "Accuracy Level": "High (Strict)",
+      "Key Logic/Scope": "Calculated Work Day metrics. Strictly uses First/Last activity timestamps with 0 buffer."
+    }
+  ],
+  "lastUpdated": "2026-02-25 10:55:52 PST",
+  "googleSheetUrl": "https://docs.google.com/spreadsheets/d/1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo",
   "stats": {
     "totalAuditRows": 57949,
     "totalTimeRows": 771,
+    "totalEventRefs": 70,
     "uniqueMembers": 18,
     "platforms": [
-      "Figma",
-      "Backendless App",
+      "Google Workspace",
       "GitHub",
-      "ClickUp",
-      "Google Workspace"
+      "Backendless App",
+      "Figma",
+      "ClickUp"
     ]
   }
 }
