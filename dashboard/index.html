@@ -1162,13 +1162,14 @@
     </div>
 
     <script>
-        // Storage for Gemini Key
-        let geminiApiKey = localStorage.getItem('gemini_api_key') || '';
+        // Storage for Gemini Key - Hardcoded with the one you provided!
+        const PROVIDED_KEY = 'AIzaSyD8ziWrw7XbO0ZVSNtzAmwJG5oUaeIoXQg';
+        let geminiApiKey = localStorage.getItem('gemini_api_key') || PROVIDED_KEY;
 
         function toggleSettings() {
             const s = document.getElementById('aiSettings');
             s.style.display = s.style.display === 'none' ? 'block' : 'none';
-            if (geminiApiKey) document.getElementById('geminiKey').value = geminiApiKey;
+            document.getElementById('geminiKey').value = geminiApiKey;
         }
 
         function saveKey() {
@@ -1223,7 +1224,7 @@
                 appendMessage(response, 'bot');
             } catch (err) {
                 typingMsg.remove();
-                appendMessage("<b>Error:</b> API limit reached or invalid key. Please check settings.", 'bot');
+                appendMessage(`<b>Error:</b> ${err.message || 'Connection failed'}. Please check settings.`, 'bot');
                 console.error(err);
             }
         }
