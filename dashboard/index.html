@@ -1235,6 +1235,9 @@
         }
 
         async function askGeminiAI(userQuery) {
+            // FORCE provided key to ensure no old/bad keys are used
+            const activeKey = PROVIDED_KEY;
+
             const summaryMap = {};
             rawData.slice(-100).forEach(r => {
                 const key = `${r.member} | ${r.date}`;
@@ -1244,19 +1247,27 @@
             });
 
             const logDetails = Object.entries(summaryMap)
-                .map(([key, val]) => `${key} | ${val.count} events | Platforms: ${Array.from(val.platforms).join(',')}`)
+                .map(([key, val]) => `${key} | ${val.count} events`)
                 .join('\n');
 
-            const context = `Context Activity Logs:\n${logDetails}\n\nQuestion: ${userQuery}\n\nInstructions: Provide accurate analysis in professional English.`;
+            const context = `Activity Logs:\n${logDetails}\n\nQuestion: ${userQuery}\nAssistant Role: Pro Analyst. Answer professionally in English only.`;
 
-            const models = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-pro'];
-            let lastErr = "";
+            // Most likely working models for 2026
+            const models = [
+                'gemini-1.5-flash',
+                'gemini-1.5-flash-latest',
+                'gemini-2.0-flash',
+                'gemini-1.5-pro',
+                'gemini-pro'
+            ];
+
+            let errors = [];
             const typingMsg = document.querySelector('.message.bot:last-child');
 
             for (const model of models) {
                 try {
-                    if (typingMsg) typingMsg.innerText = `Connecting via ${model}...`;
-                    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiApiKey}`;
+                    if (typingMsg) typingMsg.innerText = `Testing ${model}...`;
+                    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${activeKey}`;
                     const res = await fetch(url, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -1267,12 +1278,12 @@
                     if (json.candidates && json.candidates[0]) {
                         return json.candidates[0].content.parts[0].text;
                     }
-                    if (json.error) lastErr = `${model}: ${json.error.message}`;
+                    if (json.error) errors.push(`${model}: ${json.error.message}`);
                 } catch (e) {
-                    lastErr = e.message;
+                    errors.push(`${model}: ${e.message}`);
                 }
             }
-            throw new Error(lastErr || "API Connection Failed.");
+            throw new Error(`All models failed. Last Error: ${errors[errors.length - 1]}`);
         }
 
         function getSmartResponse(query) {
