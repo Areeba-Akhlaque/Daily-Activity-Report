@@ -1118,18 +1118,40 @@
         <div class="chat-window" id="chatWindow">
             <div class="chat-header">
                 <h3><i class="fas fa-robot"></i> Data Assistant</h3>
-                <button class="chat-close" onclick="toggleChat()"
-                    style="background:none; border:none; color:white; cursor:pointer;"><i
-                        class="fas fa-times"></i></button>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <button onclick="toggleSettings()" title="AI Settings"
+                        style="background:none; border:none; color:rgba(255,255,255,0.6); cursor:pointer; font-size: 14px;"><i
+                            class="fas fa-cog"></i></button>
+                    <button class="chat-close" onclick="toggleChat()"
+                        style="background:none; border:none; color:white; cursor:pointer;"><i
+                            class="fas fa-times"></i></button>
+                </div>
             </div>
+
+            <!-- API Settings Sub-panel -->
+            <div id="aiSettings"
+                style="display:none; padding: 15px; border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.15); backdrop-filter: blur(5px);">
+                <label style="font-size: 11px; color: var(--text-secondary); display: block; margin-bottom: 5px;">GEMINI
+                    API KEY:</label>
+                <div style="display: flex; gap: 5px;">
+                    <input type="password" id="geminiKey" placeholder="Paste key here..."
+                        style="flex:1; background: rgba(0,0,0,0.5); border: 1px solid var(--border); border-radius: 5px; color: white; padding: 5px 8px; font-size: 12px;">
+                    <button onclick="saveKey()"
+                        style="background: var(--success); border:none; color:white; padding: 5px 10px; border-radius: 5px; cursor:pointer; font-size: 11px;">Save</button>
+                </div>
+                <p style="font-size: 10px; color: var(--text-secondary); margin-top: 8px;">Need a key? <a
+                        href="https://aistudio.google.com/app/apikey" target="_blank"
+                        style="color:var(--accent); text-decoration: none;">Get a free one here &rarr;</a></p>
+            </div>
+
             <div class="chat-messages" id="chatMessages">
                 <div class="message bot">
-                    Hello! I'm your Pvragon AI Assistant. I've analyzed today's data. Ask me anything about team
-                    activity!
+                    Hello! I'm your Pvragon AI Assistant. Give me a <b>Gemini API Key</b> in settings (gear icon) to
+                    unlock professional ChatGPT-level data analysis!
                 </div>
             </div>
             <div class="chat-input-area">
-                <input type="text" class="chat-input" id="chatInput" placeholder="Try: Who is at the top?"
+                <input type="text" class="chat-input" id="chatInput" placeholder="Ask about team activity..."
                     onkeypress="if(event.key === 'Enter') sendMessage()">
                 <button class="chat-send" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
             </div>
@@ -1140,7 +1162,25 @@
     </div>
 
     <script>
-        // Chat Logic
+        // Storage for Gemini Key
+        let geminiApiKey = localStorage.getItem('gemini_api_key') || '';
+
+        function toggleSettings() {
+            const s = document.getElementById('aiSettings');
+            s.style.display = s.style.display === 'none' ? 'block' : 'none';
+            if (geminiApiKey) document.getElementById('geminiKey').value = geminiApiKey;
+        }
+
+        function saveKey() {
+            const val = document.getElementById('geminiKey').value.trim();
+            if (val) {
+                localStorage.setItem('gemini_api_key', val);
+                geminiApiKey = val;
+                alert('API Key Saved! The assistant is now in Pro Mode.');
+                toggleSettings();
+            }
+        }
+
         function toggleChat() {
             const chatWin = document.getElementById('chatWindow');
             chatWin.classList.toggle('active');
@@ -1153,7 +1193,7 @@
             const container = document.getElementById('chatMessages');
             const msg = document.createElement('div');
             msg.className = `message ${role}`;
-            msg.innerText = text;
+            msg.innerHTML = text.replace(/\n/g, '<br>'); // Simple formatting
             container.appendChild(msg);
             container.scrollTop = container.scrollHeight;
         }
@@ -1166,111 +1206,93 @@
             appendMessage(text, 'user');
             input.value = '';
 
-            // Simulate "Thinking"
             const typingMsg = document.createElement('div');
             typingMsg.className = 'message bot';
-            typingMsg.innerText = 'Analyzing...';
+            typingMsg.innerText = geminiApiKey ? 'Consulting Gemini AI...' : 'Analyzing logs...';
             document.getElementById('chatMessages').appendChild(typingMsg);
 
-            setTimeout(() => {
+            try {
+                let response = "";
+                if (geminiApiKey) {
+                    response = await askGeminiAI(text);
+                } else {
+                    await new Promise(r => setTimeout(r, 600));
+                    response = getSmartResponse(text);
+                }
                 typingMsg.remove();
-                const response = getSmartResponse(text);
                 appendMessage(response, 'bot');
-            }, 600);
+            } catch (err) {
+                typingMsg.remove();
+                appendMessage("<b>Error:</b> API limit reached or invalid key. Please check settings.", 'bot');
+                console.error(err);
+            }
+        }
+
+        async function askGeminiAI(userQuery) {
+            const memberStats = {};
+            rawData.forEach(r => {
+                if (!memberStats[r.member]) memberStats[r.member] = 0;
+                memberStats[r.member] += r.count;
+            });
+
+            const context = `
+                Role: Pvragon Performance Analyst.
+                Current Stats:
+                - Active Members: ${Object.keys(memberStats).length}
+                - Leaders: ${Object.entries(memberStats).sort((a, b) => b[1] - a[1]).slice(0, 5).map(x => `${x[0]} (${x[1]})`).join(', ')}
+                - Total Events: ${rawData.reduce((s, r) => s + r.count, 0)}
+                
+                Question: "${userQuery}"
+                
+                Instruction: You are talking to Manager Areeba. Provide a detailed, human-like answer based on the team activity logs. Use Urdu phrases if appropriate.
+            `;
+
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`;
+
+            const res = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents: [{ parts: [{ text: context }] }] })
+            });
+
+            const json = await res.json();
+            if (json.error) throw new Error(json.error.message);
+            return json.candidates[0].content.parts[0].text;
         }
 
         function getSmartResponse(query) {
             const q = query.toLowerCase();
-
-            // --- KNOWLEDGE BASE ---
             const allMembers = [...new Set(rawData.map(r => r.member))];
-            const allPlatforms = [...new Set(rawData.map(r => r.platform))];
+            const detectedMembers = allMembers.filter(m => q.includes(m.toLowerCase()) || q.includes(m.split(' ')[0].toLowerCase()));
 
-            // --- ENTITY DETECTION ---
-            const detectedMembers = allMembers.filter(m => {
-                const parts = m.toLowerCase().split(' ');
-                return q.includes(m.toLowerCase()) || (parts[0].length > 2 && q.includes(parts[0]));
-            });
-            const detectedPlatforms = allPlatforms.filter(p => q.includes(p.toLowerCase()));
-
-            // --- TIME DETECTION ---
-            let timeFilterDesc = "";
-            let filteredDates = [...new Set(rawData.map(r => r.date))];
-            const allDates = [...filteredDates];
-
-            if (q.includes('weekend') || q.includes('sat') || q.includes('sun')) {
-                timeFilterDesc = 'over the weekend';
-                filteredDates = allDates.filter(dStr => {
-                    const d = parseDate(dStr);
-                    return d && (d.getDay() === 0 || d.getDay() === 6);
-                });
-            } else if (q.includes('yesterday')) {
-                timeFilterDesc = 'yesterday';
-                const yest = new Date(); yest.setDate(yest.getDate() - 1);
-                filteredDates = [yest.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' })];
-            } else if (q.includes('today')) {
-                timeFilterDesc = 'today';
-                filteredDates = [new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' })];
-            } else if (q.includes('last week')) {
-                timeFilterDesc = 'last week';
-                const lastWeek = new Date(); lastWeek.setDate(lastWeek.getDate() - 7);
-                filteredDates = allDates.filter(dStr => parseDate(dStr) >= lastWeek);
+            let timeDesc = "";
+            let filtered = rawData;
+            if (q.includes('weekend')) {
+                timeDesc = 'over the weekend';
+                filtered = rawData.filter(r => { const d = parseDate(r.date); return d && (d.getDay() === 0 || d.getDay() === 6); });
             }
 
-            // --- INTENT CLASSIFICATION ---
-            const isLeaderboardQuery = q.includes('top') || q.includes('leader') || q.includes('best') || q.includes('most active') || q.includes('rank');
-
-            // --- DATA ANALYSIS ---
-            let analysisData = rawData.filter(r => filteredDates.includes(r.date));
-            if (detectedMembers.length && !isLeaderboardQuery) {
-                analysisData = analysisData.filter(r => detectedMembers.includes(r.member));
-            }
-            if (detectedPlatforms.length) {
-                analysisData = analysisData.filter(r => detectedPlatforms.includes(r.platform));
-            }
-
-            const total = analysisData.reduce((sum, r) => sum + r.count, 0);
-
-            // --- RESPONSE GENERATION ---
-
-            // Case 1: Leaderboard / Ranking (Only if specifically asked)
-            if (isLeaderboardQuery) {
+            if (q.includes('top') || q.includes('leader')) {
                 const leaderboard = {};
-                analysisData.forEach(r => leaderboard[r.member] = (leaderboard[r.member] || 0) + r.count);
+                filtered.forEach(r => leaderboard[r.member] = (leaderboard[r.member] || 0) + r.count);
                 const sorted = Object.entries(leaderboard).sort((a, b) => b[1] - a[1]);
-                if (sorted.length > 0) {
-                    return `Analysis Report: ${sorted[0][0]} is leading the team with ${sorted[0][1]} activities ${timeFilterDesc || 'in this view'}. ${sorted[1] ? sorted[1][0] + ' is 2nd.' : ''}`;
-                }
+                return `Top results ${timeDesc}: ${sorted[0][0]} is #1 with ${sorted[0][1]} events.`;
             }
 
-            // Case 2: Specific People Analysis
             if (detectedMembers.length > 0) {
-                const member = detectedMembers[0];
-                if (total > 0) {
-                    const platCounts = {};
-                    analysisData.forEach(r => platCounts[r.platform] = (platCounts[r.platform] || 0) + r.count);
-                    const topPlat = Object.entries(platCounts).sort((a, b) => b[1] - a[1])[0];
-                    return `Log Data for ${member}: Total ${total} events recorded ${timeFilterDesc}. Most work was done on ${topPlat[0]} (${topPlat[1]} events).`;
-                } else {
-                    return `No Activity: I checked the logs for ${member} ${timeFilterDesc}, but their record shows 0 events for this period.`;
-                }
+                const name = detectedMembers[detectedMembers.length - 1];
+                const count = filtered.filter(r => r.member === name).reduce((s, r) => s + r.count, 0);
+                return `Analysis for ${name}: Found ${count} activities ${timeDesc}.`;
             }
 
-            // Case 3: Platform specific without specific person
-            if (detectedPlatforms.length > 0) {
-                return `Platform Check: I found ${total} total events on ${detectedPlatforms.join('/')} ${timeFilterDesc}.`;
-            }
-
-            // Case 4: General Data Summary
-            if (total > 0) {
-                return `Quick Stats: I found ${total} total activities recorded ${timeFilterDesc}. You can ask me about a specific member for a deeper breakdown.`;
-            }
-
-            return "I've analyzed the data, but I couldn't find any specific answer. Tip: To get ChatGPT-like smart answers, please provide a Gemini API Key in the settings (Coming soon)!";
+            return "To get high-level expert answers, please click the gear icon above and enter your Gemini API Key!";
         }
 
         window.addEventListener('DOMContentLoaded', init);
     </script>
+</body>
+
+</html>
 </body>
 
 </html>
