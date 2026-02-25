@@ -1164,7 +1164,12 @@
     <script>
         // Storage for Gemini Key - Hardcoded with the one you provided!
         const PROVIDED_KEY = 'AIzaSyD8ziWrw7XbO0ZVSNtzAmwJG5oUaeIoXQg';
-        let geminiApiKey = localStorage.getItem('gemini_api_key') || PROVIDED_KEY;
+        let geminiApiKey = localStorage.getItem('gemini_api_key');
+
+        // If no key in storage or storage is 'null', use the provided one
+        if (!geminiApiKey || geminiApiKey === 'null' || geminiApiKey.length < 10) {
+            geminiApiKey = PROVIDED_KEY;
+        }
 
         function toggleSettings() {
             const s = document.getElementById('aiSettings');
@@ -1258,18 +1263,21 @@
                 4. Answer in a professional, human-like tone. Use STRICTLY PROFESSIONAL ENGLISH. Do NOT use Urdu or Roman Urdu under any circumstances.
             `;
 
-            // Try 2026 generation models (Gemini 3 and 2.5 series)
+            // Try 2026 generation models (most reliable first)
             const modelsToTry = [
-                'gemini-3-flash', 'gemini-3-pro',
-                'gemini-2.5-flash', 'gemini-2.5-pro',
-                'gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-pro'
+                'gemini-1.5-flash-latest', 'gemini-1.5-flash',
+                'gemini-2.0-flash', 'gemini-1.5-pro-latest',
+                'gemini-1.5-pro', 'gemini-pro'
             ];
             const versions = ['v1beta', 'v1'];
             let lastErr = "";
+            const typingMsg = document.querySelector('.message.bot:last-child');
 
             for (const model of modelsToTry) {
                 for (const ver of versions) {
                     try {
+                        if (typingMsg) typingMsg.innerText = `Connecting via ${model}...`;
+
                         const url = `https://generativelanguage.googleapis.com/${ver}/models/${model}:generateContent?key=${geminiApiKey}`;
                         const res = await fetch(url, {
                             method: 'POST',
@@ -1279,7 +1287,7 @@
                         const json = await res.json();
 
                         if (json.candidates && json.candidates[0]) {
-                            console.log(`Success: ${model} on ${ver}`);
+                            console.log(`Working: ${model} on ${ver}`);
                             return json.candidates[0].content.parts[0].text;
                         }
                         if (json.error) {
@@ -1290,7 +1298,7 @@
                     }
                 }
             }
-            throw new Error(lastErr || "All API connection attempts failed. Your key may be restricted or models have changed.");
+            throw new Error(lastErr || "API limit reached or key unauthorized.");
         }
 
         function getSmartResponse(query) {
