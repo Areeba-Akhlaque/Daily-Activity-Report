@@ -1162,14 +1162,10 @@
     </div>
 
     <script>
-        // Storage for Gemini Key - Hardcoded with the one you provided!
-        const PROVIDED_KEY = 'AIzaSyD8ziWrw7XbO0ZVSNtzAmwJG5oUaeIoXQg';
+        // MASTER CONFIGURATION
+        const MASTER_KEY = 'AIzaSyD8ziWrw7XbO0ZVSNtzAmwJG5oUaeIoXQg'.trim();
         let geminiApiKey = localStorage.getItem('gemini_api_key');
-
-        // If no key in storage or storage is 'null', use the provided one
-        if (!geminiApiKey || geminiApiKey === 'null' || geminiApiKey.length < 10) {
-            geminiApiKey = PROVIDED_KEY;
-        }
+        if (!geminiApiKey || geminiApiKey === 'null' || geminiApiKey.length < 10) { geminiApiKey = MASTER_KEY; }
 
         function toggleSettings() {
             const s = document.getElementById('aiSettings');
@@ -1182,7 +1178,7 @@
             if (val) {
                 localStorage.setItem('gemini_api_key', val);
                 geminiApiKey = val;
-                alert('API Key Saved! The assistant is now in Pro Mode.');
+                alert('API Key Saved!');
                 toggleSettings();
             }
         }
@@ -1190,16 +1186,14 @@
         function toggleChat() {
             const chatWin = document.getElementById('chatWindow');
             chatWin.classList.toggle('active');
-            if (chatWin.classList.contains('active')) {
-                document.getElementById('chatInput').focus();
-            }
+            if (chatWin.classList.contains('active')) document.getElementById('chatInput').focus();
         }
 
         function appendMessage(text, role) {
             const container = document.getElementById('chatMessages');
             const msg = document.createElement('div');
             msg.className = `message ${role}`;
-            msg.innerHTML = text.replace(/\n/g, '<br>'); // Simple formatting
+            msg.innerHTML = text.replace(/\n/g, '<br>');
             container.appendChild(msg);
             container.scrollTop = container.scrollHeight;
         }
@@ -1208,60 +1202,51 @@
             const input = document.getElementById('chatInput');
             const text = input.value.trim();
             if (!text) return;
-
             appendMessage(text, 'user');
             input.value = '';
-
             const typingMsg = document.createElement('div');
             typingMsg.className = 'message bot';
-            typingMsg.innerText = geminiApiKey ? 'Consulting Gemini AI...' : 'Analyzing logs...';
+            typingMsg.innerText = 'Analyzing data...';
             document.getElementById('chatMessages').appendChild(typingMsg);
-
             try {
-                let response = "";
-                if (geminiApiKey) {
-                    response = await askGeminiAI(text);
-                } else {
-                    await new Promise(r => setTimeout(r, 600));
-                    response = getSmartResponse(text);
-                }
+                const response = await askGeminiAI(text);
                 typingMsg.remove();
                 appendMessage(response, 'bot');
             } catch (err) {
                 typingMsg.remove();
-                appendMessage(`<b>Error:</b> ${err.message || 'Connection failed'}. Please check settings.`, 'bot');
-                console.error(err);
+                appendMessage(`<b>Error:</b> ${err.message}. Please check your Key settings.`, 'bot');
             }
         }
 
         async function askGeminiAI(userQuery) {
-            const activeKey = PROVIDED_KEY;
+            // Group data for context
             const summary = {};
             rawData.forEach(r => {
-                const key = `${r.member} | ${r.date}`;
-                if (!summary[key]) summary[key] = { count: 0, platform: r.platform };
-                summary[key].count += r.count;
+                const k = `${r.member} | ${r.date}`;
+                if (!summary[k]) summary[k] = { c: 0, p: r.platform };
+                summary[k].c += r.count;
             });
-            const stats = Object.entries(summary).map(([k, v]) => `${k} | ${v.platform} | ${v.count}`).join('\n');
+            const stats = Object.entries(summary).map(([k, v]) => `${k} | ${v.p} | ${v.c} events`).join('\n');
 
             const context = `
-                Role: Pvragon Auditor. Analyze this data for Manager Areeba.
+                Role: Pvragon Auditor Analyst. 
                 Feb 2026 Weekends: Feb 1, 7, 8, 14, 15, 21, 22, 28.
-                Data (Member | Date | Platform | Count):
+                Data Logs:
                 ${stats}
 
                 Question: "${userQuery}"
-                Instructions: Answer in professional English. Be exact about who worked on which weekend date.
+                Task: Provide a concise, data-backed answer in Professional English. Reference weekend dates clearly.
             `;
 
-            const models = ['gemini-1.5-flash', 'gemini-1.0-pro', 'gemini-1.5-pro'];
+            // Test models on v1beta endpoint (most compatible)
+            const models = ['gemini-1.5-flash', 'gemini-pro', 'gemini-1.5-pro'];
             let lastErr = "";
             const typingMsg = document.querySelector('.message.bot:last-child');
 
             for (const model of models) {
                 try {
                     if (typingMsg) typingMsg.innerText = `Connecting via ${model}...`;
-                    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${activeKey}`, {
+                    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiApiKey}`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ contents: [{ parts: [{ text: context }] }] })
@@ -1270,38 +1255,10 @@
                     if (json.candidates && json.candidates[0]) return json.candidates[0].content.parts[0].text;
                     if (json.error) lastErr = `${model}: ${json.error.message}`;
                 } catch (e) {
-                    lastErr = e.message;
+                    lastErr = `${model}: ${e.message}`;
                 }
             }
-            throw new Error(lastErr || "Connection failed.");
-        }
-
-        function getSmartResponse(query) {
-            const q = query.toLowerCase();
-            const allMembers = [...new Set(rawData.map(r => r.member))];
-            const detectedMembers = allMembers.filter(m => q.includes(m.toLowerCase()) || q.includes(m.split(' ')[0].toLowerCase()));
-
-            let timeDesc = "";
-            let filtered = rawData;
-            if (q.includes('weekend')) {
-                timeDesc = 'over the weekend';
-                filtered = rawData.filter(r => { const d = parseDate(r.date); return d && (d.getDay() === 0 || d.getDay() === 6); });
-            }
-
-            if (q.includes('top') || q.includes('leader')) {
-                const leaderboard = {};
-                filtered.forEach(r => leaderboard[r.member] = (leaderboard[r.member] || 0) + r.count);
-                const sorted = Object.entries(leaderboard).sort((a, b) => b[1] - a[1]);
-                if (sorted.length > 0) return `${sorted[0][0]} is #1 with ${sorted[0][1]} events ${timeDesc}.`;
-            }
-
-            if (detectedMembers.length > 0) {
-                const name = detectedMembers[detectedMembers.length - 1];
-                const count = filtered.filter(r => r.member === name).reduce((s, r) => s + r.count, 0);
-                return `Analysis for ${name}: ${count} activities found ${timeDesc}.`;
-            }
-
-            return "Please provide your Gemini API Key in settings to get professional analyst insights.";
+            throw new Error(lastErr || "All connection attempts failed");
         }
 
         window.addEventListener('DOMContentLoaded', init);
