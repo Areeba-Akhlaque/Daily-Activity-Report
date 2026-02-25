@@ -1146,8 +1146,8 @@
 
             <div class="chat-messages" id="chatMessages">
                 <div class="message bot">
-                    Hello! I'm your Pvragon AI Assistant. Give me a <b>Gemini API Key</b> in settings (gear icon) to
-                    unlock professional ChatGPT-level data analysis!
+                    Hello Manager Areeba! To unlock analysis, please click the <b>Gear Icon (⚙️)</b> and paste a fresh
+                    <b>Gemini API Key</b>. (The previous one was flagged as public by Google).
                 </div>
             </div>
             <div class="chat-input-area">
@@ -1162,15 +1162,8 @@
     </div>
 
     <script>
-        // MASTER CONFIGURATION (Fresh Key)
-        const MASTER_KEY = 'AIzaSyChJMZzqau3k8-N6R5i5LUl0FY-B3cm-5c'.trim();
+        // API Key Management (User-provided via Gear Icon)
         let geminiApiKey = localStorage.getItem('gemini_api_key');
-
-        // Always prioritize the fresh key if storage is old/empty
-        if (!geminiApiKey || geminiApiKey.length < 10) {
-            geminiApiKey = MASTER_KEY;
-            localStorage.setItem('gemini_api_key', MASTER_KEY);
-        }
 
         function toggleSettings() {
             const s = document.getElementById('aiSettings');
