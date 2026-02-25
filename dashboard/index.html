@@ -1217,22 +1217,39 @@
         }
 
         async function askGeminiAI(userQuery) {
-            const summary = {};
+            // 1. Group Event Data (Fix: Include Platform in key)
+            const eventSummary = {};
             rawData.forEach(r => {
-                const k = `${r.member} | ${r.date}`;
-                if (!summary[k]) summary[k] = { c: 0, p: r.platform };
-                summary[k].c += r.count;
+                const k = `${r.member} | ${r.date} | ${r.platform}`;
+                eventSummary[k] = (eventSummary[k] || 0) + r.count;
             });
-            const stats = Object.entries(summary).map(([k, v]) => `${k} | ${v.p} | ${v.c} events`).join('\n');
+            const stats = Object.entries(eventSummary)
+                .map(([k, v]) => `${k} | ${v} events`)
+                .join('\n');
+
+            // 2. Prepare Time Analysis Data (for hours calculation)
+            const timeStats = timeData.slice(-100).map(t =>
+                `${t['Team Member']} | ${t['Date']} | Split: ${t['First Activity (PST)']} to ${t['Last Activity (PST)']} (Break: ${t['Longest Break (Minutes)']}m)`
+            ).join('\n');
 
             const context = `
-                Role: Pvragon Auditor Analyst.
+                Role: Pvragon Auditor Analyst. 
+                Reference Date (Today): Wednesday, February 25, 2026.
                 Feb 2026 Weekends: Feb 1, 7, 8, 14, 15, 21, 22, 28.
-                Data Logs:
+
+                PART 1: Activity Logs (Member | Date | Platform | Event Count)
                 ${stats}
 
-                Question: "${userQuery}"
-                Task: Provide a concise, data-backed answer in Professional English. Reference weekend dates clearly.
+                PART 2: Time Window Logs (Member | Date | Start/End Window)
+                ${timeStats}
+
+                User Question: "${userQuery}"
+
+                Instructions:
+                - If asked about "hours", calculate the duration between Start and End times in PART 2, subtracting any long breaks.
+                - Be specific about platforms (ClickUp, GitHub, Figma, etc.) listed in PART 1.
+                - If data is missing for a specific platform/date combination, state it clearly.
+                - Answer in Strictly Professional English.
             `;
 
             const models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-flash-latest', 'gemini-pro-latest', 'gemini-2.5-pro'];
@@ -1241,7 +1258,7 @@
 
             for (const model of models) {
                 try {
-                    if (typingMsg) typingMsg.innerText = `Connecting via ${model}...`;
+                    if (typingMsg) typingMsg.innerText = `Analyzing logs via ${model}...`;
                     const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiApiKey}`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -1254,7 +1271,7 @@
                     lastErr = `${model}: ${e.message}`;
                 }
             }
-            throw new Error(lastErr || "All connection attempts failed");
+            throw new Error(lastErr || "Analysis failed");
         }
 
         window.addEventListener('DOMContentLoaded', init);
