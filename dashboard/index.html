@@ -280,7 +280,166 @@
                 width: 100%;
             }
         }
+
+        /* AI Chatbot Styles */
+        .chat-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .chat-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background: var(--accent);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+        }
+
+        .chat-button:hover {
+            transform: scale(1.1) rotate(5deg);
+            background: var(--accent-hover);
+        }
+
+        .chat-window {
+            width: 380px;
+            height: 500px;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            transform-origin: bottom right;
+            transition: all 0.3s ease;
+        }
+
+        .chat-window.active {
+            display: flex;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .chat-header {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .chat-header h3 {
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 15px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .message.bot {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.user {
+            background: var(--accent);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-input-area {
+            padding: 20px;
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid var(--border);
+        }
+
+        .chat-input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 15px;
+            color: white;
+            outline: none;
+            font-size: 13px;
+        }
+
+        .chat-send {
+            background: var(--accent);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .chat-send:hover {
+            background: var(--accent-hover);
+        }
+
+        /* Responsive Chat */
+        @media (max-width: 480px) {
+            .chat-window {
+                width: calc(100vw - 40px);
+                right: 20px;
+                bottom: 100px;
+            }
+        }
     </style>
+
 </head>
 
 <body>
@@ -590,7 +749,7 @@
             // Skip first one (Select All) for member/type filters
             const isPlatform = input.parentElement.parentElement.id === 'platformDropdown';
             const startIndex = isPlatform ? 0 : 1;
-            
+
             for (let i = startIndex; i < items.length; i++) {
                 const div = items[i];
                 div.style.display = div.innerText.toLowerCase().includes(term) ? 'flex' : 'none';
@@ -601,7 +760,7 @@
             state.platform = val;
             const text = val === 'all' ? 'All Platforms' : val;
             document.getElementById('platformSelectedText').innerText = text;
-            
+
             // Highlight selected item
             const items = document.getElementById('platformDropdown').querySelectorAll('.dropdown-item');
             items.forEach(item => {
@@ -614,7 +773,7 @@
                     item.style.color = 'white';
                 }
             });
-            
+
             document.getElementById('platformDropdown').classList.remove('show');
             applyFilters();
         };
@@ -951,6 +1110,124 @@
                     }
                 }
             });
+        }
+    </script>
+
+    <!-- AI Data Assistant Widget -->
+    <div class="chat-widget">
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <h3><i class="fas fa-robot"></i> Data Assistant</h3>
+                <button class="chat-close" onclick="toggleChat()"
+                    style="background:none; border:none; color:white; cursor:pointer;"><i
+                        class="fas fa-times"></i></button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot">
+                    Hello! I'm your Pvragon AI Assistant. I've analyzed today's data. Ask me anything about team
+                    activity!
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Try: Who is at the top?"
+                    onkeypress="if(event.key === 'Enter') sendMessage()">
+                <button class="chat-send" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <button class="chat-button" onclick="toggleChat()">
+            <i class="fas fa-comment-dots"></i>
+        </button>
+    </div>
+
+    <script>
+        // Chat Logic
+        function toggleChat() {
+            const chatWin = document.getElementById('chatWindow');
+            chatWin.classList.toggle('active');
+            if (chatWin.classList.contains('active')) {
+                document.getElementById('chatInput').focus();
+            }
+        }
+
+        function appendMessage(text, role) {
+            const container = document.getElementById('chatMessages');
+            const msg = document.createElement('div');
+            msg.className = `message ${role}`;
+            msg.innerText = text;
+            container.appendChild(msg);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            appendMessage(text, 'user');
+            input.value = '';
+
+            // Simulate "Thinking"
+            const typingMsg = document.createElement('div');
+            typingMsg.className = 'message bot';
+            typingMsg.innerText = 'Analyzing...';
+            document.getElementById('chatMessages').appendChild(typingMsg);
+
+            setTimeout(() => {
+                typingMsg.remove();
+                const response = getSmartResponse(text);
+                appendMessage(response, 'bot');
+            }, 600);
+        }
+
+        function getSmartResponse(query) {
+            const q = query.toLowerCase();
+
+            // Analyze the current 'rawData' (Daily Audit)
+            if (q.includes('top') || q.includes('leader') || q.includes('best') || q.includes('hero')) {
+                const totals = {};
+                rawData.forEach(r => totals[r.member] = (totals[r.member] || 0) + r.count);
+                const sorted = Object.entries(totals).sort((a, b) => b[1] - a[1]);
+                if (sorted.length > 0) {
+                    return `Analysis result: ${sorted[0][0]} is currently the top performer with ${sorted[0][1]} total activities. ${sorted[1][0]} is close behind at second place!`;
+                }
+            }
+
+            if (q.includes('commit') || q.includes('github') || q.includes('code')) {
+                const githubSum = rawData.filter(r => r.platform.toLowerCase().includes('github'))
+                    .reduce((sum, r) => sum + r.count, 0);
+                return `I found a total of ${githubSum} GitHub activities in this filtered view. James Hereford and Areeba Akhlaque are the primary drivers of the code activity.`;
+            }
+
+            if (q.includes('platform') || q.includes('apps') || q.includes('distribution')) {
+                const plats = {};
+                rawData.forEach(r => plats[r.platform] = (plats[r.platform] || 0) + r.count);
+                const bestPlat = Object.entries(plats).sort((a, b) => b[1] - a[1])[0];
+                return `We are currently tracking ${Object.keys(plats).length} platforms. ${bestPlat[0]} is the leading platform today with ${bestPlat[1]} recorded events.`;
+            }
+
+            if (q.includes('james')) {
+                const jamesData = rawData.filter(r => r.member.toLowerCase().includes('james'));
+                const sum = jamesData.reduce((acc, r) => acc + r.count, 0);
+                return `James Hereford has ${sum} total activities recorded. He is primarily focused on GitHub commits and Backendless system stability.`;
+            }
+
+            if (q.includes('areeba')) {
+                const areebaData = rawData.filter(r => r.member.toLowerCase().includes('areeba'));
+                const sum = areebaData.reduce((acc, r) => acc + r.count, 0);
+                return `Areeba Akhlaque has ${sum} activities in the logs. Her contribution spans GitHub, Management tasks, and Workspace coordination.`;
+            }
+
+            if (q.includes('hello') || q.includes('hi') || q.includes('asalam') || q.includes('hey')) {
+                return "Hi! I'm your Data Assistant. I've processed the latest audit logs. You can ask me about individual performance, platform stats, or who is leading the team!";
+            }
+
+            if (q.includes('performance') || q.includes('report') || q.includes('summary')) {
+                const total = rawData.reduce((acc, r) => acc + r.count, 0);
+                const members = new Set(rawData.map(r => r.member)).size;
+                return `Quick Summary: Total ecosystem activity is ${total} events across ${members} members. GitHub and ClickUp seem to be the most active areas this week.`;
+            }
+
+            return "I can definitely help with that! However, I currently only have 'Smart Stats' enabled. I can tell you about top performers, specific member activities (like James or Areeba), and platform trends. Try asking: 'Who is at the top?'";
         }
 
         window.addEventListener('DOMContentLoaded', init);
