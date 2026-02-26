@@ -83,6 +83,7 @@ def main():
     print("\n[STEP 2] REFRESHING DASHBOARD")
     # This script is now in the same directory (orchestration)
     results['dashboard'] = run_script(os.path.join(SCRIPT_DIR, 'refresh_dashboard.py'), 'Dashboard Data Export')
+    results['dashboard_hourly'] = run_script(os.path.join(SCRIPT_DIR, 'build_hourly.py'), 'Dashboard Hourly Build')
     
     # Step 3: Send email summary
     print("\n[STEP 3] SENDING EMAIL SUMMARY")
