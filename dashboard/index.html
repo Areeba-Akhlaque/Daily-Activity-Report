@@ -919,7 +919,7 @@
                 const hourMap = {};
                 hourlyFiltered.forEach(r => {
                     if (!hourMap[r.hour]) hourMap[r.hour] = {};
-                    hourMap[r.hour][r.member] = (hourMap[r.hour][r.member] || 0) + r.count;
+                    hourMap[r.hour][r.member] = (hourMap[r.hour][r.member] || 0) + (r.count || 1);
                 });
                 
                 for(let h=0; h<24; h++) {
