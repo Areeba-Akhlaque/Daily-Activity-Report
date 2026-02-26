@@ -648,7 +648,7 @@
                     first.setDate(first.getDate() - 30);
 
                     const formatYMD = (d) => {
-                        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+                        return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
                     };
 
                     document.getElementById('endDate').value = formatYMD(last);
@@ -678,12 +678,14 @@
                 const parts = str.split('/');
                 if (parts.length === 3) {
                     const y = parseInt(parts[2]) + 2000;
-                    return new Date(y, parseInt(parts[0]) - 1, parseInt(parts[1]));
+                    // Use UTC to prevent local timezone from shifting the date completely
+                    return new Date(Date.UTC(y, parseInt(parts[0]) - 1, parseInt(parts[1]), 12, 0, 0));
                 }
             } else if (str.includes('-')) {
                 const parts = str.split('-');
                 if (parts.length === 3) {
-                    return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+                    // Use UTC to prevent local timezone from shifting the date completely
+                    return new Date(Date.UTC(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]), 12, 0, 0));
                 }
             }
             return new Date(str);
