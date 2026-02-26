@@ -248,12 +248,11 @@ def fetch_figma_events_wrapped():
     """Fetch Figma events via fetch_figma module."""
     print('[5/5] Fetching Figma events...')
     try:
-        projects = fetch_figma.fetch_projects()
-        raw_events = fetch_figma.fetch_files_for_projects(projects)
+        raw_events = fetch_figma.fetch_all_activity()
         
         processed = []
         for e in raw_events:
-            # We updated fetch_figma to include 'timestamp' (PST-aware)
+            # fetch_figma returns dicts with 'timestamp' (PST-aware) and 'Name'
             dt = e.get('timestamp')
             name = e.get('Name')
             if dt and name:
