@@ -9,8 +9,9 @@ import os
 import sys
 import json
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timezone
 from collections import defaultdict
+import pytz
 import gspread
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
@@ -185,17 +186,22 @@ def update_daily_audit(gc, sh):
     df_existing = pd.DataFrame(all_data)
     summary_existing = df_existing.groupby(['Team Member', 'Activity Date', 'Platform', 'Activity Type'])['Count'].sum().to_dict()
     
-    # 2. Define Matrix Scope (Last 45 days to avoid cell limit)
-    # Convert dates to datetime objects for filtering
+    # 2. Define Matrix Scope (Last 45 days)
+    # Convert dates to datetime objects
     dt_objects = sorted([pd.to_datetime(d, format='%m/%d/%y') for d in all_dates], reverse=True)
-    if dt_objects:
-        latest = dt_objects[0]
-        cutoff = latest - pd.Timedelta(days=45)
-        filtered_dates = [d.strftime('%m/%d/%y') for d in dt_objects if d >= cutoff]
-    else:
-        filtered_dates = list(all_dates)
+    
+    # ALWAYS include Today (PST) to prevent empty dashboard
+    today_pst = datetime.now(timezone.utc).astimezone(pytz.timezone('America/Los_Angeles'))
+    today_str = today_pst.strftime('%m/%d/%y')
+    
+    latest = dt_objects[0] if dt_objects else today_pst
+    cutoff = latest - pd.Timedelta(days=45)
+    
+    filtered_dates = [d.strftime('%m/%d/%y') for d in dt_objects if d >= cutoff]
+    if today_str not in filtered_dates:
+        filtered_dates.insert(0, today_str) # Force today at the top
 
-    print(f"  Matrix will cover {len(filtered_dates)} dates (last 45 days).")
+    print(f"  Matrix will cover {len(filtered_dates)} dates (including Today PST).")
     
     # 3. Create the Full Matrix with 0s
     matrix_rows = []

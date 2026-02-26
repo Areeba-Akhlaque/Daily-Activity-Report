@@ -74,9 +74,9 @@ def fetch_events_for_repos(repos):
     
     # Event mapping
     EVENT_MAP = {
-        "PushEvent": "Code Pushed",
+        # "PushEvent": "Code Pushed", # REMOVED: Doubled with Github_Commits
         "PullRequestEvent": "PR Opened/Closed",
-        "PullRequestReviewEvent": "PR Reviewed",  # Added this
+        "PullRequestReviewEvent": "PR Reviewed", 
         "PullRequestReviewCommentEvent": "PR Comment Posted",
         "IssueCommentEvent": "Issue/PR Comment Posted",
         "IssuesEvent": "Issue Opened/Closed",
@@ -84,18 +84,23 @@ def fetch_events_for_repos(repos):
         "DeleteEvent": "Branch/Tag Deleted"
     }
 
+    last_event_time = {} # (User, Type) -> Last TS
+
     for repo in repos:
         repo_name = repo['name']
-        # removed updated_at check to be safe
-            
         print(f"  Fetching events for: {repo_name}...")
         page = 1
         repo_active = True
         while repo_active:
             url = f"https://api.github.com/repos/{GITHUB_ORG}/{repo_name}/events"
-            resp = requests.get(url, headers=get_headers(), params={"page": page, "per_page": 100})
-            if resp.status_code != 200: break
-            events = resp.json()
+            try:
+                resp = requests.get(url, headers=get_headers(), params={"page": page, "per_page": 100}, timeout=20)
+                if resp.status_code != 200: break
+                events = resp.json()
+            except Exception as e:
+                print(f"    Timeout or error for {repo_name}: {e}")
+                break
+            
             if not events: break
             
             for ev in events:
@@ -113,9 +118,17 @@ def fetch_events_for_repos(repos):
                 readable_type = EVENT_MAP.get(etype)
                 
                 if readable_type:
+                    # INTEGRITY FIX: 60s cooldown per User/Type
+                    key = (actor, readable_type)
+                    ts_unix = ts_pst.timestamp()
+                    if key in last_event_time:
+                        if abs(ts_unix - last_event_time[key]) < 60:
+                            continue
+                    last_event_time[key] = ts_unix
+
                     all_events.append({
                         "User": actor,
-                        "Date": get_audit_date(ts_pst), # 7PM PST Window Date
+                        "Date": get_audit_date(ts_pst), 
                         "timestamp": ts_pst,
                         "Event Type": readable_type
                     })

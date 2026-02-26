@@ -189,10 +189,13 @@ def main():
         print("[ERROR] No data found via API. (CSV fallback DISABLED).")
         return # Exit gracefully
 
-    # Process
-    print(f"Processing {len(logs)} logs from {source}...")
+    # Sort by timestamp to apply cooldown
+    logs.sort(key=lambda x: x.get('created') or x.get('timestamp') or 0)
+    
     processed = []
     
+    last_event_time = {} # (Name, Event) -> Last TS
+
     for log in logs:
         try:
             # Developer
@@ -202,22 +205,26 @@ def main():
             if should_exclude(name, email): continue
             
             # Timestamp (ms -> date)
-            ts = log.get('created') or log.get('timestamp')
-            if not ts: continue
+            ts_raw = log.get('created') or log.get('timestamp')
+            if not ts_raw: continue
             
-            if ts > 9999999999: ts = ts / 1000.0
+            ts = ts_raw / 1000.0 if ts_raw > 9999999999 else ts_raw
             
             # UTC to PST
             dt_utc = datetime.fromtimestamp(ts, timezone.utc)
-            
-            # Start Date filter (2026 onwards)
             if dt_utc < datetime(2026, 1, 1, tzinfo=timezone.utc): continue
             
-            dt_pst = pd.to_datetime(ts, unit='s').tz_localize('UTC').tz_convert('America/Los_Angeles')
-            date_str = get_audit_date(dt_pst) # 7PM PST Rolling Window
-            
-            # Event
             event = log.get('action') or log.get('event') or 'Unknown'
+            
+            # INTEGRITY FIX: 60-second cooldown per (User, Event) to filter auto-save noise
+            key = (name, event)
+            if key in last_event_time:
+                if abs(ts - last_event_time[key]) < 60:
+                    continue
+            last_event_time[key] = ts
+
+            dt_pst = pd.to_datetime(ts, unit='s').tz_localize('UTC').tz_convert('America/Los_Angeles')
+            date_str = get_audit_date(dt_pst)
             
             processed.append({
                 'Name': name,

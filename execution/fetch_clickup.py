@@ -88,36 +88,47 @@ def fetch_task_activity():
             if not tasks: break
             
             print(f"  Processing Tasks Page {page} ({len(tasks)} tasks)...")
+            last_event_time = {} # (User, Type) -> Last TS
+
             for t in tasks:
                 tid = t.get('id')
                 task_ids.add(tid)
                 
+                # Helper for cooldown
+                def add_event(uid, ts, etype):
+                    if not uid or not ts: return
+                    ts_unix = int(ts) / 1000.0
+                    key = (uid, etype)
+                    if key in last_event_time:
+                        if abs(ts_unix - last_event_time[key]) < 60:
+                            return
+                    last_event_time[key] = ts_unix
+                    events.append({"user_id": uid, "timestamp": ts, "event_type": etype})
+
                 # 1. task created
                 d_c = int(t.get('date_created') or 0)
                 if d_c >= START_TS_MS:
                     uid = str(t.get('creator', {}).get('id', ''))
-                    events.append({"user_id": uid, "timestamp": d_c, "event_type": "task created"})
+                    add_event(uid, d_c, "task created")
                 
                 # 2. task completed
                 d_done = t.get('date_done') or t.get('date_closed')
                 if d_done:
                     d_d_int = int(d_done)
                     if d_d_int >= START_TS_MS:
-                        # Best effort: Attribute to first assignee or creator
                         assignees = t.get('assignees', [])
                         uid = str(assignees[0].get('id')) if assignees else str(t.get('creator', {}).get('id', ''))
-                        events.append({"user_id": uid, "timestamp": d_d_int, "event_type": "task completed"})
+                        add_event(uid, d_d_int, "task completed")
                 
                 # 3. task updated (based on last update)
                 d_u = int(t.get('date_updated') or 0)
                 if d_u >= START_TS_MS:
-                    # ONLY count if assignee is explicitly the user who triggered the update?
-                    # ClickUp V2 API doesn't show 'updated_by' in list view.
-                    # We will REDUCE weight of these events or rely more on comments/chat for precise time.
-                    assignees = t.get('assignees', [])
-                    uid = str(assignees[0].get('id')) if assignees else str(t.get('creator', {}).get('id', ''))
-                    # We add a flag 'is_uncertain_attribution' if needed, but for now we keep as is but note it.
-                    events.append({"user_id": uid, "timestamp": d_u, "event_type": "task updated"})
+                    # Attribution on 'updated' is noisy in List API (often guesses creator/assignee).
+                    # We only count it if it's NOT a creation/completion event.
+                    if abs(d_u - d_c) > 5000: # not the same as creation
+                        assignees = t.get('assignees', [])
+                        uid = str(assignees[0].get('id')) if assignees else str(t.get('creator', {}).get('id', ''))
+                        add_event(uid, d_u, "task updated")
 
                 # 4. Comments (These are always attributed correctly)
                 # Note: We still fetch comments as they are reliable user-attributed logs.
