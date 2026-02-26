@@ -215,13 +215,14 @@ def update_daily_audit(gc, sh):
                 key = (person, date, plat, etype)
                 count = summary_existing.get(key, 0)
                 
-                matrix_rows.append({
-                    'Team Member': person,
-                    'Activity Date': date,
-                    'Platform': plat,
-                    'Activity Type': etype,
-                    'Count': count
-                })
+                if count > 0: # Only include non-zero rows to keep JSON small
+                    matrix_rows.append({
+                        'Team Member': person,
+                        'Activity Date': date,
+                        'Platform': plat,
+                        'Activity Type': etype,
+                        'Count': count
+                    })
     
     df_result = pd.DataFrame(matrix_rows)
     print(f"  Total matrix rows: {len(df_result)}")
