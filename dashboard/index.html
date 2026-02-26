@@ -647,8 +647,12 @@
                     const first = new Date(last);
                     first.setDate(first.getDate() - 30);
 
-                    document.getElementById('endDate').valueAsDate = last;
-                    document.getElementById('startDate').valueAsDate = first;
+                    const formatYMD = (d) => {
+                        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+                    };
+
+                    document.getElementById('endDate').value = formatYMD(last);
+                    document.getElementById('startDate').value = formatYMD(first);
                     state.startDate = first;
                     state.endDate = last;
 
@@ -670,11 +674,17 @@
 
         function parseDate(str) {
             if (!str) return null;
-            const parts = str.split('/');
-            if (parts.length === 3) {
-                // MM/DD/YY
-                const y = parseInt(parts[2]) + 2000;
-                return new Date(y, parseInt(parts[0]) - 1, parseInt(parts[1]));
+            if (str.includes('/')) {
+                const parts = str.split('/');
+                if (parts.length === 3) {
+                    const y = parseInt(parts[2]) + 2000;
+                    return new Date(y, parseInt(parts[0]) - 1, parseInt(parts[1]));
+                }
+            } else if (str.includes('-')) {
+                const parts = str.split('-');
+                if (parts.length === 3) {
+                    return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+                }
             }
             return new Date(str);
         }
@@ -798,8 +808,10 @@
         }
 
         window.handleDateChange = () => {
-            state.startDate = document.getElementById('startDate').valueAsDate;
-            state.endDate = document.getElementById('endDate').valueAsDate;
+            const startVal = document.getElementById('startDate').value;
+            const endVal = document.getElementById('endDate').value;
+            state.startDate = startVal ? parseDate(startVal) : null;
+            state.endDate = endVal ? parseDate(endVal) : null;
             applyFilters();
         };
 
