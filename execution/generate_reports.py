@@ -195,13 +195,13 @@ def update_daily_audit(gc, sh):
     today_str = today_pst.strftime('%m/%d/%y')
     
     latest = dt_objects[0] if dt_objects else today_pst
-    cutoff = latest - pd.Timedelta(days=45)
+    cutoff = latest - pd.Timedelta(days=90) # Increased to 90 days to capture Jan 1st
     
     filtered_dates = [d.strftime('%m/%d/%y') for d in dt_objects if d >= cutoff]
     if today_str not in filtered_dates:
         filtered_dates.insert(0, today_str) # Force today at the top
 
-    print(f"  Matrix will cover {len(filtered_dates)} dates (including Today PST).")
+    print(f"  Matrix will cover {len(filtered_dates)} dates (last 90 days, including Today PST).")
     
     # 3. Create the Full Matrix with 0s
     matrix_rows = []
