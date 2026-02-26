@@ -74,12 +74,14 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Add the specific data file
-          git add dashboard/data.json
+          # Add all dashboard data files generated
+          git add dashboard/data.json dashboard/hourly_data.json
           
-          # Check for changes, then commit and push with local priority
+          # Check for changes
           if ! git diff --staged --quiet; then
-            git commit -m "🔄 Auto-update dashboard data - $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git commit -m "🔄 Auto-update dashboard metrics - $(date -u +'%Y-%m-%d %H:%M UTC')"
+            # Stash any stray/unstaged files before rebasing to prevent conflicts
+            git stash --include-untracked
             # Force take our new data even if history has moved
             git pull --rebase -X ours origin main
             git push origin main
