@@ -580,6 +580,7 @@
 
     <script>
         let rawData = [];
+        let rawHourlyData = [];
         let timeData = [];
         let eventReferences = [];
         let systemArchitecture = [];
@@ -615,6 +616,11 @@
                 const response = await fetch(path);
                 if (!response.ok) throw new Error('Failed to load data');
                 const json = await response.json();
+
+                try {
+                    const hRes = await fetch('hourly_data.json?t=' + new Date().getTime());
+                    if (hRes.ok) rawHourlyData = await hRes.json();
+                } catch(e) { console.warn("No hourly data found"); }
 
                 if (json.dailyAudit) {
                     rawData = json.dailyAudit.map(r => ({
@@ -852,41 +858,101 @@
         }
 
         function updateTrend(data, activeMembers) {
-            const dateMap = {};
-            const allDates = new Set();
+            const isSingleDay = (state.startDate && state.endDate && state.startDate.getTime() === state.endDate.getTime());
 
-            // Filter: Identify members who have Google Workspace activity (Core Team)
             const gwMembers = new Set(data.filter(r => r.platform === 'Google Workspace').map(r => r.member));
-
-            data.forEach(r => {
-                if (!dateMap[r.date]) dateMap[r.date] = {};
-                dateMap[r.date][r.member] = (dateMap[r.date][r.member] || 0) + r.count;
-                allDates.add(r.date);
-            });
-
-            const sortedDates = [...allDates].sort((a, b) => parseDate(a) - parseDate(b));
             const datasets = [];
-
-            // Filter timeline logic
-            activeMembers.forEach(member => {
-                if (!gwMembers.has(member)) return; // Only core team
-
-                const color = getStringColor(member);
-                const series = sortedDates.map(d => (dateMap[d] && dateMap[d][member]) || 0);
-
-                datasets.push({
-                    label: member,
-                    data: series,
-                    borderColor: color,
-                    backgroundColor: color,
-                    fill: false,
-                    tension: 0.3,
-                    pointRadius: 2,
-                    borderWidth: 2
+            const labels = [];
+            
+            if (isSingleDay) {
+                // Hourly Distribution Mode
+                document.querySelector('#trendChart').parentElement.previousElementSibling.querySelector('.card-title').innerText = 'Hourly Distribution (Internal Team)';
+                
+                const targetDate = state.startDate;
+                
+                // Filter hourly data
+                const hourlyFiltered = rawHourlyData.filter(r => {
+                    if (!state.members.has(r.member)) return false;
+                    if (!state.types.has(r.type)) return false;
+                    if (state.platform !== 'all' && r.platform !== state.platform) return false;
+                    
+                    const d = parseDate(r.date);
+                    if (d.getTime() !== targetDate.getTime()) return false;
+                    
+                    return true;
                 });
-            });
+                
+                const hourMap = {};
+                hourlyFiltered.forEach(r => {
+                    if (!hourMap[r.hour]) hourMap[r.hour] = {};
+                    hourMap[r.hour][r.member] = (hourMap[r.hour][r.member] || 0) + r.count;
+                });
+                
+                for(let h=0; h<24; h++) {
+                    const ampm = h >= 12 ? 'PM' : 'AM';
+                    let hr = h % 12;
+                    if(hr === 0) hr = 12;
+                    labels.push(`${hr} ${ampm}`);
+                }
+                
+                activeMembers.forEach(member => {
+                    if (!gwMembers.has(member)) return;
+                    
+                    const color = getStringColor(member);
+                    const series = [];
+                    for(let h=0; h<24; h++) {
+                        series.push((hourMap[h] && hourMap[h][member]) || 0);
+                    }
+                    
+                    datasets.push({
+                        label: member,
+                        data: series,
+                        borderColor: color,
+                        backgroundColor: color,
+                        fill: true,
+                        backgroundColor: color.replace('hsl', 'hsla').replace(')', ', 0.1)'),
+                        tension: 0.4,
+                        pointRadius: 3,
+                        borderWidth: 2
+                    });
+                });
+                
+            } else {
+                // Daily Trend Mode
+                document.querySelector('#trendChart').parentElement.previousElementSibling.querySelector('.card-title').innerText = 'Activity Timeline (Internal Team)';
+                
+                const dateMap = {};
+                const allDates = new Set();
+                
+                data.forEach(r => {
+                    if (!dateMap[r.date]) dateMap[r.date] = {};
+                    dateMap[r.date][r.member] = (dateMap[r.date][r.member] || 0) + r.count;
+                    allDates.add(r.date);
+                });
 
-            charts.trend.data.labels = sortedDates;
+                const sortedDates = [...allDates].sort((a, b) => parseDate(a) - parseDate(b));
+                labels.push(...sortedDates);
+                
+                activeMembers.forEach(member => {
+                    if (!gwMembers.has(member)) return; 
+
+                    const color = getStringColor(member);
+                    const series = sortedDates.map(d => (dateMap[d] && dateMap[d][member]) || 0);
+
+                    datasets.push({
+                        label: member,
+                        data: series,
+                        borderColor: color,
+                        backgroundColor: color,
+                        fill: false,
+                        tension: 0.3,
+                        pointRadius: 2,
+                        borderWidth: 2
+                    });
+                });
+            }
+
+            charts.trend.data.labels = labels;
             charts.trend.data.datasets = datasets;
             charts.trend.update();
         }

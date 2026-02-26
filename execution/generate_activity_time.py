@@ -397,6 +397,34 @@ def generate_activity_time_analysis(creds):
     ws.update(values=values, range_name='A1')
     
     print(f'\n[SUCCESS] Activity Time Analysis updated: {len(result_df)} rows')
+    
+    # === NEW: Generate Hourly Data for Dashboard ===
+    print("Generating Hourly Data JSON for Dashboard...")
+    try:
+        hourly_records = []
+        for e in all_events:
+            dt = e['timestamp'].astimezone(PST)
+            hourly_records.append({
+                'member': e['name'],
+                'date': dt.strftime('%m/%d/%y'),
+                'hour': int(dt.strftime('%H')), # 0-23
+                'platform': e.get('app', 'Unknown'),
+                'type': e.get('event_type', e.get('Action', 'Unknown'))
+            })
+        
+        df_hourly = pd.DataFrame(hourly_records)
+        # Aggregate by hour
+        hourly_counts = df_hourly.groupby(['member', 'date', 'hour', 'platform', 'type']).size().reset_index(name='count')
+        
+        dashboard_dir = os.path.join(ROOT_DIR, 'dashboard')
+        os.makedirs(dashboard_dir, exist_ok=True)
+        hourly_path = os.path.join(dashboard_dir, 'hourly_data.json')
+        
+        hourly_counts.to_json(hourly_path, orient='records')
+        print(f"[SUCCESS] Hourly data saved to {hourly_path} ({len(hourly_counts)} records)")
+    except Exception as e:
+        print(f"[ERROR] Failed to generate hourly data: {e}")
+
     print('=' * 60)
 
 
