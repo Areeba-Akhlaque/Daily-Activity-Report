@@ -152,9 +152,11 @@ NAME_MAP = {
 
 # Strict team list for GitHub (only these handles will be scanned/reported)
 GITHUB_TEAM_HANDLES = [
-    'AdrianeBarredo', 'Areeba-Akhlaque', 'bilalmunir985-oss', 'Bradd Schofield',
-    'Muhammad Farhan', 'Alexander Pavelko', 'jkhereford', 'keekov2',
-    'raz0r-b1ade', 'Saifullah Khan', 'Saymond02', 'Victor Cheung'
+    'AdrianeBarredo', 'adriane-pvragon', 'Areeba-Akhlaque', 
+    'bilalmunir985', 'bilalmunir985-oss', 'jkhereford', 'keekov2',
+    'raz0r-b1ade', 'Saymond02', 'mfarhan0304', 'SaifullahCICT',
+    'juan-vidal-pvragon', 'alex-pvragon', 'Cherry-Aznar',
+    'codingbreeze', 'SunnatChoriyev', 'Sunnat-Choriev', 'KBergeron17'
 ]
 
 # Exclusion patterns - accounts to skip

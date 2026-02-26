@@ -894,7 +894,6 @@
         function updateTrend(data, activeMembers) {
             const isSingleDay = (state.startDate && state.endDate && state.startDate.getTime() === state.endDate.getTime());
 
-            const gwMembers = new Set(data.filter(r => r.platform === 'Google Workspace').map(r => r.member));
             const datasets = [];
             const labels = [];
             
@@ -930,8 +929,6 @@
                 }
                 
                 activeMembers.forEach(member => {
-                    if (!gwMembers.has(member)) return;
-                    
                     const color = getStringColor(member);
                     const series = [];
                     for(let h=0; h<24; h++) {
@@ -968,8 +965,6 @@
                 labels.push(...sortedDates);
                 
                 activeMembers.forEach(member => {
-                    if (!gwMembers.has(member)) return; 
-
                     const color = getStringColor(member);
                     const series = sortedDates.map(d => (dateMap[d] && dateMap[d][member]) || 0);
 

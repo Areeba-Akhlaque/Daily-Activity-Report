@@ -217,15 +217,7 @@ def process_and_upload(events):
         ws = sh.add_worksheet(ws_name, 5000, 10)
         df_old = pd.DataFrame(columns=['Name', 'Date', 'Platform', 'Event Type', 'Quantity'])
 
-    # Merge Old and New Data
-    # Deduplicate based on 'Name', 'Date', 'Platform', 'Event Type'
-    if not df_old.empty:
-        # Combine
-        combined = pd.concat([df_old, summary_new], ignore_index=True)
-        # Sum quantities for existing duplicates
-        final_summary = combined.groupby(['Name', 'Date', 'Platform', 'Event Type'])['Quantity'].sum().reset_index()
-    else:
-        final_summary = summary_new
+    final_summary = summary_new
 
     # Sort final
     final_summary['sort_dt'] = pd.to_datetime(final_summary['Date'], format='%m/%d/%y')
