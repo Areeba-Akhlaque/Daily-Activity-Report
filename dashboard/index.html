@@ -103,7 +103,6 @@
 
         /* Input Styling */
         select,
-        input[type="date"],
         .multi-select-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border);
@@ -117,6 +116,43 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+        }
+
+        /* Date Picker Wrapper */
+        .date-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .date-input-wrapper .date-icon {
+            position: absolute;
+            left: 10px;
+            color: #6366f1;
+            font-size: 13px;
+            pointer-events: none;
+            z-index: 1;
+        }
+        input[type="date"] {
+            background: rgba(99, 102, 241, 0.12);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            color: #e2e8f0;
+            padding: 7px 10px 7px 30px;
+            border-radius: 8px;
+            height: 38px;
+            min-width: 155px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            color-scheme: dark;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        input[type="date"]:hover {
+            border-color: rgba(99, 102, 241, 0.8);
+            background: rgba(99, 102, 241, 0.18);
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1) opacity(0.6);
+            cursor: pointer;
         }
 
         select:focus,
@@ -459,12 +495,18 @@
 
         <div class="filters-container">
             <div class="filter-group">
-                <span class="filter-label">Start Date</span>
-                <input type="date" id="startDate" onchange="handleDateChange()">
+                <span class="filter-label"><i class="fas fa-calendar-alt" style="margin-right:5px;color:#6366f1;"></i>Start Date</span>
+                <div class="date-input-wrapper">
+                    <i class="fas fa-calendar-day date-icon"></i>
+                    <input type="date" id="startDate" onchange="handleDateChange()">
+                </div>
             </div>
             <div class="filter-group">
-                <span class="filter-label">End Date</span>
-                <input type="date" id="endDate" onchange="handleDateChange()">
+                <span class="filter-label"><i class="fas fa-calendar-alt" style="margin-right:5px;color:#6366f1;"></i>End Date</span>
+                <div class="date-input-wrapper">
+                    <i class="fas fa-calendar-check date-icon"></i>
+                    <input type="date" id="endDate" onchange="handleDateChange()">
+                </div>
             </div>
             <div class="filter-group" style="flex-grow: 1;">
                 <span class="filter-label">Team Members</span>
@@ -642,22 +684,23 @@
                 // Parse dates and set defaults
                 const dates = rawData.map(r => parseDate(r.date)).filter(Boolean).sort((a, b) => a - b);
                 if (dates.length) {
-                    // Default last 60 days
+                    // Default: start = 2026-01-01, end = latest date in data
                     const last = dates[dates.length - 1];
-                    const first = new Date(last);
-                    first.setDate(first.getDate() - 60);
+                    // Always default start to Jan 1, 2026
+                    const first = new Date('2026-01-01T00:00:00Z');
 
                     const formatYMD = (d) => {
                         return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
                     };
                     
                     const strLast = formatYMD(last);
-                    const strFirst = formatYMD(first);
+                    const strFirst = '2026-01-01'; // Fixed start date
 
                     document.getElementById('endDate').value = strLast;
                     document.getElementById('startDate').value = strFirst;
                     document.getElementById('endDate').max = strLast;
                     document.getElementById('startDate').max = strLast;
+                    document.getElementById('startDate').min = '2026-01-01';
                     
                     state.startDate = first;
                     state.endDate = last;
