@@ -69,17 +69,23 @@ NAME_MAP = {
     'bilalmunir985-oss': 'Bilal Munir',
     'bilalmunir985': 'Bilal Munir',
     'Bradd Schofield': 'Bradd Schofield',
+    'braddschofield': 'Bradd Schofield',
     'Muhammad Farhan': 'Muhammad Farhan',
+    'FarhanSE': 'Muhammad Farhan',
     'Alexander Pavelko': 'Alexander Pavelko',
+    'Fr3ud': 'Alexander Pavelko',
     'jkhereford': 'James Hereford',
     'keekov2': 'Keeko Villaveces',
     'raz0r-b1ade': 'Roman Naidenko',
     'Saifullah Khan': 'Saifullah Khan',
+    'saif72437': 'Saifullah Khan',
+    'SaifullahCICT': 'Saifullah Khan',
     'Saymond02': 'Saymond Montoya',
     'Victor Cheung': 'Victor Cheung',
+    'Verridium': 'Victor Cheung',
     'mfarhan0304': 'Muhammad Farhan',
-    'SaifullahCICT': 'Saifullah Khan',
     'juan-vidal-pvragon': 'Juan Vidal',
+    'javidal10': 'Juan Vidal',
     'alex-pvragon': 'Alexander Pavelko',
     'adriane-pvragon': 'Adriane Barredo',
     'Cherry-Aznar': 'Cherry Aznar',
@@ -156,7 +162,8 @@ GITHUB_TEAM_HANDLES = [
     'bilalmunir985', 'bilalmunir985-oss', 'jkhereford', 'keekov2',
     'raz0r-b1ade', 'Saymond02', 'mfarhan0304', 'SaifullahCICT',
     'juan-vidal-pvragon', 'alex-pvragon', 'Cherry-Aznar',
-    'codingbreeze', 'SunnatChoriyev', 'Sunnat-Choriev', 'KBergeron17'
+    'codingbreeze', 'SunnatChoriyev', 'Sunnat-Choriev', 'KBergeron17',
+    'Fr3ud', 'saif72437', 'javidal10', 'braddschofield', 'FarhanSE', 'Verridium'
 ]
 
 # Exclusion patterns - accounts to skip

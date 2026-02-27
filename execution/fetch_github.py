@@ -74,7 +74,7 @@ def fetch_events_for_repos(repos):
     
     # Event mapping
     EVENT_MAP = {
-        # "PushEvent": "Code Pushed", # REMOVED: Doubled with Github_Commits
+        "PushEvent": "Code Pushed",
         "PullRequestEvent": "PR Opened/Closed",
         "PullRequestReviewEvent": "PR Reviewed", 
         "PullRequestReviewCommentEvent": "PR Comment Posted",
@@ -139,6 +139,53 @@ def fetch_events_for_repos(repos):
             
     return all_events
 
+def fetch_historical_search():
+    """Use Search API to find PR/Issue and Commit events before the Event Buffer (approx 30 days)."""
+    print("[1.5/4] Searching for historical PRs, Issues and Commits (Backfill)...")
+    from name_mappings import GITHUB_TEAM_HANDLES
+    
+    historical_events = []
+    # Search since Jan 1st
+    since = START_DATE_STR # '2026-01-01'
+    
+    for handle in GITHUB_TEAM_HANDLES:
+        print(f"    Scanning {handle}...")
+        # 1. PRs Created
+        q_pr = f"author:{handle} org:{GITHUB_ORG} type:pr created:>={since}"
+        r_pr = requests.get("https://api.github.com/search/issues", headers=get_headers(), params={"q": q_pr, "per_page": 100})
+        if r_pr.status_code == 200:
+            for item in r_pr.json().get('items', []):
+                dt = pd.to_datetime(item['created_at']).tz_convert('America/Los_Angeles')
+                historical_events.append({
+                    "User": handle, "Date": get_audit_date(dt), "timestamp": dt, "Event Type": "PR Opened/Closed"
+                })
+        
+        # 2. Issues Created
+        q_is = f"author:{handle} org:{GITHUB_ORG} type:issue created:>={since}"
+        r_is = requests.get("https://api.github.com/search/issues", headers=get_headers(), params={"q": q_is, "per_page": 100})
+        if r_is.status_code == 200:
+            for item in r_is.json().get('items', []):
+                dt = pd.to_datetime(item['created_at']).tz_convert('America/Los_Angeles')
+                historical_events.append({
+                    "User": handle, "Date": get_audit_date(dt), "timestamp": dt, "Event Type": "Issue Opened/Closed"
+                })
+
+        # 3. Commits (Backfill as 'Code Pushed')
+        q_co = f"author:{handle} org:{GITHUB_ORG} committer-date:>={since}"
+        r_co = requests.get("https://api.github.com/search/commits", headers=get_headers(), params={"q": q_co, "per_page": 100})
+        if r_co.status_code == 200:
+            for item in r_co.json().get('items', []):
+                dt_str = item.get('commit', {}).get('committer', {}).get('date')
+                if dt_str:
+                    dt = pd.to_datetime(dt_str).tz_convert('America/Los_Angeles')
+                    historical_events.append({
+                        "User": handle, "Date": get_audit_date(dt), "timestamp": dt, "Event Type": "Code Pushed"
+                    })
+
+        time.sleep(2) # Search API rate limits are stricter (30 calls/min)
+    
+    return historical_events
+
 def process_and_upload(events):
     print("[3/4] Processing data...")
     if not events:
@@ -154,13 +201,10 @@ def process_and_upload(events):
     
     # Aggregate
     summary = df.groupby(['Name', 'Date', 'Event Type']).size().reset_index(name='Quantity')
-    summary['sort_dt'] = pd.to_datetime(summary['Date'], format='%m/%d/%y')
-    summary = summary.sort_values(by=['sort_dt', 'Quantity'], ascending=[False, False])
-    
     summary['Platform'] = "GitHub"
     final_df = summary[['Name', 'Date', 'Platform', 'Event Type', 'Quantity']]
     
-    print(f"[4/4] Uploading {len(final_df)} rows to Google Sheet...")
+    print(f"[4/4] Uploading {len(final_df)} aggregate rows to Google Sheet...")
     # Auth
     creds = None
     if os.path.exists('token.json'): creds = Credentials.from_authorized_user_file('token.json', SCOPES)
@@ -210,4 +254,9 @@ def process_and_upload(events):
 if __name__ == "__main__":
     repos = fetch_repos()
     events = fetch_events_for_repos(repos)
+    
+    # Always attempt search backfill to capture historical PRs/Issues
+    history = fetch_historical_search()
+    events.extend(history)
+    
     process_and_upload(events)
