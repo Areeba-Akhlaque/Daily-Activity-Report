@@ -124,6 +124,7 @@
             display: flex;
             align-items: center;
         }
+
         .date-input-wrapper .date-icon {
             position: absolute;
             left: 10px;
@@ -132,6 +133,7 @@
             pointer-events: none;
             z-index: 1;
         }
+
         input[type="date"] {
             background: rgba(99, 102, 241, 0.12);
             border: 1px solid rgba(99, 102, 241, 0.4);
@@ -146,10 +148,12 @@
             color-scheme: dark;
             transition: border-color 0.2s, background 0.2s;
         }
+
         input[type="date"]:hover {
             border-color: rgba(99, 102, 241, 0.8);
             background: rgba(99, 102, 241, 0.18);
         }
+
         input[type="date"]::-webkit-calendar-picker-indicator {
             filter: invert(1) opacity(0.6);
             cursor: pointer;
@@ -495,14 +499,14 @@
 
         <div class="filters-container">
             <div class="filter-group">
-                <span class="filter-label"><i class="fas fa-calendar-alt" style="margin-right:5px;color:#6366f1;"></i>Start Date</span>
+                <span class="filter-label">Start Date</span>
                 <div class="date-input-wrapper">
                     <i class="fas fa-calendar-day date-icon"></i>
                     <input type="date" id="startDate" onchange="handleDateChange()">
                 </div>
             </div>
             <div class="filter-group">
-                <span class="filter-label"><i class="fas fa-calendar-alt" style="margin-right:5px;color:#6366f1;"></i>End Date</span>
+                <span class="filter-label">End Date</span>
                 <div class="date-input-wrapper">
                     <i class="fas fa-calendar-check date-icon"></i>
                     <input type="date" id="endDate" onchange="handleDateChange()">
@@ -662,7 +666,7 @@
                 try {
                     const hRes = await fetch('hourly_data.json?t=' + new Date().getTime());
                     if (hRes.ok) rawHourlyData = await hRes.json();
-                } catch(e) { console.warn("No hourly data found"); }
+                } catch (e) { console.warn("No hourly data found"); }
 
                 if (json.dailyAudit) {
                     rawData = json.dailyAudit.map(r => ({
@@ -692,7 +696,7 @@
                     const formatYMD = (d) => {
                         return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
                     };
-                    
+
                     const strLast = formatYMD(last);
                     const strFirst = '2026-01-01'; // Fixed start date
 
@@ -701,7 +705,7 @@
                     document.getElementById('endDate').max = strLast;
                     document.getElementById('startDate').max = strLast;
                     document.getElementById('startDate').min = '2026-01-01';
-                    
+
                     state.startDate = first;
                     state.endDate = last;
 
@@ -863,15 +867,15 @@
             const endVal = document.getElementById('endDate').value;
             let s = startVal ? parseDate(startVal) : null;
             let e = endVal ? parseDate(endVal) : null;
-            
+
             // Native browsers "Today" buttons often bypass max= constraints. We explicitly clamp local PKT 'today' down to maximum PST available date.
             const maxD = parseDate(document.getElementById('endDate').max);
-            if (s && maxD && s > maxD) { 
-                s = maxD; 
+            if (s && maxD && s > maxD) {
+                s = maxD;
                 document.getElementById('startDate').value = document.getElementById('startDate').max;
             }
-            if (e && maxD && e > maxD) { 
-                e = maxD; 
+            if (e && maxD && e > maxD) {
+                e = maxD;
                 document.getElementById('endDate').value = document.getElementById('endDate').max;
             }
 
@@ -939,45 +943,45 @@
 
             const datasets = [];
             const labels = [];
-            
+
             if (isSingleDay) {
                 // Hourly Distribution Mode
                 document.querySelector('#trendChart').parentElement.previousElementSibling.querySelector('.card-title').innerText = 'Hourly Distribution (Internal Team)';
-                
+
                 const targetDate = state.startDate;
-                
+
                 // Filter hourly data
                 const hourlyFiltered = rawHourlyData.filter(r => {
                     if (!state.members.has(r.member)) return false;
                     if (!state.types.has(r.type)) return false;
                     if (state.platform !== 'all' && r.platform !== state.platform) return false;
-                    
+
                     const d = parseDate(r.date);
                     if (d.getTime() !== targetDate.getTime()) return false;
-                    
+
                     return true;
                 });
-                
+
                 const hourMap = {};
                 hourlyFiltered.forEach(r => {
                     if (!hourMap[r.hour]) hourMap[r.hour] = {};
                     hourMap[r.hour][r.member] = (hourMap[r.hour][r.member] || 0) + (r.count || 1);
                 });
-                
-                for(let h=0; h<24; h++) {
+
+                for (let h = 0; h < 24; h++) {
                     const ampm = h >= 12 ? 'PM' : 'AM';
                     let hr = h % 12;
-                    if(hr === 0) hr = 12;
+                    if (hr === 0) hr = 12;
                     labels.push(`${hr} ${ampm}`);
                 }
-                
+
                 activeMembers.forEach(member => {
                     const color = getStringColor(member);
                     const series = [];
-                    for(let h=0; h<24; h++) {
+                    for (let h = 0; h < 24; h++) {
                         series.push((hourMap[h] && hourMap[h][member]) || 0);
                     }
-                    
+
                     datasets.push({
                         label: member,
                         data: series,
@@ -990,14 +994,14 @@
                         borderWidth: 2
                     });
                 });
-                
+
             } else {
                 // Daily Trend Mode
                 document.querySelector('#trendChart').parentElement.previousElementSibling.querySelector('.card-title').innerText = 'Activity Timeline (Internal Team)';
-                
+
                 const dateMap = {};
                 const allDates = new Set();
-                
+
                 data.forEach(r => {
                     if (!dateMap[r.date]) dateMap[r.date] = {};
                     dateMap[r.date][r.member] = (dateMap[r.date][r.member] || 0) + r.count;
@@ -1006,7 +1010,7 @@
 
                 const sortedDates = [...allDates].sort((a, b) => parseDate(a) - parseDate(b));
                 labels.push(...sortedDates);
-                
+
                 activeMembers.forEach(member => {
                     const color = getStringColor(member);
                     const series = sortedDates.map(d => (dateMap[d] && dateMap[d][member]) || 0);
