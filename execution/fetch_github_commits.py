@@ -215,12 +215,26 @@ def process_and_upload_commits(commits):
         tn = "Github_Commits"
         try: 
             ws = sh.worksheet(tn)
-            ws.clear()
+            existing_data = ws.get_all_records()
+            df_old = pd.DataFrame(existing_data)
         except: 
-            ws = sh.add_worksheet(tn, 5000, 10)
+            ws = sh.add_worksheet(tn, 10000, 10)
+            df_old = pd.DataFrame(columns=['Name', 'Date', 'Platform', 'Event Type', 'Quantity', 'Hash', 'Message', 'Repo'])
         
-        ws.update(values=[final_df.columns.values.tolist()] + final_df.values.tolist(), range_name='A1')
-        print(f"  [SUCCESS] Uploaded {len(final_df)} commits to Github_Commits tab.")
+        # Merge by Hash
+        if not df_old.empty:
+            combined = pd.concat([df_old, final_df]).drop_duplicates(subset=['Hash'], keep='first')
+        else:
+            combined = final_df
+
+        # Sort
+        combined['sort_dt'] = pd.to_datetime(combined['Date'], format='%m/%d/%y')
+        combined = combined.sort_values(by=['sort_dt'], ascending=[False])
+        final_merged = combined[['Name', 'Date', 'Platform', 'Event Type', 'Quantity', 'Hash', 'Message', 'Repo']]
+
+        ws.clear()
+        ws.update(values=[final_merged.columns.values.tolist()] + final_merged.values.tolist(), range_name='A1')
+        print(f"  [SUCCESS] Uploaded {len(final_merged)} merged commits.")
     except Exception as e: 
         print(f"  [ERROR] {e}")
 
