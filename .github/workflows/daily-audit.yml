@@ -92,6 +92,9 @@ jobs:
       - name: Prepare Dashboard for Deployment
         run: |
           mkdir -p _site/dashboard
+          # Copy to root for primary access
+          cp -r dashboard/* _site/
+          # Also keep in /dashboard for backward compatibility
           cp -r dashboard/* _site/dashboard/
           cp .nojekyll _site/
 
