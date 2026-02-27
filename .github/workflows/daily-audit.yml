@@ -89,11 +89,16 @@ jobs:
             git push origin main
           fi
 
+      - name: Prepare Dashboard for Deployment
+        run: |
+          mkdir -p _site/dashboard
+          cp -r dashboard/* _site/dashboard/
+          cp .nojekyll _site/
+
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload the entire repository (includes dashboard/ folder)
-          path: '.'
+          path: '_site/'
 
       - name: Workflow summary
         if: always()
