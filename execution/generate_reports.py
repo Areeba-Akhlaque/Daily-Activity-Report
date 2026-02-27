@@ -145,9 +145,15 @@ def update_daily_audit(gc, sh):
                 # Normalize column names
                 name = row.get('Name', row.get('Team Member', ''))
                 date = row.get('Date', row.get('Activity Date', ''))
-                platform = row.get('Platform', tab_name.replace('_Activity', '').replace('_', ' '))
                 event_type = row.get('Event Type', row.get('Activity Type', ''))
                 count = row.get('Count', row.get('Quantity', 1))
+                
+                # IMPORTANT: Github_Activity and Github_Commits both belong to 'GitHub' platform
+                # so their events sum correctly in the Daily Audit matrix.
+                if tab_name in ('Github_Activity', 'Github_Commits'):
+                    platform = 'GitHub'
+                else:
+                    platform = row.get('Platform', tab_name.replace('_Activity', '').replace('_Logs','').replace('_', ' '))
                 
                 # Apply name mapping
                 name = map_name(name)
@@ -165,10 +171,7 @@ def update_daily_audit(gc, sh):
                         'Count': int(count) if count else 0
                     })
                     
-                    if event_type == "Gmail Received":
-                        continue
-                        
-                    # Track all unique values
+                    # Track all unique values for matrix generation
                     all_persons.add(name)
                     all_dates.add(date)
                     all_event_types.add((platform, event_type))
@@ -215,14 +218,14 @@ def update_daily_audit(gc, sh):
                 key = (person, date, plat, etype)
                 count = summary_existing.get(key, 0)
                 
-                if count > 0: # Only include non-zero rows to keep JSON small
-                    matrix_rows.append({
-                        'Team Member': person,
-                        'Activity Date': date,
-                        'Platform': plat,
-                        'Activity Type': etype,
-                        'Count': count
-                    })
+                # Include ALL rows (even zeros) so dashboard filters and charts work correctly
+                matrix_rows.append({
+                    'Team Member': person,
+                    'Activity Date': date,
+                    'Platform': plat,
+                    'Activity Type': etype,
+                    'Count': count
+                })
     
     df_result = pd.DataFrame(matrix_rows)
     print(f"  Total matrix rows: {len(df_result)}")
