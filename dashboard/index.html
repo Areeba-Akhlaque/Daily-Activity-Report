@@ -103,6 +103,7 @@
 
         /* Input Styling */
         select,
+        input[type="date"],
         .multi-select-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border);
@@ -118,44 +119,12 @@
             justify-content: space-between;
         }
 
-        /* Date Picker Wrapper */
-        .date-input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .date-input-wrapper .date-icon {
-            position: absolute;
-            left: 10px;
-            color: #6366f1;
-            font-size: 13px;
-            pointer-events: none;
-            z-index: 1;
-        }
-
         input[type="date"] {
-            background: rgba(99, 102, 241, 0.12);
-            border: 1px solid rgba(99, 102, 241, 0.4);
-            color: #e2e8f0;
-            padding: 7px 10px 7px 30px;
-            border-radius: 8px;
-            height: 38px;
-            min-width: 155px;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 13px;
             color-scheme: dark;
-            transition: border-color 0.2s, background 0.2s;
-        }
-
-        input[type="date"]:hover {
-            border-color: rgba(99, 102, 241, 0.8);
-            background: rgba(99, 102, 241, 0.18);
         }
 
         input[type="date"]::-webkit-calendar-picker-indicator {
-            filter: invert(1) opacity(0.6);
+            filter: invert(1) opacity(0.7);
             cursor: pointer;
         }
 
@@ -500,17 +469,11 @@
         <div class="filters-container">
             <div class="filter-group">
                 <span class="filter-label">Start Date</span>
-                <div class="date-input-wrapper">
-                    <i class="fas fa-calendar-day date-icon"></i>
-                    <input type="date" id="startDate" onchange="handleDateChange()">
-                </div>
+                <input type="date" id="startDate" onchange="handleDateChange()">
             </div>
             <div class="filter-group">
                 <span class="filter-label">End Date</span>
-                <div class="date-input-wrapper">
-                    <i class="fas fa-calendar-check date-icon"></i>
-                    <input type="date" id="endDate" onchange="handleDateChange()">
-                </div>
+                <input type="date" id="endDate" onchange="handleDateChange()">
             </div>
             <div class="filter-group" style="flex-grow: 1;">
                 <span class="filter-label">Team Members</span>
