@@ -74,7 +74,7 @@ def fetch_events_for_repos(repos):
     
     # Event mapping
     EVENT_MAP = {
-        "PushEvent": "Code Pushed",
+        # PushEvent intentionally excluded - covered by Github_Commits tab
         "PullRequestEvent": "PR Opened/Closed",
         "PullRequestReviewEvent": "PR Reviewed", 
         "PullRequestReviewCommentEvent": "PR Comment Posted",
@@ -140,13 +140,15 @@ def fetch_events_for_repos(repos):
     return all_events
 
 def fetch_historical_search():
-    """Use Search API to find PR/Issue and Commit events before the Event Buffer (approx 30 days)."""
-    print("[1.5/4] Searching for historical PRs, Issues and Commits (Backfill)...")
+    """Use Search API to find PR/Issue events before the Event Buffer (approx 30 days).
+    NOTE: Commits are intentionally excluded here — they are tracked in Github_Commits tab.
+    Adding commits here would double-count and inflate numbers.
+    """
+    print("[1.5/4] Searching for historical PRs and Issues (Backfill)...")
     from name_mappings import GITHUB_TEAM_HANDLES
     
     historical_events = []
-    # Search since Jan 1st
-    since = START_DATE_STR # '2026-01-01'
+    since = START_DATE_STR  # '2026-01-01'
     
     for handle in GITHUB_TEAM_HANDLES:
         print(f"    Scanning {handle}...")
@@ -170,19 +172,7 @@ def fetch_historical_search():
                     "User": handle, "Date": get_audit_date(dt), "timestamp": dt, "Event Type": "Issue Opened/Closed"
                 })
 
-        # 3. Commits (Backfill as 'Code Pushed')
-        q_co = f"author:{handle} org:{GITHUB_ORG} committer-date:>={since}"
-        r_co = requests.get("https://api.github.com/search/commits", headers=get_headers(), params={"q": q_co, "per_page": 100})
-        if r_co.status_code == 200:
-            for item in r_co.json().get('items', []):
-                dt_str = item.get('commit', {}).get('committer', {}).get('date')
-                if dt_str:
-                    dt = pd.to_datetime(dt_str).tz_convert('America/Los_Angeles')
-                    historical_events.append({
-                        "User": handle, "Date": get_audit_date(dt), "timestamp": dt, "Event Type": "Code Pushed"
-                    })
-
-        time.sleep(2) # Search API rate limits are stricter (30 calls/min)
+        time.sleep(2)  # Search API rate limits are stricter (30 calls/min)
     
     return historical_events
 
@@ -229,10 +219,17 @@ def process_and_upload(events):
             ws = sh.add_worksheet(tn, 5000, 10)
             df_old = pd.DataFrame(columns=['Name', 'Date', 'Platform', 'Event Type', 'Quantity'])
         
+        # IMPORTANT: Strip old 'Code Pushed' rows from existing data.
+        # These were wrongly added in a previous run. Commits live in Github_Commits tab.
+        ALLOWED_EVENT_TYPES = ['PR Opened/Closed', 'PR Reviewed', 'PR Comment Posted',
+                               'Issue/PR Comment Posted', 'Issue Opened/Closed',
+                               'Branch/Tag Created', 'Branch/Tag Deleted']
+        
         # Merge
         if not df_old.empty:
-            # Ensure Date columns match format for comparison
-            combined = pd.concat([df_old, final_df]).drop_duplicates(
+            # Remove any old Code Pushed rows first
+            df_old_clean = df_old[df_old['Event Type'].isin(ALLOWED_EVENT_TYPES)]
+            combined = pd.concat([df_old_clean, final_df]).drop_duplicates(
                 subset=['Name', 'Date', 'Event Type'], keep='last'
             )
         else:

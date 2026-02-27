@@ -20158,10 +20158,10 @@
       "Team Member": "Areeba Akhlaque",
       "Date": "02/26/26",
       "First Activity (PST)": "04:34 AM",
-      "Last Activity (PST)": "06:37 PM",
-      "Active Window (Hours)": 11.5,
+      "Last Activity (PST)": "07:01 PM",
+      "Active Window (Hours)": 11.9,
       "Longest Break (Minutes)": 212,
-      "Total Events": 131,
+      "Total Events": 133,
       "Platform Distribution": "GW:Drive, GW:Gmail, GitHub Commit, ClickUp"
     },
     {
@@ -20228,10 +20228,10 @@
       "Team Member": "Mariana Gracia Salgado",
       "Date": "02/26/26",
       "First Activity (PST)": "09:35 AM",
-      "Last Activity (PST)": "05:57 PM",
-      "Active Window (Hours)": 8.9,
-      "Longest Break (Minutes)": 106,
-      "Total Events": 26,
+      "Last Activity (PST)": "07:07 PM",
+      "Active Window (Hours)": 7.8,
+      "Longest Break (Minutes)": 163,
+      "Total Events": 30,
       "Platform Distribution": "GW:Drive, GW:Gmail, ClickUp"
     },
     {
@@ -25911,7 +25911,7 @@
       "Last Activity (PST)": "11:13 PM",
       "Active Window (Hours)": 19.6,
       "Longest Break (Minutes)": 134,
-      "Total Events": 131,
+      "Total Events": 127,
       "Platform Distribution": "GW:Drive, GW:Gmail, ClickUp"
     },
     {
@@ -25928,10 +25928,10 @@
       "Team Member": "Keeko Villaveces",
       "Date": "01/07/26",
       "First Activity (PST)": "08:42 AM",
-      "Last Activity (PST)": "01:36 PM",
-      "Active Window (Hours)": 2.2,
+      "Last Activity (PST)": "12:28 PM",
+      "Active Window (Hours)": 1.1,
       "Longest Break (Minutes)": 221,
-      "Total Events": 4,
+      "Total Events": 3,
       "Platform Distribution": "GW:Gmail, ClickUp"
     },
     {
@@ -25960,8 +25960,8 @@
       "First Activity (PST)": "09:27 AM",
       "Last Activity (PST)": "05:41 PM",
       "Active Window (Hours)": 8.7,
-      "Longest Break (Minutes)": 84,
-      "Total Events": 28,
+      "Longest Break (Minutes)": 107,
+      "Total Events": 25,
       "Platform Distribution": "GW:Gmail, Backendless, ClickUp"
     },
     {
@@ -26131,7 +26131,7 @@
       "Last Activity (PST)": "08:35 PM",
       "Active Window (Hours)": 10.9,
       "Longest Break (Minutes)": 283,
-      "Total Events": 29,
+      "Total Events": 28,
       "Platform Distribution": "GW:Drive, GW:Gmail, ClickUp"
     },
     {
@@ -26171,7 +26171,7 @@
       "Last Activity (PST)": "10:06 PM",
       "Active Window (Hours)": 17.8,
       "Longest Break (Minutes)": 290,
-      "Total Events": 93,
+      "Total Events": 91,
       "Platform Distribution": "GW:Drive, GW:Gmail, ClickUp"
     },
     {
@@ -26188,11 +26188,11 @@
       "Team Member": "Keeko Villaveces",
       "Date": "01/05/26",
       "First Activity (PST)": "07:34 AM",
-      "Last Activity (PST)": "08:49 AM",
+      "Last Activity (PST)": "08:44 AM",
       "Active Window (Hours)": 1.7,
       "Longest Break (Minutes)": 69,
-      "Total Events": 3,
-      "Platform Distribution": "GW:Gmail, ClickUp"
+      "Total Events": 2,
+      "Platform Distribution": "GW:Gmail"
     },
     {
       "Team Member": "Lena Klapper",
@@ -26221,7 +26221,7 @@
       "Last Activity (PST)": "11:16 PM",
       "Active Window (Hours)": 5.6,
       "Longest Break (Minutes)": 321,
-      "Total Events": 11,
+      "Total Events": 10,
       "Platform Distribution": "GW:Drive, GW:Gmail, ClickUp"
     },
     {
@@ -26237,11 +26237,11 @@
     {
       "Team Member": "Victor Cheung",
       "Date": "01/05/26",
-      "First Activity (PST)": "09:28 AM",
+      "First Activity (PST)": "10:13 AM",
       "Last Activity (PST)": "04:29 PM",
-      "Active Window (Hours)": 7.5,
+      "Active Window (Hours)": 6.8,
       "Longest Break (Minutes)": 112,
-      "Total Events": 15,
+      "Total Events": 14,
       "Platform Distribution": "GW:Gmail, Backendless, ClickUp"
     },
     {
@@ -26271,8 +26271,8 @@
       "Last Activity (PST)": "11:21 PM",
       "Active Window (Hours)": 18.9,
       "Longest Break (Minutes)": 234,
-      "Total Events": 56,
-      "Platform Distribution": "GW:Drive, GW:Gmail, ClickUp"
+      "Total Events": 55,
+      "Platform Distribution": "GW:Drive, GW:Gmail"
     },
     {
       "Team Member": "Mariana Gracia Salgado",
@@ -26287,11 +26287,11 @@
     {
       "Team Member": "Saymond Montoya",
       "Date": "01/04/26",
-      "First Activity (PST)": "09:59 PM",
+      "First Activity (PST)": "10:37 PM",
       "Last Activity (PST)": "11:58 PM",
-      "Active Window (Hours)": 2.5,
+      "Active Window (Hours)": 1.9,
       "Longest Break (Minutes)": 66,
-      "Total Events": 5,
+      "Total Events": 4,
       "Platform Distribution": "Backendless, ClickUp"
     },
     {
@@ -27060,7 +27060,7 @@
       "Key Logic/Scope": "Calculated Work Day metrics. Strictly uses First/Last activity timestamps with 0 buffer."
     }
   ],
-  "lastUpdated": "2026-02-26 19:08:06 PST",
+  "lastUpdated": "2026-02-26 19:30:38 PST",
   "googleSheetUrl": "https://docs.google.com/spreadsheets/d/1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo",
   "stats": {
     "totalAuditRows": 2876,
@@ -27068,11 +27068,11 @@
     "totalEventRefs": 71,
     "uniqueMembers": 18,
     "platforms": [
-      "GitHub",
       "Figma",
+      "Backendless App",
+      "GitHub",
       "Google Workspace",
-      "ClickUp",
-      "Backendless App"
+      "ClickUp"
     ]
   }
 }
