@@ -170,6 +170,24 @@ def fetch_google_workspace_events(creds):
             
             current_start = current_end
     
+    print(f'  Google Workspace (raw): {len(events)} events')
+    
+    # === 15-MINUTE WINDOW DEDUPLICATION (Occurrence-Based Counting) ===
+    # Same logic as fetch_google_workspace.py: collapse bulk events within 15-min windows.
+    if events:
+        seen_windows = set()
+        deduped = []
+        for e in sorted(events, key=lambda x: x['timestamp']):
+            # Floor timestamp to 15-minute window
+            window_ts = e['timestamp'].floor('15min')
+            window_key = (e['raw_name'], e['app'], window_ts)
+            if window_key not in seen_windows:
+                seen_windows.add(window_key)
+                deduped.append(e)
+        if len(deduped) != len(events):
+            print(f'  15-min window dedup: {len(events)} → {len(deduped)} events')
+        events = deduped
+    
     print(f'  Google Workspace: {len(events)} events')
     return events
 

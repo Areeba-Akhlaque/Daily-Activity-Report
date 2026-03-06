@@ -166,7 +166,7 @@ def fetch_all_activity():
                     v_dt = pd.to_datetime(v['created_at']).tz_convert('America/Los_Angeles')
                     if v_dt >= START_DATE_DT:
                         user = v.get('user', {}).get('handle', 'Unknown')
-                        v_key = (user, v_dt.strftime('%Y-%m-%d %H:%M'))
+                        v_key = (user, v_dt.strftime('%Y-%m-%d %H:') + f'{(v_dt.minute // 15) * 15:02d}')
                         if v_key in seen_v_stamps: continue
                         seen_v_stamps.add(v_key)
                         

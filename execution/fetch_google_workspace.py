@@ -312,7 +312,21 @@ def process_and_upload(events):
     except Exception as e:
         print(f"Error printing summary: {e}")
     print("=========================================\n")
-        
+    
+    # === 15-MINUTE WINDOW DEDUPLICATION (Occurrence-Based Counting) ===
+    # Instead of counting each individual file operation (e.g., 200 file copies = 200 events),
+    # group events within 15-minute windows per user per event type.
+    # This means bulk operations (mass copy, drag-drop uploads) count as 1 occurrence.
+    # Max possible per user per event type per day: ~96 events.
+    if 'timestamp_dt' in df.columns:
+        original_count = len(df)
+        df['_window_15m'] = df['timestamp_dt'].dt.floor('15min')
+        df = df.drop_duplicates(subset=['Name', 'Event Type', '_window_15m'])
+        df = df.drop(columns=['_window_15m'])
+        deduped_count = len(df)
+        if original_count != deduped_count:
+            print(f"  15-min window dedup: {original_count} → {deduped_count} events (removed {original_count - deduped_count} bulk duplicates)")
+    
     summary = df.groupby(['Name', 'Date', 'Platform', 'Event Type']).size().reset_index(name='Quantity')
     summary['sort_dt'] = pd.to_datetime(summary['Date'], format='%m/%d/%y')
     summary = summary.sort_values(by=['sort_dt', 'Quantity'], ascending=[False, False])
