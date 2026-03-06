@@ -320,7 +320,7 @@ def process_and_upload(events):
     # Max possible per user per event type per day: ~96 events.
     if 'timestamp_dt' in df.columns:
         original_count = len(df)
-        df['_window_15m'] = df['timestamp_dt'].dt.floor('15min')
+        df['_window_15m'] = df['timestamp_dt'].dt.tz_convert('UTC').dt.floor('15min')
         df = df.drop_duplicates(subset=['Name', 'Event Type', '_window_15m'])
         df = df.drop(columns=['_window_15m'])
         deduped_count = len(df)

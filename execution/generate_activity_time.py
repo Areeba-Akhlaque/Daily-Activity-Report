@@ -179,7 +179,7 @@ def fetch_google_workspace_events(creds):
         deduped = []
         for e in sorted(events, key=lambda x: x['timestamp']):
             # Floor timestamp to 15-minute window
-            window_ts = e['timestamp'].floor('15min')
+            window_ts = e['timestamp'].tz_convert('UTC').floor('15min')
             window_key = (e['raw_name'], e['app'], window_ts)
             if window_key not in seen_windows:
                 seen_windows.add(window_key)
