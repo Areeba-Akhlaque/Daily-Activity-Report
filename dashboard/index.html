@@ -595,16 +595,69 @@
         };
         let charts = { trend: null, platform: null, leaderboard: null, range: null };
 
-        // Colors
+        // Colors - Platform-based color system with HSL shading
         const PLATFORM_COLORS = {
-            'Google Workspace': '#4285F4',
-            'ClickUp': '#7b68ee',
-            'GitHub': '#24292e',
-            'Figma': '#F24E1E',
-            'Backendless App': '#32D74B',
-            'Other': '#777'
+            'Google Workspace': { base: '#4285F4', h: 217, s: 89, l: 61 },
+            'ClickUp':          { base: '#7B68EE', h: 249, s: 80, l: 67 },
+            'GitHub':           { base: '#6e5494', h: 271, s: 28, l: 45 },
+            'Figma':            { base: '#F24E1E', h: 14,  s: 89, l: 53 },
+            'Backendless App':  { base: '#00BFA5', h: 170, s: 100, l: 37 },
+            'Other':            { base: '#777777', h: 0,   s: 0,  l: 47 }
         };
-        const PIE_COLORS = ['#6366f1', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444'];
+
+        // Map event types to their platform
+        const EVENT_PLATFORM_MAP = {
+            // ClickUp
+            'task created': 'ClickUp', 'task updated': 'ClickUp', 'task completed': 'ClickUp',
+            'Comment Posted': 'ClickUp', 'Channels messages': 'ClickUp', 'Direct chats messages': 'ClickUp',
+            // GitHub
+            'Code Commit': 'GitHub', 'PR Opened/Closed': 'GitHub', 'PR Reviewed': 'GitHub',
+            'PR Comment Posted': 'GitHub', 'Issue/PR Comment Posted': 'GitHub',
+            'Issue Opened/Closed': 'GitHub', 'Branch/Tag Created': 'GitHub', 'Branch/Tag Deleted': 'GitHub',
+            // Google Workspace
+            'Gmail Send': 'Google Workspace', 'Drive Edit': 'Google Workspace',
+            // Figma
+            'File Edited': 'Figma', 'File Created': 'Figma',
+            // Backendless (common ones)
+            'Update Page UI': 'Backendless App', 'Modify table record': 'Backendless App',
+            'Create UI Container': 'Backendless App', 'API/Console Access': 'Backendless App',
+        };
+
+        // Track shade index per platform for unique tints
+        const _platformShadeCounters = {};
+        const _eventColorCache = {};
+
+        function getEventColor(eventType, platformHint) {
+            if (_eventColorCache[eventType]) return _eventColorCache[eventType];
+
+            // Determine platform
+            let platform = EVENT_PLATFORM_MAP[eventType] || platformHint || 'Other';
+            if (!PLATFORM_COLORS[platform]) platform = 'Other';
+
+            const pc = PLATFORM_COLORS[platform];
+            if (!_platformShadeCounters[platform]) _platformShadeCounters[platform] = 0;
+            const idx = _platformShadeCounters[platform]++;
+
+            // Generate distinct shade: shift lightness and slightly adjust saturation
+            const lightnessShifts = [0, 12, -10, 22, -18, 30, 6, -6];
+            const satShifts =       [0, -5,   5, -10,  10, -15, 8, -8];
+            const lShift = lightnessShifts[idx % lightnessShifts.length];
+            const sShift = satShifts[idx % satShifts.length];
+
+            const l = Math.min(85, Math.max(30, pc.l + lShift));
+            const s = Math.min(100, Math.max(20, pc.s + sShift));
+
+            const color = `hsl(${pc.h}, ${s}%, ${l}%)`;
+            _eventColorCache[eventType] = color;
+            return color;
+        }
+
+        function getPlatformBaseColor(platform) {
+            const pc = PLATFORM_COLORS[platform] || PLATFORM_COLORS['Other'];
+            return pc.base;
+        }
+
+        const PIE_COLORS_PLATFORMS = Object.values(PLATFORM_COLORS).map(p => p.base);
 
         async function init() {
             try {
@@ -856,15 +909,14 @@
         };
 
         function getStringColor(str) {
-            // Enhanced hash-based color palette for better differentiation
+            // Hash-based color for MEMBER names (timeline chart)
             let h = 0;
             for (let i = 0; i < str.length; i++) {
                 h = str.charCodeAt(i) + ((h << 5) - h);
             }
-            // Use HSL for more vibrant and distinct colors
             const hue = Math.abs(h) % 360;
-            const saturation = 50 + (Math.abs(h * 13) % 40); // 50-90%
-            const lightness = 60 + (Math.abs(h * 17) % 15);  // 60-75%
+            const saturation = 50 + (Math.abs(h * 13) % 40);
+            const lightness = 60 + (Math.abs(h * 17) % 15);
             return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
 
@@ -990,7 +1042,7 @@
         function updatePlatform(counts) {
             charts.platform.data.labels = Object.keys(counts);
             charts.platform.data.datasets[0].data = Object.values(counts);
-            charts.platform.data.datasets[0].backgroundColor = Object.keys(counts).map((_, i) => PIE_COLORS[i % PIE_COLORS.length]);
+            charts.platform.data.datasets[0].backgroundColor = Object.keys(counts).map(p => getPlatformBaseColor(p));
             charts.platform.update();
         }
 
@@ -1009,16 +1061,36 @@
             data.forEach(r => typeCounts[r.type] = (typeCounts[r.type] || 0) + r.count);
             const sortedTypes = Object.keys(typeCounts).sort((a, b) => typeCounts[b] - typeCounts[a]);
 
-            const datasets = sortedTypes.map(type => {
+            // Reset shade counters for fresh color assignment
+            Object.keys(_platformShadeCounters).forEach(k => _platformShadeCounters[k] = 0);
+            Object.keys(_eventColorCache).forEach(k => delete _eventColorCache[k]);
+
+            // Find platform for each event type from the data itself
+            const typePlatformLookup = {};
+            data.forEach(r => { if (r.type && r.platform) typePlatformLookup[r.type] = r.platform; });
+
+            // Sort types by platform first, then by count — so same-platform events are adjacent in legend
+            const platformOrder = ['ClickUp', 'GitHub', 'Google Workspace', 'Figma', 'Backendless App', 'Other'];
+            const sortedTypesByPlatform = sortedTypes.sort((a, b) => {
+                const pa = EVENT_PLATFORM_MAP[a] || typePlatformLookup[a] || 'Other';
+                const pb = EVENT_PLATFORM_MAP[b] || typePlatformLookup[b] || 'Other';
+                const ia = platformOrder.indexOf(pa) === -1 ? 99 : platformOrder.indexOf(pa);
+                const ib = platformOrder.indexOf(pb) === -1 ? 99 : platformOrder.indexOf(pb);
+                if (ia !== ib) return ia - ib;
+                return typeCounts[b] - typeCounts[a];
+            });
+
+            const datasets = sortedTypesByPlatform.map(type => {
                 const dataPoints = sortedMembers.map(mem => {
                     const rows = data.filter(r => r.member === mem && r.type === type);
                     return rows.reduce((acc, curr) => acc + curr.count, 0);
                 });
 
+                const platformForType = typePlatformLookup[type] || 'Other';
                 return {
                     label: type,
                     data: dataPoints,
-                    backgroundColor: getStringColor(type),
+                    backgroundColor: getEventColor(type, platformForType),
                     borderRadius: 1
                 };
             });

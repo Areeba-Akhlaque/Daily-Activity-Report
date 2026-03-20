@@ -217,45 +217,196 @@ def get_daily_summary(creds, target_date_override=None):
 
 
 
-def get_chart_color(label, index):
-    """Generate consistent and unique color based on label. Ensures maximum distinction."""
-    h = 0
-    for char in label:
-        h = ord(char) + ((h << 5) - h)
-    
-    # 1. Start with a high-contrast palette
-    palette = [
-        '#4e79a7', '#f28e2c', '#e15759', '#76b7b2', '#59a14f', 
-        '#edc949', '#af7aa1', '#ff9da7', '#9c755f', '#bab0ab',
-        '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd',
-        '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'
-    ]
-    
-    if index < len(palette):
-        return palette[index]
-    
-    # 2. Fallback to unique HSL for additional items
-    hue = abs(h) % 360
-    return f'hsl({hue}, 60%, 65%)'
+# === Platform-Based Color System ===
+PLATFORM_COLOR_DEFS = {
+    'ClickUp':          {'h': 249, 's': 80, 'l': 67},  # Purple family
+    'GitHub':           {'h': 271, 's': 28, 'l': 45},  # Violet family
+    'Google Workspace': {'h': 217, 's': 89, 'l': 61},  # Blue family
+    'Figma':            {'h': 14,  's': 89, 'l': 53},  # Orange/Red family
+    'Backendless App':  {'h': 170, 's': 100, 'l': 37}, # Teal family
+}
 
-def generate_stacked_bar_chart(summary):
+EVENT_PLATFORM_MAP = {
+    # ClickUp
+    'task created': 'ClickUp', 'task updated': 'ClickUp', 'task completed': 'ClickUp',
+    'Comment Posted': 'ClickUp', 'Channels messages': 'ClickUp', 'Direct chats messages': 'ClickUp',
+    # GitHub
+    'Code Commit': 'GitHub', 'PR Opened/Closed': 'GitHub', 'PR Reviewed': 'GitHub',
+    'PR Comment Posted': 'GitHub', 'Issue/PR Comment Posted': 'GitHub',
+    'Issue Opened/Closed': 'GitHub', 'Branch/Tag Created': 'GitHub', 'Branch/Tag Deleted': 'GitHub',
+    # Google Workspace
+    'Gmail Send': 'Google Workspace', 'Drive Edit': 'Google Workspace',
+    # Figma
+    'File Edited': 'Figma', 'File Created': 'Figma',
+    # Backendless
+    'Update Page UI': 'Backendless App', 'Modify table record': 'Backendless App',
+    'Create UI Container': 'Backendless App', 'API/Console Access': 'Backendless App',
+}
+
+PLATFORM_SORT_ORDER = ['ClickUp', 'GitHub', 'Google Workspace', 'Figma', 'Backendless App', 'Other']
+
+
+def _hsl_to_hex(h, s, l):
+    """Convert HSL (0-360, 0-100, 0-100) to hex color."""
+    s_f, l_f = s / 100, l / 100
+    c = (1 - abs(2 * l_f - 1)) * s_f
+    x = c * (1 - abs((h / 60) % 2 - 1))
+    m = l_f - c / 2
+    if h < 60:    r, g, b = c, x, 0
+    elif h < 120: r, g, b = x, c, 0
+    elif h < 180: r, g, b = 0, c, x
+    elif h < 240: r, g, b = 0, x, c
+    elif h < 300: r, g, b = x, 0, c
+    else:         r, g, b = c, 0, x
+    return f'#{int((r+m)*255):02x}{int((g+m)*255):02x}{int((b+m)*255):02x}'
+
+
+def get_event_color(event_type, _shade_counters={}):
+    """Get a hex color for an event type based on its platform's base color with shade variation."""
+    platform = EVENT_PLATFORM_MAP.get(event_type, 'Other')
+    pc = PLATFORM_COLOR_DEFS.get(platform, {'h': 0, 's': 0, 'l': 47})
+    
+    if platform not in _shade_counters:
+        _shade_counters[platform] = 0
+    idx = _shade_counters[platform]
+    _shade_counters[platform] += 1
+    
+    lightness_shifts = [0, 12, -10, 22, -18, 30, 6, -6]
+    sat_shifts =       [0, -5,   5, -10,  10, -15, 8, -8]
+    l_shift = lightness_shifts[idx % len(lightness_shifts)]
+    s_shift = sat_shifts[idx % len(sat_shifts)]
+    
+    l = min(85, max(30, pc['l'] + l_shift))
+    s = min(100, max(20, pc['s'] + s_shift))
+    
+    return _hsl_to_hex(pc['h'], s, l)
+
+
+DRIVE_FOLDER_ID = '0AGXVh_HBvJKwUk9PVA'  # Pvragon (HR restricted) shared folder
+
+def upload_chart_to_drive(creds, chart_url, date_str):
+    """Download chart image from QuickChart and upload to Google Drive shared folder."""
+    try:
+        from googleapiclient.discovery import build as build_service
+        from googleapiclient.http import MediaInMemoryUpload
+        
+        # 1. Download chart image
+        print(f"  Downloading chart image from QuickChart...")
+        img_resp = requests.get(chart_url, timeout=30)
+        if img_resp.status_code != 200:
+            print(f"  [WARN] Could not download chart image: HTTP {img_resp.status_code}")
+            return chart_url  # Fallback to original URL
+        
+        img_bytes = img_resp.content
+        
+        # 2. Upload to Drive
+        print(f"  Uploading chart to Google Drive (folder: {DRIVE_FOLDER_ID})...")
+        drive_service = build_service('drive', 'v3', credentials=creds)
+        
+        # Check/Create subfolder "Daily Audit Charts"
+        subfolder_name = 'Daily Audit Charts'
+        query = f"'{DRIVE_FOLDER_ID}' in parents and name='{subfolder_name}' and mimeType='application/vnd.google-apps.folder' and trashed=false"
+        results = drive_service.files().list(
+            q=query, spaces='drive',
+            fields='files(id, name)',
+            supportsAllDrives=True,
+            includeItemsFromAllDrives=True
+        ).execute()
+        
+        folders = results.get('files', [])
+        if folders:
+            subfolder_id = folders[0]['id']
+        else:
+            folder_metadata = {
+                'name': subfolder_name,
+                'mimeType': 'application/vnd.google-apps.folder',
+                'parents': [DRIVE_FOLDER_ID]
+            }
+            folder = drive_service.files().create(
+                body=folder_metadata, fields='id',
+                supportsAllDrives=True
+            ).execute()
+            subfolder_id = folder['id']
+            print(f"  Created subfolder '{subfolder_name}' in shared drive.")
+        
+        # 3. Upload the chart image
+        safe_date = date_str.replace('/', '-')
+        file_name = f"audit_chart_{safe_date}.png"
+        
+        file_metadata = {
+            'name': file_name,
+            'parents': [subfolder_id]
+        }
+        media = MediaInMemoryUpload(img_bytes, mimetype='image/png')
+        
+        uploaded_file = drive_service.files().create(
+            body=file_metadata,
+            media_body=media,
+            fields='id, webViewLink, webContentLink',
+            supportsAllDrives=True
+        ).execute()
+        
+        file_id = uploaded_file.get('id')
+        
+        # 4. Make the file viewable by anyone with the link
+        drive_service.permissions().create(
+            fileId=file_id,
+            body={'type': 'anyone', 'role': 'reader'},
+            supportsAllDrives=True
+        ).execute()
+        
+        # 5. Generate direct image link for email embedding
+        drive_url = f"https://drive.google.com/uc?export=view&id={file_id}"
+        print(f"  [SUCCESS] Chart uploaded to Drive: {file_name} (ID: {file_id})")
+        return drive_url
+        
+    except Exception as e:
+        print(f"  [WARN] Drive upload failed: {e}")
+        return chart_url  # Fallback to original QuickChart URL
+
+
+def generate_stacked_bar_chart(summary, creds=None):
     """Generate a stacked horizontal bar chart for Activity Types per Member using QuickChart.io."""
     active_members = [m for m in summary['members'] if m['events'] > 0]
     if not active_members: return None
         
     names = [m['name'] for m in active_members]
     # Get all unique types present in active members
-    types = sorted(list(set(t for m in active_members for t in m.get('type_breakdown', {}).keys())))
+    all_types = list(set(t for m in active_members for t in m.get('type_breakdown', {}).keys()))
+    
+    # Sort types by platform grouping then alphabetically within platform
+    def sort_key(t):
+        plat = EVENT_PLATFORM_MAP.get(t, 'Other')
+        plat_idx = PLATFORM_SORT_ORDER.index(plat) if plat in PLATFORM_SORT_ORDER else 99
+        return (plat_idx, t)
+    
+    types = sorted(all_types, key=sort_key)
+    
+    # Reset shade counters for fresh color assignment
+    shade_counters = {}
     
     datasets = []
-    for idx, t in enumerate(types):
+    for t in types:
         data = [m.get('type_breakdown', {}).get(t, 0) for m in active_members]
+        
+        # Get platform-aware color
+        platform = EVENT_PLATFORM_MAP.get(t, 'Other')
+        pc = PLATFORM_COLOR_DEFS.get(platform, {'h': 0, 's': 0, 'l': 47})
+        if platform not in shade_counters:
+            shade_counters[platform] = 0
+        idx = shade_counters[platform]
+        shade_counters[platform] += 1
+        
+        lightness_shifts = [0, 12, -10, 22, -18, 30, 6, -6]
+        sat_shifts =       [0, -5,   5, -10,  10, -15, 8, -8]
+        l = min(85, max(30, pc['l'] + lightness_shifts[idx % len(lightness_shifts)]))
+        s = min(100, max(20, pc['s'] + sat_shifts[idx % len(sat_shifts)]))
+        color = _hsl_to_hex(pc['h'], s, l)
+        
         datasets.append({
             'label': t,
             'data': data,
-            'backgroundColor': get_chart_color(t, idx),
-            # Stack all in one group to mimic Dashboard 'stacked' mode
-            # Chart.js 2 (QuickChart default) uses 'xAxes/yAxes: stacked: true' options
+            'backgroundColor': color,
         })
         
     chart_config = {
@@ -286,10 +437,17 @@ def generate_stacked_bar_chart(summary):
             'https://quickchart.io/chart/create', 
             json={'chart': chart_config, 'width': 800, 'height': total_height, 'backgroundColor': 'white'}
         )
-        if resp.status_code == 200: 
-            return resp.json().get('url') # Return Short URL
+        if resp.status_code == 200:
+            quickchart_url = resp.json().get('url')
+            
+            # Try to upload to Drive for permanent storage
+            if quickchart_url and creds:
+                drive_url = upload_chart_to_drive(creds, quickchart_url, summary.get('date', 'unknown'))
+                return drive_url
+            
+            return quickchart_url
     except Exception as e:
-        print(f"[WARN] Chart URL generation failed: {e}")
+        print(f"[WARN] Chart generation failed: {e}")
     return None
 
 
@@ -527,9 +685,9 @@ def main():
     print(f"  Total activities: {summary['total_activities']:,}")
     print(f"  Active members: {summary['active_members']}")
     
-    # Generate Chart URL
+    # Generate Chart URL (and upload to Drive for permanent storage)
     print("  Generating daily chart URL...")
-    chart_url = generate_stacked_bar_chart(summary)
+    chart_url = generate_stacked_bar_chart(summary, creds=creds)
     
     # Generate email
     print("[2/3] Generating email...")

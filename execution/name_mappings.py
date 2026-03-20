@@ -29,6 +29,18 @@ NAME_MAP = {
     'tara@pvragon.com': 'Tara Yowell',
     'ricardo@pvragon.com': 'Ricardo',
     
+    # === New Team Members (March 2026) ===
+    'nicole@pvragon.com': 'Nicole Rodrigues',
+    'victoria@pvragon.com': 'Victoria Chanzá',
+    'rafael@pvragon.com': 'Rafael Casabianca',
+    'jp@pvragon.com': 'JP Casabianca',
+    'dana@pvragon.com': 'Dana Hetté',
+    'david@pvragon.com': 'David Andres',
+    'clarissa@pvragon.com': 'Clarissa',
+    'keeko@pvragon.com': 'Keeko Villaveces',
+    'lena@pvragon.com': 'Lena Klapper',
+    'johan@pvragon.com': 'A.S. Johan',
+    
     # === Personal Gmail Accounts ===
     'aleksandar.m.tanaskovic@gmail.com': 'Alexander Pavelko',
     'oO.Pavelko@gmail.com': 'Alexander Pavelko',
@@ -41,6 +53,7 @@ NAME_MAP = {
     'KristiBergeron17@gmail.com': 'Kristi Bergeron',
     'roman.naidenko@gmail.com': 'Roman Naidenko',
     'roman': 'Roman Naidenko',
+    'nicole.trodrigues@gmail.com': 'Nicole Trodrigues',
     
     
     # === Backendless Emails ===
@@ -62,6 +75,7 @@ NAME_MAP = {
     'michel@davidrobertsconsulting.com': 'Michel',
     'bradd@alphadesign.us': 'Bradd Schofield',
     'davidz5@uw.edu': 'David',
+    'hola@jpcasabianca.com': 'JP Casabianca',
     
     # === GitHub Usernames ===
     'AdrianeBarredo': 'Adriane Barredo',
@@ -134,6 +148,13 @@ NAME_MAP = {
     'Saymond Montoya': 'Saymond Montoya',
     'Victor Cheung': 'Victor Cheung',
     'Roman Naidenko': 'Roman Naidenko',
+    'Nicole Rodrigues': 'Nicole Rodrigues',
+    'Victoria Chanzá': 'Victoria Chanzá',
+    'Rafael Casabianca': 'Rafael Casabianca',
+    'JP Casabianca': 'JP Casabianca',
+    'Dana Hetté': 'Dana Hetté',
+    'David Andres': 'David Andres',
+    'Clarissa': 'Clarissa',
     
     # === Google Workspace Display Names ===
     'Adriane Barredo': 'Adriane Barredo',
@@ -154,6 +175,13 @@ NAME_MAP = {
     'Juan Vidal': 'Juan Vidal',
     'Mariana Gracia Salgado': 'Mariana Gracia Salgado',
     'A.S. Johan': 'A.S. Johan',
+    'Nicole Rodrigues': 'Nicole Rodrigues',
+    'Victoria Chanzá': 'Victoria Chanzá',
+    'Rafael Casabianca': 'Rafael Casabianca',
+    'JP Casabianca': 'JP Casabianca',
+    'Dana Hetté': 'Dana Hetté',
+    'David Andres': 'David Andres',
+    'Clarissa': 'Clarissa',
 }
 
 # Strict team list for GitHub (only these handles will be scanned/reported)
@@ -175,8 +203,7 @@ EXCLUDE_PATTERNS = [
     'build@pvragon.com', 'careers@pvragon.com', 'employees@pvragon.com',
     'pvragon llc',
     'hello@pvragon.com',
-    'nicole.trodrigues@gmail.com', # Excluded
-    'david@pvragon.com', # Excluded
+    'nicole.trodrigues@gmail.com', # Excluded (different person than Nicole Rodrigues)
     'support@pvragon.com', 'gcp-organization-admins@pvragon.com',
     'rc-eng-notifications@', 'service-admins@', 'softstackers@',
     'Eng', 'Errors-Rc', 'RefCheqr-eng-notifications@pvragon.com', '/hd/domain/pvragon.com',
@@ -211,7 +238,7 @@ EXCLUDE_PATTERNS = [
     'backendlessmail.com', # Exclude all backendless internal support emails
     'Figma', # System user
     'abiel@pvragon.com', 'alejandra@pvragon.com', 'arinaldi@launchfactory.com',
-    'mari@pvragon.com', 'sergio@pvragon.com', 'trent@pvragon.com', 'David', 
+    'mari@pvragon.com', 'sergio@pvragon.com', 'trent@pvragon.com',
     ' Mari ', # Specific name with spaces to avoid 'Mariana' match
     'Mari' # I will change the logic below to handle exact matches for some patterns
     
@@ -219,17 +246,22 @@ EXCLUDE_PATTERNS = [
     'errors-rc@pvragon.com', 'emailparser@okridecare.com',
     'drive-shares-dm-noreply@google.com', 'rc-eng-notifications@pvragon.com',
     'noreply@medium.com', 'chrisl1315@att.net',
-    # JP (External/Not an employee)
-    'JP', 'hola@jpcasabianca.com',
+    # System/Service accounts
+    'oc-sage@pvragon.com', 'gcp-billing-admins@pvragon.com',
+    'Pvragon Automation',
 ]
 
-# Strict core team list (The official 18 members to be included in all reports)
+# Strict core team list (25 members to be included in all reports)
 CORE_TEAM = [
+    # Original 18
     'Adriane Barredo', 'Alexander Pavelko', 'Areeba Akhlaque', 'Bilal Munir',
     'Bradd Schofield', 'Cherry Aznar', 'James Hereford', 'Juan Vidal',
     'Keeko Villaveces', 'Muhammad Farhan', 'Roman Naidenko', 'Saifullah Khan',
     'Saymond Montoya', 'Victor Cheung', 'Tara Yowell', 'Mariana Gracia Salgado',
-    'A.S. Johan', 'Lena Klapper'
+    'A.S. Johan', 'Lena Klapper',
+    # New members (March 2026)
+    'Nicole Rodrigues', 'Victoria Chanzá', 'Rafael Casabianca',
+    'JP Casabianca', 'Dana Hetté', 'David Andres', 'Clarissa',
 ]
 
 # Strict team list for Gmail sent events
@@ -276,6 +308,7 @@ def map_name(identifier):
         'juan': 'Juan Vidal',
         'roman naidenko': 'Roman Naidenko',
         'roman': 'Roman Naidenko',
+        'victoria': 'Victoria Chanzá',
         'victor cheung': 'Victor Cheung',
         'victor': 'Victor Cheung',
         'saymond montoya': 'Saymond Montoya',
@@ -287,7 +320,11 @@ def map_name(identifier):
         'xingran': 'Xingran Du',
         'kinney': 'Kinney',
         'michel': 'Michel',
-        'david': 'David',
+        'david': 'David Andres',
+        'nicole': 'Nicole Rodrigues',
+        'rafael': 'Rafael Casabianca',
+        'clarissa': 'Clarissa',
+        'dana': 'Dana Hetté',
         'bradd schofield': 'Bradd Schofield',
         'bradd konert': 'Bradd Schofield',
         'bradd': 'Bradd Schofield',

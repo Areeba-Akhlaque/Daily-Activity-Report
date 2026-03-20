@@ -7,7 +7,8 @@ from google.auth.transport.requests import Request
 # The scopes required for your reports
 SCOPES = [
     'https://www.googleapis.com/auth/spreadsheets',
-    'https://www.googleapis.com/auth/admin.reports.audit.readonly'
+    'https://www.googleapis.com/auth/admin.reports.audit.readonly',
+    'https://www.googleapis.com/auth/drive'  # For uploading chart images to shared Drive
 ]
 
 def main():
