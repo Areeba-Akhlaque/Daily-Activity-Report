@@ -1,10 +1,234 @@
 [
   {
+    "member": "Alexander Pavelko",
+    "date": "03/22/26",
+    "hour": 10,
+    "platform": "ClickUp",
+    "type": "Comment Posted"
+  },
+  {
+    "member": "Alexander Pavelko",
+    "date": "03/22/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "task updated"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/22/26",
+    "hour": 16,
+    "platform": "Google Workspace",
+    "type": "Drive Edit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/22/26",
+    "hour": 8,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "03/21/26",
+    "hour": 15,
+    "platform": "Backendless App",
+    "type": "Delete File"
+  },
+  {
+    "member": "Rafael Casabianca",
+    "date": "03/21/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/21/26",
+    "hour": 14,
+    "platform": "ClickUp",
+    "type": "Comment Posted"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/21/26",
+    "hour": 12,
+    "platform": "ClickUp",
+    "type": "Comment Posted"
+  },
+  {
+    "member": "Keeko Villaveces",
+    "date": "03/21/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Comment Posted"
+  },
+  {
+    "member": "Keeko Villaveces",
+    "date": "03/21/26",
+    "hour": 14,
+    "platform": "ClickUp",
+    "type": "Comment Posted"
+  },
+  {
+    "member": "Keeko Villaveces",
+    "date": "03/21/26",
+    "hour": 12,
+    "platform": "ClickUp",
+    "type": "task completed"
+  },
+  {
+    "member": "Keeko Villaveces",
+    "date": "03/21/26",
+    "hour": 17,
+    "platform": "ClickUp",
+    "type": "task created"
+  },
+  {
+    "member": "Keeko Villaveces",
+    "date": "03/21/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "task created"
+  },
+  {
+    "member": "Keeko Villaveces",
+    "date": "03/21/26",
+    "hour": 14,
+    "platform": "ClickUp",
+    "type": "task created"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/21/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "task updated"
+  },
+  {
+    "member": "Keeko Villaveces",
+    "date": "03/21/26",
+    "hour": 14,
+    "platform": "ClickUp",
+    "type": "task updated"
+  },
+  {
+    "member": "Keeko Villaveces",
+    "date": "03/21/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "task updated"
+  },
+  {
+    "member": "Keeko Villaveces",
+    "date": "03/21/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "task updated"
+  },
+  {
+    "member": "Keeko Villaveces",
+    "date": "03/21/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "task updated"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/21/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Branch/Tag Created"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/21/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "PR Opened/Closed"
+  },
+  {
     "member": "Areeba Akhlaque",
     "date": "03/21/26",
     "hour": 13,
     "platform": "Google Workspace",
     "type": "Drive Edit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/21/26",
+    "hour": 9,
+    "platform": "Google Workspace",
+    "type": "Drive Edit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/21/26",
+    "hour": 14,
+    "platform": "Google Workspace",
+    "type": "Drive Edit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/21/26",
+    "hour": 13,
+    "platform": "Google Workspace",
+    "type": "Drive Edit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/21/26",
+    "hour": 8,
+    "platform": "Google Workspace",
+    "type": "Drive Edit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 13,
+    "platform": "Google Workspace",
+    "type": "Drive Edit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 14,
+    "platform": "Google Workspace",
+    "type": "Drive Edit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 12,
+    "platform": "Google Workspace",
+    "type": "Drive Edit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 14,
+    "platform": "Google Workspace",
+    "type": "Drive Edit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/21/26",
+    "hour": 13,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/21/26",
+    "hour": 8,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/21/26",
+    "hour": 18,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
   },
   {
     "member": "Cherry Aznar",
@@ -14,6 +238,13 @@
     "type": "Gmail Send"
   },
   {
+    "member": "Cherry Aznar",
+    "date": "03/21/26",
+    "hour": 9,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
+  },
+  {
     "member": "James Hereford",
     "date": "03/21/26",
     "hour": 13,
@@ -24,6 +255,97 @@
     "member": "James Hereford",
     "date": "03/21/26",
     "hour": 13,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 17,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 15,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 18,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 12,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 14,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 13,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 13,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 10,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 17,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 14,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 17,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
+  },
+  {
+    "member": "Keeko Villaveces",
+    "date": "03/21/26",
+    "hour": 9,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
+  },
+  {
+    "member": "Rafael Casabianca",
+    "date": "03/21/26",
+    "hour": 12,
     "platform": "Google Workspace",
     "type": "Gmail Send"
   },
@@ -882,13 +1204,6 @@
     "type": "task updated"
   },
   {
-    "member": "Alexander Pavelko",
-    "date": "03/20/26",
-    "hour": 18,
-    "platform": "ClickUp",
-    "type": "task updated"
-  },
-  {
     "member": "Bradd Schofield",
     "date": "03/20/26",
     "hour": 17,
@@ -938,23 +1253,9 @@
     "type": "task updated"
   },
   {
-    "member": "JP Casabianca",
-    "date": "03/20/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "task updated"
-  },
-  {
     "member": "Lena Klapper",
     "date": "03/20/26",
     "hour": 11,
-    "platform": "ClickUp",
-    "type": "task updated"
-  },
-  {
-    "member": "Lena Klapper",
-    "date": "03/20/26",
-    "hour": 14,
     "platform": "ClickUp",
     "type": "task updated"
   },
@@ -1179,6 +1480,13 @@
     "member": "Saifullah Khan",
     "date": "03/20/26",
     "hour": 17,
+    "platform": "ClickUp",
+    "type": "task updated"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/20/26",
+    "hour": 12,
     "platform": "ClickUp",
     "type": "task updated"
   },
@@ -2733,13 +3041,6 @@
     "member": "Keeko Villaveces",
     "date": "03/19/26",
     "hour": 8,
-    "platform": "ClickUp",
-    "type": "task updated"
-  },
-  {
-    "member": "Keeko Villaveces",
-    "date": "03/19/26",
-    "hour": 13,
     "platform": "ClickUp",
     "type": "task updated"
   },
@@ -4746,13 +5047,6 @@
     "type": "task completed"
   },
   {
-    "member": "Areeba Akhlaque",
-    "date": "03/18/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "task completed"
-  },
-  {
     "member": "Bradd Schofield",
     "date": "03/18/26",
     "hour": 18,
@@ -5106,13 +5400,6 @@
     "member": "Areeba Akhlaque",
     "date": "03/18/26",
     "hour": 14,
-    "platform": "ClickUp",
-    "type": "task updated"
-  },
-  {
-    "member": "Areeba Akhlaque",
-    "date": "03/18/26",
-    "hour": 15,
     "platform": "ClickUp",
     "type": "task updated"
   },
@@ -9478,6 +9765,34 @@
     "type": "Channels messages"
   },
   {
+    "member": "Muhammad Farhan",
+    "date": "03/16/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "03/16/26",
+    "hour": 8,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "03/16/26",
+    "hour": 14,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "03/16/26",
+    "hour": 16,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
     "member": "Roman Naidenko",
     "date": "03/16/26",
     "hour": 13,
@@ -10675,13 +10990,6 @@
     "type": "task updated"
   },
   {
-    "member": "Bradd Schofield",
-    "date": "03/16/26",
-    "hour": 18,
-    "platform": "ClickUp",
-    "type": "task updated"
-  },
-  {
     "member": "Cherry Aznar",
     "date": "03/16/26",
     "hour": 15,
@@ -10720,13 +11028,6 @@
     "member": "Keeko Villaveces",
     "date": "03/16/26",
     "hour": 11,
-    "platform": "ClickUp",
-    "type": "task updated"
-  },
-  {
-    "member": "Keeko Villaveces",
-    "date": "03/16/26",
-    "hour": 10,
     "platform": "ClickUp",
     "type": "task updated"
   },
@@ -10846,6 +11147,13 @@
     "member": "Victoria Chanz\u00e1",
     "date": "03/16/26",
     "hour": 9,
+    "platform": "ClickUp",
+    "type": "task updated"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/16/26",
+    "hour": 12,
     "platform": "ClickUp",
     "type": "task updated"
   },
@@ -12421,13 +12729,6 @@
     "member": "Keeko Villaveces",
     "date": "03/14/26",
     "hour": 18,
-    "platform": "ClickUp",
-    "type": "task updated"
-  },
-  {
-    "member": "Keeko Villaveces",
-    "date": "03/14/26",
-    "hour": 17,
     "platform": "ClickUp",
     "type": "task updated"
   },
@@ -22459,13 +22760,6 @@
     "member": "Roman Naidenko",
     "date": "03/09/26",
     "hour": 11,
-    "platform": "ClickUp",
-    "type": "task completed"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/09/26",
-    "hour": 10,
     "platform": "ClickUp",
     "type": "task completed"
   },
@@ -33131,6 +33425,13 @@
     "type": "task completed"
   },
   {
+    "member": "Saifullah Khan",
+    "date": "03/03/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "task completed"
+  },
+  {
     "member": "Areeba Akhlaque",
     "date": "03/03/26",
     "hour": 14,
@@ -33225,13 +33526,6 @@
     "member": "Bradd Schofield",
     "date": "03/03/26",
     "hour": 14,
-    "platform": "ClickUp",
-    "type": "task created"
-  },
-  {
-    "member": "Bradd Schofield",
-    "date": "03/03/26",
-    "hour": 17,
     "platform": "ClickUp",
     "type": "task created"
   },
@@ -33477,13 +33771,6 @@
     "member": "James Hereford",
     "date": "03/03/26",
     "hour": 11,
-    "platform": "ClickUp",
-    "type": "task updated"
-  },
-  {
-    "member": "Keeko Villaveces",
-    "date": "03/03/26",
-    "hour": 15,
     "platform": "ClickUp",
     "type": "task updated"
   },
@@ -52983,13 +53270,6 @@
     "type": "task updated"
   },
   {
-    "member": "Alexander Pavelko",
-    "date": "02/19/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "task updated"
-  },
-  {
     "member": "Areeba Akhlaque",
     "date": "02/19/26",
     "hour": 15,
@@ -55870,13 +56150,6 @@
     "member": "Alexander Pavelko",
     "date": "02/18/26",
     "hour": 13,
-    "platform": "ClickUp",
-    "type": "task completed"
-  },
-  {
-    "member": "Alexander Pavelko",
-    "date": "02/18/26",
-    "hour": 14,
     "platform": "ClickUp",
     "type": "task completed"
   },
@@ -58996,6 +59269,13 @@
     "type": "task updated"
   },
   {
+    "member": "Lena Klapper",
+    "date": "02/17/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "task updated"
+  },
+  {
     "member": "Saymond Montoya",
     "date": "02/17/26",
     "hour": 15,
@@ -60287,13 +60567,6 @@
     "member": "Alexander Pavelko",
     "date": "02/16/26",
     "hour": 13,
-    "platform": "ClickUp",
-    "type": "task created"
-  },
-  {
-    "member": "Alexander Pavelko",
-    "date": "02/16/26",
-    "hour": 15,
     "platform": "ClickUp",
     "type": "task created"
   },
@@ -66752,13 +67025,6 @@
     "type": "task completed"
   },
   {
-    "member": "Saymond Montoya",
-    "date": "02/11/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "task completed"
-  },
-  {
     "member": "Victor Cheung",
     "date": "02/11/26",
     "hour": 14,
@@ -66997,13 +67263,6 @@
     "type": "task updated"
   },
   {
-    "member": "Bilal Munir",
-    "date": "02/11/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "task updated"
-  },
-  {
     "member": "Cherry Aznar",
     "date": "02/11/26",
     "hour": 15,
@@ -67133,13 +67392,6 @@
     "member": "Saymond Montoya",
     "date": "02/11/26",
     "hour": 17,
-    "platform": "ClickUp",
-    "type": "task updated"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "02/11/26",
-    "hour": 14,
     "platform": "ClickUp",
     "type": "task updated"
   },
@@ -73360,13 +73612,6 @@
     "type": "task completed"
   },
   {
-    "member": "Victor Cheung",
-    "date": "02/05/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "task completed"
-  },
-  {
     "member": "Areeba Akhlaque",
     "date": "02/05/26",
     "hour": 17,
@@ -73685,13 +73930,6 @@
     "member": "Victor Cheung",
     "date": "02/05/26",
     "hour": 11,
-    "platform": "ClickUp",
-    "type": "task updated"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "02/05/26",
-    "hour": 14,
     "platform": "ClickUp",
     "type": "task updated"
   },
@@ -76660,13 +76898,6 @@
     "member": "Victor Cheung",
     "date": "02/03/26",
     "hour": 15,
-    "platform": "ClickUp",
-    "type": "task created"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "02/03/26",
-    "hour": 14,
     "platform": "ClickUp",
     "type": "task created"
   },
@@ -85284,13 +85515,6 @@
     "member": "James Hereford",
     "date": "01/27/26",
     "hour": 8,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "01/27/26",
-    "hour": 11,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
@@ -96089,13 +96313,6 @@
     "type": "task completed"
   },
   {
-    "member": "Saymond Montoya",
-    "date": "01/16/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "task completed"
-  },
-  {
     "member": "Areeba Akhlaque",
     "date": "01/16/26",
     "hour": 15,
@@ -100544,13 +100761,6 @@
     "member": "James Hereford",
     "date": "01/13/26",
     "hour": 15,
-    "platform": "ClickUp",
-    "type": "task created"
-  },
-  {
-    "member": "James Hereford",
-    "date": "01/13/26",
-    "hour": 11,
     "platform": "ClickUp",
     "type": "task created"
   },
@@ -107299,13 +107509,6 @@
     "member": "Saymond Montoya",
     "date": "01/06/26",
     "hour": 12,
-    "platform": "ClickUp",
-    "type": "task created"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "01/06/26",
-    "hour": 11,
     "platform": "ClickUp",
     "type": "task created"
   },
