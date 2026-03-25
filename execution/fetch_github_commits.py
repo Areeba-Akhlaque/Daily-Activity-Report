@@ -167,6 +167,7 @@ def fetch_detailed_commits(repos):
                         "Time": ts_pst.strftime('%I:%M %p'),
                         "timestamp": ts_pst,
                         "Repo": full_name,
+                        "Hash": c.get('sha', '')[:10],
                         "Message": commit_data.get('message', '')[:100]
                     })
                 
@@ -192,8 +193,9 @@ def process_and_upload_commits(commits):
     
     df['Platform'] = "GitHub"
     df['Event Type'] = "Code Commit"
+    df['Quantity'] = 1
     
-    final_df = df[['Name', 'Date', 'Time', 'Platform', 'Repo', 'Event Type', 'Message']]
+    final_df = df[['Name', 'Date', 'Time', 'Platform', 'Repo', 'Event Type', 'Quantity', 'Hash', 'Message']]
     
     print(f"[4/4] Uploading {len(final_df)} commits to Google Sheet (Github_Commits)...")
     
