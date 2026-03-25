@@ -595,66 +595,99 @@
         };
         let charts = { trend: null, platform: null, leaderboard: null, range: null };
 
-        // Colors - Platform-based color system with HSL shading
+        // Colors - Platform-based color system with explicit hex per event type
+        // ClickUp=Pink, GitHub=Grey, Google Workspace=Blue, Figma=Orange, Backendless=Green/Teal
         const PLATFORM_COLORS = {
-            'Google Workspace': { base: '#4285F4', h: 217, s: 89, l: 61 },
-            'ClickUp':          { base: '#7B68EE', h: 249, s: 80, l: 67 },
-            'GitHub':           { base: '#6e5494', h: 271, s: 28, l: 45 },
-            'Figma':            { base: '#F24E1E', h: 14,  s: 89, l: 53 },
-            'Backendless App':  { base: '#00BFA5', h: 170, s: 100, l: 37 },
-            'Other':            { base: '#777777', h: 0,   s: 0,  l: 47 }
+            'ClickUp':          { base: '#FF5C85' },
+            'GitHub':           { base: '#686868' },
+            'Google Workspace': { base: '#1E88E5' },
+            'Figma':            { base: '#FF9800' },
+            'Backendless App':  { base: '#26A69A' },
+            'Other':            { base: '#777777' }
+        };
+
+        // Explicit color per event type — no two are the same
+        const EVENT_COLOR_MAP = {
+            // ClickUp — Pink/Rose family
+            'Comment Posted':         '#FF5C85',
+            'task updated':           '#FF87A5',
+            'task completed':         '#E63870',
+            'task created':           '#C41E5A',
+            'Channels messages':      '#FFB6C8',
+            'Direct chats messages':  '#FFE4EC',
+            // GitHub — Grey family
+            'Code Commit':            '#686868',
+            'PR Opened/Closed':       '#8C8C8C',
+            'PR Reviewed':            '#444444',
+            'PR Comment Posted':      '#555555',
+            'Issue/PR Comment Posted':'#5A5A5A',
+            'Branch/Tag Created':     '#B0B0B0',
+            'Branch/Tag Deleted':     '#D4D4D4',
+            'Issue Opened/Closed':    '#9E9E9E',
+            // Google Workspace — Blue family
+            'Gmail Send':             '#1E88E5',
+            'Drive Edit':             '#42A5F5',
+            // Figma — Orange family
+            'File Edited':            '#FF9800',
+            'File Created':           '#FFB74D',
+            // Backendless — Green/Teal family
+            'Update Page UI':                          '#26A69A',
+            'Modify table record':                     '#00897B',
+            'Deploy Cloud Code Model From Console':    '#00796B',
+            'Save Cloud Code Draft Model':             '#80CBC4',
+            'Update UI Page Handler Logic':            '#004D40',
+            'Delete File':                             '#4DB6AC',
+            'Update Function Logic':                   '#009688',
+            'Delete table records':                    '#00695C',
+            'Run Timer':                               '#B2DFDB',
+            'Create Column':                           '#1B5E20',
+            'Change Column':                           '#2E7D32',
+            'Publish UI Container':                    '#388E3C',
+            'Create new record in table':              '#43A047',
+            'Create new UI Page':                      '#4CAF50',
+            'Edit Custom Email Template':              '#66BB6A',
+            'Create UI Container':                     '#81C784',
+            'Copy File':                               '#A5D6A7',
+            'Create New Directory':                    '#C8E6C9',
         };
 
         // Map event types to their platform
         const EVENT_PLATFORM_MAP = {
-            // ClickUp
             'task created': 'ClickUp', 'task updated': 'ClickUp', 'task completed': 'ClickUp',
             'Comment Posted': 'ClickUp', 'Channels messages': 'ClickUp', 'Direct chats messages': 'ClickUp',
-            // GitHub
             'Code Commit': 'GitHub', 'PR Opened/Closed': 'GitHub', 'PR Reviewed': 'GitHub',
             'PR Comment Posted': 'GitHub', 'Issue/PR Comment Posted': 'GitHub',
             'Issue Opened/Closed': 'GitHub', 'Branch/Tag Created': 'GitHub', 'Branch/Tag Deleted': 'GitHub',
-            // Google Workspace
             'Gmail Send': 'Google Workspace', 'Drive Edit': 'Google Workspace',
-            // Figma
             'File Edited': 'Figma', 'File Created': 'Figma',
-            // Backendless (common ones)
             'Update Page UI': 'Backendless App', 'Modify table record': 'Backendless App',
             'Create UI Container': 'Backendless App', 'API/Console Access': 'Backendless App',
         };
 
-        // Track shade index per platform for unique tints
-        const _platformShadeCounters = {};
+        const _backendlessShadeCtr = { idx: 0 };
         const _eventColorCache = {};
 
         function getEventColor(eventType, platformHint) {
             if (_eventColorCache[eventType]) return _eventColorCache[eventType];
-
-            // Determine platform
+            if (EVENT_COLOR_MAP[eventType]) {
+                _eventColorCache[eventType] = EVENT_COLOR_MAP[eventType];
+                return EVENT_COLOR_MAP[eventType];
+            }
+            // Auto-shade for unmapped events (mostly Backendless)
             let platform = EVENT_PLATFORM_MAP[eventType] || platformHint || 'Other';
             if (!PLATFORM_COLORS[platform]) platform = 'Other';
-
-            const pc = PLATFORM_COLORS[platform];
-            if (!_platformShadeCounters[platform]) _platformShadeCounters[platform] = 0;
-            const idx = _platformShadeCounters[platform]++;
-
-            // Generate distinct shade: shift lightness and slightly adjust saturation
-            const lightnessShifts = [0, 12, -10, 22, -18, 30, 6, -6];
-            const satShifts =       [0, -5,   5, -10,  10, -15, 8, -8];
-            const lShift = lightnessShifts[idx % lightnessShifts.length];
-            const sShift = satShifts[idx % satShifts.length];
-
-            const l = Math.min(85, Math.max(30, pc.l + lShift));
-            const s = Math.min(100, Math.max(20, pc.s + sShift));
-
-            const color = `hsl(${pc.h}, ${s}%, ${l}%)`;
+            const tealShades = ['#26A69A','#00897B','#00796B','#80CBC4','#004D40','#4DB6AC','#009688','#00695C','#B2DFDB','#1B5E20','#2E7D32','#388E3C','#43A047','#4CAF50','#66BB6A','#81C784'];
+            let color;
+            if (platform === 'Backendless App') {
+                color = tealShades[_backendlessShadeCtr.idx % tealShades.length];
+                _backendlessShadeCtr.idx++;
+            } else { color = PLATFORM_COLORS[platform].base; }
             _eventColorCache[eventType] = color;
             return color;
         }
 
         function getPlatformBaseColor(platform) {
-            const pc = PLATFORM_COLORS[platform] || PLATFORM_COLORS['Other'];
-            return pc.base;
+            return (PLATFORM_COLORS[platform] || PLATFORM_COLORS['Other']).base;
         }
 
         const PIE_COLORS_PLATFORMS = Object.values(PLATFORM_COLORS).map(p => p.base);

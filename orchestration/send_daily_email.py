@@ -218,69 +218,61 @@ def get_daily_summary(creds, target_date_override=None):
 
 
 # === Platform-Based Color System ===
-PLATFORM_COLOR_DEFS = {
-    'ClickUp':          {'h': 249, 's': 80, 'l': 67},  # Purple family
-    'GitHub':           {'h': 271, 's': 28, 'l': 45},  # Violet family
-    'Google Workspace': {'h': 217, 's': 89, 'l': 61},  # Blue family
-    'Figma':            {'h': 14,  's': 89, 'l': 53},  # Orange/Red family
-    'Backendless App':  {'h': 170, 's': 100, 'l': 37}, # Teal family
+EVENT_COLOR_MAP = {
+    # ClickUp
+    'Comment Posted': '#FF5C85', 'task updated': '#FF87A5', 'task completed': '#E63870',
+    'task created': '#C41E5A', 'Channels messages': '#FFB6C8', 'Direct chats messages': '#FFE4EC',
+    # GitHub
+    'Code Commit': '#686868', 'PR Opened/Closed': '#8C8C8C', 'PR Reviewed': '#444444',
+    'PR Comment Posted': '#555555', 'Issue/PR Comment Posted': '#5A5A5A',
+    'Branch/Tag Created': '#B0B0B0', 'Branch/Tag Deleted': '#D4D4D4', 'Issue Opened/Closed': '#9E9E9E',
+    # Google Workspace
+    'Gmail Send': '#1E88E5', 'Drive Edit': '#42A5F5',
+    # Figma
+    'File Edited': '#FF9800', 'File Created': '#FFB74D',
+    # Backendless
+    'Update Page UI': '#26A69A', 'Modify table record': '#00897B',
+    'Deploy Cloud Code Model From Console': '#00796B', 'Save Cloud Code Draft Model': '#80CBC4',
+    'Update UI Page Handler Logic': '#004D40', 'Delete File': '#4DB6AC',
+    'Update Function Logic': '#009688', 'Delete table records': '#00695C',
+    'Run Timer': '#B2DFDB', 'Create Column': '#1B5E20', 'Change Column': '#2E7D32',
+    'Publish UI Container': '#388E3C', 'Create new record in table': '#43A047',
+    'Create new UI Page': '#4CAF50', 'Edit Custom Email Template': '#66BB6A',
+    'Create UI Container': '#81C784', 'Copy File': '#A5D6A7', 'Create New Directory': '#C8E6C9',
 }
 
 EVENT_PLATFORM_MAP = {
-    # ClickUp
     'task created': 'ClickUp', 'task updated': 'ClickUp', 'task completed': 'ClickUp',
     'Comment Posted': 'ClickUp', 'Channels messages': 'ClickUp', 'Direct chats messages': 'ClickUp',
-    # GitHub
     'Code Commit': 'GitHub', 'PR Opened/Closed': 'GitHub', 'PR Reviewed': 'GitHub',
     'PR Comment Posted': 'GitHub', 'Issue/PR Comment Posted': 'GitHub',
     'Issue Opened/Closed': 'GitHub', 'Branch/Tag Created': 'GitHub', 'Branch/Tag Deleted': 'GitHub',
-    # Google Workspace
     'Gmail Send': 'Google Workspace', 'Drive Edit': 'Google Workspace',
-    # Figma
     'File Edited': 'Figma', 'File Created': 'Figma',
-    # Backendless
     'Update Page UI': 'Backendless App', 'Modify table record': 'Backendless App',
     'Create UI Container': 'Backendless App', 'API/Console Access': 'Backendless App',
 }
 
 PLATFORM_SORT_ORDER = ['ClickUp', 'GitHub', 'Google Workspace', 'Figma', 'Backendless App', 'Other']
 
+_TEAL_SHADES = ['#26A69A','#00897B','#00796B','#80CBC4','#004D40','#4DB6AC','#009688','#00695C',
+                '#B2DFDB','#1B5E20','#2E7D32','#388E3C','#43A047','#4CAF50','#66BB6A','#81C784']
+_backendless_shade_ctr = [0]
 
-def _hsl_to_hex(h, s, l):
-    """Convert HSL (0-360, 0-100, 0-100) to hex color."""
-    s_f, l_f = s / 100, l / 100
-    c = (1 - abs(2 * l_f - 1)) * s_f
-    x = c * (1 - abs((h / 60) % 2 - 1))
-    m = l_f - c / 2
-    if h < 60:    r, g, b = c, x, 0
-    elif h < 120: r, g, b = x, c, 0
-    elif h < 180: r, g, b = 0, c, x
-    elif h < 240: r, g, b = 0, x, c
-    elif h < 300: r, g, b = x, 0, c
-    else:         r, g, b = c, 0, x
-    return f'#{int((r+m)*255):02x}{int((g+m)*255):02x}{int((b+m)*255):02x}'
-
-
-def get_event_color(event_type, _shade_counters={}):
-    """Get a hex color for an event type based on its platform's base color with shade variation."""
+def get_event_color(event_type, _cache={}):
+    if event_type in _cache: return _cache[event_type]
+    if event_type in EVENT_COLOR_MAP:
+        _cache[event_type] = EVENT_COLOR_MAP[event_type]
+        return EVENT_COLOR_MAP[event_type]
     platform = EVENT_PLATFORM_MAP.get(event_type, 'Other')
-    pc = PLATFORM_COLOR_DEFS.get(platform, {'h': 0, 's': 0, 'l': 47})
-    
-    if platform not in _shade_counters:
-        _shade_counters[platform] = 0
-    idx = _shade_counters[platform]
-    _shade_counters[platform] += 1
-    
-    lightness_shifts = [0, 12, -10, 22, -18, 30, 6, -6]
-    sat_shifts =       [0, -5,   5, -10,  10, -15, 8, -8]
-    l_shift = lightness_shifts[idx % len(lightness_shifts)]
-    s_shift = sat_shifts[idx % len(sat_shifts)]
-    
-    l = min(85, max(30, pc['l'] + l_shift))
-    s = min(100, max(20, pc['s'] + s_shift))
-    
-    return _hsl_to_hex(pc['h'], s, l)
-
+    if platform == 'Backendless App' or event_type not in EVENT_PLATFORM_MAP:
+        color = _TEAL_SHADES[_backendless_shade_ctr[0] % len(_TEAL_SHADES)]
+        _backendless_shade_ctr[0] += 1
+    else:
+        color = {'ClickUp':'#FF5C85', 'GitHub':'#686868', 'Google Workspace':'#1E88E5',
+                 'Figma':'#FF9800', 'Backendless App':'#26A69A'}.get(platform, '#777777')
+    _cache[event_type] = color
+    return color
 
 DRIVE_FOLDER_ID = '0AGXVh_HBvJKwUk9PVA'  # Pvragon (HR restricted) shared folder
 
