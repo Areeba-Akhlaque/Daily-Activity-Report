@@ -8,7 +8,8 @@ from google.auth.transport.requests import Request
 SCOPES = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/admin.reports.audit.readonly',
-    'https://www.googleapis.com/auth/drive'  # For uploading chart images to shared Drive
+    'https://www.googleapis.com/auth/drive',  # For uploading chart images to shared Drive
+    'https://www.googleapis.com/auth/gmail.send'  # Required for sending daily summary emails
 ]
 
 def main():
