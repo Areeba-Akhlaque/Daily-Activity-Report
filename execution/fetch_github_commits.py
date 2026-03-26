@@ -232,7 +232,7 @@ def process_and_upload_commits(commits):
         # Sort
         combined['sort_dt'] = pd.to_datetime(combined['Date'], format='%m/%d/%y')
         combined = combined.sort_values(by=['sort_dt'], ascending=[False])
-        final_merged = combined[['Name', 'Date', 'Platform', 'Event Type', 'Quantity', 'Hash', 'Message', 'Repo']]
+        final_merged = combined[['Name', 'Date', 'Platform', 'Event Type', 'Quantity', 'Hash', 'Message', 'Repo']].fillna("")
 
         ws.clear()
         ws.update(values=[final_merged.columns.values.tolist()] + final_merged.values.tolist(), range_name='A1')
