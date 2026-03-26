@@ -218,27 +218,28 @@ def get_daily_summary(creds, target_date_override=None):
 
 
 # === Platform-Based Color System ===
+# ClickUp=Pastel Pink, GitHub=Pastel Grey, Google Workspace=Pastel Blue, Figma=Pastel Orange, Backendless=Pastel Mint
 EVENT_COLOR_MAP = {
     # ClickUp
-    'Comment Posted': '#FF5C85', 'task updated': '#FF87A5', 'task completed': '#E63870',
-    'task created': '#C41E5A', 'Channels messages': '#FFB6C8', 'Direct chats messages': '#FFE4EC',
+    'Comment Posted': '#FF9AA2', 'task updated': '#FFB7B2', 'task completed': '#FF8C94',
+    'task created': '#F4A4A4', 'Channels messages': '#FADADD', 'Direct chats messages': '#FFE4E1',
     # GitHub
-    'Code Commit': '#686868', 'PR Opened/Closed': '#8C8C8C', 'PR Reviewed': '#444444',
-    'PR Comment Posted': '#555555', 'Issue/PR Comment Posted': '#5A5A5A',
-    'Branch/Tag Created': '#B0B0B0', 'Branch/Tag Deleted': '#D4D4D4', 'Issue Opened/Closed': '#9E9E9E',
+    'Code Commit': '#A8A8A8', 'PR Opened/Closed': '#B8B8B8', 'PR Reviewed': '#9E9E9E',
+    'PR Comment Posted': '#C0C0C0', 'Issue/PR Comment Posted': '#CFCFCF',
+    'Branch/Tag Created': '#D3D3D3', 'Branch/Tag Deleted': '#DCDCDC', 'Issue Opened/Closed': '#E4E4E4',
     # Google Workspace
-    'Gmail Send': '#1E88E5', 'Drive Edit': '#42A5F5',
+    'Gmail Send': '#AEC6CF', 'Drive Edit': '#C5D6E0',
     # Figma
-    'File Edited': '#FF9800', 'File Created': '#FFB74D',
+    'File Edited': '#FFDFBA', 'File Created': '#FFD3B6',
     # Backendless
-    'Update Page UI': '#26A69A', 'Modify table record': '#00897B',
-    'Deploy Cloud Code Model From Console': '#00796B', 'Save Cloud Code Draft Model': '#80CBC4',
-    'Update UI Page Handler Logic': '#004D40', 'Delete File': '#4DB6AC',
-    'Update Function Logic': '#009688', 'Delete table records': '#00695C',
-    'Run Timer': '#B2DFDB', 'Create Column': '#1B5E20', 'Change Column': '#2E7D32',
-    'Publish UI Container': '#388E3C', 'Create new record in table': '#43A047',
-    'Create new UI Page': '#4CAF50', 'Edit Custom Email Template': '#66BB6A',
-    'Create UI Container': '#81C784', 'Copy File': '#A5D6A7', 'Create New Directory': '#C8E6C9',
+    'Update Page UI': '#B5EAD7', 'Modify table record': '#E2F0CB',
+    'Deploy Cloud Code Model From Console': '#C1E1C1', 'Save Cloud Code Draft Model': '#A9DCA9',
+    'Update UI Page Handler Logic': '#98FF98', 'Delete File': '#B4F8C8',
+    'Update Function Logic': '#A0E8AF', 'Delete table records': '#AEEBCA',
+    'Run Timer': '#CBF0D9', 'Create Column': '#D6E5D8', 'Change Column': '#8FBC8F',
+    'Publish UI Container': '#90EE90', 'Create new record in table': '#98FB98',
+    'Create new UI Page': '#B2DFDB', 'Edit Custom Email Template': '#80CBC4',
+    'Create UI Container': '#A5D6A7', 'Copy File': '#C8E6C9', 'Create New Directory': '#E8F5E9',
 }
 
 EVENT_PLATFORM_MAP = {
@@ -255,8 +256,8 @@ EVENT_PLATFORM_MAP = {
 
 PLATFORM_SORT_ORDER = ['ClickUp', 'GitHub', 'Google Workspace', 'Figma', 'Backendless App', 'Other']
 
-_TEAL_SHADES = ['#26A69A','#00897B','#00796B','#80CBC4','#004D40','#4DB6AC','#009688','#00695C',
-                '#B2DFDB','#1B5E20','#2E7D32','#388E3C','#43A047','#4CAF50','#66BB6A','#81C784']
+_TEAL_SHADES = ['#B5EAD7','#E2F0CB','#C1E1C1','#A9DCA9','#98FF98','#B4F8C8','#A0E8AF','#AEEBCA',
+                '#CBF0D9','#D6E5D8','#8FBC8F','#90EE90','#98FB98','#B2DFDB','#80CBC4','#A5D6A7']
 _backendless_shade_ctr = [0]
 
 def get_event_color(event_type, _cache={}):
