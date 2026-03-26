@@ -381,19 +381,8 @@ def generate_stacked_bar_chart(summary, creds=None):
     for t in types:
         data = [m.get('type_breakdown', {}).get(t, 0) for m in active_members]
         
-        # Get platform-aware color
-        platform = EVENT_PLATFORM_MAP.get(t, 'Other')
-        pc = PLATFORM_COLOR_DEFS.get(platform, {'h': 0, 's': 0, 'l': 47})
-        if platform not in shade_counters:
-            shade_counters[platform] = 0
-        idx = shade_counters[platform]
-        shade_counters[platform] += 1
-        
-        lightness_shifts = [0, 12, -10, 22, -18, 30, 6, -6]
-        sat_shifts =       [0, -5,   5, -10,  10, -15, 8, -8]
-        l = min(85, max(30, pc['l'] + lightness_shifts[idx % len(lightness_shifts)]))
-        s = min(100, max(20, pc['s'] + sat_shifts[idx % len(sat_shifts)]))
-        color = _hsl_to_hex(pc['h'], s, l)
+        # Get explicitly mapped color for this event type
+        color = get_event_color(t)
         
         datasets.append({
             'label': t,
