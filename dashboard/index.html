@@ -595,59 +595,59 @@
         };
         let charts = { trend: null, platform: null, leaderboard: null, range: null };
 
-                        // Colors - Vibrant Platform-based color system
+                                // Colors - Premium SaaS UI Color System (Tailwind Inspired)
         const PLATFORM_COLORS = {
-            'ClickUp':          { base: '#D81B60' }, // Vibrant Pink/Rose
-            'GitHub':           { base: '#616161' }, // High-Contrast Grey
-            'Google Workspace': { base: '#1976D2' }, // Bold Blue
-            'Figma':            { base: '#FF6D00' }, // Bright Orange
-            'Backendless App':  { base: '#009688' }, // Vivid Teal
-            'Other':            { base: '#757575' }
+            'ClickUp':          { base: '#8B5CF6' }, // Premium Violet
+            'GitHub':           { base: '#64748B' }, // Luminous Slate
+            'Google Workspace': { base: '#0EA5E9' }, // Sky Blue
+            'Figma':            { base: '#F59E0B' }, // Premium Amber
+            'Backendless App':  { base: '#10B981' }, // Emerald
+            'Other':            { base: '#94A3B8' }
         };
 
-        // Explicit vibrant color per event type
+        // Explicit premium color per event type
         const EVENT_COLOR_MAP = {
-            // ClickUp
-            'Comment Posted':         '#FF4081',
-            'task updated':           '#F50057',
-            'task completed':         '#D81B60',
-            'task created':           '#C2185B',
-            'Channels messages':      '#F06292',
-            'Direct chats messages':  '#E91E63',
-            // GitHub
-            'Code Commit':            '#424242',
-            'PR Opened/Closed':       '#616161',
-            'PR Reviewed':            '#757575',
-            'PR Comment Posted':      '#9E9E9E',
-            'Issue/PR Comment Posted':'#BDBDBD',
-            'Branch/Tag Created':     '#212121',
-            'Branch/Tag Deleted':     '#546E7A',
-            'Issue Opened/Closed':    '#8D6E63',
-            // Google Workspace
-            'Gmail Send':             '#1976D2',
-            'Drive Edit':             '#039BE5',
-            // Figma
-            'File Edited':            '#FF6D00',
-            'File Created':           '#FF5722',
-            // Backendless
-            'Update Page UI':                          '#009688',
-            'Modify table record':                     '#00897B',
-            'Deploy Cloud Code Model From Console':    '#26A69A',
-            'Save Cloud Code Draft Model':             '#4DB6AC',
-            'Update UI Page Handler Logic':            '#00BFA5',
-            'Delete File':                             '#43A047',
-            'Update Function Logic':                   '#388E3C',
-            'Delete table records':                    '#66BB6A',
-            'Run Timer':                               '#81C784',
-            'Create Column':                           '#00C853',
-            'Change Column':                           '#64DD17',
-            'Publish UI Container':                    '#AEEA00',
-            'Create new record in table':              '#1DE9B6',
-            'Create new UI Page':                      '#00B0FF',
-            'Edit Custom Email Template':              '#00E5FF',
-            'Create UI Container':                     '#18FFFF',
-            'Copy File':                               '#B2FF59',
-            'Create New Directory':                    '#76FF03',
+            // ClickUp (Fuchsia/Purple progression)
+            'Comment Posted':         '#C084FC',
+            'task updated':           '#A78BFA',
+            'task completed':         '#8B5CF6',
+            'task created':           '#7C3AED',
+            'Channels messages':      '#C4B5FD',
+            'Direct chats messages':  '#DDD6FE',
+            // GitHub (Slate progression)
+            'Code Commit':            '#94A3B8',
+            'PR Opened/Closed':       '#CBD5E1',
+            'PR Reviewed':            '#E2E8F0',
+            'PR Comment Posted':      '#F1F5F9',
+            'Issue/PR Comment Posted':'#F8FAFC',
+            'Branch/Tag Created':     '#64748B',
+            'Branch/Tag Deleted':     '#475569',
+            'Issue Opened/Closed':    '#334155',
+            // Google Workspace (Sky Blue)
+            'Gmail Send':             '#38BDF8',
+            'Drive Edit':             '#0EA5E9',
+            // Figma (Amber)
+            'File Edited':            '#FBBF24',
+            'File Created':           '#F59E0B',
+            // Backendless (Emerald/Teal progression)
+            'Update Page UI':                          '#34D399',
+            'Modify table record':                     '#10B981',
+            'Deploy Cloud Code Model From Console':    '#059669',
+            'Save Cloud Code Draft Model':             '#6EE7B7',
+            'Update UI Page Handler Logic':            '#2DD4BF',
+            'Delete File':                             '#14B8A6',
+            'Update Function Logic':                   '#0D9488',
+            'Delete table records':                    '#A7F3D0',
+            'Run Timer':                               '#5EEAD4',
+            'Create Column':                           '#4ADE80',
+            'Change Column':                           '#22C55E',
+            'Publish UI Container':                    '#86EFAC',
+            'Create new record in table':              '#16A34A',
+            'Create new UI Page':                      '#4ADE80',
+            'Edit Custom Email Template':              '#38BDF8',
+            'Create UI Container':                     '#818CF8',
+            'Copy File':                               '#6EE7B7',
+            'Create New Directory':                    '#A7F3D0',
         };
 
         // Map event types to their platform
@@ -675,7 +675,7 @@
             // Auto-shade for unmapped events (mostly Backendless)
             let platform = EVENT_PLATFORM_MAP[eventType] || platformHint || 'Other';
             if (!PLATFORM_COLORS[platform]) platform = 'Other';
-            const tealShades = ['#009688','#00897B','#26A69A','#4DB6AC','#00BFA5','#43A047','#388E3C','#66BB6A','#81C784','#00C853','#64DD17','#AEEA00','#1DE9B6','#00B0FF','#00E5FF','#18FFFF','#B2FF59','#76FF03'];
+            const tealShades = ['#34D399','#10B981','#059669','#6EE7B7','#2DD4BF','#14B8A6','#0D9488','#A7F3D0','#5EEAD4','#4ADE80','#22C55E','#86EFAC','#16A34A','#4ADE80','#38BDF8','#818CF8','#6EE7B7','#A7F3D0'];
             let color;
             if (platform === 'Backendless App') {
                 color = tealShades[_backendlessShadeCtr.idx % tealShades.length];
