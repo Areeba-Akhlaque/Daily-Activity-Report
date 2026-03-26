@@ -119,6 +119,13 @@
     "type": "Modify table record"
   },
   {
+    "member": "Roman Naidenko",
+    "date": "03/25/26",
+    "hour": 11,
+    "platform": "Backendless App",
+    "type": "Modify table record"
+  },
+  {
     "member": "Saymond Montoya",
     "date": "03/25/26",
     "hour": 10,
@@ -266,6 +273,20 @@
     "type": "Channels messages"
   },
   {
+    "member": "Bradd Schofield",
+    "date": "03/25/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/25/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
     "member": "James Hereford",
     "date": "03/25/26",
     "hour": 14,
@@ -283,6 +304,41 @@
     "member": "Keeko Villaveces",
     "date": "03/25/26",
     "hour": 10,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Mariana Gracia Salgado",
+    "date": "03/25/26",
+    "hour": 14,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Mariana Gracia Salgado",
+    "date": "03/25/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/25/26",
+    "hour": 12,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/25/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/25/26",
+    "hour": 15,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
@@ -318,6 +374,20 @@
     "member": "Saymond Montoya",
     "date": "03/25/26",
     "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/25/26",
+    "hour": 12,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/25/26",
+    "hour": 13,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
@@ -1659,6 +1729,20 @@
     "type": "Code Commit"
   },
   {
+    "member": "Areeba Akhlaque",
+    "date": "03/25/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/25/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "David Andres",
     "date": "03/25/26",
     "hour": 11,
@@ -1977,6 +2061,20 @@
     "member": "Areeba Akhlaque",
     "date": "03/25/26",
     "hour": 12,
+    "platform": "Google Workspace",
+    "type": "Drive Edit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/25/26",
+    "hour": 9,
+    "platform": "Google Workspace",
+    "type": "Drive Edit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/25/26",
+    "hour": 15,
     "platform": "Google Workspace",
     "type": "Drive Edit"
   },
@@ -2296,6 +2394,13 @@
     "type": "Drive Edit"
   },
   {
+    "member": "Roman Naidenko",
+    "date": "03/25/26",
+    "hour": 16,
+    "platform": "Google Workspace",
+    "type": "Drive Edit"
+  },
+  {
     "member": "Areeba Akhlaque",
     "date": "03/25/26",
     "hour": 11,
@@ -2331,6 +2436,13 @@
     "type": "Gmail Send"
   },
   {
+    "member": "Areeba Akhlaque",
+    "date": "03/25/26",
+    "hour": 8,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
+  },
+  {
     "member": "Bilal Munir",
     "date": "03/25/26",
     "hour": 10,
@@ -2348,6 +2460,13 @@
     "member": "Bradd Schofield",
     "date": "03/25/26",
     "hour": 11,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/25/26",
+    "hour": 16,
     "platform": "Google Workspace",
     "type": "Gmail Send"
   },
@@ -2541,6 +2660,13 @@
     "type": "Gmail Send"
   },
   {
+    "member": "James Hereford",
+    "date": "03/25/26",
+    "hour": 12,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
+  },
+  {
     "member": "Keeko Villaveces",
     "date": "03/25/26",
     "hour": 11,
@@ -2551,6 +2677,13 @@
     "member": "Keeko Villaveces",
     "date": "03/25/26",
     "hour": 11,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
+  },
+  {
+    "member": "Keeko Villaveces",
+    "date": "03/25/26",
+    "hour": 14,
     "platform": "Google Workspace",
     "type": "Gmail Send"
   },
@@ -2793,6 +2926,76 @@
     "type": "Channels messages"
   },
   {
+    "member": "Bradd Schofield",
+    "date": "03/24/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/24/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/24/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/24/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/24/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/24/26",
+    "hour": 17,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/24/26",
+    "hour": 14,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/24/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/24/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/24/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
     "member": "James Hereford",
     "date": "03/24/26",
     "hour": 16,
@@ -2828,9 +3031,65 @@
     "type": "Channels messages"
   },
   {
+    "member": "Mariana Gracia Salgado",
+    "date": "03/24/26",
+    "hour": 12,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Mariana Gracia Salgado",
+    "date": "03/24/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
     "member": "Muhammad Farhan",
     "date": "03/24/26",
     "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/24/26",
+    "hour": 10,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/24/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/24/26",
+    "hour": 12,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/24/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/24/26",
+    "hour": 18,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/24/26",
+    "hour": 9,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
@@ -2887,6 +3146,62 @@
     "member": "Victor Cheung",
     "date": "03/24/26",
     "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/24/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/24/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/24/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/24/26",
+    "hour": 18,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/24/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/24/26",
+    "hour": 18,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/24/26",
+    "hour": 12,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/24/26",
+    "hour": 11,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
@@ -5334,6 +5649,41 @@
     "type": "Update Page UI"
   },
   {
+    "member": "Bradd Schofield",
+    "date": "03/23/26",
+    "hour": 8,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/23/26",
+    "hour": 16,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/23/26",
+    "hour": 17,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/23/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/23/26",
+    "hour": 17,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
     "member": "James Hereford",
     "date": "03/23/26",
     "hour": 13,
@@ -5344,6 +5694,48 @@
     "member": "James Hereford",
     "date": "03/23/26",
     "hour": 9,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Mariana Gracia Salgado",
+    "date": "03/23/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Mariana Gracia Salgado",
+    "date": "03/23/26",
+    "hour": 14,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/23/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/23/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/23/26",
+    "hour": 17,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/23/26",
+    "hour": 15,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
@@ -5484,6 +5876,27 @@
     "member": "Victor Cheung",
     "date": "03/23/26",
     "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/23/26",
+    "hour": 10,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/23/26",
+    "hour": 16,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/23/26",
+    "hour": 9,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
@@ -8085,6 +8498,34 @@
     "type": "Update UI Page Handler Logic"
   },
   {
+    "member": "Bradd Schofield",
+    "date": "03/20/26",
+    "hour": 16,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/20/26",
+    "hour": 16,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/20/26",
+    "hour": 16,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/20/26",
+    "hour": 18,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
     "member": "James Hereford",
     "date": "03/20/26",
     "hour": 15,
@@ -8100,6 +8541,55 @@
   },
   {
     "member": "James Hereford",
+    "date": "03/20/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Mariana Gracia Salgado",
+    "date": "03/20/26",
+    "hour": 16,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Mariana Gracia Salgado",
+    "date": "03/20/26",
+    "hour": 12,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/20/26",
+    "hour": 12,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/20/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/20/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/20/26",
+    "hour": 14,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
     "date": "03/20/26",
     "hour": 15,
     "platform": "ClickUp",
@@ -9562,6 +10052,13 @@
     "type": "Update Page UI"
   },
   {
+    "member": "Bradd Schofield",
+    "date": "03/19/26",
+    "hour": 8,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
     "member": "James Hereford",
     "date": "03/19/26",
     "hour": 10,
@@ -9572,6 +10069,20 @@
     "member": "James Hereford",
     "date": "03/19/26",
     "hour": 14,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/19/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/19/26",
+    "hour": 15,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
@@ -11963,6 +12474,13 @@
     "type": "Channels messages"
   },
   {
+    "member": "Bradd Schofield",
+    "date": "03/18/26",
+    "hour": 10,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
     "member": "James Hereford",
     "date": "03/18/26",
     "hour": 12,
@@ -12026,6 +12544,27 @@
     "type": "Channels messages"
   },
   {
+    "member": "Mariana Gracia Salgado",
+    "date": "03/18/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/18/26",
+    "hour": 16,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/18/26",
+    "hour": 12,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
     "member": "Roman Naidenko",
     "date": "03/18/26",
     "hour": 11,
@@ -12057,6 +12596,20 @@
     "member": "Saymond Montoya",
     "date": "03/18/26",
     "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/18/26",
+    "hour": 12,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/18/26",
+    "hour": 12,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
@@ -14609,6 +15162,13 @@
     "type": "Update Page UI"
   },
   {
+    "member": "Bradd Schofield",
+    "date": "03/17/26",
+    "hour": 8,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
     "member": "James Hereford",
     "date": "03/17/26",
     "hour": 18,
@@ -14735,6 +15295,62 @@
     "type": "Channels messages"
   },
   {
+    "member": "Mariana Gracia Salgado",
+    "date": "03/17/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Mariana Gracia Salgado",
+    "date": "03/17/26",
+    "hour": 12,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Mariana Gracia Salgado",
+    "date": "03/17/26",
+    "hour": 14,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Mariana Gracia Salgado",
+    "date": "03/17/26",
+    "hour": 14,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/17/26",
+    "hour": 14,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/17/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/17/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/17/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
     "member": "Roman Naidenko",
     "date": "03/17/26",
     "hour": 10,
@@ -14773,6 +15389,27 @@
     "member": "Saymond Montoya",
     "date": "03/17/26",
     "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/17/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/17/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/17/26",
+    "hour": 10,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
@@ -17850,6 +18487,62 @@
     "type": "Update UI Page Handler Logic"
   },
   {
+    "member": "Bradd Schofield",
+    "date": "03/16/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/16/26",
+    "hour": 16,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/16/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/16/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/16/26",
+    "hour": 10,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/16/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/16/26",
+    "hour": 14,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/16/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
     "member": "James Hereford",
     "date": "03/16/26",
     "hour": 16,
@@ -17899,34 +18592,6 @@
     "type": "Channels messages"
   },
   {
-    "member": "James Hereford",
-    "date": "03/16/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/16/26",
-    "hour": 16,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/16/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/16/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
     "member": "Muhammad Farhan",
     "date": "03/16/26",
     "hour": 11,
@@ -17955,6 +18620,20 @@
     "type": "Channels messages"
   },
   {
+    "member": "Nicole Rodrigues",
+    "date": "03/16/26",
+    "hour": 8,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/16/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
     "member": "Roman Naidenko",
     "date": "03/16/26",
     "hour": 13,
@@ -17965,13 +18644,6 @@
     "member": "Roman Naidenko",
     "date": "03/16/26",
     "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/16/26",
-    "hour": 15,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
@@ -18004,13 +18676,6 @@
     "type": "Channels messages"
   },
   {
-    "member": "Saymond Montoya",
-    "date": "03/16/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
     "member": "Victor Cheung",
     "date": "03/16/26",
     "hour": 17,
@@ -18025,16 +18690,37 @@
     "type": "Channels messages"
   },
   {
-    "member": "Victor Cheung",
+    "member": "Victoria Chanz\u00e1",
     "date": "03/16/26",
-    "hour": 14,
+    "hour": 12,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "Victor Cheung",
+    "member": "Victoria Chanz\u00e1",
     "date": "03/16/26",
     "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/16/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/16/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/16/26",
+    "hour": 18,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
@@ -21014,27 +21700,6 @@
     "type": "Update Page UI"
   },
   {
-    "member": "James Hereford",
-    "date": "03/14/26",
-    "hour": 8,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/14/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/14/26",
-    "hour": 17,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
     "member": "Keeko Villaveces",
     "date": "03/14/26",
     "hour": 16,
@@ -21448,112 +22113,70 @@
     "type": "Update UI Page"
   },
   {
-    "member": "Alexander Pavelko",
-    "date": "03/13/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Alexander Pavelko",
+    "member": "Bradd Schofield",
     "date": "03/13/26",
     "hour": 12,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "James Hereford",
-    "date": "03/13/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/13/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/13/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/13/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/13/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/13/26",
-    "hour": 10,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Keeko Villaveces",
-    "date": "03/13/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Keeko Villaveces",
-    "date": "03/13/26",
-    "hour": 18,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Muhammad Farhan",
-    "date": "03/13/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
+    "member": "Bradd Schofield",
     "date": "03/13/26",
     "hour": 17,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "Saymond Montoya",
+    "member": "Mariana Gracia Salgado",
+    "date": "03/13/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Mariana Gracia Salgado",
+    "date": "03/13/26",
+    "hour": 14,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Mariana Gracia Salgado",
+    "date": "03/13/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Mariana Gracia Salgado",
+    "date": "03/13/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
     "date": "03/13/26",
     "hour": 9,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "Saymond Montoya",
-    "date": "03/13/26",
-    "hour": 18,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
+    "member": "Nicole Rodrigues",
     "date": "03/13/26",
     "hour": 12,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "Saymond Montoya",
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/13/26",
+    "hour": 17,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
     "date": "03/13/26",
     "hour": 9,
     "platform": "ClickUp",
@@ -23394,107 +24017,79 @@
     "type": "Update UI Page Handler Logic"
   },
   {
-    "member": "James Hereford",
+    "member": "Bradd Schofield",
     "date": "03/12/26",
     "hour": 14,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "James Hereford",
-    "date": "03/12/26",
-    "hour": 18,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/12/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/12/26",
-    "hour": 16,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/12/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/12/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Muhammad Farhan",
-    "date": "03/12/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
+    "member": "Bradd Schofield",
     "date": "03/12/26",
     "hour": 9,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "Saymond Montoya",
+    "member": "Bradd Schofield",
     "date": "03/12/26",
-    "hour": 14,
+    "hour": 11,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "Saymond Montoya",
+    "member": "Mariana Gracia Salgado",
     "date": "03/12/26",
-    "hour": 13,
+    "hour": 11,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "Saymond Montoya",
+    "member": "Mariana Gracia Salgado",
     "date": "03/12/26",
-    "hour": 14,
+    "hour": 11,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "Victor Cheung",
-    "date": "03/12/26",
-    "hour": 9,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/12/26",
-    "hour": 10,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/12/26",
-    "hour": 10,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
+    "member": "Mariana Gracia Salgado",
     "date": "03/12/26",
     "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Mariana Gracia Salgado",
+    "date": "03/12/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/12/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/12/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/12/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/12/26",
+    "hour": 12,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
@@ -25802,212 +26397,114 @@
     "type": "Update UI Page"
   },
   {
-    "member": "Alexander Pavelko",
+    "member": "Bradd Schofield",
     "date": "03/11/26",
-    "hour": 14,
+    "hour": 18,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "Alexander Pavelko",
+    "member": "Bradd Schofield",
     "date": "03/11/26",
     "hour": 12,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "James Hereford",
+    "member": "Bradd Schofield",
+    "date": "03/11/26",
+    "hour": 10,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
     "date": "03/11/26",
     "hour": 15,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "James Hereford",
+    "member": "Bradd Schofield",
     "date": "03/11/26",
     "hour": 15,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "James Hereford",
+    "member": "Bradd Schofield",
     "date": "03/11/26",
-    "hour": 12,
+    "hour": 15,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "James Hereford",
-    "date": "03/11/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/11/26",
-    "hour": 8,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Muhammad Farhan",
+    "member": "Bradd Schofield",
     "date": "03/11/26",
     "hour": 14,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "Muhammad Farhan",
+    "member": "Lena Klapper",
     "date": "03/11/26",
-    "hour": 13,
+    "hour": 12,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "Roman Naidenko",
+    "member": "Nicole Rodrigues",
+    "date": "03/11/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/11/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
     "date": "03/11/26",
     "hour": 11,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "Roman Naidenko",
+    "member": "Nicole Rodrigues",
     "date": "03/11/26",
-    "hour": 17,
+    "hour": 13,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "Roman Naidenko",
+    "member": "Victoria Chanz\u00e1",
     "date": "03/11/26",
-    "hour": 15,
+    "hour": 14,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "Roman Naidenko",
-    "date": "03/11/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
+    "member": "Victoria Chanz\u00e1",
     "date": "03/11/26",
     "hour": 11,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "Roman Naidenko",
-    "date": "03/11/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/11/26",
-    "hour": 10,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/11/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/11/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/11/26",
-    "hour": 10,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/11/26",
-    "hour": 16,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/11/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/11/26",
-    "hour": 10,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/11/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/11/26",
-    "hour": 10,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/11/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
+    "member": "Victoria Chanz\u00e1",
     "date": "03/11/26",
     "hour": 15,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "Victor Cheung",
+    "member": "Victoria Chanz\u00e1",
     "date": "03/11/26",
     "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/11/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/11/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/11/26",
-    "hour": 12,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
@@ -28378,100 +28875,65 @@
     "type": "Update UI Page Handler Logic"
   },
   {
-    "member": "Alexander Pavelko",
-    "date": "03/10/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Alexander Pavelko",
-    "date": "03/10/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/10/26",
-    "hour": 18,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/10/26",
-    "hour": 10,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/10/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/10/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/10/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/10/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/10/26",
-    "hour": 16,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/10/26",
-    "hour": 18,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/10/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/10/26",
-    "hour": 8,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
+    "member": "Bradd Schofield",
     "date": "03/10/26",
     "hour": 12,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "Saymond Montoya",
+    "member": "Bradd Schofield",
+    "date": "03/10/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/10/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/10/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/10/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/10/26",
+    "hour": 12,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
     "date": "03/10/26",
     "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/10/26",
+    "hour": 16,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/10/26",
+    "hour": 10,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
@@ -30926,16 +31388,191 @@
     "type": "Update UI Page Handler Logic"
   },
   {
-    "member": "James Hereford",
+    "member": "Bradd Schofield",
+    "date": "03/09/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/09/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
     "date": "03/09/26",
     "hour": 9,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "Roman Naidenko",
+    "member": "Bradd Schofield",
+    "date": "03/09/26",
+    "hour": 18,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/09/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/09/26",
+    "hour": 10,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/09/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Lena Klapper",
+    "date": "03/09/26",
+    "hour": 14,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Lena Klapper",
+    "date": "03/09/26",
+    "hour": 14,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Lena Klapper",
+    "date": "03/09/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Mariana Gracia Salgado",
     "date": "03/09/26",
     "hour": 12,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Mariana Gracia Salgado",
+    "date": "03/09/26",
+    "hour": 16,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Mariana Gracia Salgado",
+    "date": "03/09/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Mariana Gracia Salgado",
+    "date": "03/09/26",
+    "hour": 12,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Mariana Gracia Salgado",
+    "date": "03/09/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Mariana Gracia Salgado",
+    "date": "03/09/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/09/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/09/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/09/26",
+    "hour": 12,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/09/26",
+    "hour": 14,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/09/26",
+    "hour": 11,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/09/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/09/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/09/26",
+    "hour": 14,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Nicole Rodrigues",
+    "date": "03/09/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/09/26",
+    "hour": 15,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Victoria Chanz\u00e1",
+    "date": "03/09/26",
+    "hour": 18,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
@@ -34377,65 +35014,16 @@
     "type": "Update UI Page Handler Logic"
   },
   {
-    "member": "Bilal Munir",
-    "date": "03/06/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Bilal Munir",
-    "date": "03/06/26",
-    "hour": 10,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
+    "member": "Mariana Gracia Salgado",
     "date": "03/06/26",
     "hour": 12,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "James Hereford",
+    "member": "Nicole Rodrigues",
     "date": "03/06/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/06/26",
-    "hour": 8,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/06/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Muhammad Farhan",
-    "date": "03/06/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/06/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/06/26",
-    "hour": 18,
+    "hour": 17,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
@@ -36463,261 +37051,9 @@
     "type": "Update Page UI"
   },
   {
-    "member": "Bilal Munir",
+    "member": "Mariana Gracia Salgado",
     "date": "03/05/26",
     "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/05/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/05/26",
-    "hour": 17,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/05/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/05/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/05/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/05/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/05/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/05/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/05/26",
-    "hour": 18,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/05/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/05/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/05/26",
-    "hour": 18,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/05/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/05/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/05/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Muhammad Farhan",
-    "date": "03/05/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Muhammad Farhan",
-    "date": "03/05/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/05/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/05/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/05/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/05/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/05/26",
-    "hour": 18,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/05/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/05/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/05/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/05/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/05/26",
-    "hour": 8,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/05/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/05/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/05/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/05/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/05/26",
-    "hour": 9,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/05/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/05/26",
-    "hour": 18,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/05/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/05/26",
-    "hour": 8,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
@@ -39291,247 +39627,16 @@
     "type": "Update UI Page Handler Logic"
   },
   {
-    "member": "Areeba Akhlaque",
-    "date": "03/04/26",
-    "hour": 8,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Areeba Akhlaque",
-    "date": "03/04/26",
-    "hour": 16,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Bilal Munir",
-    "date": "03/04/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Bilal Munir",
-    "date": "03/04/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/04/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/04/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/04/26",
-    "hour": 16,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/04/26",
-    "hour": 17,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/04/26",
-    "hour": 9,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/04/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/04/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/04/26",
-    "hour": 8,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/04/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/04/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/04/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/04/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/04/26",
-    "hour": 8,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Muhammad Farhan",
-    "date": "03/04/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Muhammad Farhan",
-    "date": "03/04/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Muhammad Farhan",
-    "date": "03/04/26",
-    "hour": 16,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/04/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/04/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/04/26",
-    "hour": 9,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
+    "member": "Bradd Schofield",
     "date": "03/04/26",
     "hour": 10,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "Saymond Montoya",
-    "date": "03/04/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/04/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
+    "member": "Bradd Schofield",
     "date": "03/04/26",
     "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/04/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/04/26",
-    "hour": 10,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/04/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/04/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/04/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/04/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/04/26",
-    "hour": 17,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/04/26",
-    "hour": 14,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
@@ -42259,219 +42364,51 @@
     "type": "Update Page UI"
   },
   {
-    "member": "Alexander Pavelko",
-    "date": "03/03/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Alexander Pavelko",
-    "date": "03/03/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Bilal Munir",
-    "date": "03/03/26",
-    "hour": 10,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/03/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/03/26",
-    "hour": 17,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
+    "member": "Bradd Schofield",
     "date": "03/03/26",
     "hour": 11,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "James Hereford",
+    "member": "Bradd Schofield",
     "date": "03/03/26",
-    "hour": 10,
+    "hour": 11,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "James Hereford",
+    "member": "Bradd Schofield",
+    "date": "03/03/26",
+    "hour": 17,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/03/26",
+    "hour": 14,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "Lena Klapper",
     "date": "03/03/26",
     "hour": 15,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "James Hereford",
-    "date": "03/03/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/03/26",
-    "hour": 17,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/03/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/03/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/03/26",
-    "hour": 8,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
+    "member": "Mariana Gracia Salgado",
     "date": "03/03/26",
     "hour": 12,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "Roman Naidenko",
-    "date": "03/03/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/03/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/03/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/03/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/03/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/03/26",
-    "hour": 17,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/03/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/03/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/03/26",
-    "hour": 9,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/03/26",
-    "hour": 17,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
+    "member": "Mariana Gracia Salgado",
     "date": "03/03/26",
     "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/03/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/03/26",
-    "hour": 17,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/03/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/03/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/03/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/03/26",
-    "hour": 15,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
@@ -45038,111 +44975,6 @@
     "type": "Update UI Page Handler Logic"
   },
   {
-    "member": "James Hereford",
-    "date": "03/02/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/02/26",
-    "hour": 10,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/02/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "03/02/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "03/02/26",
-    "hour": 9,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/02/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/02/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "03/02/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/02/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/02/26",
-    "hour": 8,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/02/26",
-    "hour": 9,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/02/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/02/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/02/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "03/02/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
     "member": "Adriane Barredo",
     "date": "03/02/26",
     "hour": 9,
@@ -46767,6 +46599,13 @@
     "type": "Delete File"
   },
   {
+    "member": "Bradd Schofield",
+    "date": "03/01/26",
+    "hour": 13,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
     "member": "James Hereford",
     "date": "03/01/26",
     "hour": 13,
@@ -46982,48 +46821,6 @@
     "hour": 12,
     "platform": "Backendless App",
     "type": "Delete File"
-  },
-  {
-    "member": "James Hereford",
-    "date": "02/28/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "02/28/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "02/28/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "02/28/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "02/28/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "02/28/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
   },
   {
     "member": "Areeba Akhlaque",
@@ -47304,90 +47101,6 @@
     "hour": 15,
     "platform": "Backendless App",
     "type": "Update UI Page Handler Logic"
-  },
-  {
-    "member": "Alexander Pavelko",
-    "date": "02/27/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "02/27/26",
-    "hour": 16,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "02/27/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "02/27/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "02/27/26",
-    "hour": 10,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "02/27/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "02/27/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "02/27/26",
-    "hour": 17,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "02/27/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "02/27/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "02/27/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "02/27/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
   },
   {
     "member": "Adriane Barredo",
@@ -48475,170 +48188,23 @@
     "type": "Update UI Page Handler Logic"
   },
   {
-    "member": "James Hereford",
-    "date": "02/26/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "02/26/26",
-    "hour": 18,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
+    "member": "Bradd Schofield",
     "date": "02/26/26",
     "hour": 17,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "James Hereford",
-    "date": "02/26/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
+    "member": "Bradd Schofield",
     "date": "02/26/26",
     "hour": 15,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
   {
-    "member": "James Hereford",
-    "date": "02/26/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Muhammad Farhan",
+    "member": "Mariana Gracia Salgado",
     "date": "02/26/26",
     "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "02/26/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "02/26/26",
-    "hour": 17,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "02/26/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "02/26/26",
-    "hour": 10,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "02/26/26",
-    "hour": 9,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "02/26/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "02/26/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "02/26/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "02/26/26",
-    "hour": 16,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "02/26/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "02/26/26",
-    "hour": 18,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "02/26/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "02/26/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "02/26/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "02/26/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "02/26/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "02/26/26",
-    "hour": 14,
     "platform": "ClickUp",
     "type": "Channels messages"
   },
@@ -50853,48 +50419,6 @@
     "hour": 8,
     "platform": "Backendless App",
     "type": "Update Page UI"
-  },
-  {
-    "member": "Bilal Munir",
-    "date": "02/25/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "02/25/26",
-    "hour": 8,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "02/25/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "02/25/26",
-    "hour": 9,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "02/25/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "02/25/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
   },
   {
     "member": "Adriane Barredo",
@@ -53382,55 +52906,6 @@
     "type": "Update UI Page Handler Logic"
   },
   {
-    "member": "Bilal Munir",
-    "date": "02/24/26",
-    "hour": 18,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "02/24/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "02/24/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "02/24/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "02/24/26",
-    "hour": 16,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Roman Naidenko",
-    "date": "02/24/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "02/24/26",
-    "hour": 8,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
     "member": "Areeba Akhlaque",
     "date": "02/24/26",
     "hour": 13,
@@ -55781,13 +55256,6 @@
     "hour": 15,
     "platform": "Backendless App",
     "type": "Update Page UI"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "02/23/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
   },
   {
     "member": "Areeba Akhlaque",
@@ -60004,41 +59472,6 @@
     "type": "Update Page UI"
   },
   {
-    "member": "James Hereford",
-    "date": "02/20/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "02/20/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "02/20/26",
-    "hour": 12,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "02/20/26",
-    "hour": 9,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Victor Cheung",
-    "date": "02/20/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
     "member": "Adriane Barredo",
     "date": "02/20/26",
     "hour": 12,
@@ -62116,34 +61549,6 @@
     "hour": 12,
     "platform": "Backendless App",
     "type": "Update UI Page Handler Logic"
-  },
-  {
-    "member": "Bilal Munir",
-    "date": "02/19/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "02/19/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "02/19/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "02/19/26",
-    "hour": 14,
-    "platform": "ClickUp",
-    "type": "Channels messages"
   },
   {
     "member": "Adriane Barredo",
@@ -65032,48 +64437,6 @@
   {
     "member": "Alexander Pavelko",
     "date": "02/18/26",
-    "hour": 18,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "02/18/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "02/18/26",
-    "hour": 8,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "02/18/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "02/18/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "02/18/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Alexander Pavelko",
-    "date": "02/18/26",
     "hour": 13,
     "platform": "ClickUp",
     "type": "Comment Posted"
@@ -67296,34 +66659,6 @@
     "hour": 15,
     "platform": "Backendless App",
     "type": "Update UI Page Handler Logic"
-  },
-  {
-    "member": "James Hereford",
-    "date": "02/17/26",
-    "hour": 11,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "02/17/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "James Hereford",
-    "date": "02/17/26",
-    "hour": 16,
-    "platform": "ClickUp",
-    "type": "Channels messages"
-  },
-  {
-    "member": "Saymond Montoya",
-    "date": "02/17/26",
-    "hour": 15,
-    "platform": "ClickUp",
-    "type": "Channels messages"
   },
   {
     "member": "Alexander Pavelko",
