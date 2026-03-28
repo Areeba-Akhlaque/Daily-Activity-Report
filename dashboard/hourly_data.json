@@ -518,6 +518,20 @@
     "type": "Channels messages"
   },
   {
+    "member": "James Hereford",
+    "date": "03/27/26",
+    "hour": 14,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/27/26",
+    "hour": 14,
+    "platform": "ClickUp",
+    "type": "Channels messages"
+  },
+  {
     "member": "Saifullah Khan",
     "date": "03/27/26",
     "hour": 18,
@@ -826,6 +840,20 @@
     "type": "Comment Posted"
   },
   {
+    "member": "James Hereford",
+    "date": "03/27/26",
+    "hour": 16,
+    "platform": "ClickUp",
+    "type": "Comment Posted"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/27/26",
+    "hour": 12,
+    "platform": "ClickUp",
+    "type": "Comment Posted"
+  },
+  {
     "member": "Mariana Gracia Salgado",
     "date": "03/27/26",
     "hour": 9,
@@ -1708,6 +1736,13 @@
     "type": "Branch/Tag Created"
   },
   {
+    "member": "David Andres",
+    "date": "03/27/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Branch/Tag Created"
+  },
+  {
     "member": "JP Casabianca",
     "date": "03/27/26",
     "hour": 9,
@@ -1762,6 +1797,188 @@
     "hour": 18,
     "platform": "GitHub",
     "type": "Branch/Tag Deleted"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/27/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/27/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/27/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/27/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/27/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/27/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/27/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/27/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/27/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/27/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/27/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/27/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/27/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/27/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/27/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/27/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/27/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/27/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/27/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/27/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/27/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Rafael Casabianca",
+    "date": "03/27/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Rafael Casabianca",
+    "date": "03/27/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Rafael Casabianca",
+    "date": "03/27/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Rafael Casabianca",
+    "date": "03/27/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Rafael Casabianca",
+    "date": "03/27/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "David Andres",
@@ -2061,6 +2278,20 @@
     "member": "Areeba Akhlaque",
     "date": "03/27/26",
     "hour": 13,
+    "platform": "Google Workspace",
+    "type": "Drive Edit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/27/26",
+    "hour": 14,
+    "platform": "Google Workspace",
+    "type": "Drive Edit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/27/26",
+    "hour": 11,
     "platform": "Google Workspace",
     "type": "Drive Edit"
   },
@@ -2299,6 +2530,13 @@
     "member": "Areeba Akhlaque",
     "date": "03/27/26",
     "hour": 16,
+    "platform": "Google Workspace",
+    "type": "Gmail Send"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/27/26",
+    "hour": 15,
     "platform": "Google Workspace",
     "type": "Gmail Send"
   },
@@ -4718,6 +4956,160 @@
     "type": "Branch/Tag Deleted"
   },
   {
+    "member": "Areeba Akhlaque",
+    "date": "03/26/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "03/26/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/26/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/26/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/26/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/26/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/26/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/26/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/26/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/26/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/26/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/26/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/26/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/26/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/26/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/26/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/26/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/26/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/26/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/26/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/26/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/26/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "David Andres",
     "date": "03/26/26",
     "hour": 13,
@@ -4819,6 +5211,27 @@
     "member": "JP Casabianca",
     "date": "03/26/26",
     "hour": 12,
+    "platform": "GitHub",
+    "type": "PR Opened/Closed"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/26/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "PR Opened/Closed"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/26/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "PR Opened/Closed"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/26/26",
+    "hour": 16,
     "platform": "GitHub",
     "type": "PR Opened/Closed"
   },
@@ -7112,6 +7525,328 @@
     "type": "Branch/Tag Deleted"
   },
   {
+    "member": "Areeba Akhlaque",
+    "date": "03/25/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/25/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/25/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/25/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/25/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/25/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/25/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/25/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/25/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/25/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/25/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/25/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/25/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/25/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/25/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/25/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/25/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/25/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/25/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/25/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "David Andres",
     "date": "03/25/26",
     "hour": 14,
@@ -7381,6 +8116,41 @@
     "member": "JP Casabianca",
     "date": "03/25/26",
     "hour": 9,
+    "platform": "GitHub",
+    "type": "PR Opened/Closed"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "PR Opened/Closed"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "PR Opened/Closed"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "PR Opened/Closed"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "PR Opened/Closed"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "03/25/26",
+    "hour": 13,
     "platform": "GitHub",
     "type": "PR Opened/Closed"
   },
@@ -10052,6 +10822,216 @@
     "type": "Branch/Tag Created"
   },
   {
+    "member": "Areeba Akhlaque",
+    "date": "03/24/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/24/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/24/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/24/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/24/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/24/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/24/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/24/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/24/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/24/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/24/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/24/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/24/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/24/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/24/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/24/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/24/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/24/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/24/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/24/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/24/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/24/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/24/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/24/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/24/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/24/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/24/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/24/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/24/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/24/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "David Andres",
     "date": "03/24/26",
     "hour": 13,
@@ -12068,6 +13048,83 @@
     "type": "Branch/Tag Created"
   },
   {
+    "member": "James Hereford",
+    "date": "03/23/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/23/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/23/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/23/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/23/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/23/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/23/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/23/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Saifullah Khan",
     "date": "03/23/26",
     "hour": 9,
@@ -12964,6 +14021,13 @@
     "type": "Comment Posted"
   },
   {
+    "member": "James Hereford",
+    "date": "03/22/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "David Andres",
     "date": "03/22/26",
     "hour": 13,
@@ -13263,6 +14327,69 @@
     "hour": 13,
     "platform": "GitHub",
     "type": "Branch/Tag Created"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/21/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/21/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "David Andres",
@@ -14394,6 +15521,118 @@
   {
     "member": "David Andres",
     "date": "03/20/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/20/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/20/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/20/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/20/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/20/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/20/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/20/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/20/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/20/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/20/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/20/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/20/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/20/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/20/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/20/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "David Andres",
+    "date": "03/20/26",
     "hour": 8,
     "platform": "GitHub",
     "type": "PR Opened/Closed"
@@ -15804,6 +17043,223 @@
     "hour": 10,
     "platform": "GitHub",
     "type": "Branch/Tag Created"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/19/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "03/19/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/19/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Areeba Akhlaque",
@@ -18081,6 +19537,62 @@
     "type": "Branch/Tag Created"
   },
   {
+    "member": "James Hereford",
+    "date": "03/18/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/18/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/18/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/18/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/18/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/18/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/18/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/18/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Saifullah Khan",
     "date": "03/18/26",
     "hour": 13,
@@ -20452,6 +21964,69 @@
     "hour": 14,
     "platform": "GitHub",
     "type": "Branch/Tag Created"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/17/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/17/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/17/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/17/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/17/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/17/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/17/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/17/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/17/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Bradd Schofield",
@@ -23415,6 +24990,118 @@
     "type": "Branch/Tag Created"
   },
   {
+    "member": "James Hereford",
+    "date": "03/16/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/16/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/16/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/16/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/16/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "03/16/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "03/16/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/16/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/16/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/16/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/16/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/16/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/16/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/16/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/16/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/16/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Bradd Schofield",
     "date": "03/16/26",
     "hour": 13,
@@ -24724,6 +26411,20 @@
     "type": "File Edited"
   },
   {
+    "member": "Muhammad Farhan",
+    "date": "03/15/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "03/15/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Areeba Akhlaque",
     "date": "03/15/26",
     "hour": 14,
@@ -24953,6 +26654,48 @@
     "hour": 15,
     "platform": "ClickUp",
     "type": "task updated"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/14/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/14/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/14/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/14/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/14/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "03/14/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Areeba Akhlaque",
@@ -26122,6 +27865,48 @@
     "hour": 11,
     "platform": "GitHub",
     "type": "Branch/Tag Created"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/13/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/13/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/13/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/13/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/13/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/13/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Alexander Pavelko",
@@ -27566,13 +29351,6 @@
     "type": "task completed"
   },
   {
-    "member": "Saifullah Khan",
-    "date": "03/12/26",
-    "hour": 13,
-    "platform": "ClickUp",
-    "type": "task completed"
-  },
-  {
     "member": "Victor Cheung",
     "date": "03/12/26",
     "hour": 18,
@@ -27872,6 +29650,48 @@
     "hour": 11,
     "platform": "GitHub",
     "type": "Branch/Tag Created"
+  },
+  {
+    "member": "Bradd Schofield",
+    "date": "03/12/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/12/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/12/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/12/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/12/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/12/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Bradd Schofield",
@@ -30562,6 +32382,41 @@
     "type": "Branch/Tag Created"
   },
   {
+    "member": "James Hereford",
+    "date": "03/11/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/11/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/11/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/11/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Victor Cheung",
+    "date": "03/11/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Saifullah Khan",
     "date": "03/11/26",
     "hour": 17,
@@ -35406,6 +37261,34 @@
     "type": "Branch/Tag Created"
   },
   {
+    "member": "Saifullah Khan",
+    "date": "03/09/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/09/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/09/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/09/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Alexander Pavelko",
     "date": "03/09/26",
     "hour": 13,
@@ -36409,6 +38292,13 @@
   {
     "member": "Saifullah Khan",
     "date": "03/08/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/08/26",
     "hour": 18,
     "platform": "GitHub",
     "type": "PR Opened/Closed"
@@ -36727,6 +38617,111 @@
     "hour": 12,
     "platform": "GitHub",
     "type": "Branch/Tag Created"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/07/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/07/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/07/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/07/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/07/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/07/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/07/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/07/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/07/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/07/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/07/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/07/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/07/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/07/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/07/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Saifullah Khan",
@@ -38372,6 +40367,118 @@
     "hour": 12,
     "platform": "GitHub",
     "type": "Branch/Tag Created"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/06/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/06/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/06/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/06/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/06/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/06/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/06/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/06/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/06/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/06/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/06/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/06/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/06/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/06/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/06/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/06/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Saifullah Khan",
@@ -39926,6 +42033,83 @@
     "hour": 17,
     "platform": "Figma",
     "type": "File Edited"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/05/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/05/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/05/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/05/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "03/05/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/05/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/05/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/05/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/05/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "03/05/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/05/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Bilal Munir",
@@ -42789,6 +44973,48 @@
     "hour": 13,
     "platform": "GitHub",
     "type": "Branch/Tag Deleted"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "03/04/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/04/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/04/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/04/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/04/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/04/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Alexander Pavelko",
@@ -45136,6 +47362,146 @@
     "type": "Branch/Tag Created"
   },
   {
+    "member": "James Hereford",
+    "date": "03/03/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/03/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "03/03/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "03/03/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "03/03/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "03/03/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "03/03/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "03/03/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "03/03/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "03/03/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "03/03/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "03/03/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "03/03/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "03/03/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "03/03/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/03/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/03/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/03/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/03/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "03/03/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Saifullah Khan",
     "date": "03/03/26",
     "hour": 14,
@@ -49357,6 +51723,20 @@
     "type": "File Edited"
   },
   {
+    "member": "Alexander Pavelko",
+    "date": "02/27/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Alexander Pavelko",
+    "date": "02/27/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Areeba Akhlaque",
     "date": "02/27/26",
     "hour": 14,
@@ -50706,6 +53086,279 @@
     "hour": 13,
     "platform": "GitHub",
     "type": "Branch/Tag Created"
+  },
+  {
+    "member": "Alexander Pavelko",
+    "date": "02/26/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Alexander Pavelko",
+    "date": "02/26/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Alexander Pavelko",
+    "date": "02/26/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Alexander Pavelko",
+    "date": "02/26/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Alexander Pavelko",
+    "date": "02/26/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Alexander Pavelko",
+    "date": "02/26/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Alexander Pavelko",
+    "date": "02/26/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Alexander Pavelko",
+    "date": "02/26/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/26/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/26/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/26/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/26/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/26/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/26/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/26/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/26/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/26/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/26/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/26/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/26/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/26/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/26/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/26/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/26/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/26/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/26/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/26/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/26/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/26/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/26/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/26/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/26/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/26/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/26/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/26/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/26/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/26/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/26/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/26/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Alexander Pavelko",
@@ -52668,18 +55321,193 @@
     "type": "Branch/Tag Created"
   },
   {
-    "member": "Saifullah Khan",
+    "member": "James Hereford",
+    "date": "02/25/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Branch/Tag Deleted"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/25/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/25/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/25/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/25/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/25/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/25/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/25/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/25/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
     "date": "02/25/26",
     "hour": 15,
     "platform": "GitHub",
-    "type": "Branch/Tag Created"
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/25/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/25/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/25/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/25/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/25/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "James Hereford",
     "date": "02/25/26",
     "hour": 11,
     "platform": "GitHub",
-    "type": "Branch/Tag Deleted"
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/25/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/25/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/25/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/25/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/25/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/25/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/25/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/25/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/25/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/25/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/25/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "James Hereford",
@@ -54840,6 +57668,349 @@
   {
     "member": "Areeba Akhlaque",
     "date": "02/24/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/24/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/24/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/24/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/24/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/24/26",
     "hour": 13,
     "platform": "GitHub",
     "type": "PR Opened/Closed"
@@ -56798,6 +59969,573 @@
     "type": "Branch/Tag Deleted"
   },
   {
+    "member": "Areeba Akhlaque",
+    "date": "02/23/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/23/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/23/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/23/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/23/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/23/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/23/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/23/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "James Hereford",
     "date": "02/23/26",
     "hour": 18,
@@ -57834,6 +61572,34 @@
     "type": "Comment Posted"
   },
   {
+    "member": "Muhammad Farhan",
+    "date": "02/22/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "02/22/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "02/22/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "02/22/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "James Hereford",
     "date": "02/22/26",
     "hour": 15,
@@ -58028,6 +61794,34 @@
     "hour": 12,
     "platform": "ClickUp",
     "type": "task created"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/21/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/21/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/21/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/21/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Areeba Akhlaque",
@@ -60424,6 +64218,97 @@
     "type": "task updated"
   },
   {
+    "member": "Areeba Akhlaque",
+    "date": "02/20/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/20/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/20/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/20/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/20/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/20/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/20/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/20/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/20/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/20/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/20/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/20/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/20/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Saifullah Khan",
     "date": "02/20/26",
     "hour": 12,
@@ -62711,6 +66596,237 @@
     "hour": 18,
     "platform": "ClickUp",
     "type": "task updated"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/19/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/19/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Adriane Barredo",
@@ -65256,6 +69372,181 @@
   {
     "member": "Areeba Akhlaque",
     "date": "02/18/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/18/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/18/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/18/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/18/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/18/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/18/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/18/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/18/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/18/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/18/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/18/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/18/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/18/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/18/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/18/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/18/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/18/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/18/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/18/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/18/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/18/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/18/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/18/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/18/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/18/26",
     "hour": 11,
     "platform": "Google Workspace",
     "type": "Drive Edit"
@@ -69384,6 +73675,118 @@
     "type": "task updated"
   },
   {
+    "member": "Saifullah Khan",
+    "date": "02/16/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/16/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/16/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/16/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/16/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/16/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/16/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/16/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/16/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/16/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/16/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/16/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/16/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/16/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/16/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/16/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Areeba Akhlaque",
     "date": "02/16/26",
     "hour": 16,
@@ -71631,6 +76034,20 @@
     "type": "task updated"
   },
   {
+    "member": "Saifullah Khan",
+    "date": "02/13/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/13/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Areeba Akhlaque",
     "date": "02/13/26",
     "hour": 16,
@@ -73169,6 +77586,83 @@
     "hour": 15,
     "platform": "GitHub",
     "type": "Branch/Tag Created"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/12/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/12/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/12/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/12/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/12/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/12/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/12/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/12/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/12/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/12/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/12/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Saifullah Khan",
@@ -75894,6 +80388,188 @@
     "type": "task updated"
   },
   {
+    "member": "Areeba Akhlaque",
+    "date": "02/11/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/11/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/11/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/11/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/11/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/11/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/11/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/11/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/11/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/11/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/11/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/11/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/11/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/11/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/11/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/11/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/11/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/11/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/11/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/11/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/11/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/11/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/11/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/11/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/11/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/11/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Adriane Barredo",
     "date": "02/11/26",
     "hour": 12,
@@ -77296,6 +81972,139 @@
   {
     "member": "Areeba Akhlaque",
     "date": "02/10/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/10/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/10/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/10/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/10/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/10/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/10/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/10/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/10/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "02/10/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "02/10/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "02/10/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "02/10/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "02/10/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "02/10/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "02/10/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "02/10/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Muhammad Farhan",
+    "date": "02/10/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/10/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/10/26",
     "hour": 11,
     "platform": "Google Workspace",
     "type": "Drive Edit"
@@ -78582,6 +83391,167 @@
     "type": "Branch/Tag Created"
   },
   {
+    "member": "Areeba Akhlaque",
+    "date": "02/09/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/09/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/09/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/09/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/09/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/09/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/09/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/09/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/09/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/09/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/09/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/09/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/09/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/09/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/09/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/09/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/09/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/09/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/09/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/09/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/09/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/09/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/09/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Saifullah Khan",
     "date": "02/09/26",
     "hour": 10,
@@ -79555,6 +84525,48 @@
     "type": "Branch/Tag Created"
   },
   {
+    "member": "James Hereford",
+    "date": "02/07/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/07/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/07/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/07/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/07/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/07/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Areeba Akhlaque",
     "date": "02/07/26",
     "hour": 15,
@@ -80050,6 +85062,97 @@
     "hour": 17,
     "platform": "ClickUp",
     "type": "task updated"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/06/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/06/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/06/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/06/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/06/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/06/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "02/06/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/06/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/06/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/06/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "02/06/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "02/06/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "02/06/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Areeba Akhlaque",
@@ -81872,6 +86975,41 @@
     "type": "task updated"
   },
   {
+    "member": "Areeba Akhlaque",
+    "date": "02/05/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/05/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/05/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/05/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "02/05/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Adriane Barredo",
     "date": "02/05/26",
     "hour": 8,
@@ -83039,6 +88177,223 @@
     "hour": 18,
     "platform": "GitHub",
     "type": "Branch/Tag Deleted"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/04/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "02/04/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "02/04/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "02/04/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/04/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/04/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/04/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/04/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Juan Vidal",
@@ -84663,6 +90018,104 @@
     "hour": 10,
     "platform": "GitHub",
     "type": "Branch/Tag Created"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/03/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/03/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/03/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/03/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/03/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/03/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/03/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/03/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/03/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "02/03/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/03/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/03/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/03/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/03/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Areeba Akhlaque",
@@ -86263,6 +91716,83 @@
   {
     "member": "Areeba Akhlaque",
     "date": "02/02/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/02/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/02/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/02/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/02/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/02/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/02/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/02/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/02/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/02/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "02/02/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "02/02/26",
     "hour": 13,
     "platform": "Google Workspace",
     "type": "Drive Edit"
@@ -87474,6 +93004,20 @@
   {
     "member": "Juan Vidal",
     "date": "01/31/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/31/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/31/26",
     "hour": 18,
     "platform": "GitHub",
     "type": "PR Opened/Closed"
@@ -88415,6 +93959,279 @@
     "hour": 12,
     "platform": "GitHub",
     "type": "Branch/Tag Created"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/30/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/30/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/30/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/30/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/30/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/30/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/30/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/30/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/30/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/30/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/30/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/30/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/30/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/30/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/30/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/30/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/30/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/30/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/30/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/30/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/30/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/30/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/30/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/30/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/30/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/30/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/30/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/30/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/30/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/30/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/30/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/30/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/30/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/30/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/30/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/30/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/30/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/30/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/30/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Saifullah Khan",
@@ -89689,6 +95506,251 @@
     "hour": 14,
     "platform": "GitHub",
     "type": "Branch/Tag Created"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/29/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "01/29/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "01/29/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "01/29/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/29/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/29/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/29/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Saifullah Khan",
@@ -91005,6 +97067,356 @@
     "hour": 9,
     "platform": "GitHub",
     "type": "Branch/Tag Deleted"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Areeba Akhlaque",
+    "date": "01/28/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "01/28/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "01/28/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "JP Casabianca",
+    "date": "01/28/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/28/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/28/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/28/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/28/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Juan Vidal",
@@ -92470,6 +98882,55 @@
     "type": "Branch/Tag Created"
   },
   {
+    "member": "Bilal Munir",
+    "date": "01/27/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/27/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/27/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/27/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/27/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/27/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/27/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Saifullah Khan",
     "date": "01/27/26",
     "hour": 17,
@@ -93702,6 +100163,90 @@
     "type": "task updated"
   },
   {
+    "member": "Bilal Munir",
+    "date": "01/26/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/26/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/26/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/26/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/26/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/26/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/26/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/26/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/26/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/26/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/26/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/26/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Areeba Akhlaque",
     "date": "01/26/26",
     "hour": 12,
@@ -94638,6 +101183,13 @@
     "hour": 11,
     "platform": "ClickUp",
     "type": "task created"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/24/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Areeba Akhlaque",
@@ -95450,6 +102002,104 @@
     "hour": 10,
     "platform": "Figma",
     "type": "Comment Posted"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/23/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/23/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/23/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/23/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/23/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/23/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/23/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/23/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/23/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/23/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/23/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/23/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/23/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Areeba Akhlaque",
@@ -96934,6 +103584,48 @@
     "hour": 15,
     "platform": "Figma",
     "type": "Comment Posted"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/22/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/22/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/22/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/22/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/22/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/22/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Areeba Akhlaque",
@@ -98488,6 +105180,48 @@
     "hour": 11,
     "platform": "ClickUp",
     "type": "task updated"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/21/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/21/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/21/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/21/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/21/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/21/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Bradd Schofield",
@@ -100478,6 +107212,62 @@
     "type": "task updated"
   },
   {
+    "member": "Juan Vidal",
+    "date": "01/20/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/20/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/20/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/20/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/20/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/20/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/20/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/20/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Areeba Akhlaque",
     "date": "01/20/26",
     "hour": 16,
@@ -101717,6 +108507,13 @@
     "type": "task created"
   },
   {
+    "member": "Saifullah Khan",
+    "date": "01/19/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "James Hereford",
     "date": "01/19/26",
     "hour": 12,
@@ -101962,6 +108759,13 @@
     "type": "Update Page UI"
   },
   {
+    "member": "James Hereford",
+    "date": "01/18/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Areeba Akhlaque",
     "date": "01/18/26",
     "hour": 15,
@@ -102086,6 +108890,97 @@
     "hour": 11,
     "platform": "Backendless App",
     "type": "Update Page UI"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/17/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/17/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/17/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/17/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/17/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/17/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/17/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/17/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/17/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/17/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/17/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/17/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/17/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "James Hereford",
@@ -102975,6 +109870,90 @@
     "hour": 18,
     "platform": "ClickUp",
     "type": "task updated"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/16/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/16/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/16/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/16/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/16/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/16/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/16/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/16/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/16/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/16/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/16/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/16/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Areeba Akhlaque",
@@ -104342,6 +111321,55 @@
     "type": "task updated"
   },
   {
+    "member": "Bilal Munir",
+    "date": "01/15/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/15/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/15/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/15/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/15/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/15/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/15/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Areeba Akhlaque",
     "date": "01/15/26",
     "hour": 11,
@@ -105621,6 +112649,41 @@
     "hour": 13,
     "platform": "ClickUp",
     "type": "task created"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/14/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/14/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/14/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/14/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/14/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Areeba Akhlaque",
@@ -107590,6 +114653,69 @@
     "type": "task updated"
   },
   {
+    "member": "Bilal Munir",
+    "date": "01/13/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/13/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/13/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/13/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/13/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/13/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/13/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/13/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/13/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Areeba Akhlaque",
     "date": "01/13/26",
     "hour": 14,
@@ -108857,6 +115983,97 @@
     "type": "Comment Posted"
   },
   {
+    "member": "Bilal Munir",
+    "date": "01/12/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/12/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/12/26",
+    "hour": 8,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/12/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/12/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/12/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/12/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/12/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/12/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/12/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/12/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/12/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/12/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Areeba Akhlaque",
     "date": "01/12/26",
     "hour": 14,
@@ -109618,6 +116835,13 @@
     "hour": 10,
     "platform": "ClickUp",
     "type": "Comment Posted"
+  },
+  {
+    "member": "James Hereford",
+    "date": "01/11/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "James Hereford",
@@ -110675,6 +117899,83 @@
     "hour": 13,
     "platform": "Figma",
     "type": "Comment Posted"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/09/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/09/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/09/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/09/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/09/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/09/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/09/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/09/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/09/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/09/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/09/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Bradd Schofield",
@@ -111809,6 +119110,34 @@
     "hour": 8,
     "platform": "ClickUp",
     "type": "task updated"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/08/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/08/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/08/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/08/26",
+    "hour": 10,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Areeba Akhlaque",
@@ -113006,6 +120335,48 @@
     "hour": 11,
     "platform": "ClickUp",
     "type": "task created"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/07/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/07/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/07/26",
+    "hour": 17,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/07/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/07/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/07/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "Areeba Akhlaque",
@@ -114191,6 +121562,48 @@
     "type": "task updated"
   },
   {
+    "member": "Bilal Munir",
+    "date": "01/06/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/06/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/06/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/06/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/06/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/06/26",
+    "hour": 18,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Bradd Schofield",
     "date": "01/06/26",
     "hour": 14,
@@ -115227,6 +122640,41 @@
     "type": "task updated"
   },
   {
+    "member": "Juan Vidal",
+    "date": "01/05/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/05/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/05/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/05/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Juan Vidal",
+    "date": "01/05/26",
+    "hour": 16,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Areeba Akhlaque",
     "date": "01/05/26",
     "hour": 14,
@@ -116123,6 +123571,27 @@
     "type": "task created"
   },
   {
+    "member": "Bilal Munir",
+    "date": "01/02/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/02/26",
+    "hour": 11,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/02/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
     "member": "Areeba Akhlaque",
     "date": "01/02/26",
     "hour": 14,
@@ -116408,6 +123877,62 @@
     "hour": 8,
     "platform": "Backendless App",
     "type": "Delete File"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/01/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Bilal Munir",
+    "date": "01/01/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/01/26",
+    "hour": 14,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/01/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/01/26",
+    "hour": 15,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/01/26",
+    "hour": 9,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/01/26",
+    "hour": 13,
+    "platform": "GitHub",
+    "type": "Code Commit"
+  },
+  {
+    "member": "Saifullah Khan",
+    "date": "01/01/26",
+    "hour": 12,
+    "platform": "GitHub",
+    "type": "Code Commit"
   },
   {
     "member": "James Hereford",
