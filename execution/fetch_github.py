@@ -238,15 +238,28 @@ def process_and_upload(events):
         # Sort
         combined['sort_dt'] = pd.to_datetime(combined['Date'], format='%m/%d/%y')
         combined = combined.sort_values(by=['sort_dt', 'Quantity'], ascending=[False, False])
-        final_merged = combined[['Name', 'Date', 'Platform', 'Event Type', 'Quantity']]
+        # 3. BULLETPROOF CLEANING: Convert every value to a native Python type
+        final_merged = combined[['Name', 'Date', 'Platform', 'Event Type', 'Quantity']].copy()
+        rows_to_upload = []
+        rows_to_upload.append(final_merged.columns.tolist()) # Add Header
         
-        # Convert to native Python types (numpy int64 is NOT JSON serializable)
-        final_merged = final_merged.astype(object)
-        final_merged['Quantity'] = final_merged['Quantity'].apply(lambda x: int(x) if x != '' else 1)
+        for _, row in final_merged.iterrows():
+            clean_row = []
+            for col in final_merged.columns:
+                val = row[col]
+                if col == 'Quantity':
+                    try:
+                        clean_row.append(int(float(val)) if pd.notnull(val) and str(val) != '' else 1)
+                    except:
+                        clean_row.append(1)
+                else:
+                    clean_row.append(str(val) if pd.notnull(val) else "")
+            rows_to_upload.append(clean_row)
 
+        print(f"  [CLEAN] Data sanitized for JSON upload.")
         ws.clear()
-        ws.update(values=[list(final_merged.columns)] + final_merged.values.tolist(), range_name='A1')
-        print(f"  [SUCCESS] Uploaded {len(final_merged)} merged aggregate rows.")
+        ws.update(values=rows_to_upload, range_name='A1')
+        print(f"  [SUCCESS] Uploaded {len(rows_to_upload)-1} merged aggregate rows.")
     except Exception as e: 
         print(f"  [ERROR] {e}")
         import traceback

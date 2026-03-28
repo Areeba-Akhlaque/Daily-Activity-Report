@@ -223,35 +223,50 @@ def process_and_upload_commits(commits):
             ws = sh.add_worksheet(tn, 10000, 10)
             df_old = pd.DataFrame(columns=['Name', 'Date', 'Time', 'Platform', 'Repo', 'Event Type', 'Quantity', 'Hash', 'Message'])
         
-        # Standardize columns before merge to prevent schema mismatch NaN
+        # 1. Standardize columns
         STANDARD_COLS = ['Name', 'Date', 'Time', 'Platform', 'Repo', 'Event Type', 'Quantity', 'Hash', 'Message']
         for col in STANDARD_COLS:
             if col not in df_old.columns:
                 df_old[col] = ''
         
-        # Merge by Hash
+        # 2. Merge by Hash
         if not df_old.empty:
             combined = pd.concat([df_old[STANDARD_COLS], final_df[STANDARD_COLS]]).drop_duplicates(subset=['Hash'], keep='last')
         else:
             combined = final_df[STANDARD_COLS]
 
-        # Ensure Quantity is int (gspread returns strings)
-        combined['Quantity'] = pd.to_numeric(combined['Quantity'], errors='coerce').fillna(1).astype(int)
-
-        # Sort
+        # 3. Sort
         combined['sort_dt'] = pd.to_datetime(combined['Date'], format='%m/%d/%y', errors='coerce')
         combined = combined.sort_values(by=['sort_dt'], ascending=[False])
-        final_merged = combined[STANDARD_COLS].fillna('')
         
-        # Convert to native Python types (numpy int64/float64 are NOT JSON serializable)
-        final_merged = final_merged.astype(object)
-        final_merged['Quantity'] = final_merged['Quantity'].apply(lambda x: int(x) if x != '' else 1)
+        # 4. BULLETPROOF CLEANING: Convert every value to a native Python type
+        final_upload_df = combined[STANDARD_COLS].copy()
+        rows_to_upload = []
+        rows_to_upload.append(final_upload_df.columns.tolist()) # Add Header
+        
+        for _, row in final_upload_df.iterrows():
+            clean_row = []
+            for col in STANDARD_COLS:
+                val = row[col]
+                # Special handling for Quantity to ensure it's a native int
+                if col == 'Quantity':
+                    try:
+                        clean_row.append(int(float(val)) if pd.notnull(val) and str(val) != '' else 1)
+                    except:
+                        clean_row.append(1)
+                else:
+                    # Convert everything else to string, handle nulls
+                    clean_row.append(str(val) if pd.notnull(val) else "")
+            rows_to_upload.append(clean_row)
 
+        print(f"  [CLEAN] Data sanitized for JSON upload.")
         ws.clear()
-        ws.update(values=[list(final_merged.columns)] + final_merged.values.tolist(), range_name='A1')
-        print(f"  [SUCCESS] Uploaded {len(final_merged)} merged commits.")
+        ws.update(values=rows_to_upload, range_name='A1')
+        print(f"  [SUCCESS] Uploaded {len(rows_to_upload)-1} merged commits.")
     except Exception as e: 
         print(f"  [ERROR] {e}")
+        import traceback
+        traceback.print_exc()
 
 if __name__ == "__main__":
     from name_mappings import GITHUB_TEAM_HANDLES

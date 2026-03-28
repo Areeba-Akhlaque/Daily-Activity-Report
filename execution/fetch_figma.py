@@ -232,18 +232,27 @@ def process_and_upload(events):
     # Ensure Quantity is int
     combined['Quantity'] = pd.to_numeric(combined['Quantity'], errors='coerce').fillna(1).astype(int)
 
-    # Sort final
-    combined['sort_dt'] = pd.to_datetime(combined['Date'], format='%m/%d/%y', errors='coerce')
-    combined = combined.sort_values(by=['sort_dt', 'Quantity'], ascending=[False, False])
-    final_df = combined[['Name', 'Date', 'Platform', 'Event Type', 'Quantity']]
+    # 3. BULLETPROOF CLEANING: Convert every value to a native Python type
+    final_df = combined[['Name', 'Date', 'Platform', 'Event Type', 'Quantity']].copy()
+    rows_to_upload = []
+    rows_to_upload.append(final_df.columns.tolist()) # Add Header
     
-    # Convert to native Python types (numpy int64 is NOT JSON serializable)
-    final_df = final_df.astype(object)
-    final_df['Quantity'] = final_df['Quantity'].apply(lambda x: int(x) if x != '' else 1)
-    
-    print(f"[4/4] Uploading {len(final_df)} merged rows to Google Sheet...")
+    for _, row in final_df.iterrows():
+        clean_row = []
+        for col in final_df.columns:
+            val = row[col]
+            if col == 'Quantity':
+                try:
+                    clean_row.append(int(float(val)) if pd.notnull(val) and str(val) != '' else 1)
+                except:
+                    clean_row.append(1)
+            else:
+                clean_row.append(str(val) if pd.notnull(val) else "")
+        rows_to_upload.append(clean_row)
+
+    print(f"  [CLEAN] Data sanitized for JSON upload.")
     ws.clear()
-    ws.update(values=[list(final_df.columns)] + final_df.values.tolist(), range_name='A1')
+    ws.update(values=rows_to_upload, range_name='A1')
     print("  [SUCCESS] Figma activity synced.")
 
 if __name__ == "__main__":
