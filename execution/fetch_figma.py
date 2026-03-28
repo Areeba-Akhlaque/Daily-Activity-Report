@@ -217,17 +217,30 @@ def process_and_upload(events):
         ws = sh.add_worksheet(ws_name, 5000, 10)
         df_old = pd.DataFrame(columns=['Name', 'Date', 'Platform', 'Event Type', 'Quantity'])
 
-    final_summary = summary_new
+    # Merge new data with existing sheet data to preserve history
+    if not df_old.empty:
+        # Ensure consistent columns
+        for col in ['Name', 'Date', 'Platform', 'Event Type', 'Quantity']:
+            if col not in df_old.columns:
+                df_old[col] = ''
+        combined = pd.concat([df_old[['Name', 'Date', 'Platform', 'Event Type', 'Quantity']], summary_new])
+        # Deduplicate: keep latest (new data) for same (Name, Date, Event Type)
+        combined = combined.drop_duplicates(subset=['Name', 'Date', 'Event Type'], keep='last')
+    else:
+        combined = summary_new
+    
+    # Ensure Quantity is int
+    combined['Quantity'] = pd.to_numeric(combined['Quantity'], errors='coerce').fillna(1).astype(int)
 
     # Sort final
-    final_summary['sort_dt'] = pd.to_datetime(final_summary['Date'], format='%m/%d/%y')
-    final_summary = final_summary.sort_values(by=['sort_dt', 'Quantity'], ascending=[False, False])
-    final_df = final_summary[['Name', 'Date', 'Platform', 'Event Type', 'Quantity']]
+    combined['sort_dt'] = pd.to_datetime(combined['Date'], format='%m/%d/%y', errors='coerce')
+    combined = combined.sort_values(by=['sort_dt', 'Quantity'], ascending=[False, False])
+    final_df = combined[['Name', 'Date', 'Platform', 'Event Type', 'Quantity']]
     
     print(f"[4/4] Uploading {len(final_df)} merged rows to Google Sheet...")
     ws.clear()
     ws.update(values=[final_df.columns.values.tolist()] + final_df.values.tolist(), range_name='A1')
-    print("  [SUCCESS*** Figma activity synced.")
+    print("  [SUCCESS] Figma activity synced.")
 
 if __name__ == "__main__":
     events = fetch_all_activity()

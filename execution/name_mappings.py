@@ -40,6 +40,7 @@ NAME_MAP = {
     'keeko@pvragon.com': 'Keeko Villaveces',
     'lena@pvragon.com': 'Lena Klapper',
     'johan@pvragon.com': 'A.S. Johan',
+    'azalfa@pvragon.com': 'Azalfa Akhlaq',
     
     # === Personal Gmail Accounts ===
     'aleksandar.m.tanaskovic@gmail.com': 'Alexander Pavelko',
@@ -155,6 +156,7 @@ NAME_MAP = {
     'Dana Hetté': 'Dana Hetté',
     'David Andres': 'David Andres',
     'Clarissa': 'Clarissa',
+    'Azalfa Akhlaq': 'Azalfa Akhlaq',
     
     # === Google Workspace Display Names ===
     'Adriane Barredo': 'Adriane Barredo',
@@ -182,6 +184,7 @@ NAME_MAP = {
     'Dana Hetté': 'Dana Hetté',
     'David Andres': 'David Andres',
     'Clarissa': 'Clarissa',
+    'Azalfa Akhlaq': 'Azalfa Akhlaq',
 }
 
 # Strict team list for GitHub (only these handles will be scanned/reported)
@@ -262,6 +265,7 @@ CORE_TEAM = [
     # New members (March 2026)
     'Nicole Rodrigues', 'Victoria Chanzá', 'Rafael Casabianca',
     'JP Casabianca', 'Dana Hetté', 'David Andres', 'Clarissa',
+    'Azalfa Akhlaq',
 ]
 
 # Strict team list for Gmail sent events
@@ -340,6 +344,7 @@ def map_name(identifier):
         'lena': 'Lena Klapper',
         'a.s. johan': 'A.S. Johan',
         'johan': 'A.S. Johan',
+        'azalfa': 'Azalfa Akhlaq',
     }
     
     for keyword, name in keyword_map.items():

@@ -221,18 +221,27 @@ def process_and_upload_commits(commits):
             df_old = pd.DataFrame(existing_data)
         except: 
             ws = sh.add_worksheet(tn, 10000, 10)
-            df_old = pd.DataFrame(columns=['Name', 'Date', 'Platform', 'Event Type', 'Quantity', 'Hash', 'Message', 'Repo'])
+            df_old = pd.DataFrame(columns=['Name', 'Date', 'Time', 'Platform', 'Repo', 'Event Type', 'Quantity', 'Hash', 'Message'])
+        
+        # Standardize columns before merge to prevent schema mismatch NaN
+        STANDARD_COLS = ['Name', 'Date', 'Time', 'Platform', 'Repo', 'Event Type', 'Quantity', 'Hash', 'Message']
+        for col in STANDARD_COLS:
+            if col not in df_old.columns:
+                df_old[col] = ''
         
         # Merge by Hash
         if not df_old.empty:
-            combined = pd.concat([df_old, final_df]).drop_duplicates(subset=['Hash'], keep='first')
+            combined = pd.concat([df_old[STANDARD_COLS], final_df[STANDARD_COLS]]).drop_duplicates(subset=['Hash'], keep='last')
         else:
-            combined = final_df
+            combined = final_df[STANDARD_COLS]
+
+        # Ensure Quantity is int (gspread returns strings)
+        combined['Quantity'] = pd.to_numeric(combined['Quantity'], errors='coerce').fillna(1).astype(int)
 
         # Sort
-        combined['sort_dt'] = pd.to_datetime(combined['Date'], format='%m/%d/%y')
+        combined['sort_dt'] = pd.to_datetime(combined['Date'], format='%m/%d/%y', errors='coerce')
         combined = combined.sort_values(by=['sort_dt'], ascending=[False])
-        final_merged = combined[['Name', 'Date', 'Platform', 'Event Type', 'Quantity', 'Hash', 'Message', 'Repo']].fillna("")
+        final_merged = combined[STANDARD_COLS].fillna('')
 
         ws.clear()
         ws.update(values=[final_merged.columns.values.tolist()] + final_merged.values.tolist(), range_name='A1')
