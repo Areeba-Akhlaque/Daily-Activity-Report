@@ -237,9 +237,13 @@ def process_and_upload(events):
     combined = combined.sort_values(by=['sort_dt', 'Quantity'], ascending=[False, False])
     final_df = combined[['Name', 'Date', 'Platform', 'Event Type', 'Quantity']]
     
+    # Convert to native Python types (numpy int64 is NOT JSON serializable)
+    final_df = final_df.astype(object)
+    final_df['Quantity'] = final_df['Quantity'].apply(lambda x: int(x) if x != '' else 1)
+    
     print(f"[4/4] Uploading {len(final_df)} merged rows to Google Sheet...")
     ws.clear()
-    ws.update(values=[final_df.columns.values.tolist()] + final_df.values.tolist(), range_name='A1')
+    ws.update(values=[list(final_df.columns)] + final_df.values.tolist(), range_name='A1')
     print("  [SUCCESS] Figma activity synced.")
 
 if __name__ == "__main__":

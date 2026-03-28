@@ -239,9 +239,13 @@ def process_and_upload(events):
         combined['sort_dt'] = pd.to_datetime(combined['Date'], format='%m/%d/%y')
         combined = combined.sort_values(by=['sort_dt', 'Quantity'], ascending=[False, False])
         final_merged = combined[['Name', 'Date', 'Platform', 'Event Type', 'Quantity']]
+        
+        # Convert to native Python types (numpy int64 is NOT JSON serializable)
+        final_merged = final_merged.astype(object)
+        final_merged['Quantity'] = final_merged['Quantity'].apply(lambda x: int(x) if x != '' else 1)
 
         ws.clear()
-        ws.update(values=[final_merged.columns.values.tolist()] + final_merged.values.tolist(), range_name='A1')
+        ws.update(values=[list(final_merged.columns)] + final_merged.values.tolist(), range_name='A1')
         print(f"  [SUCCESS] Uploaded {len(final_merged)} merged aggregate rows.")
     except Exception as e: 
         print(f"  [ERROR] {e}")
