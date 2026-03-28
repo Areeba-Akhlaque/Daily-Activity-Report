@@ -256,10 +256,15 @@ def process_and_upload(events):
                     clean_row.append(str(val) if pd.notnull(val) else "")
             rows_to_upload.append(clean_row)
 
-        print(f"  [CLEAN] Data sanitized for JSON upload.")
-        ws.clear()
-        ws.update(values=rows_to_upload, range_name='A1')
-        print(f"  [SUCCESS] Uploaded {len(rows_to_upload)-1} merged aggregate rows.")
+        # 4. SAFETY CHECK: Only clear and update if we have actual data rows (more than just header)
+        if len(rows_to_upload) > 1:
+            print(f"  [CLEAN] Data sanitized. Uploading {len(rows_to_upload)-1} aggregate rows...")
+            ws.clear()
+            ws.update(values=rows_to_upload, range_name='A1')
+            print(f"  [SUCCESS] Uploaded {len(rows_to_upload)-1} merged aggregate rows.")
+        else:
+            print("  [SKIP] No new or existing data to upload. Sheet preserved.")
+            
     except Exception as e: 
         print(f"  [ERROR] {e}")
         import traceback

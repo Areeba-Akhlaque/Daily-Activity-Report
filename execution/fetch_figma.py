@@ -250,10 +250,14 @@ def process_and_upload(events):
                 clean_row.append(str(val) if pd.notnull(val) else "")
         rows_to_upload.append(clean_row)
 
-    print(f"  [CLEAN] Data sanitized for JSON upload.")
-    ws.clear()
-    ws.update(values=rows_to_upload, range_name='A1')
-    print("  [SUCCESS] Figma activity synced.")
+    # 4. SAFETY CHECK: Only clear and update if we have actual data rows (more than just header)
+    if len(rows_to_upload) > 1:
+        print(f"  [CLEAN] Data sanitized. Uploading {len(rows_to_upload)-1} Figma rows...")
+        ws.clear()
+        ws.update(values=rows_to_upload, range_name='A1')
+        print("  [SUCCESS] Figma activity synced.")
+    else:
+        print("  [SKIP] No new or existing Figma data to upload. Sheet preserved.")
 
 if __name__ == "__main__":
     events = fetch_all_activity()
