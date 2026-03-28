@@ -108,6 +108,13 @@ NAME_MAP = {
     'SunnatChoriyev': 'Sunnat Choriev',
     'Sunnat-Choriev': 'Sunnat Choriev',
     'KBergeron17': 'Kristi Bergeron',
+    'DanaHette': 'Dana Hetté',
+    'danahette': 'Dana Hetté',
+    'davidboom95': 'David Andres',
+    'DavidAndres': 'David Andres',
+    'jpcasa': 'JP Casabianca',
+    'rafacas19': 'Rafael Casabianca',
+    'nicole-rodrigues': 'Nicole Rodrigues',
     
     # === ClickUp Usernames ===
     'alexanderpavelko': 'Alexander Pavelko',
@@ -194,7 +201,8 @@ GITHUB_TEAM_HANDLES = [
     'raz0r-b1ade', 'Saymond02', 'mfarhan0304', 'SaifullahCICT',
     'juan-vidal-pvragon', 'alex-pvragon', 'Cherry-Aznar',
     'codingbreeze', 'SunnatChoriyev', 'Sunnat-Choriev', 'KBergeron17',
-    'Fr3ud', 'saif72437', 'javidal10', 'braddschofield', 'FarhanSE', 'Verridium'
+    'Fr3ud', 'saif72437', 'javidal10', 'braddschofield', 'FarhanSE', 'Verridium',
+    'DanaHette', 'davidboom95', 'jpcasa', 'rafacas19', 'nicole-rodrigues'
 ]
 
 # Exclusion patterns - accounts to skip
