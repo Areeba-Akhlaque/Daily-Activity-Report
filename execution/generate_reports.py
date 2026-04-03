@@ -39,10 +39,17 @@ load_env()
 
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
 
+SCOPES = [
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/admin.reports.audit.readonly',
+    'https://www.googleapis.com/auth/drive',
+    'https://www.googleapis.com/auth/gmail.send'
+]
+
 def get_creds():
     """Get Google OAuth credentials."""
     token_path = os.path.join(ROOT_DIR, 'token.json')
-    creds = Credentials.from_authorized_user_file(token_path)
+    creds = Credentials.from_authorized_user_file(token_path, SCOPES)
     if not creds.valid and creds.refresh_token:
         creds.refresh(Request())
         with open(token_path, 'w') as f:

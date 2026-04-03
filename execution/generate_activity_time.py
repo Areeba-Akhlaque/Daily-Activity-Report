@@ -40,6 +40,13 @@ SHEET_ID = '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo'
 PST = pytz.timezone('America/Los_Angeles')
 START_DATE = '2026-01-01'
 
+SCOPES = [
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/admin.reports.audit.readonly',
+    'https://www.googleapis.com/auth/drive',
+    'https://www.googleapis.com/auth/gmail.send'
+]
+
 # Load .env
 def load_env():
     env_path = os.path.join(ROOT_DIR, '.env')
@@ -57,7 +64,7 @@ load_env()
 def get_creds():
     """Get Google OAuth credentials."""
     token_path = os.path.join(ROOT_DIR, 'token.json')
-    creds = Credentials.from_authorized_user_file(token_path)
+    creds = Credentials.from_authorized_user_file(token_path, SCOPES)
     if not creds.valid and creds.refresh_token:
         creds.refresh(Request())
         with open(token_path, 'w') as f:

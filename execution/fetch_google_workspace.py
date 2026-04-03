@@ -35,7 +35,9 @@ SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8
 START_DATE_STR = os.environ.get('START_DATE', '2026-01-01')
 SCOPES = [
     'https://www.googleapis.com/auth/spreadsheets',
-    'https://www.googleapis.com/auth/admin.reports.audit.readonly'
+    'https://www.googleapis.com/auth/admin.reports.audit.readonly',
+    'https://www.googleapis.com/auth/drive',
+    'https://www.googleapis.com/auth/gmail.send'
 ]
 
 def load_env():

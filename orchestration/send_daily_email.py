@@ -50,14 +50,22 @@ EMAIL_RECIPIENTS = os.environ.get('EMAIL_RECIPIENTS', 'areeba@pvragon.com,jaime@
 DASHBOARD_URL = os.environ.get('DASHBOARD_URL', 'https://Areeba-Akhlaque.github.io/Daily-Activity-Report/dashboard/index.html')
 SHEET_URL = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}"
 
+SCOPES = [
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/admin.reports.audit.readonly',
+    'https://www.googleapis.com/auth/drive',
+    'https://www.googleapis.com/auth/gmail.send'
+]
+
 def get_credentials():
     """Get Google OAuth credentials."""
     token_path = os.path.join(ROOT_DIR, 'token.json')
-    creds = Credentials.from_authorized_user_file(token_path)
+    creds = Credentials.from_authorized_user_file(token_path, SCOPES)
     if not creds.valid and creds.refresh_token:
         creds.refresh(Request())
         with open(token_path, 'w') as f:
             f.write(creds.to_json())
+    return creds
     return creds
 
 def safe_int(val):
@@ -353,7 +361,11 @@ def upload_chart_to_drive(creds, chart_url, date_str):
         return drive_url
         
     except Exception as e:
-        print(f"  [WARN] Drive upload failed: {e}")
+        if "insufficientPermissions" in str(e) or "403" in str(e):
+             print(f"  [WARN] Drive API permissions missing. Falling back to QuickChart URL.")
+             print(f"  [TIP] To fix: Run execution/refresh_google_token.py locally and update GOOGLE_TOKEN secret.")
+        else:
+             print(f"  [WARN] Drive upload failed: {e}")
         return chart_url  # Fallback to original QuickChart URL
 
 
@@ -684,17 +696,22 @@ def main():
     
     print(f"[3/3] Sending to: {', '.join(recipients)}")
     
+    # Send Email
+    success = False
     if EMAIL_USER and EMAIL_PASSWORD:
-        print(f"  Using SMTP (App Password)...")
+        print(f"  Attempting SMTP (App Password)...")
         success = send_email_smtp(EMAIL_USER, EMAIL_PASSWORD, recipients, subject, html)
-    else:
+        if not success:
+            print(f"  [WARN] SMTP failed. Falling back to Gmail API...")
+    
+    if not success:
         print(f"  Using Gmail API (OAuth)...")
         success = send_email(creds, recipients, subject, html)
     
     if success:
         print("\n[COMPLETE] Daily summary email sent successfully!")
     else:
-        print("\n[FAILED] Could not send email. Check logs above.")
+        print("\n[FAILED] Could not send email via SMTP or Gmail API. Check logs above.")
         sys.exit(1)
 
 
