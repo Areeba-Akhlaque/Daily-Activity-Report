@@ -14,7 +14,6 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import smtplib
 import requests
-from email.mime.image import MIMEImage
 import pytz
 
 from collections import defaultdict
@@ -283,89 +282,63 @@ def get_event_color(event_type, _cache={}):
 
 DRIVE_FOLDER_ID = '1MUvSw33n-PTpUkB6QwgQuJ5fEdLDNfKi'  # Daily Audit Charts folder
 
-def upload_chart_to_drive(creds, chart_url, date_str):
-    """Download chart image from QuickChart and upload to Google Drive shared folder."""
+def upload_chart_to_drive(creds, img_bytes, date_str):
+    """Upload chart image bytes to Google Drive. Side-effect only — does not affect email URL."""
+    import traceback
     try:
         from googleapiclient.discovery import build as build_service
         from googleapiclient.http import MediaInMemoryUpload
-        
-        # 1. Download chart image
-        print(f"  Downloading chart image from QuickChart...")
-        img_resp = requests.get(chart_url, timeout=30)
-        if img_resp.status_code != 200:
-            print(f"  [WARN] Could not download chart image: HTTP {img_resp.status_code}")
-            return chart_url  # Fallback to original URL
-        
-        img_bytes = img_resp.content
-        
-        # 2. Upload to Drive
-        print(f"  Uploading chart to Google Drive (folder: {DRIVE_FOLDER_ID})...")
+
+        # Check token has drive scope before attempting
+        token_scopes = getattr(creds, 'scopes', None) or []
+        if token_scopes and 'https://www.googleapis.com/auth/drive' not in token_scopes:
+            print(f"  [WARN] Token is missing 'drive' scope — Drive upload skipped.")
+            print(f"  [FIX]  Run execution/refresh_google_token.py locally and update the GOOGLE_TOKEN GitHub secret.")
+            return None
+
+        print(f"  Uploading chart to Google Drive folder {DRIVE_FOLDER_ID}...")
         drive_service = build_service('drive', 'v3', credentials=creds)
-        
-        # Check/Create subfolder "Daily Audit Charts"
-        subfolder_name = 'Daily Audit Charts'
-        query = f"'{DRIVE_FOLDER_ID}' in parents and name='{subfolder_name}' and mimeType='application/vnd.google-apps.folder' and trashed=false"
-        results = drive_service.files().list(
-            q=query, spaces='drive',
-            fields='files(id, name)',
-            supportsAllDrives=True,
-            includeItemsFromAllDrives=True
-        ).execute()
-        
-        folders = results.get('files', [])
-        if folders:
-            subfolder_id = folders[0]['id']
-        else:
-            folder_metadata = {
-                'name': subfolder_name,
-                'mimeType': 'application/vnd.google-apps.folder',
-                'parents': [DRIVE_FOLDER_ID]
-            }
-            folder = drive_service.files().create(
-                body=folder_metadata, fields='id',
-                supportsAllDrives=True
-            ).execute()
-            subfolder_id = folder['id']
-            print(f"  Created subfolder '{subfolder_name}' in shared drive.")
-        
-        # 3. Upload the chart image
+
         safe_date = date_str.replace('/', '-')
         file_name = f"audit_chart_{safe_date}.png"
-        
+
         file_metadata = {
             'name': file_name,
-            'parents': [subfolder_id]
+            'parents': [DRIVE_FOLDER_ID]
         }
         media = MediaInMemoryUpload(img_bytes, mimetype='image/png')
-        
+
         uploaded_file = drive_service.files().create(
             body=file_metadata,
             media_body=media,
-            fields='id, webViewLink, webContentLink',
+            fields='id, webViewLink',
             supportsAllDrives=True
         ).execute()
-        
+
         file_id = uploaded_file.get('id')
-        
-        # 4. Make the file viewable by anyone with the link
-        drive_service.permissions().create(
-            fileId=file_id,
-            body={'type': 'anyone', 'role': 'reader'},
-            supportsAllDrives=True
-        ).execute()
-        
-        # 5. Generate direct image link for email embedding
-        drive_url = f"https://drive.google.com/uc?export=view&id={file_id}"
-        print(f"  [SUCCESS] Chart uploaded to Drive: {file_name} (ID: {file_id})")
-        return drive_url
-        
+        print(f"  [SUCCESS] Chart saved to Drive: {file_name} (ID: {file_id})")
+
+        # Try to make the file viewable by anyone — non-fatal if domain policy blocks it
+        try:
+            drive_service.permissions().create(
+                fileId=file_id,
+                body={'type': 'anyone', 'role': 'reader'},
+                supportsAllDrives=True
+            ).execute()
+            print(f"  [SUCCESS] Drive file set to public (viewable by anyone with link).")
+        except Exception as perm_err:
+            print(f"  [WARN] Could not set public permission (domain policy may restrict link sharing): {perm_err}")
+
+        return file_id
+
     except Exception as e:
-        if "insufficientPermissions" in str(e) or "403" in str(e):
-             print(f"  [WARN] Drive API permissions missing. Falling back to QuickChart URL.")
-             print(f"  [TIP] To fix: Run execution/refresh_google_token.py locally and update GOOGLE_TOKEN secret.")
+        if 'insufficientPermissions' in str(e) or '403' in str(e):
+            print(f"  [WARN] Drive upload blocked — token missing 'drive' scope.")
+            print(f"  [FIX]  Run execution/refresh_google_token.py locally and update the GOOGLE_TOKEN GitHub secret.")
         else:
-             print(f"  [WARN] Drive upload failed: {e}")
-        return chart_url  # Fallback to original QuickChart URL
+            print(f"  [WARN] Drive upload failed: {e}")
+        print(traceback.format_exc())
+        return None
 
 
 def generate_stacked_bar_chart(summary, creds=None):
@@ -384,9 +357,6 @@ def generate_stacked_bar_chart(summary, creds=None):
         return (plat_idx, t)
     
     types = sorted(all_types, key=sort_key)
-    
-    # Reset shade counters for fresh color assignment
-    shade_counters = {}
     
     datasets = []
     for t in types:
@@ -423,21 +393,36 @@ def generate_stacked_bar_chart(summary, creds=None):
     }
     
     try:
-        # Create Short URL
+        # Create Short URL via QuickChart
         total_height = max(400, len(names) * 30 + 100)
         resp = requests.post(
-            'https://quickchart.io/chart/create', 
+            'https://quickchart.io/chart/create',
             json={'chart': chart_config, 'width': 800, 'height': total_height, 'backgroundColor': 'white'}
         )
-        if resp.status_code == 200:
-            quickchart_url = resp.json().get('url')
-            
-            # Try to upload to Drive for permanent storage
-            if quickchart_url and creds:
-                drive_url = upload_chart_to_drive(creds, quickchart_url, summary.get('date', 'unknown'))
-                return drive_url
-            
-            return quickchart_url
+        if resp.status_code != 200:
+            print(f"[WARN] QuickChart API returned {resp.status_code}")
+            return None
+
+        quickchart_url = resp.json().get('url')
+        if not quickchart_url:
+            print(f"[WARN] QuickChart response missing 'url' field: {resp.text[:200]}")
+            return None
+
+        # Download chart bytes and save to Drive for permanent archival (side-effect only)
+        if creds:
+            try:
+                print(f"  Downloading chart image for Drive archival...")
+                img_resp = requests.get(quickchart_url, timeout=30)
+                if img_resp.status_code == 200:
+                    upload_chart_to_drive(creds, img_resp.content, summary.get('date', 'unknown'))
+                else:
+                    print(f"  [WARN] Could not download chart for Drive: HTTP {img_resp.status_code}")
+            except Exception as dl_err:
+                print(f"  [WARN] Chart download for Drive archival failed: {dl_err}")
+
+        # Always return QuickChart URL for the email — reliable and doesn't depend on Drive permissions
+        return quickchart_url
+
     except Exception as e:
         print(f"[WARN] Chart generation failed: {e}")
     return None
