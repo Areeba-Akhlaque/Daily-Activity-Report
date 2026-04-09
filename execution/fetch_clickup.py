@@ -181,66 +181,169 @@ def fetch_comments_for_active_tasks(task_ids):
                 
     return events
 
-def fetch_chat_activity():
-    print("[3/4] Fetching Chat Activity (Channels & Direct Chats)...")
+def _fetch_messages_for_channel(cid, event_type):
+    """Fetch all messages (and replies) for a single channel/DM channel."""
     events = []
-    try:
-        cursor = ""
-        while True:
-            url = f"https://api.clickup.com/api/v3/workspaces/{WORKSPACE_ID}/chat/channels"
-            resp = requests.get(url, headers=get_headers_v3(), params={"cursor": cursor} if cursor else {})
-            if resp.status_code != 200: break
-            data = resp.json()
-            channels = data.get('data', []) or data.get('channels', [])
-            for c in channels:
-                cid = c.get('id')
-                ctype = str(c.get('type')).upper()
-                event_type = "Channels messages" if ctype == "CHANNEL" else "Direct chats messages"
-                
-                msg_cursor = ""
-                while True:
-                    m_resp = requests.get(f"https://api.clickup.com/api/v3/workspaces/{WORKSPACE_ID}/chat/channels/{cid}/messages", 
-                                          headers=get_headers_v3(), 
-                                          params={"cursor": msg_cursor} if msg_cursor else {})
-                    if m_resp.status_code != 200: break
-                    m_data = m_resp.json().get('data', [])
-                    if not m_data: break
-                    
-                    stop_channel = False
-                    for m in m_data:
-                        m_ts = int(m.get('date', 0))
-                        if m_ts < START_TS_MS: stop_channel = True; break
-                        uid = str(m.get('user_id') or m.get('user', {}).get('id', ''))
-                        events.append({"user_id": uid, "timestamp": m_ts, "event_type": event_type})
-                        
-                        if m.get('replies_count', 0) > 0:
-                            mid = m.get('id')
-                            r_resp = requests.get(f"https://api.clickup.com/api/v3/workspaces/{WORKSPACE_ID}/chat/messages/{mid}/replies", headers=get_headers_v3())
-                            if r_resp.status_code == 200:
-                                for r in r_resp.json().get('data', []):
-                                    r_ts = int(r.get('date', 0))
-                                    if r_ts >= START_TS_MS:
-                                        events.append({"user_id": str(r.get('user_id') or r.get('user', {}).get('id', '')), "timestamp": r_ts, "event_type": event_type})
-                    
-                    if stop_channel: break
-                    msg_cursor = m_resp.json().get('next_cursor')
-                    if not msg_cursor: break
-            
-            cursor = data.get('next_cursor')
-            if not cursor: break
-    except: pass
+    msg_cursor = ""
+    while True:
+        params = {"cursor": msg_cursor} if msg_cursor else {}
+        try:
+            m_resp = requests.get(
+                f"https://api.clickup.com/api/v3/workspaces/{WORKSPACE_ID}/chat/channels/{cid}/messages",
+                headers=get_headers_v3(), params=params, timeout=15
+            )
+        except Exception as e:
+            print(f"    [Chat] Message fetch error for channel {cid}: {e}")
+            break
+
+        if m_resp.status_code != 200:
+            print(f"    [Chat] Messages HTTP {m_resp.status_code} for channel {cid}")
+            break
+        resp_body = m_resp.json()
+        m_data = resp_body.get('data', [])
+        if not m_data:
+            break
+
+        stop_channel = False
+        for m in m_data:
+            m_ts = int(m.get('date', 0))
+            if m_ts < START_TS_MS:
+                stop_channel = True
+                break
+            uid = str(m.get('user_id') or m.get('user', {}).get('id', ''))
+            if uid:
+                events.append({"user_id": uid, "timestamp": m_ts, "event_type": event_type})
+
+            # Fetch thread replies
+            if m.get('replies_count', 0) > 0:
+                mid = m.get('id')
+                try:
+                    r_resp = requests.get(
+                        f"https://api.clickup.com/api/v3/workspaces/{WORKSPACE_ID}/chat/messages/{mid}/replies",
+                        headers=get_headers_v3(), timeout=15
+                    )
+                    if r_resp.status_code == 200:
+                        for r in r_resp.json().get('data', []):
+                            r_ts = int(r.get('date', 0))
+                            if r_ts >= START_TS_MS:
+                                r_uid = str(r.get('user_id') or r.get('user', {}).get('id', ''))
+                                if r_uid:
+                                    events.append({"user_id": r_uid, "timestamp": r_ts, "event_type": event_type})
+                except Exception:
+                    pass
+
+        if stop_channel:
+            break
+        msg_cursor = resp_body.get('next_cursor') or ''
+        if not msg_cursor:
+            break
+    return events
+
+
+def _collect_channels(channel_type_filter=None):
+    """
+    Page through the ClickUp v3 channels endpoint.
+    channel_type_filter: None (all), 'CHANNEL' (public), 'DIRECT' (DMs), etc.
+    Returns list of channel dicts.
+    """
+    channels = []
+    cursor = ""
+    while True:
+        params = {}
+        if cursor:
+            params['cursor'] = cursor
+        if channel_type_filter:
+            params['type'] = channel_type_filter
+
+        try:
+            resp = requests.get(
+                f"https://api.clickup.com/api/v3/workspaces/{WORKSPACE_ID}/chat/channels",
+                headers=get_headers_v3(), params=params, timeout=15
+            )
+        except Exception as e:
+            print(f"  [Chat] Channel list error (filter={channel_type_filter}): {e}")
+            break
+
+        if resp.status_code != 200:
+            print(f"  [Chat] Channel list HTTP {resp.status_code} (filter={channel_type_filter}): {resp.text[:200]}")
+            break
+
+        data = resp.json()
+        batch = data.get('data', []) or data.get('channels', [])
+        channels.extend(batch)
+
+        cursor = data.get('next_cursor') or data.get('nextCursor') or ''
+        if not cursor:
+            break
+    return channels
+
+
+def fetch_chat_activity():
+    print("[3/4] Fetching Chat Activity (Channels & Direct Messages)...")
+    events = []
+
+    # --- Step A: Collect all channels (unfiltered) ---
+    all_channels = _collect_channels(channel_type_filter=None)
+    print(f"  [Chat] Unfiltered channel list: {len(all_channels)} items")
+
+    # --- Step B: Explicitly fetch DM channels too ---
+    # ClickUp v3 changed its API so DMs may not appear in the unfiltered listing.
+    # We fetch with explicit type filters to guarantee coverage.
+    for dm_type in ('DIRECT', 'direct', 'dm', 'DM'):
+        dm_channels = _collect_channels(channel_type_filter=dm_type)
+        if dm_channels:
+            print(f"  [Chat] Found {len(dm_channels)} DM channels via type='{dm_type}'")
+            all_channels.extend(dm_channels)
+            break  # Only one filter will work; stop on first success
+
+    # Deduplicate by channel ID
+    seen_ids = set()
+    unique_channels = []
+    for c in all_channels:
+        cid = c.get('id')
+        if cid and cid not in seen_ids:
+            seen_ids.add(cid)
+            unique_channels.append(c)
+
+    print(f"  [Chat] Total unique channels to scan: {len(unique_channels)}")
+
+    # Summarise what types we found (for diagnostics)
+    type_counts = {}
+    for c in unique_channels:
+        t = str(c.get('type', 'unknown')).upper()
+        type_counts[t] = type_counts.get(t, 0) + 1
+    print(f"  [Chat] Channel types found: {type_counts}")
+
+    # --- Step C: Fetch messages for each channel ---
+    for c in unique_channels:
+        cid = c.get('id')
+        ctype = str(c.get('type', '')).upper()
+
+        # Classify: anything that isn't a public/group channel is a DM
+        if ctype in ('CHANNEL', 'PUBLIC', 'GROUP', 'SPACE'):
+            event_type = "Channels messages"
+        else:
+            event_type = "Direct chats messages"
+
+        ch_events = _fetch_messages_for_channel(cid, event_type)
+        events.extend(ch_events)
+
+    dm_count = sum(1 for e in events if e['event_type'] == 'Direct chats messages')
+    ch_count = sum(1 for e in events if e['event_type'] == 'Channels messages')
+    print(f"  [Chat] Total events: {len(events)} ({ch_count} channel msgs, {dm_count} DMs)")
     return events
 
 def process_and_upload(events):
     print("[4/4] Processing and Uploading...")
     if not events: print("  No events found."); return
-    
+
     df = pd.DataFrame(events)
     df['Raw Name'] = df['user_id'].apply(lambda x: USER_CACHE.get(str(x), f"User {x}"))
     df['Name'] = df['Raw Name'].apply(map_name)
-    
-    # Filter out "User ..." (unidentified generic users)
+
+    # Filter out unidentified generic users and non-core team members
     df = df[~df['Name'].str.startswith('User')]
+    df = df[~df['Name'].apply(should_exclude)]
     # Convert ms timestamp to PST and apply Audit Date logic
     df['dt_pst'] = pd.to_datetime(df['timestamp'], unit='ms').dt.tz_localize('UTC').dt.tz_convert('America/Los_Angeles')
     df['Date'] = df['dt_pst'].apply(get_audit_date)

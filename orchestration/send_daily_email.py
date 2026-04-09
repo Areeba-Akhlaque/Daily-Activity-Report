@@ -66,7 +66,6 @@ def get_credentials():
         with open(token_path, 'w') as f:
             f.write(creds.to_json())
     return creds
-    return creds
 
 def safe_int(val):
     """Safely convert to int, defaulting to 0."""
@@ -282,7 +281,7 @@ def get_event_color(event_type, _cache={}):
     _cache[event_type] = color
     return color
 
-DRIVE_FOLDER_ID = '0AGXVh_HBvJKwUk9PVA'  # Pvragon (HR restricted) shared folder
+DRIVE_FOLDER_ID = '1MUvSw33n-PTpUkB6QwgQuJ5fEdLDNfKi'  # Daily Audit Charts folder
 
 def upload_chart_to_drive(creds, chart_url, date_str):
     """Download chart image from QuickChart and upload to Google Drive shared folder."""
@@ -687,7 +686,7 @@ def main():
     html = generate_email_html(summary, chart_url)
     
     # Send Email
-    subject = f"[v2.4] Daily Activity Audit - {summary['date']}"
+    subject = f"[v2.5] Daily Activity Audit - {summary['date']}"
     if summary.get('time_range'):
         subject += f" ({summary['time_range']})"
         

@@ -251,8 +251,8 @@ EXCLUDE_PATTERNS = [
     'abiel@pvragon.com', 'alejandra@pvragon.com', 'arinaldi@launchfactory.com',
     'mari@pvragon.com', 'sergio@pvragon.com', 'trent@pvragon.com',
     ' Mari ', # Specific name with spaces to avoid 'Mariana' match
-    'Mari' # I will change the logic below to handle exact matches for some patterns
-    
+    'Mari',   # Exact match handled in should_exclude logic
+
     # Machine-generated / Auto-emails
     'errors-rc@pvragon.com', 'emailparser@okridecare.com',
     'drive-shares-dm-noreply@google.com', 'rc-eng-notifications@pvragon.com',

@@ -212,7 +212,8 @@ def main():
             
             # UTC to PST
             dt_utc = datetime.fromtimestamp(ts, timezone.utc)
-            if dt_utc < datetime(2026, 1, 1, tzinfo=timezone.utc): continue
+            start_year, start_month, start_day = (int(x) for x in os.environ.get('START_DATE', '2026-01-01').split('-'))
+            if dt_utc < datetime(start_year, start_month, start_day, tzinfo=timezone.utc): continue
             
             event = log.get('action') or log.get('event') or 'Unknown'
             
@@ -276,7 +277,7 @@ def fetch_backendless_events_raw():
     if not logs: return []
     
     from name_mappings import get_audit_date
-    start_filter = pd.to_datetime('2026-01-01').tz_localize('UTC')
+    start_filter = pd.to_datetime(os.environ.get('START_DATE', '2026-01-01')).tz_localize('UTC')
     
     for log in logs:
         try:

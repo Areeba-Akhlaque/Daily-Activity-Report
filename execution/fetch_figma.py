@@ -61,7 +61,7 @@ def get_headers():
     }
 
 def fetch_all_activity():
-    print(f"[{get_audit_date(datetime.now())}*** STARTING FIGMA FETCH")
+    print(f"[{get_audit_date(datetime.now())}] *** STARTING FIGMA FETCH")
     all_events = []
     
     # 1. Get Projects
@@ -69,7 +69,7 @@ def fetch_all_activity():
     p_url = f"https://api.figma.com/v1/teams/{FIGMA_TEAM_ID}/projects"
     p_resp = get_with_retry(p_url, get_headers())
     if p_resp.status_code != 200:
-        print(f"  [ERROR*** Projects API: {p_resp.status_code}")
+        print(f"  [ERROR] Projects API: {p_resp.status_code}")
         return []
         
     projects = p_resp.json().get('projects', [])

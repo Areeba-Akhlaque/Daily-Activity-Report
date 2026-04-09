@@ -41,9 +41,15 @@ DASHBOARD_DIR = os.path.join(ROOT_DIR, 'dashboard')
 # Ensure dashboard directory exists
 os.makedirs(DASHBOARD_DIR, exist_ok=True)
 
+SCOPES = [
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/admin.reports.audit.readonly',
+    'https://www.googleapis.com/auth/drive',
+]
+
 # Auth
 print("[1/5] Authenticating...")
-creds = Credentials.from_authorized_user_file(os.path.join(ROOT_DIR, 'token.json'))
+creds = Credentials.from_authorized_user_file(os.path.join(ROOT_DIR, 'token.json'), SCOPES)
 if not creds.valid and creds.refresh_token:
     creds.refresh(Request())
     with open(os.path.join(ROOT_DIR, 'token.json'), 'w') as f:

@@ -59,7 +59,7 @@ def get_creds():
 
 def update_console_audit_logs(gc, sh):
     """Update Console_Audit_Logs from the live worksheet (synced by fetch_backendless.py)."""
-    print("\n=== [1/3] Updating Console_Audit_Logs (Virtual) ===")
+    print("\n=== [1/5] Updating Console_Audit_Logs (Virtual) ===")
     
     try:
         ws = sh.worksheet('Console_Audit_Logs')
@@ -124,7 +124,7 @@ def update_daily_audit(gc, sh):
     Note: Previously generated a complete matrix (including 0s), but this hit Google Sheet cell limits.
     Now only stores existing activity rows (sparse).
     """
-    print("\n=== [2/3] Updating Daily Audit (Complete Matrix) ===")
+    print("\n=== [2/5] Updating Daily Audit (Complete Matrix) ===")
     
     # Source tabs
     source_tabs = [
@@ -249,13 +249,13 @@ def update_daily_audit(gc, sh):
     rows_to_upload = [headers] + df_result.values.tolist()
     
     # Chunked upload
-    CHUNK_SIZE = 5000 
+    CHUNK_SIZE = 5000
     for i in range(0, len(rows_to_upload), CHUNK_SIZE):
         chunk = rows_to_upload[i:i + CHUNK_SIZE]
         if i == 0:
             ws.update(values=chunk, range_name='A1')
         else:
-            ws.append_rows(chunk[1:] if i > 0 else chunk)
+            ws.append_rows(chunk)
         print(f"    Uploaded rows {i} to {min(i + CHUNK_SIZE, len(rows_to_upload))}")
     
     print(f"  [SUCCESS] Uploaded {len(df_result)} rows (Full Matrix)")
@@ -272,7 +272,7 @@ except ImportError:
 
 def update_event_references(gc, sh):
     """Update 'Event Type References' by scanning all unique (Platform, Event Type) pairs in Daily Audit."""
-    print("\n=== [4/4] Updating Event Type References ===")
+    print("\n=== [4/5] Updating Event Type References ===")
     try:
         ws_audit = sh.worksheet('Daily Audit')
         data = ws_audit.get_all_records()
@@ -387,7 +387,7 @@ def update_activity_time_analysis(gc, sh):
     Update Activity Time Analysis using robust timestamp-based logic.
     Delegates to generate_activity_time.py which fetches raw timestamps.
     """
-    print("\n=== [3/3] Updating Activity Time Analysis (Robust) ===")
+    print("\n=== [3/5] Updating Activity Time Analysis (Robust) ===")
     
     try:
         # Use credentials from existing gc object or fetch new ones

@@ -268,10 +268,8 @@ def process_and_upload_commits(commits):
         else:
             print("  [SKIP] No new or existing data to upload. Sheet preserved.")
             
-    except Exception as e: 
+    except Exception as e:
         print(f"  [ERROR] {e}")
-        import traceback
-        traceback.print_exc()
         import traceback
         traceback.print_exc()
 

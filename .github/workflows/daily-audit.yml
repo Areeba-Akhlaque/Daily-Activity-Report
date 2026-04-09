@@ -84,8 +84,11 @@ jobs:
           
           if ! git diff --staged --quiet; then
             git commit -m "🔄 Auto-update dashboard metrics - $(date -u +'%Y-%m-%d %H:%M UTC')"
+            # Clean untracked/modified files before rebase to avoid conflicts.
+            # Use stash + pop so nothing is permanently lost on the runner.
             git stash --include-untracked
             git pull --rebase -X ours origin main
+            git stash pop || true
             git push origin main
           fi
 

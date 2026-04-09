@@ -36,18 +36,7 @@ import fetch_clickup
 import fetch_figma
 import fetch_backendless
 
-SHEET_ID = '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo'
-PST = pytz.timezone('America/Los_Angeles')
-START_DATE = '2026-01-01'
-
-SCOPES = [
-    'https://www.googleapis.com/auth/spreadsheets',
-    'https://www.googleapis.com/auth/admin.reports.audit.readonly',
-    'https://www.googleapis.com/auth/drive',
-    'https://www.googleapis.com/auth/gmail.send'
-]
-
-# Load .env
+# Load .env FIRST so os.environ.get() calls below pick up the right values
 def load_env():
     env_path = os.path.join(ROOT_DIR, '.env')
     if os.path.exists(env_path):
@@ -59,6 +48,17 @@ def load_env():
                     os.environ[key] = value
 
 load_env()
+
+SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
+START_DATE = os.environ.get('START_DATE', '2026-01-01')
+PST = pytz.timezone('America/Los_Angeles')
+
+SCOPES = [
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/admin.reports.audit.readonly',
+    'https://www.googleapis.com/auth/drive',
+    'https://www.googleapis.com/auth/gmail.send'
+]
 
 
 def get_creds():
