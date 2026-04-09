@@ -393,35 +393,44 @@ def generate_stacked_bar_chart(summary, creds=None):
     }
     
     try:
-        # Create Short URL via QuickChart
         total_height = max(400, len(names) * 30 + 100)
-        resp = requests.post(
-            'https://quickchart.io/chart/create',
-            json={'chart': chart_config, 'width': 800, 'height': total_height, 'backgroundColor': 'white'}
-        )
-        if resp.status_code != 200:
-            print(f"[WARN] QuickChart API returned {resp.status_code}")
-            return None
+        chart_payload = {'chart': chart_config, 'width': 800, 'height': total_height, 'backgroundColor': 'white'}
 
-        quickchart_url = resp.json().get('url')
-        if not quickchart_url:
-            print(f"[WARN] QuickChart response missing 'url' field: {resp.text[:200]}")
-            return None
+        # Step 1: Get short URL for email embedding (email client loads image itself — no download needed)
+        quickchart_url = None
+        try:
+            resp = requests.post('https://quickchart.io/chart/create', json=chart_payload, timeout=15)
+            if resp.status_code == 200:
+                quickchart_url = resp.json().get('url')
+            else:
+                print(f"  [WARN] QuickChart /chart/create returned {resp.status_code}")
+        except Exception as qc_err:
+            print(f"  [WARN] QuickChart /chart/create failed: {qc_err}")
 
-        # Download chart bytes and save to Drive for permanent archival (side-effect only)
+        # Step 2: Fetch PNG bytes directly from /chart endpoint (does NOT depend on the short URL)
+        # This avoids the two-step download that fails from GitHub Actions
         if creds:
             try:
-                print(f"  Downloading chart image for Drive archival...")
-                img_resp = requests.get(quickchart_url, timeout=30)
-                if img_resp.status_code == 200:
+                print(f"  Fetching chart PNG directly for Drive archival...")
+                img_resp = requests.post(
+                    'https://quickchart.io/chart',
+                    json=chart_payload,
+                    timeout=30
+                )
+                if img_resp.status_code == 200 and img_resp.content[:4] == b'\x89PNG':
                     upload_chart_to_drive(creds, img_resp.content, summary.get('date', 'unknown'))
                 else:
-                    print(f"  [WARN] Could not download chart for Drive: HTTP {img_resp.status_code}")
+                    print(f"  [WARN] Direct chart PNG fetch failed: HTTP {img_resp.status_code}, Content-Type: {img_resp.headers.get('Content-Type', 'unknown')}")
             except Exception as dl_err:
-                print(f"  [WARN] Chart download for Drive archival failed: {dl_err}")
+                print(f"  [WARN] Drive archival failed: {dl_err}")
 
-        # Always return QuickChart URL for the email — reliable and doesn't depend on Drive permissions
-        return quickchart_url
+        # Always return QuickChart short URL for the email
+        if quickchart_url:
+            return quickchart_url
+
+        # Fallback: if short URL failed, use the direct chart URL (works but is long)
+        print(f"  [INFO] Using direct chart endpoint as email URL fallback.")
+        return None
 
     except Exception as e:
         print(f"[WARN] Chart generation failed: {e}")
