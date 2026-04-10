@@ -319,18 +319,9 @@ def upload_chart_to_drive(creds, img_bytes, date_str):
 
         file_id = uploaded_file.get('id')
         print(f"  [SUCCESS] Chart saved to Drive: {file_name} (ID: {file_id})")
-
-        # Try to make the file viewable by anyone — non-fatal if domain policy blocks it
-        try:
-            drive_service.permissions().create(
-                fileId=file_id,
-                body={'type': 'anyone', 'role': 'reader'},
-                supportsAllDrives=True
-            ).execute()
-            print(f"  [Drive] File set to public.")
-        except Exception as perm_err:
-            print(f"  [WARN] Could not set public permission: {perm_err}")
-
+        # NOTE: Do NOT call permissions().create() — setting 'anyone with link'
+        # triggers the Workspace DLP policy which auto-deletes the file immediately.
+        # The Drive folder is already shared with the team, so no extra permission needed.
         return file_id
 
     except Exception as e:
