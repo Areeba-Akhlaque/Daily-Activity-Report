@@ -1,10 +1,8 @@
 import os
 import sys
 import time
-import json
 import pandas as pd
 from datetime import datetime, timezone, timedelta
-from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import gspread
 from google.oauth2.credentials import Credentials
@@ -28,11 +26,9 @@ ROOT_DIR = os.path.dirname(SCRIPT_DIR)
 
 # Load helper modules
 sys.path.insert(0, SCRIPT_DIR)
-from name_mappings import map_name, should_exclude, NAME_MAP, get_audit_date, STRICT_TEAM_GMAIL
+from name_mappings import map_name, should_exclude, get_audit_date, STRICT_TEAM_GMAIL
 
 # Configuration
-SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
-START_DATE_STR = os.environ.get('START_DATE', '2026-01-01')
 SCOPES = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/admin.reports.audit.readonly',
@@ -51,6 +47,10 @@ def load_env():
                     os.environ[key] = value
 
 load_env()
+
+# Load AFTER load_env() so .env values are picked up in local runs
+SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
+START_DATE_STR = os.environ.get('START_DATE', '2026-01-01')
 
 def get_creds():
     """Get valid credentials, refreshing or prompting as needed."""
@@ -335,6 +335,23 @@ def process_and_upload(events):
     
     final_df = summary[['Name', 'Date', 'Platform', 'Event Type', 'Quantity']]
     
+    # Save raw timestamped events cache for Activity Time Analysis
+    # (prevents generate_activity_time.py from re-fetching Google Workspace APIs a second time)
+    if 'timestamp_dt' in df.columns:
+        try:
+            import json
+            cache_rows = [
+                {'name': row['Name'], 'timestamp': row['timestamp_dt'].isoformat(), 'app': f"GW:{row['Event Type'].replace(' ', '')}"}
+                for _, row in df.iterrows()
+            ]
+            cache_path = os.path.join(ROOT_DIR, 'dashboard', 'gworkspace_events_cache.json')
+            os.makedirs(os.path.dirname(cache_path), exist_ok=True)
+            with open(cache_path, 'w') as f:
+                json.dump(cache_rows, f)
+            print(f"  [CACHE] Saved {len(cache_rows)} Google Workspace events to cache")
+        except Exception as ce:
+            print(f"  [CACHE WARN] {ce}")
+
     # Upload
     creds = get_creds()
     gc = gspread.authorize(creds)
@@ -346,7 +363,7 @@ def process_and_upload(events):
             ws.clear()
         except:
             ws = sh.add_worksheet(title=tab_name, rows=2000, cols=10)
-        
+
         ws.update(values=[final_df.columns.values.tolist()], range_name='A1')
         ws.append_rows(final_df.values.tolist())
         print(f"  [SUCCESS] Uploaded {len(final_df)} aggregate rows to '{tab_name}'.")

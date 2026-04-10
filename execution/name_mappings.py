@@ -355,10 +355,13 @@ def map_name(identifier):
         'azalfa': 'Azalfa Akhlaq',
     }
     
+    import re as _re
     for keyword, name in keyword_map.items():
-        if keyword in identifier_lower:
+        # Match keyword only as a whole word (not as a substring of another word).
+        # e.g. 'victor' matches 'victor@...' but NOT 'victoria@...'
+        if _re.search(r'(?<![a-z0-9])' + _re.escape(keyword) + r'(?![a-z0-9])', identifier_lower):
             return name
-    
+
     # Return original if no mapping found
     return identifier
 

@@ -16,7 +16,6 @@ Output Columns:
 
 import os
 import sys
-import requests
 import json
 import pandas as pd
 from datetime import datetime, timezone, timedelta
@@ -28,13 +27,11 @@ import pytz
 # Configuration
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(SCRIPT_DIR)
+DASHBOARD_DIR = os.path.join(ROOT_DIR, 'dashboard')
 
 # Import name mappings
 sys.path.insert(0, SCRIPT_DIR)
 from name_mappings import map_name, should_exclude, STRICT_TEAM_GMAIL
-import fetch_clickup
-import fetch_figma
-import fetch_backendless
 
 # Load .env FIRST so os.environ.get() calls below pick up the right values
 def load_env():
@@ -72,23 +69,57 @@ def get_creds():
     return creds
 
 
+def _load_cache(cache_filename, label):
+    """
+    Load a timestamped-events cache written by a fetch_*.py script.
+    Returns list of dicts with 'name' (str) and 'timestamp' (tz-aware PST datetime).
+    Returns None if the cache file doesn't exist (signals caller to fall back).
+    """
+    cache_path = os.path.join(DASHBOARD_DIR, cache_filename)
+    if not os.path.exists(cache_path):
+        print(f'  [{label}] No cache file found at {cache_path} — will fall back.')
+        return None
+    try:
+        with open(cache_path, 'r') as f:
+            rows = json.load(f)
+        events = []
+        for r in rows:
+            try:
+                dt = pd.to_datetime(r['timestamp']).tz_convert(PST)
+                events.append({'raw_name': r.get('name', ''), 'name': r.get('name', ''), 'timestamp': dt, 'app': r.get('app', label)})
+            except Exception:
+                continue
+        print(f'  [{label}] Loaded {len(events)} events from cache.')
+        return events
+    except Exception as e:
+        print(f'  [{label}] Cache load error: {e} — will fall back.')
+        return None
+
+
 def fetch_google_workspace_events(creds):
-    """Fetch events from Google Workspace (Drive, Gmail) with timestamps."""
-    print('[1/5] Fetching Google Workspace events...')
+    """
+    Load Google Workspace events from cache written by fetch_google_workspace.py.
+    Falls back to direct API fetch if cache is missing.
+    """
+    print('[1/5] Loading Google Workspace events...')
+    cached = _load_cache('gworkspace_events_cache.json', 'GWorkspace')
+    if cached is not None:
+        return cached
+
+    # Fallback: re-fetch directly (only runs if fetch_google_workspace.py didn't run first)
+    print('  [GWorkspace] Falling back to direct API fetch...')
+    import requests as req
     events = []
     headers = {'Authorization': f'Bearer {creds.token}'}
-    
+
     for app in ['drive', 'gmail']:
         start_dt = datetime.strptime(START_DATE, '%Y-%m-%d').replace(tzinfo=timezone.utc)
         now_dt = datetime.now(timezone.utc)
         current_start = start_dt
         processed_ids = set()
-        
+
         while current_start < now_dt:
-            current_end = current_start + timedelta(days=30)
-            if current_end > now_dt:
-                current_end = now_dt
-            
+            current_end = min(current_start + timedelta(days=30), now_dt)
             params = {
                 'startTime': current_start.strftime('%Y-%m-%dT%H:%M:%SZ'),
                 'endTime': current_end.strftime('%Y-%m-%dT%H:%M:%SZ'),
@@ -98,171 +129,138 @@ def fetch_google_workspace_events(creds):
                 params['eventName'] = 'delivery'
                 params['filters'] = 'event_info.mail_event_type==1'
             url = f'https://admin.googleapis.com/admin/reports/v1/activity/users/all/applications/{app}'
-            
+
             while True:
                 try:
-                    resp = requests.get(url, headers=headers, params=params)
+                    resp = req.get(url, headers=headers, params=params)
                     if resp.status_code != 200:
                         break
                     data = resp.json()
-                    
-                    items = data.get('items', [])
-                    print(f"    Fetched {len(items)} items from {app}...")
-                    
-                    for item in items:
+                    for item in data.get('items', []):
                         actor = item.get('actor', {})
                         email = actor.get('email', '')
                         if not email or actor.get('callerType') == 'KEY':
                             continue
-
-                        # SAFEGUARD: Skip IDs starting with /v/ or missing @ symbols that look like system ids
                         if email.startswith('/v/') or ('@' not in email and len(email) > 15):
-                             continue
-                        
-                        # Deduplication
-                        uniq_id = item.get('id', {}).get('uniqueQualifier')
-                        if not uniq_id:
-                             # Fallback composite key
-                             ts = item.get('id', {}).get('time', '')
-                             uniq_id = f"{ts}_{email}_{app}"
-                        
+                            continue
+                        uniq_id = item.get('id', {}).get('uniqueQualifier') or f"{item.get('id',{}).get('time','')}_{email}_{app}"
                         if uniq_id in processed_ids:
                             continue
                         processed_ids.add(uniq_id)
-                        
                         ts = item.get('id', {}).get('time', '')
-                        if ts:
+                        if not ts:
+                            continue
+                        keep = False
+                        evs = item.get('events', [])
+                        if app == 'gmail':
+                            mapped_nm = map_name(email)
+                            if mapped_nm not in STRICT_TEAM_GMAIL:
+                                continue
+                            if not any(ip.get('name') in ['is_auto_response', 'auto_reply'] and ip.get('boolValue') is True
+                                       for ev in evs for p in ev.get('parameters', [])
+                                       if p.get('name') == 'message_info'
+                                       for ip in p.get('messageValue', {}).get('parameter', [])):
+                                keep = True
+                        elif app == 'drive':
+                            keep = any(e.get('name') == 'edit' for e in evs)
+                        if keep:
                             try:
-                                # Apply specific filters
-                                keep = False
-                                if app == 'gmail': 
-                                    # 1. Map name to check strict inclusion
-                                    mapped_nm = map_name(email)
-                                    if mapped_nm not in STRICT_TEAM_GMAIL:
-                                         continue
-
-                                    # 2. FILTER: Exclude auto-generated emails
-                                    is_auto = False
-                                    events_in_item = item.get('events', [])
-                                    for ev in events_in_item:
-                                        params_list = ev.get('parameters', [])
-                                        for p in params_list:
-                                            if p.get('name') == 'message_info' and 'messageValue' in p:
-                                                inner_params = p['messageValue'].get('parameter', [])
-                                                for ip in inner_params:
-                                                    if ip.get('name') in ['is_auto_response', 'auto_reply'] and ip.get('boolValue') is True:
-                                                        is_auto = True
-                                                        break
-                                    if is_auto:
-                                        continue
-                                    keep = True # Filtered by API mail_event_type:1
-                                elif app == 'drive':
-                                    # We only want edits
-                                    events_in_item = item.get('events', [])
-                                    if any(e.get('name') == 'edit' for e in events_in_item):
-                                        keep = True
-                                
-                                if keep:
-                                    dt = pd.to_datetime(ts).tz_convert(PST)
-                                    events.append({'raw_name': email, 'timestamp': dt, 'app': f"GW:{app.capitalize()}"})
-                            except:
+                                dt = pd.to_datetime(ts).tz_convert(PST)
+                                events.append({'raw_name': email, 'name': map_name(email), 'timestamp': dt, 'app': f"GW:{app.capitalize()}"})
+                            except Exception:
                                 pass
-                    
                     if not data.get('nextPageToken'):
                         break
                     params['pageToken'] = data['nextPageToken']
                 except Exception as e:
                     print(f'  Warning: {e}')
                     break
-            
             current_start = current_end
-    
-    print(f'  Google Workspace (raw): {len(events)} events')
-    
-    # === 15-MINUTE WINDOW DEDUPLICATION (Occurrence-Based Counting) ===
-    # Same logic as fetch_google_workspace.py: collapse bulk events within 15-min windows.
+
+    # 15-min window dedup
     if events:
         seen_windows = set()
         deduped = []
         for e in sorted(events, key=lambda x: x['timestamp']):
-            # Floor timestamp to 15-minute window
-            window_ts = e['timestamp'].tz_convert('UTC').floor('15min')
-            window_key = (e['raw_name'], e['app'], window_ts)
-            if window_key not in seen_windows:
-                seen_windows.add(window_key)
+            wk = (e['raw_name'], e['app'], e['timestamp'].tz_convert('UTC').floor('15min'))
+            if wk not in seen_windows:
+                seen_windows.add(wk)
                 deduped.append(e)
-        if len(deduped) != len(events):
-            print(f'  15-min window dedup: {len(events)} → {len(deduped)} events')
         events = deduped
-    
-    print(f'  Google Workspace: {len(events)} events')
+
+    print(f'  Google Workspace (fallback): {len(events)} events')
     return events
 
 
 def fetch_github_events(creds):
-    """Fetch events from GitHub_Commits worksheet for more detailed analysis."""
-    print('[2/5] Fetching GitHub commits from worksheet...')
+    """Read GitHub commit timestamps from the Github_Commits sheet (written by fetch_github_commits.py)."""
+    print('[2/5] Loading GitHub commits from sheet...')
     events = []
-    
     try:
         gc = gspread.authorize(creds)
         sh = gc.open_by_key(SHEET_ID)
         ws = sh.worksheet('Github_Commits')
         data = ws.get_all_records()
-        
         for r in data:
-            dt_str = f"{r['Date']} {r['Time']}"
+            dt_str = f"{r.get('Date','')} {r.get('Time','')}"
             try:
-                # MM/DD/YY HH:MM AM/PM
-                dt = datetime.strptime(dt_str, '%m/%d/%y %I:%M %p')
-                dt = PST.localize(dt)
-                events.append({
-                    'raw_name': r['Name'], 
-                    'timestamp': dt, 
-                    'app': 'GitHub Commit'
-                })
-            except Exception as e:
+                dt = PST.localize(datetime.strptime(dt_str.strip(), '%m/%d/%y %I:%M %p'))
+                name = map_name(r.get('Name', ''))
+                if not should_exclude(name):
+                    events.append({'raw_name': r.get('Name', ''), 'name': name, 'timestamp': dt, 'app': 'GitHub Commit'})
+            except Exception:
                 continue
-                
     except Exception as e:
-        print(f'  GitHub Worksheet Fetch Error: {e}')
-    
+        print(f'  GitHub Sheet Fetch Error: {e}')
     print(f'  GitHub: {len(events)} commit events')
     return events
 
 
 def fetch_backendless_events_wrapped():
-    """Fetch events from Backendless API with timestamps."""
-    print('[3/5] Fetching Backendless events...')
+    """Load Backendless events from cache written by fetch_backendless.py."""
+    print('[3/5] Loading Backendless events...')
+    cached = _load_cache('backendless_events_cache.json', 'Backendless')
+    if cached is not None:
+        return cached
+
+    # Fallback: re-fetch via module
+    print('  [Backendless] Falling back to direct API fetch...')
     try:
-        events = fetch_backendless.fetch_backendless_events_raw()
-        print(f'  Backendless: {len(events)} events')
-        return events
+        import fetch_backendless
+        return fetch_backendless.fetch_backendless_events_raw()
     except Exception as e:
         print(f'  Backendless Fetch Error: {e}')
         return []
 
 
 def fetch_clickup_events_wrapped():
-    """Fetch ClickUp events via fetch_clickup module."""
-    print('[4/5] Fetching ClickUp events...')
+    """Load ClickUp events from cache written by fetch_clickup.py."""
+    print('[4/5] Loading ClickUp events...')
+    cached = _load_cache('clickup_events_cache.json', 'ClickUp')
+    if cached is not None:
+        return cached
+
+    # Fallback: re-fetch via module
+    print('  [ClickUp] Falling back to direct API fetch...')
     try:
+        import fetch_clickup
         fetch_clickup.fetch_users()
         tasks, tids = fetch_clickup.fetch_task_activity()
         comments = fetch_clickup.fetch_comments_for_active_tasks(tids)
         chats = fetch_clickup.fetch_chat_activity()
-        
         processed = []
-        raw_events = tasks + comments + chats
-        for e in raw_events:
+        for e in tasks + comments + chats:
             uid = e.get('user_id')
             raw_n = fetch_clickup.USER_CACHE.get(str(uid), f"User {uid}")
-            ts = e.get('timestamp') # ms
+            ts = e.get('timestamp')
             try:
                 dt = pd.to_datetime(ts, unit='ms').tz_localize('UTC').tz_convert(PST)
-                processed.append({'raw_name': raw_n, 'timestamp': dt, 'app': 'ClickUp'})
-            except: pass
-        print(f'  ClickUp: {len(processed)} events')
+                name = map_name(raw_n)
+                if not should_exclude(name):
+                    processed.append({'raw_name': raw_n, 'name': name, 'timestamp': dt, 'app': 'ClickUp'})
+            except Exception:
+                pass
+        print(f'  ClickUp (fallback): {len(processed)} events')
         return processed
     except Exception as e:
         print(f'  ClickUp Fetch Error: {e}')
@@ -270,19 +268,24 @@ def fetch_clickup_events_wrapped():
 
 
 def fetch_figma_events_wrapped():
-    """Fetch Figma events via fetch_figma module."""
-    print('[5/5] Fetching Figma events...')
+    """Load Figma events from cache written by fetch_figma.py."""
+    print('[5/5] Loading Figma events...')
+    cached = _load_cache('figma_events_cache.json', 'Figma')
+    if cached is not None:
+        return cached
+
+    # Fallback: re-fetch via module
+    print('  [Figma] Falling back to direct API fetch...')
     try:
+        import fetch_figma
         raw_events = fetch_figma.fetch_all_activity()
-        
         processed = []
         for e in raw_events:
-            # fetch_figma returns dicts with 'timestamp' (PST-aware) and 'Name'
             dt = e.get('timestamp')
-            name = e.get('Name')
-            if dt and name:
-                 processed.append({'raw_name': name, 'timestamp': dt, 'app': 'Figma'})
-        print(f'  Figma: {len(processed)} events')
+            name = e.get('Name', '')
+            if dt and name and not should_exclude(map_name(name)):
+                processed.append({'raw_name': name, 'name': map_name(name), 'timestamp': dt, 'app': 'Figma'})
+        print(f'  Figma (fallback): {len(processed)} events')
         return processed
     except Exception as e:
         print(f'  Figma Fetch Error: {e}')
@@ -309,11 +312,11 @@ def generate_activity_time_analysis(creds):
         print('[SKIP] No events found')
         return
     
-    # Map names
+    # Map names — use pre-mapped 'name' from cache if available, else derive from raw_name
     for e in all_events:
-        raw = e['raw_name']
-        e['name'] = map_name(raw)
-    
+        if not e.get('name'):
+            e['name'] = map_name(e.get('raw_name', ''))
+
     # Filter exclusions
     all_events = [e for e in all_events if not should_exclude(e['name'])]
     print(f'After filtering and mapping: {len(all_events)} events')

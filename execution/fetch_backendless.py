@@ -8,7 +8,6 @@ import gspread
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
 import re
-import time
 
 # Add current directory to path for imports
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -177,13 +176,11 @@ def main():
     
     # Priority: Node.js (Official SDK)
     logs = fetch_logs_node_wrapper()
-    source = 'Node API'
-    
+
     # Fallback to Python Internal API (Legacy)
     if not logs:
         print("[WARN] Node fetch failed/empty. Trying direct Python API...")
         logs = fetch_logs_internal_api()
-        source = 'Python API'
     
     if not logs:
         print("[ERROR] No data found via API. (CSV fallback DISABLED).")
@@ -268,17 +265,17 @@ def main():
     print("[SUCCESS] Done.")
 
 def fetch_backendless_events_raw():
-    """Wrapper for activity time analysis."""
+    """Wrapper for activity time analysis. Saves a cache to avoid re-fetching in generate_activity_time."""
     logs = fetch_logs_node_wrapper()
     if not logs:
         logs = fetch_logs_internal_api()
-    
+
     events = []
     if not logs: return []
-    
-    from name_mappings import get_audit_date
+
+    from name_mappings import get_audit_date, map_name, should_exclude
     start_filter = pd.to_datetime(os.environ.get('START_DATE', '2026-01-01')).tz_localize('UTC')
-    
+
     for log in logs:
         try:
             dev_raw = log.get('developer')
@@ -286,15 +283,30 @@ def fetch_backendless_events_raw():
             ts = log.get('created') or log.get('timestamp')
             if not ts: continue
             if ts > 9999999999: ts = ts / 1000.0
-            
-            # UTC timestamp to filter
+
             dt_utc = pd.to_datetime(ts, unit='s').tz_localize('UTC')
             if dt_utc < start_filter: continue
-            
-            # PST for reporting/analysis
+
             dt_pst = dt_utc.tz_convert('America/Los_Angeles')
-            events.append({'raw_name': email, 'timestamp': dt_pst, 'app': 'Backendless'})
+            name = map_name(email)
+            if should_exclude(name): continue
+            events.append({'raw_name': email, 'name': name, 'timestamp': dt_pst, 'app': 'Backendless'})
         except: continue
+
+    # Save cache so generate_activity_time.py doesn't re-fetch the API
+    try:
+        cache_rows = [
+            {'name': e['name'], 'timestamp': e['timestamp'].isoformat(), 'app': 'Backendless'}
+            for e in events
+        ]
+        cache_path = os.path.join(ROOT_DIR, 'dashboard', 'backendless_events_cache.json')
+        os.makedirs(os.path.dirname(cache_path), exist_ok=True)
+        with open(cache_path, 'w') as f:
+            json.dump(cache_rows, f)
+        print(f"  [CACHE] Saved {len(cache_rows)} Backendless events to cache")
+    except Exception as ce:
+        print(f"  [CACHE WARN] {ce}")
+
     return events
 
 if __name__ == "__main__":

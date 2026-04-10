@@ -347,6 +347,21 @@ def process_and_upload(events):
     # Convert ms timestamp to PST and apply Audit Date logic
     df['dt_pst'] = pd.to_datetime(df['timestamp'], unit='ms').dt.tz_localize('UTC').dt.tz_convert('America/Los_Angeles')
     df['Date'] = df['dt_pst'].apply(get_audit_date)
+
+    # Save raw timestamped events cache for Activity Time Analysis
+    # (prevents generate_activity_time.py from re-fetching the ClickUp API a second time)
+    try:
+        cache_rows = [
+            {'name': row['Name'], 'timestamp': row['dt_pst'].isoformat(), 'app': 'ClickUp'}
+            for _, row in df.iterrows()
+        ]
+        cache_path = os.path.join(ROOT_DIR, 'dashboard', 'clickup_events_cache.json')
+        os.makedirs(os.path.dirname(cache_path), exist_ok=True)
+        with open(cache_path, 'w') as f:
+            json.dump(cache_rows, f)
+        print(f"  [CACHE] Saved {len(cache_rows)} ClickUp events to cache")
+    except Exception as ce:
+        print(f"  [CACHE WARN] {ce}")
     
     summary = df.groupby(['Name', 'Date', 'event_type']).size().reset_index(name='Quantity')
     summary['sort_dt'] = pd.to_datetime(summary['Date'], format='%m/%d/%y')

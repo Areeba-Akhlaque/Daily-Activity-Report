@@ -259,6 +259,22 @@ def process_and_upload(events):
     else:
         print("  [SKIP] No new or existing Figma data to upload. Sheet preserved.")
 
+def save_figma_cache(events):
+    """Save raw timestamped Figma events for Activity Time Analysis to avoid double API calls."""
+    try:
+        cache_rows = [
+            {'name': e.get('Name', ''), 'timestamp': e['timestamp'].isoformat(), 'app': 'Figma'}
+            for e in events if e.get('timestamp') and e.get('Name')
+        ]
+        cache_path = os.path.join(ROOT_DIR, 'dashboard', 'figma_events_cache.json')
+        os.makedirs(os.path.dirname(cache_path), exist_ok=True)
+        with open(cache_path, 'w') as f:
+            json.dump(cache_rows, f)
+        print(f"  [CACHE] Saved {len(cache_rows)} Figma events to cache")
+    except Exception as ce:
+        print(f"  [CACHE WARN] {ce}")
+
 if __name__ == "__main__":
     events = fetch_all_activity()
+    save_figma_cache(events)
     process_and_upload(events)
