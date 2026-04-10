@@ -80,7 +80,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
-          git add dashboard/data.json dashboard/hourly_data.json
+          git add dashboard/data.json dashboard/hourly_data.json dashboard/charts/
           
           if ! git diff --staged --quiet; then
             git commit -m "🔄 Auto-update dashboard metrics - $(date -u +'%Y-%m-%d %H:%M UTC')"

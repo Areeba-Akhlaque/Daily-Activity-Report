@@ -289,14 +289,16 @@ def upload_chart_to_drive(creds, img_bytes, date_str):
         from googleapiclient.discovery import build as build_service
         from googleapiclient.http import MediaInMemoryUpload
 
-        # Check token has drive scope before attempting
+        # Log token state for diagnostics
         token_scopes = getattr(creds, 'scopes', None) or []
+        print(f"  [Drive] Token valid: {creds.valid} | Scopes: {token_scopes}")
+
         if token_scopes and 'https://www.googleapis.com/auth/drive' not in token_scopes:
             print(f"  [WARN] Token is missing 'drive' scope — Drive upload skipped.")
             print(f"  [FIX]  Run execution/refresh_google_token.py locally and update the GOOGLE_TOKEN GitHub secret.")
             return None
 
-        print(f"  Uploading chart to Google Drive folder {DRIVE_FOLDER_ID}...")
+        print(f"  [Drive] Uploading chart to folder {DRIVE_FOLDER_ID}...")
         drive_service = build_service('drive', 'v3', credentials=creds)
 
         safe_date = date_str.replace('/', '-')
@@ -325,19 +327,34 @@ def upload_chart_to_drive(creds, img_bytes, date_str):
                 body={'type': 'anyone', 'role': 'reader'},
                 supportsAllDrives=True
             ).execute()
-            print(f"  [SUCCESS] Drive file set to public (viewable by anyone with link).")
+            print(f"  [Drive] File set to public.")
         except Exception as perm_err:
-            print(f"  [WARN] Could not set public permission (domain policy may restrict link sharing): {perm_err}")
+            print(f"  [WARN] Could not set public permission: {perm_err}")
 
         return file_id
 
     except Exception as e:
-        if 'insufficientPermissions' in str(e) or '403' in str(e):
-            print(f"  [WARN] Drive upload blocked — token missing 'drive' scope.")
-            print(f"  [FIX]  Run execution/refresh_google_token.py locally and update the GOOGLE_TOKEN GitHub secret.")
-        else:
-            print(f"  [WARN] Drive upload failed: {e}")
+        print(f"  [WARN] Drive upload failed: {type(e).__name__}: {e}")
         print(traceback.format_exc())
+        if '403' in str(e) or 'insufficientPermissions' in str(e):
+            print(f"  [FIX] Token in GOOGLE_TOKEN secret is missing 'drive' scope.")
+            print(f"  [FIX] Re-run execution/refresh_google_token.py locally, then update the secret.")
+        return None
+
+
+def save_chart_to_repo(img_bytes, date_str):
+    """Save chart PNG to dashboard/charts/ so it gets committed with the daily run."""
+    try:
+        charts_dir = os.path.join(ROOT_DIR, 'dashboard', 'charts')
+        os.makedirs(charts_dir, exist_ok=True)
+        safe_date = date_str.replace('/', '-')
+        file_path = os.path.join(charts_dir, f"audit_chart_{safe_date}.png")
+        with open(file_path, 'wb') as f:
+            f.write(img_bytes)
+        print(f"  [CHART] Saved chart to repo: dashboard/charts/audit_chart_{safe_date}.png")
+        return file_path
+    except Exception as e:
+        print(f"  [CHART WARN] Could not save chart to repo: {e}")
         return None
 
 
@@ -409,20 +426,23 @@ def generate_stacked_bar_chart(summary, creds=None):
 
         # Step 2: Fetch PNG bytes directly from /chart endpoint (does NOT depend on the short URL)
         # This avoids the two-step download that fails from GitHub Actions
-        if creds:
-            try:
-                print(f"  Fetching chart PNG directly for Drive archival...")
-                img_resp = requests.post(
-                    'https://quickchart.io/chart',
-                    json=chart_payload,
-                    timeout=30
-                )
-                if img_resp.status_code == 200 and img_resp.content[:4] == b'\x89PNG':
+        try:
+            print(f"  Fetching chart PNG directly...")
+            img_resp = requests.post(
+                'https://quickchart.io/chart',
+                json=chart_payload,
+                timeout=30
+            )
+            if img_resp.status_code == 200 and img_resp.content[:4] == b'\x89PNG':
+                # Primary: Save to git repo (always works — committed in every run)
+                save_chart_to_repo(img_resp.content, summary.get('date', 'unknown'))
+                # Secondary: Upload to Drive if creds available (bonus — non-fatal)
+                if creds:
                     upload_chart_to_drive(creds, img_resp.content, summary.get('date', 'unknown'))
-                else:
-                    print(f"  [WARN] Direct chart PNG fetch failed: HTTP {img_resp.status_code}, Content-Type: {img_resp.headers.get('Content-Type', 'unknown')}")
-            except Exception as dl_err:
-                print(f"  [WARN] Drive archival failed: {dl_err}")
+            else:
+                print(f"  [WARN] Direct chart PNG fetch failed: HTTP {img_resp.status_code}, Content-Type: {img_resp.headers.get('Content-Type', 'unknown')}")
+        except Exception as dl_err:
+            print(f"  [WARN] Chart PNG fetch failed: {dl_err}")
 
         # Always return QuickChart short URL for the email
         if quickchart_url:
