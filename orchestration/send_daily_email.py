@@ -425,11 +425,9 @@ def generate_stacked_bar_chart(summary, creds=None):
                 timeout=30
             )
             if img_resp.status_code == 200 and img_resp.content[:4] == b'\x89PNG':
-                # Primary: Save to git repo (always works — committed in every run)
+                # Save PNG to dashboard/charts/ — committed to git and picked up
+                # by the dedicated "Upload Chart to Google Drive" workflow step.
                 save_chart_to_repo(img_resp.content, summary.get('date', 'unknown'))
-                # Secondary: Upload to Drive if creds available (bonus — non-fatal)
-                if creds:
-                    upload_chart_to_drive(creds, img_resp.content, summary.get('date', 'unknown'))
             else:
                 print(f"  [WARN] Direct chart PNG fetch failed: HTTP {img_resp.status_code}, Content-Type: {img_resp.headers.get('Content-Type', 'unknown')}")
         except Exception as dl_err:

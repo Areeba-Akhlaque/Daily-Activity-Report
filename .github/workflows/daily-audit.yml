@@ -94,6 +94,10 @@ jobs:
             git push origin main
           fi
 
+      - name: Upload Chart to Google Drive
+        continue-on-error: true
+        run: python orchestration/upload_charts_to_drive.py
+
       - name: Prepare Dashboard for Deployment
         run: |
           mkdir -p _site/dashboard
