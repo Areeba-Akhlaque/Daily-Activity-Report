@@ -247,22 +247,50 @@ def main():
     summary = summary.drop(columns=['sort_dt'])
     
     rows = summary.to_dict('records')
-    
+
     # Upload
     print(f"[Sheet] Uploading {len(rows)} summarized rows...")
     creds = get_google_creds()
     gc = gspread.authorize(creds)
     sh = gc.open_by_key(SHEET_ID)
-    
+
     # Update 'Console_Audit_Logs'
     try: ws = sh.worksheet('Console_Audit_Logs')
     except: ws = sh.add_worksheet('Console_Audit_Logs', 5000, 10)
-    
+
     ws.clear()
     headers = ['Name', 'Date', 'Platform', 'Event Type', 'Count']
     values = [headers] + [[r[h] for h in headers] for r in rows]
     ws.update(values=values, range_name='A1')
     print("[SUCCESS] Done.")
+
+    # Save cache so generate_activity_time.py reads it instead of re-fetching
+    start_filter = pd.to_datetime(os.environ.get('START_DATE', '2026-01-01')).tz_localize('UTC')
+    cache_events = []
+    for log in logs:
+        try:
+            dev_raw = log.get('developer')
+            email = clean_developer_email(dev_raw)
+            ts = log.get('created') or log.get('timestamp')
+            if not ts: continue
+            if ts > 9999999999: ts = ts / 1000.0
+            dt_utc = pd.to_datetime(ts, unit='s').tz_localize('UTC')
+            if dt_utc < start_filter: continue
+            dt_pst = dt_utc.tz_convert('America/Los_Angeles')
+            name = map_name(email)
+            if should_exclude(name): continue
+            cache_events.append({'name': name, 'timestamp': dt_pst.isoformat(), 'app': 'Backendless'})
+        except: continue
+
+    try:
+        import json as _json
+        cache_path = os.path.join(ROOT_DIR, 'dashboard', 'backendless_events_cache.json')
+        os.makedirs(os.path.dirname(cache_path), exist_ok=True)
+        with open(cache_path, 'w') as f:
+            _json.dump(cache_events, f)
+        print(f"  [CACHE] Saved {len(cache_events)} Backendless events to cache")
+    except Exception as ce:
+        print(f"  [CACHE WARN] {ce}")
 
 def fetch_backendless_events_raw():
     """Wrapper for activity time analysis. Saves a cache to avoid re-fetching in generate_activity_time."""

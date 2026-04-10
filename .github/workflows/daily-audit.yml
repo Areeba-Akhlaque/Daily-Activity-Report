@@ -17,11 +17,13 @@ jobs:
   daily-audit:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
 # Re-enable Node.js logic as requested
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -124,6 +126,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: daily-audit
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Deploy to GitHub Pages
         id: deployment

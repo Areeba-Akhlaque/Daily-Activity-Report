@@ -187,17 +187,26 @@ def _fetch_messages_for_channel(cid, event_type):
     msg_cursor = ""
     while True:
         params = {"cursor": msg_cursor} if msg_cursor else {}
-        try:
-            m_resp = requests.get(
-                f"https://api.clickup.com/api/v3/workspaces/{WORKSPACE_ID}/chat/channels/{cid}/messages",
-                headers=get_headers_v3(), params=params, timeout=15
-            )
-        except Exception as e:
-            print(f"    [Chat] Message fetch error for channel {cid}: {e}")
-            break
+        m_resp = None
+        for attempt in range(4):  # up to 3 retries on 429
+            try:
+                m_resp = requests.get(
+                    f"https://api.clickup.com/api/v3/workspaces/{WORKSPACE_ID}/chat/channels/{cid}/messages",
+                    headers=get_headers_v3(), params=params, timeout=15
+                )
+                if m_resp.status_code == 429:
+                    wait = (attempt + 1) * 10  # 10s, 20s, 30s
+                    # print(f"    [Chat] 429 for channel {cid}, retry in {wait}s...")
+                    time.sleep(wait)
+                    continue
+                break  # success or non-retryable error
+            except Exception as e:
+                print(f"    [Chat] Message fetch error for channel {cid}: {e}")
+                break
 
-        if m_resp.status_code != 200:
-            print(f"    [Chat] Messages HTTP {m_resp.status_code} for channel {cid}")
+        if m_resp is None or m_resp.status_code != 200:
+            if m_resp is not None and m_resp.status_code != 429:
+                pass  # silently skip — channel may be inaccessible
             break
         resp_body = m_resp.json()
         m_data = resp_body.get('data', [])
