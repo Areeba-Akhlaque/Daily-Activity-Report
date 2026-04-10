@@ -5,7 +5,11 @@ on:
     # Run at 12:00 UTC = 4:00 AM PT (capture FULL previous day)
     - cron: '0 12 * * *'
   workflow_dispatch:
-    # Allow manual trigger from GitHub Actions UI
+    inputs:
+      skip_email:
+        description: 'Skip sending email to managers (use for testing)'
+        type: boolean
+        default: false
 
 # Permissions for GitHub Pages deployment
 permissions:
@@ -70,6 +74,7 @@ jobs:
           EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}
           DASHBOARD_URL=https://Areeba-Akhlaque.github.io/Daily-Activity-Report/dashboard/index.html
           START_DATE=2026-01-01
+          SKIP_EMAIL=${{ github.event.inputs.skip_email || 'false' }}
           EOF
       
       - name: Run daily workflow

@@ -695,9 +695,15 @@ def main():
         
     # Recipients
     recipients = override_email if override_email else EMAIL_RECIPIENTS
-    
+
+    # SKIP_EMAIL flag — set via workflow_dispatch input to suppress email during testing
+    if os.environ.get('SKIP_EMAIL', '').lower() in ('true', '1', 'yes'):
+        print(f"[3/3] SKIP_EMAIL=true — email suppressed (test mode). Would send to: {', '.join(recipients)}")
+        print("\n[COMPLETE] Test run complete — no email sent to managers.")
+        return
+
     print(f"[3/3] Sending to: {', '.join(recipients)}")
-    
+
     # Send Email
     success = False
     if EMAIL_USER and EMAIL_PASSWORD:
@@ -705,11 +711,11 @@ def main():
         success = send_email_smtp(EMAIL_USER, EMAIL_PASSWORD, recipients, subject, html)
         if not success:
             print(f"  [WARN] SMTP failed. Falling back to Gmail API...")
-    
+
     if not success:
         print(f"  Using Gmail API (OAuth)...")
         success = send_email(creds, recipients, subject, html)
-    
+
     if success:
         print("\n[COMPLETE] Daily summary email sent successfully!")
     else:
