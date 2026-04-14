@@ -1,7 +1,7 @@
 import requests
 import json
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 import os
 import sys
 import time
@@ -38,7 +38,18 @@ WORKSPACE_ID = os.environ.get('CLICKUP_WORKSPACE_ID', '9011906822')
 TEAM_ID = os.environ.get('CLICKUP_TEAM_ID', '9011906822')
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
 START_DATE_STR = os.environ.get('START_DATE', '2026-01-01')
-START_TS_MS = int(datetime.strptime(START_DATE_STR, "%Y-%m-%d").timestamp() * 1000)
+
+# Rolling window mode: by default only fetch events from (now - ROLLING_DAYS).
+# FULL_REBUILD=true falls back to START_DATE (used after changing name_mappings/rules).
+FULL_REBUILD = os.environ.get('FULL_REBUILD', 'false').lower() in ('true', '1', 'yes')
+ROLLING_DAYS = int(os.environ.get('ROLLING_DAYS', '7'))
+if FULL_REBUILD:
+    FETCH_START_DT = datetime.strptime(START_DATE_STR, "%Y-%m-%d").replace(tzinfo=timezone.utc)
+    print(f"[MODE] FULL_REBUILD — fetching ClickUp from {START_DATE_STR}")
+else:
+    FETCH_START_DT = datetime.now(timezone.utc) - timedelta(days=ROLLING_DAYS)
+    print(f"[MODE] Rolling {ROLLING_DAYS}-day window — fetching ClickUp from {FETCH_START_DT.strftime('%Y-%m-%d')}")
+FETCH_START_TS_MS = int(FETCH_START_DT.timestamp() * 1000)
 SCOPES = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/admin.reports.audit.readonly'
@@ -76,7 +87,7 @@ def fetch_task_activity():
         try:
             url = f"https://api.clickup.com/api/v2/team/{TEAM_ID}/task"
             params = {
-                "date_updated_gt": START_TS_MS,
+                "date_updated_gt": FETCH_START_TS_MS,
                 "page": page,
                 "subtasks": "true",
                 "include_closed": "true",
@@ -107,7 +118,7 @@ def fetch_task_activity():
 
                 # 1. task created
                 d_c = int(t.get('date_created') or 0)
-                if d_c >= START_TS_MS:
+                if d_c >= FETCH_START_TS_MS:
                     uid = str(t.get('creator', {}).get('id', ''))
                     add_event(uid, d_c, "task created")
                 
@@ -115,14 +126,14 @@ def fetch_task_activity():
                 d_done = t.get('date_done') or t.get('date_closed')
                 if d_done:
                     d_d_int = int(d_done)
-                    if d_d_int >= START_TS_MS:
+                    if d_d_int >= FETCH_START_TS_MS:
                         assignees = t.get('assignees', [])
                         uid = str(assignees[0].get('id')) if assignees else str(t.get('creator', {}).get('id', ''))
                         add_event(uid, d_d_int, "task completed")
                 
                 # 3. task updated (based on last update)
                 d_u = int(t.get('date_updated') or 0)
-                if d_u >= START_TS_MS:
+                if d_u >= FETCH_START_TS_MS:
                     # Attribution on 'updated' is noisy in List API (often guesses creator/assignee).
                     # We only count it if it's NOT a creation/completion event.
                     if abs(d_u - d_c) > 5000: # not the same as creation
@@ -153,7 +164,7 @@ def fetch_comments_for_task(tid):
             task_events = []
             for c in comments:
                 c_date = int(c.get('date', 0))
-                if c_date >= START_TS_MS:
+                if c_date >= FETCH_START_TS_MS:
                     uid = str(c.get('user', {}).get('id', ''))
                     task_events.append({"user_id": uid, "timestamp": c_date, "event_type": "Comment Posted"})
             return task_events
@@ -216,7 +227,7 @@ def _fetch_messages_for_channel(cid, event_type):
         stop_channel = False
         for m in m_data:
             m_ts = int(m.get('date', 0))
-            if m_ts < START_TS_MS:
+            if m_ts < FETCH_START_TS_MS:
                 stop_channel = True
                 break
             uid = str(m.get('user_id') or m.get('user', {}).get('id', ''))
@@ -234,7 +245,7 @@ def _fetch_messages_for_channel(cid, event_type):
                     if r_resp.status_code == 200:
                         for r in r_resp.json().get('data', []):
                             r_ts = int(r.get('date', 0))
-                            if r_ts >= START_TS_MS:
+                            if r_ts >= FETCH_START_TS_MS:
                                 r_uid = str(r.get('user_id') or r.get('user', {}).get('id', ''))
                                 if r_uid:
                                     events.append({"user_id": r_uid, "timestamp": r_ts, "event_type": event_type})
@@ -357,18 +368,55 @@ def process_and_upload(events):
     df['dt_pst'] = pd.to_datetime(df['timestamp'], unit='ms').dt.tz_localize('UTC').dt.tz_convert('America/Los_Angeles')
     df['Date'] = df['dt_pst'].apply(get_audit_date)
 
-    # Save raw timestamped events cache for Activity Time Analysis
-    # (prevents generate_activity_time.py from re-fetching the ClickUp API a second time)
+    # Save raw timestamped events cache for Activity Time Analysis.
+    # Rolling window: merge fresh last-N-days events with preserved pre-window historical cache.
+    # FULL_REBUILD: overwrite entirely.
     try:
-        cache_rows = [
+        cache_rows_new = [
             {'name': row['Name'], 'timestamp': row['dt_pst'].isoformat(), 'app': 'ClickUp'}
             for _, row in df.iterrows()
         ]
         cache_path = os.path.join(ROOT_DIR, 'dashboard', 'clickup_events_cache.json')
         os.makedirs(os.path.dirname(cache_path), exist_ok=True)
+
+        if FULL_REBUILD:
+            final_rows = cache_rows_new
+        else:
+            existing = []
+            if os.path.exists(cache_path):
+                try:
+                    with open(cache_path) as f:
+                        existing = json.load(f) or []
+                except Exception:
+                    existing = []
+            window_start_dt = pd.Timestamp(FETCH_START_DT).tz_convert('America/Los_Angeles')
+            preserved = []
+            for r in existing:
+                ts_raw = r.get('timestamp', '')
+                if not ts_raw:
+                    continue
+                try:
+                    r_dt = pd.to_datetime(ts_raw)
+                    if r_dt.tz is None:
+                        r_dt = r_dt.tz_localize('America/Los_Angeles')
+                    if r_dt < window_start_dt:
+                        preserved.append(r)
+                except Exception:
+                    continue
+            merged = preserved + cache_rows_new
+            seen = set()
+            final_rows = []
+            for r in merged:
+                key = (r.get('name', ''), r.get('timestamp', ''))
+                if key in seen:
+                    continue
+                seen.add(key)
+                final_rows.append(r)
+            print(f"  [CACHE] Preserved {len(preserved)} historical + {len(cache_rows_new)} fresh = {len(final_rows)} total")
+
         with open(cache_path, 'w') as f:
-            json.dump(cache_rows, f)
-        print(f"  [CACHE] Saved {len(cache_rows)} ClickUp events to cache")
+            json.dump(final_rows, f)
+        print(f"  [CACHE] Saved {len(final_rows)} ClickUp events to cache")
     except Exception as ce:
         print(f"  [CACHE WARN] {ce}")
     
@@ -396,13 +444,58 @@ def process_and_upload(events):
     try:
         sh = gc.open_by_key(SHEET_ID)
         tn = "Clickup_Activity"
-        try: ws = sh.worksheet(tn); ws.clear()
-        except: ws = sh.add_worksheet(tn, 1000, 20)
-        ws.update(values=[final_df.columns.values.tolist()], range_name='A1')
-        ws.append_rows(final_df.values.tolist())
-        print(f"  [SUCCESS] Uploaded {len(final_df)} aggregate rows.")
-        print("  Event breakdown:")
-        print(df['event_type'].value_counts().to_string())
+        try:
+            ws = sh.worksheet(tn)
+            existing_records = ws.get_all_records()
+            df_old = pd.DataFrame(existing_records)
+        except:
+            ws = sh.add_worksheet(tn, 1000, 20)
+            df_old = pd.DataFrame(columns=['Name', 'Date', 'Platform', 'Event Type', 'Quantity'])
+
+        # Rolling merge: keep historical rows older than window, append fresh window rows.
+        if FULL_REBUILD:
+            combined = final_df
+            print(f"  [MERGE] FULL_REBUILD — overwriting with {len(final_df)} fresh rows")
+        elif not df_old.empty:
+            for col in ['Name', 'Date', 'Platform', 'Event Type', 'Quantity']:
+                if col not in df_old.columns:
+                    df_old[col] = ''
+            df_old = df_old[['Name', 'Date', 'Platform', 'Event Type', 'Quantity']].copy()
+            df_old['_dt'] = pd.to_datetime(df_old['Date'], format='%m/%d/%y', errors='coerce')
+            window_start_naive = pd.Timestamp(FETCH_START_DT).tz_convert('America/Los_Angeles').tz_localize(None).normalize()
+            historical = df_old[df_old['_dt'].notna() & (df_old['_dt'] < window_start_naive)]
+            historical = historical.drop(columns=['_dt'])
+            combined = pd.concat([historical, final_df], ignore_index=True)
+            print(f"  [MERGE] Rolling {ROLLING_DAYS}d — {len(historical)} historical + {len(final_df)} fresh = {len(combined)}")
+        else:
+            combined = final_df
+            print(f"  [MERGE] No existing sheet — writing {len(final_df)} fresh rows")
+
+        combined['Quantity'] = pd.to_numeric(combined['Quantity'], errors='coerce').fillna(1).astype(int)
+        combined = combined[['Name', 'Date', 'Platform', 'Event Type', 'Quantity']]
+
+        rows_to_upload = [combined.columns.tolist()]
+        for _, row in combined.iterrows():
+            clean_row = []
+            for col in combined.columns:
+                val = row[col]
+                if col == 'Quantity':
+                    try:
+                        clean_row.append(int(float(val)) if pd.notnull(val) and str(val) != '' else 1)
+                    except:
+                        clean_row.append(1)
+                else:
+                    clean_row.append(str(val) if pd.notnull(val) else "")
+            rows_to_upload.append(clean_row)
+
+        if len(rows_to_upload) > 1:
+            ws.clear()
+            ws.update(values=rows_to_upload, range_name='A1')
+            print(f"  [SUCCESS] Uploaded {len(rows_to_upload)-1} aggregate rows.")
+            print("  Event breakdown:")
+            print(df['event_type'].value_counts().to_string())
+        else:
+            print("  [SKIP] No data to upload. Sheet preserved.")
     except Exception as e: print(f"  [ERROR] {e}")
 
 if __name__ == "__main__":
