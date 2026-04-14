@@ -1,7 +1,7 @@
 import requests
 import json
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 import sys
 import time
@@ -38,6 +38,17 @@ GITHUB_ORG = os.environ.get('GITHUB_ORG', 'Pvragon')
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
 START_DATE_STR = os.environ.get('START_DATE', '2026-01-01')
 START_DATE_DT = pd.to_datetime(START_DATE_STR).tz_localize('America/Los_Angeles')
+
+# Rolling window mode: by default fetch only last ROLLING_DAYS. FULL_REBUILD falls back
+# to START_DATE (used after changing name_mappings/rules).
+FULL_REBUILD = os.environ.get('FULL_REBUILD', 'false').lower() in ('true', '1', 'yes')
+ROLLING_DAYS = int(os.environ.get('ROLLING_DAYS', '7'))
+if FULL_REBUILD:
+    FETCH_START_DT = START_DATE_DT
+    print(f"[MODE] FULL_REBUILD — fetching commits from {START_DATE_STR}")
+else:
+    FETCH_START_DT = pd.Timestamp.now(tz='America/Los_Angeles') - timedelta(days=ROLLING_DAYS)
+    print(f"[MODE] Rolling {ROLLING_DAYS}-day window — fetching commits from {FETCH_START_DT.strftime('%Y-%m-%d')}")
 
 SCOPES = [
     'https://www.googleapis.com/auth/spreadsheets',
@@ -80,7 +91,7 @@ def fetch_repos():
                 updated_at = updated_at.tz_localize('UTC')
             updated_at = updated_at.tz_convert('America/Los_Angeles')
             
-            if updated_at >= START_DATE_DT:
+            if updated_at >= FETCH_START_DT:
                 repos.append({"full_name": r['full_name'], "name": r['name'], "owner": GITHUB_ORG})
                 recent_count += 1
         page += 1
@@ -106,7 +117,7 @@ def fetch_user_repos(username):
                     updated_at = updated_at.tz_localize('UTC')
                 updated_at = updated_at.tz_convert('America/Los_Angeles')
                 
-                if updated_at >= START_DATE_DT:
+                if updated_at >= FETCH_START_DT:
                     repos.append({"full_name": r['full_name'], "name": r['name'], "owner": username})
                 else: 
                     # Since we sort by updated desc, we can stop if we hit an old repo
@@ -122,7 +133,7 @@ def fetch_user_repos(username):
 def fetch_detailed_commits(repos):
     print(f"[2/4] Fetching Detailed Commits (Timestamps) for {len(repos)} repositories...")
     all_commits = []
-    since_iso = START_DATE_DT.isoformat()
+    since_iso = FETCH_START_DT.isoformat()
 
     # Deduplicate repos by full_name
     seen_repos = set()
@@ -229,9 +240,15 @@ def process_and_upload_commits(commits):
             if col not in df_old.columns:
                 df_old[col] = ''
         
-        # 2. Merge by Hash
-        if not df_old.empty:
+        # 2. Merge by Hash. Rolling window: historical commit hashes naturally stay because
+        # the fresh fetch only returns last N days; concat + dedup keeps historical + fresh.
+        # FULL_REBUILD: overwrite entirely so excluded users/rules take effect.
+        if FULL_REBUILD:
+            combined = final_df[STANDARD_COLS]
+            print(f"  [MERGE] FULL_REBUILD — overwriting with {len(final_df)} fresh rows")
+        elif not df_old.empty:
             combined = pd.concat([df_old[STANDARD_COLS], final_df[STANDARD_COLS]]).drop_duplicates(subset=['Hash'], keep='last')
+            print(f"  [MERGE] Rolling {ROLLING_DAYS}d — merged by Hash: {len(combined)} total rows")
         else:
             combined = final_df[STANDARD_COLS]
 
