@@ -1,7 +1,7 @@
 import requests
 import json
 import pandas as pd
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import os
 import sys
 import gspread
@@ -42,6 +42,18 @@ SCOPES = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/admin.reports.audit.readonly'
 ]
+
+# Rolling window mode: by default only process events from last ROLLING_DAYS.
+# FULL_REBUILD falls back to START_DATE (used after changing name_mappings/rules).
+START_DATE_STR = os.environ.get('START_DATE', '2026-01-01')
+FULL_REBUILD = os.environ.get('FULL_REBUILD', 'false').lower() in ('true', '1', 'yes')
+ROLLING_DAYS = int(os.environ.get('ROLLING_DAYS', '7'))
+if FULL_REBUILD:
+    FETCH_START_DT = pd.to_datetime(START_DATE_STR).tz_localize('UTC')
+    print(f"[MODE] FULL_REBUILD — processing Backendless from {START_DATE_STR}")
+else:
+    FETCH_START_DT = pd.Timestamp.now(tz='UTC') - timedelta(days=ROLLING_DAYS)
+    print(f"[MODE] Rolling {ROLLING_DAYS}-day window — processing Backendless from {FETCH_START_DT.strftime('%Y-%m-%d')}")
 
 def get_google_creds():
     token_path = os.path.join(ROOT_DIR, 'token.json')
@@ -207,10 +219,9 @@ def main():
             
             ts = ts_raw / 1000.0 if ts_raw > 9999999999 else ts_raw
             
-            # UTC to PST
+            # UTC filter via rolling window
             dt_utc = datetime.fromtimestamp(ts, timezone.utc)
-            start_year, start_month, start_day = (int(x) for x in os.environ.get('START_DATE', '2026-01-01').split('-'))
-            if dt_utc < datetime(start_year, start_month, start_day, tzinfo=timezone.utc): continue
+            if pd.Timestamp(dt_utc) < FETCH_START_DT: continue
             
             event = log.get('action') or log.get('event') or 'Unknown'
             
@@ -254,19 +265,58 @@ def main():
     gc = gspread.authorize(creds)
     sh = gc.open_by_key(SHEET_ID)
 
-    # Update 'Console_Audit_Logs'
-    try: ws = sh.worksheet('Console_Audit_Logs')
-    except: ws = sh.add_worksheet('Console_Audit_Logs', 5000, 10)
+    # Update 'Console_Audit_Logs' with rolling merge
+    try:
+        ws = sh.worksheet('Console_Audit_Logs')
+        existing_data = ws.get_all_records()
+        df_old = pd.DataFrame(existing_data)
+    except:
+        ws = sh.add_worksheet('Console_Audit_Logs', 5000, 10)
+        df_old = pd.DataFrame(columns=['Name', 'Date', 'Platform', 'Event Type', 'Count'])
+
+    summary_out = summary[['Name', 'Date', 'Platform', 'Event Type', 'Count']].copy()
+
+    if FULL_REBUILD:
+        combined = summary_out
+        print(f"  [MERGE] FULL_REBUILD — overwriting with {len(summary_out)} fresh rows")
+    elif not df_old.empty:
+        for col in ['Name', 'Date', 'Platform', 'Event Type', 'Count']:
+            if col not in df_old.columns:
+                df_old[col] = ''
+        df_old = df_old[['Name', 'Date', 'Platform', 'Event Type', 'Count']].copy()
+        df_old['_dt'] = pd.to_datetime(df_old['Date'], format='%m/%d/%y', errors='coerce')
+        window_start_naive = FETCH_START_DT.tz_convert('America/Los_Angeles').tz_localize(None).normalize()
+        historical = df_old[df_old['_dt'].notna() & (df_old['_dt'] < window_start_naive)]
+        historical = historical.drop(columns=['_dt'])
+        combined = pd.concat([historical, summary_out], ignore_index=True)
+        print(f"  [MERGE] Rolling {ROLLING_DAYS}d — {len(historical)} historical + {len(summary_out)} fresh = {len(combined)}")
+    else:
+        combined = summary_out
+        print(f"  [MERGE] No existing sheet — writing {len(summary_out)} fresh rows")
+
+    combined['Count'] = pd.to_numeric(combined['Count'], errors='coerce').fillna(1).astype(int)
 
     ws.clear()
     headers = ['Name', 'Date', 'Platform', 'Event Type', 'Count']
-    values = [headers] + [[r[h] for h in headers] for r in rows]
+    values = [headers]
+    for _, row in combined.iterrows():
+        clean_row = []
+        for col in headers:
+            val = row[col]
+            if col == 'Count':
+                try:
+                    clean_row.append(int(float(val)) if pd.notnull(val) and str(val) != '' else 1)
+                except:
+                    clean_row.append(1)
+            else:
+                clean_row.append(str(val) if pd.notnull(val) else "")
+        values.append(clean_row)
     ws.update(values=values, range_name='A1')
-    print("[SUCCESS] Done.")
+    print(f"[SUCCESS] Uploaded {len(values)-1} rows.")
 
-    # Save cache so generate_activity_time.py reads it instead of re-fetching
-    start_filter = pd.to_datetime(os.environ.get('START_DATE', '2026-01-01')).tz_localize('UTC')
-    cache_events = []
+    # Save cache so generate_activity_time.py reads it instead of re-fetching.
+    # Rolling window: merge fresh last-N-days events with preserved historical cache.
+    cache_events_new = []
     for log in logs:
         try:
             dev_raw = log.get('developer')
@@ -275,20 +325,54 @@ def main():
             if not ts: continue
             if ts > 9999999999: ts = ts / 1000.0
             dt_utc = pd.to_datetime(ts, unit='s').tz_localize('UTC')
-            if dt_utc < start_filter: continue
+            if dt_utc < FETCH_START_DT: continue
             dt_pst = dt_utc.tz_convert('America/Los_Angeles')
             name = map_name(email)
             if should_exclude(name): continue
-            cache_events.append({'name': name, 'timestamp': dt_pst.isoformat(), 'app': 'Backendless'})
+            cache_events_new.append({'name': name, 'timestamp': dt_pst.isoformat(), 'app': 'Backendless'})
         except: continue
 
     try:
         import json as _json
         cache_path = os.path.join(ROOT_DIR, 'dashboard', 'backendless_events_cache.json')
         os.makedirs(os.path.dirname(cache_path), exist_ok=True)
+
+        if FULL_REBUILD:
+            final_rows = cache_events_new
+        else:
+            existing = []
+            if os.path.exists(cache_path):
+                try:
+                    with open(cache_path) as f:
+                        existing = _json.load(f) or []
+                except Exception:
+                    existing = []
+            window_start_pst = FETCH_START_DT.tz_convert('America/Los_Angeles')
+            preserved = []
+            for r in existing:
+                ts_raw = r.get('timestamp', '')
+                if not ts_raw: continue
+                try:
+                    r_dt = pd.to_datetime(ts_raw)
+                    if r_dt.tz is None:
+                        r_dt = r_dt.tz_localize('America/Los_Angeles')
+                    if r_dt < window_start_pst:
+                        preserved.append(r)
+                except Exception:
+                    continue
+            merged = preserved + cache_events_new
+            seen = set()
+            final_rows = []
+            for r in merged:
+                key = (r.get('name', ''), r.get('timestamp', ''))
+                if key in seen: continue
+                seen.add(key)
+                final_rows.append(r)
+            print(f"  [CACHE] Preserved {len(preserved)} historical + {len(cache_events_new)} fresh = {len(final_rows)} total")
+
         with open(cache_path, 'w') as f:
-            _json.dump(cache_events, f)
-        print(f"  [CACHE] Saved {len(cache_events)} Backendless events to cache")
+            _json.dump(final_rows, f)
+        print(f"  [CACHE] Saved {len(final_rows)} Backendless events to cache")
     except Exception as ce:
         print(f"  [CACHE WARN] {ce}")
 
@@ -302,7 +386,6 @@ def fetch_backendless_events_raw():
     if not logs: return []
 
     from name_mappings import get_audit_date, map_name, should_exclude
-    start_filter = pd.to_datetime(os.environ.get('START_DATE', '2026-01-01')).tz_localize('UTC')
 
     for log in logs:
         try:
@@ -313,7 +396,7 @@ def fetch_backendless_events_raw():
             if ts > 9999999999: ts = ts / 1000.0
 
             dt_utc = pd.to_datetime(ts, unit='s').tz_localize('UTC')
-            if dt_utc < start_filter: continue
+            if dt_utc < FETCH_START_DT: continue
 
             dt_pst = dt_utc.tz_convert('America/Los_Angeles')
             name = map_name(email)
