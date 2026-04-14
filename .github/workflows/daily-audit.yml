@@ -20,7 +20,7 @@ permissions:
 jobs:
   daily-audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
