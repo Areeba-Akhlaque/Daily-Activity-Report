@@ -10,6 +10,10 @@ on:
         description: 'Skip sending email to managers (use for testing)'
         type: boolean
         default: false
+      full_rebuild:
+        description: 'Rebuild all historical data from START_DATE (use after changing name_mappings or exclusion rules)'
+        type: boolean
+        default: false
 
 # Permissions for GitHub Pages deployment
 permissions:
@@ -75,6 +79,8 @@ jobs:
           DASHBOARD_URL=https://Areeba-Akhlaque.github.io/Daily-Activity-Report/dashboard/index.html
           START_DATE=2026-01-01
           SKIP_EMAIL=${{ github.event.inputs.skip_email || 'false' }}
+          FULL_REBUILD=${{ github.event.inputs.full_rebuild || 'false' }}
+          ROLLING_DAYS=7
           EOF
       
       - name: Run daily workflow
@@ -88,6 +94,11 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
           git add dashboard/data.json dashboard/hourly_data.json dashboard/charts/
+          # Event caches must persist across runs for rolling-window mode
+          # (generate_activity_time.py reads these for session analysis — historical
+          # timestamps older than ROLLING_DAYS would be lost without persistence).
+          git add dashboard/figma_events_cache.json dashboard/clickup_events_cache.json \
+                  dashboard/gworkspace_events_cache.json dashboard/backendless_events_cache.json 2>/dev/null || true
           
           if ! git diff --staged --quiet; then
             git commit -m "🔄 Auto-update dashboard metrics - $(date -u +'%Y-%m-%d %H:%M UTC')"

@@ -1,7 +1,7 @@
 import requests
 import json
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 import sys
 import time
@@ -38,6 +38,17 @@ FIGMA_TEAM_ID = os.environ.get('FIGMA_TEAM_ID', '')
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
 START_DATE_STR = os.environ.get('START_DATE', '2026-01-01')
 START_DATE_DT = pd.to_datetime(START_DATE_STR).tz_localize('America/Los_Angeles')
+
+# Rolling window mode: by default fetch only last ROLLING_DAYS; FULL_REBUILD=true
+# falls back to fetching from START_DATE (used after changing name_mappings/rules).
+FULL_REBUILD = os.environ.get('FULL_REBUILD', 'false').lower() in ('true', '1', 'yes')
+ROLLING_DAYS = int(os.environ.get('ROLLING_DAYS', '7'))
+if FULL_REBUILD:
+    FETCH_START_DT = START_DATE_DT
+    print(f"[MODE] FULL_REBUILD — fetching from {START_DATE_STR}")
+else:
+    FETCH_START_DT = pd.Timestamp.now(tz='America/Los_Angeles') - timedelta(days=ROLLING_DAYS)
+    print(f"[MODE] Rolling {ROLLING_DAYS}-day window — fetching from {FETCH_START_DT.strftime('%Y-%m-%d')}")
 SCOPES = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/admin.reports.audit.readonly'
@@ -100,7 +111,7 @@ def fetch_all_activity():
                 for c in comments:
                     if 'created_at' not in c: continue
                     created_dt = pd.to_datetime(c['created_at']).tz_convert('America/Los_Angeles')
-                    if created_dt >= START_DATE_DT:
+                    if created_dt >= FETCH_START_DT:
                         user_name = c.get('user', {}).get('handle', 'Unknown')
                         file_commentators.add(user_name)
                         all_events.append({
@@ -133,7 +144,7 @@ def fetch_all_activity():
                 v_page_count += 1
                 
                 oldest_in_batch_dt = pd.to_datetime(batch[-1]['created_at']).tz_convert('America/Los_Angeles')
-                if oldest_in_batch_dt < START_DATE_DT:
+                if oldest_in_batch_dt < FETCH_START_DT:
                     break
                 
                 v_page_token = v_data.get('pagination', {}).get('next_page_token')
@@ -150,7 +161,7 @@ def fetch_all_activity():
                 
                 if 'created_at' in oldest_v:
                      v_dt = pd.to_datetime(oldest_v['created_at']).tz_convert('America/Los_Angeles')
-                     if v_dt >= START_DATE_DT:
+                     if v_dt >= FETCH_START_DT:
                          user = oldest_v.get('user', {}).get('handle', 'Unknown')
                          if user.lower() != 'figma':
                              all_events.append({
@@ -164,7 +175,7 @@ def fetch_all_activity():
                     if 'created_at' not in v: continue
                     if v.get('id') == oldest_v.get('id'): continue 
                     v_dt = pd.to_datetime(v['created_at']).tz_convert('America/Los_Angeles')
-                    if v_dt >= START_DATE_DT:
+                    if v_dt >= FETCH_START_DT:
                         user = v.get('user', {}).get('handle', 'Unknown')
                         v_key = (user, v_dt.strftime('%Y-%m-%d %H:') + f'{(v_dt.minute // 15) * 15:02d}')
                         if v_key in seen_v_stamps: continue
@@ -217,17 +228,28 @@ def process_and_upload(events):
         ws = sh.add_worksheet(ws_name, 5000, 10)
         df_old = pd.DataFrame(columns=['Name', 'Date', 'Platform', 'Event Type', 'Quantity'])
 
-    # Merge new data with existing sheet data to preserve history
-    if not df_old.empty:
-        # Ensure consistent columns
+    # Merge new data with existing sheet data.
+    # FULL_REBUILD: fresh fetch is authoritative for everything → overwrite sheet entirely.
+    # Rolling:      fresh fetch is authoritative ONLY for the last N days → preserve
+    #               rows older than the window untouched, drop old rows within the window
+    #               to avoid duplicates, then append the fresh window rows.
+    if FULL_REBUILD:
+        combined = summary_new
+        print(f"  [MERGE] FULL_REBUILD — overwriting with {len(summary_new)} fresh rows")
+    elif not df_old.empty:
         for col in ['Name', 'Date', 'Platform', 'Event Type', 'Quantity']:
             if col not in df_old.columns:
                 df_old[col] = ''
-        combined = pd.concat([df_old[['Name', 'Date', 'Platform', 'Event Type', 'Quantity']], summary_new])
-        # Deduplicate: keep latest (new data) for same (Name, Date, Event Type)
-        combined = combined.drop_duplicates(subset=['Name', 'Date', 'Event Type'], keep='last')
+        df_old = df_old[['Name', 'Date', 'Platform', 'Event Type', 'Quantity']].copy()
+        df_old['_dt'] = pd.to_datetime(df_old['Date'], format='%m/%d/%y', errors='coerce')
+        window_start_naive = FETCH_START_DT.tz_localize(None).normalize()
+        historical = df_old[df_old['_dt'].notna() & (df_old['_dt'] < window_start_naive)]
+        historical = historical.drop(columns=['_dt'])
+        combined = pd.concat([historical, summary_new], ignore_index=True)
+        print(f"  [MERGE] Rolling {ROLLING_DAYS}d — {len(historical)} historical + {len(summary_new)} fresh = {len(combined)}")
     else:
         combined = summary_new
+        print(f"  [MERGE] No existing sheet — writing {len(summary_new)} fresh rows")
     
     # Ensure Quantity is int
     combined['Quantity'] = pd.to_numeric(combined['Quantity'], errors='coerce').fillna(1).astype(int)
@@ -260,17 +282,46 @@ def process_and_upload(events):
         print("  [SKIP] No new or existing Figma data to upload. Sheet preserved.")
 
 def save_figma_cache(events):
-    """Save raw timestamped Figma events for Activity Time Analysis to avoid double API calls."""
+    """Save raw timestamped Figma events for Activity Time Analysis to avoid double API calls.
+
+    Rolling window mode: merges freshly-fetched last-N-days events with existing cache
+    (keeps pre-window historical events so Activity Time Analysis stays complete).
+    FULL_REBUILD mode: overwrites cache with the full fetch.
+    """
     try:
-        cache_rows = [
+        cache_rows_new = [
             {'name': e.get('Name', ''), 'timestamp': e['timestamp'].isoformat(), 'app': 'Figma'}
             for e in events if e.get('timestamp') and e.get('Name')
         ]
         cache_path = os.path.join(ROOT_DIR, 'dashboard', 'figma_events_cache.json')
         os.makedirs(os.path.dirname(cache_path), exist_ok=True)
+
+        if FULL_REBUILD:
+            final_rows = cache_rows_new
+        else:
+            existing = []
+            if os.path.exists(cache_path):
+                try:
+                    with open(cache_path) as f:
+                        existing = json.load(f) or []
+                except Exception:
+                    existing = []
+            window_start_iso = FETCH_START_DT.isoformat()
+            preserved = [r for r in existing if r.get('timestamp', '') < window_start_iso]
+            merged = preserved + cache_rows_new
+            seen = set()
+            final_rows = []
+            for r in merged:
+                key = (r.get('name', ''), r.get('timestamp', ''))
+                if key in seen:
+                    continue
+                seen.add(key)
+                final_rows.append(r)
+            print(f"  [CACHE] Preserved {len(preserved)} historical + {len(cache_rows_new)} fresh = {len(final_rows)} total")
+
         with open(cache_path, 'w') as f:
-            json.dump(cache_rows, f)
-        print(f"  [CACHE] Saved {len(cache_rows)} Figma events to cache")
+            json.dump(final_rows, f)
+        print(f"  [CACHE] Saved {len(final_rows)} Figma events to cache")
     except Exception as ce:
         print(f"  [CACHE WARN] {ce}")
 
