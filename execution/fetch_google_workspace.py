@@ -52,6 +52,17 @@ load_env()
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo')
 START_DATE_STR = os.environ.get('START_DATE', '2026-01-01')
 
+# Rolling window mode: by default fetch only last ROLLING_DAYS; FULL_REBUILD=true
+# falls back to fetching from START_DATE (used after changing name_mappings/rules).
+FULL_REBUILD = os.environ.get('FULL_REBUILD', 'false').lower() in ('true', '1', 'yes')
+ROLLING_DAYS = int(os.environ.get('ROLLING_DAYS', '7'))
+if FULL_REBUILD:
+    FETCH_START_DT = pd.to_datetime(START_DATE_STR).replace(tzinfo=timezone.utc)
+    print(f"[MODE] FULL_REBUILD — fetching Google Workspace from {START_DATE_STR}")
+else:
+    FETCH_START_DT = datetime.now(timezone.utc) - timedelta(days=ROLLING_DAYS)
+    print(f"[MODE] Rolling {ROLLING_DAYS}-day window — fetching Google Workspace from {FETCH_START_DT.strftime('%Y-%m-%d')}")
+
 def get_creds():
     """Get valid credentials, refreshing or prompting as needed."""
     creds = None
@@ -259,8 +270,8 @@ def fetch_all_google_workspace(creds):
     
     service = build('admin', 'reports_v1', credentials=creds)
     all_events = []
-    
-    start_dt = pd.to_datetime(START_DATE_STR).replace(tzinfo=timezone.utc)
+
+    start_dt = FETCH_START_DT
     end_dt = datetime.now(timezone.utc)
     
     # 1. GMAIL FETCH (Unified 'all' scan)
@@ -337,36 +348,104 @@ def process_and_upload(events):
     
     # Save raw timestamped events cache for Activity Time Analysis
     # (prevents generate_activity_time.py from re-fetching Google Workspace APIs a second time)
+    # Rolling mode: merge fresh window events with existing cache rows older than the window
+    # so Activity Time Analysis keeps historical first/last/break calculations intact.
     if 'timestamp_dt' in df.columns:
         try:
             import json
-            cache_rows = [
+            cache_rows_new = [
                 {'name': row['Name'], 'timestamp': row['timestamp_dt'].isoformat(), 'app': f"GW:{row['Event Type'].replace(' ', '')}"}
                 for _, row in df.iterrows()
             ]
             cache_path = os.path.join(ROOT_DIR, 'dashboard', 'gworkspace_events_cache.json')
             os.makedirs(os.path.dirname(cache_path), exist_ok=True)
+
+            if FULL_REBUILD:
+                final_rows = cache_rows_new
+            else:
+                existing = []
+                if os.path.exists(cache_path):
+                    try:
+                        with open(cache_path) as f:
+                            existing = json.load(f) or []
+                    except Exception:
+                        existing = []
+                # Parse each existing row's timestamp to a tz-aware dt for safe comparison
+                # (direct ISO string compare would be unsafe across different offsets).
+                preserved = []
+                for r in existing:
+                    ts_raw = r.get('timestamp', '')
+                    if not ts_raw:
+                        continue
+                    try:
+                        r_dt = pd.to_datetime(ts_raw)
+                        if r_dt.tz is None:
+                            r_dt = r_dt.tz_localize('UTC')
+                        if r_dt < FETCH_START_DT:
+                            preserved.append(r)
+                    except Exception:
+                        continue
+                merged = preserved + cache_rows_new
+                seen = set()
+                final_rows = []
+                for r in merged:
+                    key = (r.get('name', ''), r.get('timestamp', ''), r.get('app', ''))
+                    if key in seen:
+                        continue
+                    seen.add(key)
+                    final_rows.append(r)
+                print(f"  [CACHE] Preserved {len(preserved)} historical + {len(cache_rows_new)} fresh = {len(final_rows)} total")
+
             with open(cache_path, 'w') as f:
-                json.dump(cache_rows, f)
-            print(f"  [CACHE] Saved {len(cache_rows)} Google Workspace events to cache")
+                json.dump(final_rows, f)
+            print(f"  [CACHE] Saved {len(final_rows)} Google Workspace events to cache")
         except Exception as ce:
             print(f"  [CACHE WARN] {ce}")
 
-    # Upload
+    # Upload — rolling-window aware
+    # FULL_REBUILD: clear sheet, write fresh fetch entirely.
+    # Rolling:      read existing sheet, keep rows older than the window, merge with
+    #               fresh window rows, write combined. This preserves historical data
+    #               while eliminating duplicates for dates inside the window.
     creds = get_creds()
     gc = gspread.authorize(creds)
     try:
         sh = gc.open_by_key(SHEET_ID)
         tab_name = "GoogleWorkspace_Activity"
+
+        df_old = pd.DataFrame(columns=['Name', 'Date', 'Platform', 'Event Type', 'Quantity'])
         try:
             ws = sh.worksheet(tab_name)
-            ws.clear()
-        except:
+            if not FULL_REBUILD:
+                existing_data = ws.get_all_records()
+                df_old = pd.DataFrame(existing_data) if existing_data else df_old
+        except Exception:
             ws = sh.add_worksheet(title=tab_name, rows=2000, cols=10)
 
-        ws.update(values=[final_df.columns.values.tolist()], range_name='A1')
-        ws.append_rows(final_df.values.tolist())
-        print(f"  [SUCCESS] Uploaded {len(final_df)} aggregate rows to '{tab_name}'.")
+        if FULL_REBUILD or df_old.empty:
+            combined = final_df
+            if FULL_REBUILD:
+                print(f"  [MERGE] FULL_REBUILD — overwriting with {len(final_df)} fresh rows")
+            else:
+                print(f"  [MERGE] No existing sheet data — writing {len(final_df)} fresh rows")
+        else:
+            for col in ['Name', 'Date', 'Platform', 'Event Type', 'Quantity']:
+                if col not in df_old.columns:
+                    df_old[col] = ''
+            df_old = df_old[['Name', 'Date', 'Platform', 'Event Type', 'Quantity']].copy()
+            df_old['_dt'] = pd.to_datetime(df_old['Date'], format='%m/%d/%y', errors='coerce')
+            window_start_naive = FETCH_START_DT.replace(tzinfo=None).date()
+            historical = df_old[df_old['_dt'].notna() & (df_old['_dt'].dt.date < window_start_naive)]
+            historical = historical.drop(columns=['_dt'])
+            combined = pd.concat([historical, final_df], ignore_index=True)
+            print(f"  [MERGE] Rolling {ROLLING_DAYS}d — {len(historical)} historical + {len(final_df)} fresh = {len(combined)}")
+
+        combined['Quantity'] = pd.to_numeric(combined['Quantity'], errors='coerce').fillna(1).astype(int)
+        rows_to_upload = [combined.columns.values.tolist()] + combined.values.tolist()
+
+        ws.clear()
+        ws.update(values=rows_to_upload, range_name='A1')
+        print(f"  [SUCCESS] Uploaded {len(combined)} aggregate rows to '{tab_name}'.")
     except Exception as e:
         print(f"  [ERROR] Upload failed: {e}")
 
