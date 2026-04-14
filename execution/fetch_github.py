@@ -1,7 +1,7 @@
 import requests
 import json
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 import sys
 import time
@@ -39,6 +39,19 @@ SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8
 START_DATE_STR = os.environ.get('START_DATE', '2026-01-01')
 # GitHub API uses ISO 8601 strings.
 START_DATE_DT = datetime.strptime(START_DATE_STR, "%Y-%m-%d")
+
+# Rolling window mode: by default fetch only last ROLLING_DAYS. FULL_REBUILD falls back
+# to fetching from START_DATE (used after changing name_mappings/rules).
+FULL_REBUILD = os.environ.get('FULL_REBUILD', 'false').lower() in ('true', '1', 'yes')
+ROLLING_DAYS = int(os.environ.get('ROLLING_DAYS', '7'))
+if FULL_REBUILD:
+    FETCH_START_DT = pd.to_datetime(START_DATE_STR).tz_localize('America/Los_Angeles')
+    FETCH_SINCE_STR = START_DATE_STR
+    print(f"[MODE] FULL_REBUILD — fetching GitHub from {START_DATE_STR}")
+else:
+    FETCH_START_DT = pd.Timestamp.now(tz='America/Los_Angeles') - timedelta(days=ROLLING_DAYS)
+    FETCH_SINCE_STR = FETCH_START_DT.strftime('%Y-%m-%d')
+    print(f"[MODE] Rolling {ROLLING_DAYS}-day window — fetching GitHub from {FETCH_SINCE_STR}")
 SCOPES = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/admin.reports.audit.readonly'
@@ -108,7 +121,7 @@ def fetch_events_for_repos(repos):
                 ts_utc = pd.to_datetime(ev['created_at'])
                 ts_pst = ts_utc.tz_convert('America/Los_Angeles')
                 
-                if ts_pst < pd.to_datetime(START_DATE_STR).tz_localize('America/Los_Angeles'):
+                if ts_pst < FETCH_START_DT:
                     repo_active = False
                     break
                 
@@ -148,7 +161,7 @@ def fetch_historical_search():
     from name_mappings import GITHUB_TEAM_HANDLES
     
     historical_events = []
-    since = START_DATE_STR  # '2026-01-01'
+    since = FETCH_SINCE_STR
     
     for handle in GITHUB_TEAM_HANDLES:
         print(f"    Scanning {handle}...")
@@ -225,15 +238,22 @@ def process_and_upload(events):
                                'Issue/PR Comment Posted', 'Issue Opened/Closed',
                                'Branch/Tag Created', 'Branch/Tag Deleted']
         
-        # Merge
-        if not df_old.empty:
-            # Remove any old Code Pushed rows first
-            df_old_clean = df_old[df_old['Event Type'].isin(ALLOWED_EVENT_TYPES)]
-            combined = pd.concat([df_old_clean, final_df]).drop_duplicates(
-                subset=['Name', 'Date', 'Event Type'], keep='last'
-            )
+        # Rolling merge: historical rows (< window_start) preserved, fresh window rows appended.
+        # FULL_REBUILD: overwrite with fresh fetch entirely.
+        if FULL_REBUILD:
+            combined = final_df
+            print(f"  [MERGE] FULL_REBUILD — overwriting with {len(final_df)} fresh rows")
+        elif not df_old.empty:
+            df_old_clean = df_old[df_old['Event Type'].isin(ALLOWED_EVENT_TYPES)].copy()
+            df_old_clean['_dt'] = pd.to_datetime(df_old_clean['Date'], format='%m/%d/%y', errors='coerce')
+            window_start_naive = FETCH_START_DT.tz_localize(None).normalize()
+            historical = df_old_clean[df_old_clean['_dt'].notna() & (df_old_clean['_dt'] < window_start_naive)]
+            historical = historical.drop(columns=['_dt'])
+            combined = pd.concat([historical, final_df], ignore_index=True)
+            print(f"  [MERGE] Rolling {ROLLING_DAYS}d — {len(historical)} historical + {len(final_df)} fresh = {len(combined)}")
         else:
             combined = final_df
+            print(f"  [MERGE] No existing sheet — writing {len(final_df)} fresh rows")
 
         # Sort
         combined['sort_dt'] = pd.to_datetime(combined['Date'], format='%m/%d/%y')
