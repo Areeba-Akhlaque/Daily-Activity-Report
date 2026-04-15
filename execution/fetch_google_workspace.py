@@ -441,6 +441,9 @@ def process_and_upload(events):
             print(f"  [MERGE] Rolling {ROLLING_DAYS}d — {len(historical)} historical + {len(final_df)} fresh = {len(combined)}")
 
         combined['Quantity'] = pd.to_numeric(combined['Quantity'], errors='coerce').fillna(1).astype(int)
+        # Sort by date desc so newest rows sit at the top of the sheet.
+        combined['_sort_dt'] = pd.to_datetime(combined['Date'], format='%m/%d/%y', errors='coerce')
+        combined = combined.sort_values(by=['_sort_dt', 'Quantity'], ascending=[False, False]).drop(columns=['_sort_dt'])
         rows_to_upload = [combined.columns.values.tolist()] + combined.values.tolist()
 
         ws.clear()

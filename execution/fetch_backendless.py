@@ -295,6 +295,9 @@ def main():
         print(f"  [MERGE] No existing sheet — writing {len(summary_out)} fresh rows")
 
     combined['Count'] = pd.to_numeric(combined['Count'], errors='coerce').fillna(1).astype(int)
+    # Sort by date desc so newest rows sit at the top of the sheet.
+    combined['_sort_dt'] = pd.to_datetime(combined['Date'], format='%m/%d/%y', errors='coerce')
+    combined = combined.sort_values(by=['_sort_dt', 'Count'], ascending=[False, False]).drop(columns=['_sort_dt'])
 
     ws.clear()
     headers = ['Name', 'Date', 'Platform', 'Event Type', 'Count']

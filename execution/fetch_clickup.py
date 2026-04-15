@@ -472,6 +472,9 @@ def process_and_upload(events):
             print(f"  [MERGE] No existing sheet — writing {len(final_df)} fresh rows")
 
         combined['Quantity'] = pd.to_numeric(combined['Quantity'], errors='coerce').fillna(1).astype(int)
+        # Sort by date desc so newest rows sit at the top of the sheet.
+        combined['_sort_dt'] = pd.to_datetime(combined['Date'], format='%m/%d/%y', errors='coerce')
+        combined = combined.sort_values(by=['_sort_dt', 'Quantity'], ascending=[False, False]).drop(columns=['_sort_dt'])
         combined = combined[['Name', 'Date', 'Platform', 'Event Type', 'Quantity']]
 
         rows_to_upload = [combined.columns.tolist()]
