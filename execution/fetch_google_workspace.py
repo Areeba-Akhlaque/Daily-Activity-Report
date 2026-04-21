@@ -354,7 +354,7 @@ def process_and_upload(events):
         try:
             import json
             cache_rows_new = [
-                {'name': row['Name'], 'timestamp': row['timestamp_dt'].isoformat(), 'app': f"GW:{row['Event Type'].replace(' ', '')}"}
+                {'name': row['Name'], 'timestamp': row['timestamp_dt'].isoformat(), 'app': f"GW:{row['Event Type'].replace(' ', '')}", 'event_type': row['Event Type']}
                 for _, row in df.iterrows()
             ]
             cache_path = os.path.join(ROOT_DIR, 'dashboard', 'gworkspace_events_cache.json')

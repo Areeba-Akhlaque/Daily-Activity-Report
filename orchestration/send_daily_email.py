@@ -27,7 +27,7 @@ ROOT_DIR = os.path.dirname(SCRIPT_DIR)
 
 # Add execution dir to path for name_mappings
 sys.path.insert(0, os.path.join(ROOT_DIR, 'execution'))
-from name_mappings import map_name, should_exclude, STRICT_TEAM_GMAIL
+from name_mappings import map_name, should_exclude, STRICT_TEAM_GMAIL, COMMS_EVENT_TYPES, is_comms_event
 
 # Load from .env if exists
 def load_env():
@@ -82,54 +82,16 @@ def safe_float(val):
     except (ValueError, TypeError):
         return 0.0
 
-def get_daily_summary(creds, target_date_override=None):
-    """Fetch summary data from Google Sheet with detailed daily breakdown."""
-    print("Fetching daily summary data...")
-    gc = gspread.authorize(creds)
-    sh = gc.open_by_key(SHEET_ID)
-    
-    # Get Date Logic (PST-aware)
-    pst = pytz.timezone('America/Los_Angeles')
-    now_pst = datetime.now(pst)
-    
-    if target_date_override:
-        target_date = target_date_override
-    else:
-        # ALWAYS target "Yesterday" (The last fully completed 24h cycle)
-        # This ensures reports always cover a full 12:00 AM - 11:59 PM window.
-        target_date_dt = now_pst - timedelta(days=1)
-        target_date = target_date_dt.strftime('%m/%d/%y')
-        
-    print(f"Target Date: {target_date}")
-    
-    # 1. Fetch Activity Time Analysis
-    try:
-        print("  Reading 'Activity Time Analysis'...")
-        ws_time = sh.worksheet('Activity Time Analysis')
-        time_data = ws_time.get_all_records()
-        # Filter for target date
-        target_time_data = [r for r in time_data if r.get('Date') == target_date]
-        print(f"    Found {len(target_time_data)} time records for {target_date}")
-        
-    except Exception as e:
-        print(f"    [WARN] Error fetching Time Analysis: {e}")
-        target_time_data = []
-
-    # 2. Fetch Daily Audit
-    try:
-        print("  Reading 'Daily Audit'...")
-        ws_audit = sh.worksheet('Daily Audit')
-        audit_data = ws_audit.get_all_records()
-        target_audit_data = [r for r in audit_data if r.get('Activity Date') == target_date]
-        print(f"    Found {len(target_audit_data)} audit records for {target_date}")
-    except Exception as e:
-        print(f"    [WARN] Error fetching Daily Audit: {e}")
-        target_audit_data = []
-
-    # 3. Process Per-Member Stats
+def _build_summary_from_audit(target_audit_data, target_time_data, target_date, exclude_comms=False):
+    """
+    Build a per-member summary dict from Daily Audit + Activity Time Analysis rows.
+    When exclude_comms=True, rows whose Activity Type is in COMMS_EVENT_TYPES are dropped
+    from event/platform/type totals. Time Analysis fields (start/end/hours/break) come
+    from the sheet and reflect all activity — intentionally unchanged across variants.
+    """
     member_stats = {}
-    
-    # Pre-populate with all core employees to ensure they appear even with 0 events
+
+    # Pre-populate with all core employees so they appear even with 0 events
     for name in STRICT_TEAM_GMAIL:
         member_stats[name] = {
             'name': name,
@@ -142,8 +104,8 @@ def get_daily_summary(creds, target_date_override=None):
             'platform_breakdown': {},
             'type_breakdown': {}
         }
-    
-    # Update with actual Time Analysis data
+
+    # Time Analysis (same for both variants — describes the work day, not event count)
     for r in target_time_data:
         name = r.get('Team Member')
         if not name: continue
@@ -154,54 +116,68 @@ def get_daily_summary(creds, target_date_override=None):
             'hours': safe_float(r.get('Active Window (Hours)')),
             'break': safe_int(r.get('Longest Break (Minutes)')),
             'events': safe_int(r.get('Total Events')),
-            'top_platform': '-'
+            'top_platform': '-',
+            'platform_breakdown': {},
+            'type_breakdown': {}
         }
 
-    # From Daily Audit (Platform & Count verification)
-    platform_counts = defaultdict(lambda: defaultdict(int)) # Member -> Platform -> Count
-    type_counts = defaultdict(lambda: defaultdict(int))     # Member -> Type -> Count
+    platform_counts = defaultdict(lambda: defaultdict(int))
+    type_counts = defaultdict(lambda: defaultdict(int))
     global_plat_counts = defaultdict(int)
     total_activities = 0
-    
+    # Per-member event total derived purely from Daily Audit rows (so the
+    # Comms-excluded variant can override the sheet's Total Events figure).
+    audit_event_counts = defaultdict(int)
+
     for r in target_audit_data:
         name = r.get('Team Member')
         plat = r.get('Platform')
-        act_type = r.get('Activity Type') 
+        act_type = r.get('Activity Type')
         count = safe_int(r.get('Count'))
-        
-        if count > 0:
-            if name: 
-                platform_counts[name][plat] += count
-                if act_type: type_counts[name][act_type] += count
-            if plat: global_plat_counts[plat] += count
-            total_activities += count
-            
-            # Ensure member exists in stats
-            if name and name not in member_stats:
-                member_stats[name] = {
-                    'name': name, 'start': '-', 'end': '-', 'hours': 0.0, 'break': 0, 'events': 0, 'top_platform': '-'
-                }
 
-    # Calculate Top Platform per member & Add Type Counts
+        if count <= 0:
+            continue
+        if exclude_comms and is_comms_event(act_type):
+            continue
+
+        if name:
+            platform_counts[name][plat] += count
+            if act_type:
+                type_counts[name][act_type] += count
+            audit_event_counts[name] += count
+        if plat:
+            global_plat_counts[plat] += count
+        total_activities += count
+
+        if name and name not in member_stats:
+            member_stats[name] = {
+                'name': name, 'start': '-', 'end': '-', 'hours': 0.0, 'break': 0,
+                'events': 0, 'top_platform': '-',
+                'platform_breakdown': {}, 'type_breakdown': {}
+            }
+
     for name, plats in platform_counts.items():
-        if not plats or name not in member_stats: continue
+        if not plats or name not in member_stats:
+            continue
         top_plat = max(plats.items(), key=lambda x: x[1])[0]
         member_stats[name]['top_platform'] = top_plat
-        # Sync event count if missing
         if member_stats[name]['events'] == 0:
-             member_stats[name]['events'] = sum(plats.values())
-        
-        # Add detailed breakdowns
+            member_stats[name]['events'] = sum(plats.values())
         member_stats[name]['platform_breakdown'] = dict(plats)
         member_stats[name]['type_breakdown'] = dict(type_counts[name])
 
-    # Sort members
+    # In the Comms-excluded variant the Time Analysis 'Total Events' figure still
+    # counts Comms — override it with the Daily-Audit-derived count so the event
+    # column of the leaderboard is consistent with the other totals.
+    if exclude_comms:
+        for name, m in member_stats.items():
+            m['events'] = audit_event_counts.get(name, 0)
+
     sorted_members = sorted(member_stats.values(), key=lambda x: (x['hours'], x['events']), reverse=True)
-    
-    # Aggregate Metrics (User requested removal from email, but still useful in structure)
+
     active_mems_list = [m for m in sorted_members if m['events'] > 0]
     active_members_count = len(active_mems_list)
-    
+
     if active_members_count > 0:
         avg_hours = sum(m['hours'] for m in active_mems_list) / active_members_count
         avg_break = sum(m['break'] for m in active_mems_list) / active_members_count
@@ -217,9 +193,63 @@ def get_daily_summary(creds, target_date_override=None):
         'avg_break': round(avg_break),
         'members': sorted_members,
         'platform_counts': dict(global_plat_counts),
-        'all_types': list(set(t for m in type_counts.values() for t in m.keys())), # For chart labels
+        'all_types': list(set(t for m in type_counts.values() for t in m.keys())),
         'time_range': "12:00 AM - 11:59 PM PST"
     }
+
+
+def get_daily_summary(creds, target_date_override=None):
+    """Fetch summary data from Google Sheet with detailed daily breakdown.
+
+    Returns the full (all-activity) summary and attaches a 'work_only' sibling
+    summary with Comms event types excluded for the side-by-side email section.
+    """
+    print("Fetching daily summary data...")
+    gc = gspread.authorize(creds)
+    sh = gc.open_by_key(SHEET_ID)
+
+    # Get Date Logic (PST-aware)
+    pst = pytz.timezone('America/Los_Angeles')
+    now_pst = datetime.now(pst)
+
+    if target_date_override:
+        target_date = target_date_override
+    else:
+        # ALWAYS target "Yesterday" (The last fully completed 24h cycle)
+        # This ensures reports always cover a full 12:00 AM - 11:59 PM window.
+        target_date_dt = now_pst - timedelta(days=1)
+        target_date = target_date_dt.strftime('%m/%d/%y')
+
+    print(f"Target Date: {target_date}")
+
+    # 1. Fetch Activity Time Analysis
+    try:
+        print("  Reading 'Activity Time Analysis'...")
+        ws_time = sh.worksheet('Activity Time Analysis')
+        time_data = ws_time.get_all_records()
+        target_time_data = [r for r in time_data if r.get('Date') == target_date]
+        print(f"    Found {len(target_time_data)} time records for {target_date}")
+    except Exception as e:
+        print(f"    [WARN] Error fetching Time Analysis: {e}")
+        target_time_data = []
+
+    # 2. Fetch Daily Audit
+    try:
+        print("  Reading 'Daily Audit'...")
+        ws_audit = sh.worksheet('Daily Audit')
+        audit_data = ws_audit.get_all_records()
+        target_audit_data = [r for r in audit_data if r.get('Activity Date') == target_date]
+        print(f"    Found {len(target_audit_data)} audit records for {target_date}")
+    except Exception as e:
+        print(f"    [WARN] Error fetching Daily Audit: {e}")
+        target_audit_data = []
+
+    # Build both variants from the same raw rows so totals are directly comparable.
+    summary_all = _build_summary_from_audit(target_audit_data, target_time_data, target_date, exclude_comms=False)
+    summary_work = _build_summary_from_audit(target_audit_data, target_time_data, target_date, exclude_comms=True)
+    summary_all['work_only'] = summary_work
+
+    return summary_all
 
 
 
@@ -349,11 +379,15 @@ def save_chart_to_repo(img_bytes, date_str):
         return None
 
 
-def generate_stacked_bar_chart(summary, creds=None):
-    """Generate a stacked horizontal bar chart for Activity Types per Member using QuickChart.io."""
+def generate_stacked_bar_chart(summary, creds=None, chart_label_suffix="", save_filename_suffix=""):
+    """Generate a stacked horizontal bar chart for Activity Types per Member using QuickChart.io.
+
+    chart_label_suffix: appended to the chart title (e.g. " (Comms Excluded)").
+    save_filename_suffix: appended to the saved PNG filename so the two variants don't overwrite each other.
+    """
     active_members = [m for m in summary['members'] if m['events'] > 0]
     if not active_members: return None
-        
+
     names = [m['name'] for m in active_members]
     # Get all unique types present in active members
     all_types = list(set(t for m in active_members for t in m.get('type_breakdown', {}).keys()))
@@ -379,11 +413,15 @@ def generate_stacked_bar_chart(summary, creds=None):
             'backgroundColor': color,
         })
         
+    chart_title = 'Activity Breakdown by Member & Activity Type'
+    if chart_label_suffix:
+        chart_title = chart_title + chart_label_suffix
+
     chart_config = {
         'type': 'horizontalBar',
         'data': { 'labels': names, 'datasets': datasets },
         'options': {
-            'title': { 'display': True, 'text': 'Activity Breakdown by Member & Activity Type' },
+            'title': { 'display': True, 'text': chart_title },
             'tooltips': { 'mode': 'index', 'intersect': False },
             'legend': { 
                 'display': True, 
@@ -427,7 +465,10 @@ def generate_stacked_bar_chart(summary, creds=None):
             if img_resp.status_code == 200 and img_resp.content[:4] == b'\x89PNG':
                 # Save PNG to dashboard/charts/ — committed to git and picked up
                 # by the dedicated "Upload Chart to Google Drive" workflow step.
-                save_chart_to_repo(img_resp.content, summary.get('date', 'unknown'))
+                save_date = summary.get('date', 'unknown')
+                if save_filename_suffix:
+                    save_date = f"{save_date}{save_filename_suffix}"
+                save_chart_to_repo(img_resp.content, save_date)
             else:
                 print(f"  [WARN] Direct chart PNG fetch failed: HTTP {img_resp.status_code}, Content-Type: {img_resp.headers.get('Content-Type', 'unknown')}")
         except Exception as dl_err:
@@ -446,35 +487,48 @@ def generate_stacked_bar_chart(summary, creds=None):
     return None
 
 
-def generate_email_html(summary, chart_url=None):
-    """Generate HTML email content with detailed leaderboard."""
-    
-    # Generate Rows (Include all employees)
-    rows_html = ""
-    for m in summary['members']:
-        # Styles for this row
+def _render_leaderboard_rows(members):
+    """Render <tr> rows for the leaderboard table from a list of member dicts."""
+    html = ""
+    for m in members:
         base_s = "padding: 12px; border-bottom: 1px solid #eee;"
         if m['events'] == 0: base_s += " color: #999;"
-        
+
         name_s = base_s
         ctr_s = base_s + " text-align: center;"
         hours_s = ctr_s + " color: #244d5d; font-weight: bold;"
         if m['events'] == 0: hours_s = ctr_s + " color: #ccc;"
 
-        rows_html += f"""
+        html += f"""
         <tr>
             <td style="{name_s}"><b>{m['name']}</b></td>
             <td style="{ctr_s}">{m['start']}</td>
             <td style="{ctr_s}">{m['end']}</td>
             <td style="{hours_s}">{m['hours']}h</td>
             <td style="{ctr_s}">{m['break']}m</td>
+            <td style="{ctr_s}">{m['events']:,}</td>
         </tr>
         """
-    
-    # Platform Breakdown HTML
-    platform_html = ""
-    for plat, count in sorted(summary['platform_counts'].items(), key=lambda x: x[1], reverse=True):
-        platform_html += f"<li><strong>{plat}:</strong> {count:,}</li>"
+    return html
+
+
+def _render_platform_pills(platform_counts):
+    html = ""
+    for plat, count in sorted(platform_counts.items(), key=lambda x: x[1], reverse=True):
+        html += f"<li><strong>{plat}:</strong> {count:,}</li>"
+    return html
+
+
+def generate_email_html(summary, chart_url=None, work_chart_url=None):
+    """Generate HTML email content with an All-Activity section and a
+    side-by-side Work-Only (Comms excluded) section."""
+
+    rows_html = _render_leaderboard_rows(summary['members'])
+    platform_html = _render_platform_pills(summary['platform_counts'])
+
+    work_summary = summary.get('work_only')
+    work_rows_html = _render_leaderboard_rows(work_summary['members']) if work_summary else ""
+    work_platform_html = _render_platform_pills(work_summary['platform_counts']) if work_summary else ""
 
     # Sync Status Logic
     sync_status_html = ""
@@ -505,6 +559,53 @@ def generate_email_html(summary, chart_url=None):
         <!-- Chart Image (QuickChart URL) -->
         <div style="text-align: center; margin-bottom: 30px;">
             <img src="{chart_url}" alt="Daily Activity Breakdown" style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 8px;">
+        </div>
+        """
+
+    work_chart_html = ""
+    if work_chart_url:
+        work_chart_html = f"""
+        <div style="text-align: center; margin-bottom: 30px;">
+            <img src="{work_chart_url}" alt="Work Activity Breakdown (Comms Excluded)" style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 8px;">
+        </div>
+        """
+
+    # Side-by-side Work (Comms-excluded) section
+    work_section_html = ""
+    if work_summary:
+        work_section_html = f"""
+        <div style="margin-top: 40px; padding-top: 24px; border-top: 2px dashed #cbd5e1;">
+            <h2 style="margin: 0 0 8px; font-size: 18px; color: #1e293b;">Work Activity (Comms Excluded)</h2>
+            <p style="margin: 0 0 20px; color: #64748b; font-size: 12px;">
+                Same day, with <strong>Gmail Send</strong>, <strong>Direct chats messages</strong>, and
+                <strong>Channels messages</strong> removed. Shown side-by-side so team members whose day
+                skews toward communications aren't compared unfavorably against heads-down work output.
+                Event totals: <strong>{work_summary['total_activities']:,}</strong> vs
+                <strong>{summary['total_activities']:,}</strong> (all activity).
+            </p>
+            {work_chart_html}
+            <h3 style="margin: 0 0 16px; font-size: 16px; color: #1e293b; border-left: 4px solid #0ea5e9; padding-left: 10px;">Work-Only Leaderboard</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>First Event</th>
+                            <th>Last Event</th>
+                            <th>Active Hours</th>
+                            <th>Max Break</th>
+                            <th>Work Events</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {work_rows_html}
+                    </tbody>
+                </table>
+            </div>
+            <h3 style="margin: 20px 0 16px; font-size: 16px; color: #1e293b; border-left: 4px solid #0ea5e9; padding-left: 10px;">Platform Distribution (Work Only)</h3>
+            <div style="text-align: center;">
+                <ul>{work_platform_html}</ul>
+            </div>
         </div>
         """
     
@@ -553,6 +654,11 @@ def generate_email_html(summary, chart_url=None):
             <div class="content">
                 {chart_html}
                 
+                <h2 style="margin: 0 0 8px; font-size: 18px; color: #1e293b;">All Activity</h2>
+                <p style="margin: 0 0 20px; color: #64748b; font-size: 12px;">
+                    Every tracked event for the day — ClickUp, GitHub, Google Workspace, Figma, and Backendless combined
+                    (includes Gmail sends and ClickUp chat messages).
+                </p>
                 <!-- Expanded Activity Table -->
                 <h3 style="margin: 0 0 16px; font-size: 16px; color: #1e293b; border-left: 4px solid #244d5d; padding-left: 10px;">Daily Highlights Leaderboard</h3>
                 <div class="table-container">
@@ -564,6 +670,7 @@ def generate_email_html(summary, chart_url=None):
                                 <th>Last Event</th>
                                 <th>Active Hours</th>
                                 <th>Max Break</th>
+                                <th>Events</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -577,6 +684,8 @@ def generate_email_html(summary, chart_url=None):
                 <div style="text-align: center;">
                     <ul>{platform_html}</ul>
                 </div>
+
+                {work_section_html}
             </div>
             
             <div class="links">
@@ -683,10 +792,19 @@ def main():
     # Generate Chart URL (and upload to Drive for permanent storage)
     print("  Generating daily chart URL...")
     chart_url = generate_stacked_bar_chart(summary, creds=creds)
-    
+
+    work_chart_url = None
+    if summary.get('work_only'):
+        print("  Generating Comms-excluded chart URL...")
+        work_chart_url = generate_stacked_bar_chart(
+            summary['work_only'], creds=creds,
+            chart_label_suffix=' (Comms Excluded)',
+            save_filename_suffix='_work_only'
+        )
+
     # Generate email
     print("[2/3] Generating email...")
-    html = generate_email_html(summary, chart_url)
+    html = generate_email_html(summary, chart_url, work_chart_url=work_chart_url)
     
     # Send Email
     subject = f"[v2.5] Daily Activity Audit - {summary['date']}"

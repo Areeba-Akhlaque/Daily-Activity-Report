@@ -396,3 +396,17 @@ def get_audit_date(dt):
     Updated to standard calendar day (12:00 AM - 11:59 PM PST) to match dashboard labels.
     """
     return dt.strftime('%m/%d/%y')
+
+
+# Event types considered "Communications" (as opposed to "Work").
+# Used by the daily email to render a side-by-side Comms-excluded view.
+COMMS_EVENT_TYPES = {
+    'Gmail Send',
+    'Direct chats messages',
+    'Channels messages',
+}
+
+
+def is_comms_event(event_type):
+    """Return True if the given event type belongs to the Comms category."""
+    return event_type in COMMS_EVENT_TYPES

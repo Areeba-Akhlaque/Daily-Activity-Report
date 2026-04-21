@@ -86,7 +86,7 @@ def _load_cache(cache_filename, label):
         for r in rows:
             try:
                 dt = pd.to_datetime(r['timestamp']).tz_convert(PST)
-                events.append({'raw_name': r.get('name', ''), 'name': r.get('name', ''), 'timestamp': dt, 'app': r.get('app', label)})
+                events.append({'raw_name': r.get('name', ''), 'name': r.get('name', ''), 'timestamp': dt, 'app': r.get('app', label), 'event_type': r.get('event_type', '')})
             except Exception:
                 continue
         print(f'  [{label}] Loaded {len(events)} events from cache.')
@@ -436,7 +436,7 @@ def generate_activity_time_analysis(creds):
                 'date': dt.strftime('%m/%d/%y'),
                 'hour': int(dt.strftime('%H')), # 0-23
                 'platform': e.get('app', 'Unknown'),
-                'type': e.get('event_type', e.get('Action', 'Unknown'))
+                'type': e.get('event_type') or e.get('Action') or 'Unknown'
             })
         
         df_hourly = pd.DataFrame(hourly_records)

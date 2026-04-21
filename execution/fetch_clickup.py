@@ -373,7 +373,7 @@ def process_and_upload(events):
     # FULL_REBUILD: overwrite entirely.
     try:
         cache_rows_new = [
-            {'name': row['Name'], 'timestamp': row['dt_pst'].isoformat(), 'app': 'ClickUp'}
+            {'name': row['Name'], 'timestamp': row['dt_pst'].isoformat(), 'app': 'ClickUp', 'event_type': row['event_type']}
             for _, row in df.iterrows()
         ]
         cache_path = os.path.join(ROOT_DIR, 'dashboard', 'clickup_events_cache.json')
