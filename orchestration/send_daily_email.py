@@ -527,7 +527,6 @@ def generate_email_html(summary, chart_url=None, work_chart_url=None):
     platform_html = _render_platform_pills(summary['platform_counts'])
 
     work_summary = summary.get('work_only')
-    work_rows_html = _render_leaderboard_rows(work_summary['members']) if work_summary else ""
     work_platform_html = _render_platform_pills(work_summary['platform_counts']) if work_summary else ""
 
     # Sync Status Logic
@@ -584,24 +583,6 @@ def generate_email_html(summary, chart_url=None, work_chart_url=None):
                 <strong>{summary['total_activities']:,}</strong> (all activity).
             </p>
             {work_chart_html}
-            <h3 style="margin: 0 0 16px; font-size: 16px; color: #1e293b; border-left: 4px solid #0ea5e9; padding-left: 10px;">Work-Only Leaderboard</h3>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>First Event</th>
-                            <th>Last Event</th>
-                            <th>Active Hours</th>
-                            <th>Max Break</th>
-                            <th>Work Events</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {work_rows_html}
-                    </tbody>
-                </table>
-            </div>
             <h3 style="margin: 20px 0 16px; font-size: 16px; color: #1e293b; border-left: 4px solid #0ea5e9; padding-left: 10px;">Platform Distribution (Work Only)</h3>
             <div style="text-align: center;">
                 <ul>{work_platform_html}</ul>
