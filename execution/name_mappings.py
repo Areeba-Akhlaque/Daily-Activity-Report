@@ -250,8 +250,12 @@ EXCLUDE_PATTERNS = [
     'Figma', # System user
     'abiel@pvragon.com', 'alejandra@pvragon.com', 'arinaldi@launchfactory.com',
     'mari@pvragon.com', 'sergio@pvragon.com', 'trent@pvragon.com',
-    ' Mari ', # Specific name with spaces to avoid 'Mariana' match
-    'Mari',   # Exact match handled in should_exclude logic
+    # NOTE: Do NOT add a bare 'Mari' pattern here — should_exclude() uses
+    # substring matching, so 'mari' will incorrectly match 'Mariana Gracia
+    # Salgado' and wipe her out across every platform. The CORE_TEAM gate at
+    # the top of should_exclude() already excludes any name not in CORE_TEAM,
+    # so a user literally named just "Mari" is filtered without needing a
+    # pattern here.
 
     # Machine-generated / Auto-emails
     'errors-rc@pvragon.com', 'emailparser@okridecare.com',

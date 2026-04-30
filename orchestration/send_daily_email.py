@@ -385,7 +385,14 @@ def generate_stacked_bar_chart(summary, creds=None, chart_label_suffix="", save_
     chart_label_suffix: appended to the chart title (e.g. " (Comms Excluded)").
     save_filename_suffix: appended to the saved PNG filename so the two variants don't overwrite each other.
     """
-    active_members = [m for m in summary['members'] if m['events'] > 0]
+    # Order members on the chart by total event count (desc) — most-active member
+    # at the top of the horizontal bar chart, regardless of how summary['members']
+    # was sorted upstream (it's sorted by hours, then events).
+    active_members = sorted(
+        [m for m in summary['members'] if m['events'] > 0],
+        key=lambda m: m['events'],
+        reverse=True,
+    )
     if not active_members: return None
 
     names = [m['name'] for m in active_members]
