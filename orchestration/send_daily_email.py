@@ -385,12 +385,15 @@ def generate_stacked_bar_chart(summary, creds=None, chart_label_suffix="", save_
     chart_label_suffix: appended to the chart title (e.g. " (Comms Excluded)").
     save_filename_suffix: appended to the saved PNG filename so the two variants don't overwrite each other.
     """
-    # Order members on the chart by total event count (desc) — most-active member
-    # at the top of the horizontal bar chart, regardless of how summary['members']
-    # was sorted upstream (it's sorted by hours, then events).
+    # Order members on the chart by the actual stacked bar length (descending)
+    # so the busiest member sits at the top. The bar length equals the sum of
+    # type_breakdown values (Daily Audit counts) — NOT m['events'], which comes
+    # from Time Analysis' "Total Events" and can diverge from the bar total.
+    def _bar_total(m):
+        return sum(m.get('type_breakdown', {}).values())
     active_members = sorted(
-        [m for m in summary['members'] if m['events'] > 0],
-        key=lambda m: m['events'],
+        [m for m in summary['members'] if _bar_total(m) > 0],
+        key=_bar_total,
         reverse=True,
     )
     if not active_members: return None
