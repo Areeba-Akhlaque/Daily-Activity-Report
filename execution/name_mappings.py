@@ -266,18 +266,20 @@ EXCLUDE_PATTERNS = [
     'Pvragon Automation',
 ]
 
-# Strict core team list (25 members to be included in all reports)
+# Strict core team list — only these members are included in all reports.
+# Removing a name here is sufficient to drop them on every platform: the
+# CORE_TEAM gate at the top of should_exclude() returns True for any name
+# not in this list, so no EXCLUDE_PATTERNS entry is needed for ex-members.
 CORE_TEAM = [
-    # Original 18
     'Adriane Barredo', 'Alexander Pavelko', 'Areeba Akhlaque', 'Bilal Munir',
-    'Bradd Schofield', 'Cherry Aznar', 'James Hereford', 'Juan Vidal',
+    'Bradd Schofield', 'Cherry Aznar', 'James Hereford',
     'Keeko Villaveces', 'Muhammad Farhan', 'Roman Naidenko', 'Saifullah Khan',
     'Saymond Montoya', 'Victor Cheung', 'Tara Yowell', 'Mariana Gracia Salgado',
-    'A.S. Johan', 'Lena Klapper',
-    # New members (March 2026)
-    'Nicole Rodrigues', 'Victoria Chanzá', 'Rafael Casabianca',
+    'Victoria Chanzá', 'Rafael Casabianca',
     'JP Casabianca', 'Dana Hetté', 'David Andres', 'Clarissa',
     'Azalfa Akhlaq',
+    # Removed (no longer at the company, 2026-04-30):
+    # 'A.S. Johan', 'Juan Vidal', 'Lena Klapper', 'Nicole Rodrigues'
 ]
 
 # Strict team list for Gmail sent events
