@@ -21,6 +21,15 @@ permissions:
   pages: write
   id-token: write
 
+# Serialize Pages deploys across runs. Without this, two runs (e.g. the cron
+# tick + a manual workflow_dispatch, or two cron ticks that overlap) can both
+# try to deploy and the second fails with HTTP 400 "in progress deployment".
+# cancel-in-progress=false means: queue the new run, don't kill the active one
+# mid-flight (which could leave the live site in a broken state).
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   daily-audit:
     runs-on: ubuntu-latest
