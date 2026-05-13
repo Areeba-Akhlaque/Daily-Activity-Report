@@ -41,7 +41,11 @@ NAME_MAP = {
     'lena@pvragon.com': 'Lena Klapper',
     'johan@pvragon.com': 'A.S. Johan',
     'azalfa@pvragon.com': 'Azalfa Akhlaq',
-    
+
+    # === New Team Members (May 2026) ===
+    'prameeth@pvragon.com': 'Prameeth Kotian',
+    'william@pvragon.com': 'William Titus',
+
     # === Personal Gmail Accounts ===
     'aleksandar.m.tanaskovic@gmail.com': 'Alexander Pavelko',
     'oO.Pavelko@gmail.com': 'Alexander Pavelko',
@@ -115,7 +119,9 @@ NAME_MAP = {
     'jpcasa': 'JP Casabianca',
     'rafacas19': 'Rafael Casabianca',
     'nicole-rodrigues': 'Nicole Rodrigues',
-    
+    'PJKotian97': 'Prameeth Kotian',
+    'williamgtitus-wq': 'William Titus',
+
     # === ClickUp Usernames ===
     'alexanderpavelko': 'Alexander Pavelko',
     'reebaakhlaque': 'Areeba Akhlaque',
@@ -196,13 +202,14 @@ NAME_MAP = {
 
 # Strict team list for GitHub (only these handles will be scanned/reported)
 GITHUB_TEAM_HANDLES = [
-    'AdrianeBarredo', 'adriane-pvragon', 'Areeba-Akhlaque', 
+    'AdrianeBarredo', 'adriane-pvragon', 'Areeba-Akhlaque',
     'bilalmunir985', 'bilalmunir985-oss', 'jkhereford', 'keekov2',
     'raz0r-b1ade', 'Saymond02', 'mfarhan0304', 'SaifullahCICT',
     'juan-vidal-pvragon', 'alex-pvragon', 'Cherry-Aznar',
     'codingbreeze', 'SunnatChoriyev', 'Sunnat-Choriev', 'KBergeron17',
     'Fr3ud', 'saif72437', 'javidal10', 'braddschofield', 'FarhanSE', 'Verridium',
-    'DanaHette', 'davidboom95', 'jpcasa', 'rafacas19', 'nicole-rodrigues'
+    'DanaHette', 'davidboom95', 'jpcasa', 'rafacas19', 'nicole-rodrigues',
+    'PJKotian97', 'williamgtitus-wq',
 ]
 
 # Exclusion patterns - accounts to skip
@@ -271,15 +278,18 @@ EXCLUDE_PATTERNS = [
 # CORE_TEAM gate at the top of should_exclude() returns True for any name
 # not in this list, so no EXCLUDE_PATTERNS entry is needed for ex-members.
 CORE_TEAM = [
-    'Adriane Barredo', 'Alexander Pavelko', 'Areeba Akhlaque', 'Bilal Munir',
+    'Adriane Barredo', 'Alexander Pavelko', 'Areeba Akhlaque',
     'Bradd Schofield', 'Cherry Aznar', 'James Hereford',
     'Keeko Villaveces', 'Muhammad Farhan', 'Roman Naidenko', 'Saifullah Khan',
     'Saymond Montoya', 'Victor Cheung', 'Tara Yowell', 'Mariana Gracia Salgado',
     'Victoria Chanzá', 'Rafael Casabianca',
     'JP Casabianca', 'Dana Hetté', 'David Andres', 'Clarissa',
     'Azalfa Akhlaq',
-    # Removed (no longer at the company, 2026-04-30):
-    # 'A.S. Johan', 'Juan Vidal', 'Lena Klapper', 'Nicole Rodrigues'
+    # New (May 2026):
+    'Prameeth Kotian', 'William Titus',
+    # Removed (no longer at the company):
+    # 2026-04-30: 'A.S. Johan', 'Juan Vidal', 'Lena Klapper', 'Nicole Rodrigues'
+    # 2026-05-13: 'Bilal Munir'
 ]
 
 # Strict team list for Gmail sent events
@@ -359,6 +369,12 @@ def map_name(identifier):
         'a.s. johan': 'A.S. Johan',
         'johan': 'A.S. Johan',
         'azalfa': 'Azalfa Akhlaq',
+        'prameeth': 'Prameeth Kotian',
+        'kotian': 'Prameeth Kotian',
+        'pjkotian97': 'Prameeth Kotian',
+        'william': 'William Titus',
+        'titus': 'William Titus',
+        'williamgtitus-wq': 'William Titus',
     }
     
     import re as _re
