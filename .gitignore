@@ -2,6 +2,7 @@
 .env
 credentials.json
 token.json
+token*.json
 client_secret*.json
 
 # Temporary files

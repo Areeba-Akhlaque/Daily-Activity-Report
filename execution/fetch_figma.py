@@ -292,10 +292,18 @@ def save_figma_cache(events):
     FULL_REBUILD mode: overwrites cache with the full fetch.
     """
     try:
-        cache_rows_new = [
-            {'name': e.get('Name', ''), 'timestamp': e['timestamp'].isoformat(), 'app': 'Figma'}
-            for e in events if e.get('timestamp') and e.get('Name')
-        ]
+        # Store the MAPPED canonical name (not the raw Figma handle) and drop
+        # excluded users — matching every other cache. Otherwise raw handles like
+        # 'Bradd' / 'Mariana' fail the CORE_TEAM gate in generate_activity_time.py
+        # and the Figma activity is silently dropped from Activity Time Analysis.
+        cache_rows_new = []
+        for e in events:
+            if not (e.get('timestamp') and e.get('Name')):
+                continue
+            nm = map_name(e.get('Name', ''))
+            if should_exclude(nm):
+                continue
+            cache_rows_new.append({'name': nm, 'timestamp': e['timestamp'].isoformat(), 'app': 'Figma'})
         cache_path = os.path.join(ROOT_DIR, 'dashboard', 'figma_events_cache.json')
         os.makedirs(os.path.dirname(cache_path), exist_ok=True)
 

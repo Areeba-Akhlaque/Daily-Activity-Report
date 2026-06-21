@@ -82,6 +82,25 @@ def safe_float(val):
     except (ValueError, TypeError):
         return 0.0
 
+def _norm_date(s):
+    """Normalize a sheet date cell to MM/DD/YY for tolerant cross-tab matching.
+
+    Google Sheets can auto-format a written '05/12/26' into '5/12/2026' (or other
+    locale forms) depending on the column's number format. The leaderboard joins
+    'Activity Time Analysis'.Date against 'Daily Audit'.Activity Date by exact
+    string, so any drift between the two tabs silently drops every time-metric.
+    Parsing both sides to a canonical MM/DD/YY makes the join format-proof.
+    """
+    s = str(s).strip()
+    if not s:
+        return ''
+    for fmt in ('%m/%d/%y', '%m/%d/%Y', '%Y-%m-%d', '%m-%d-%y', '%m-%d-%Y'):
+        try:
+            return datetime.strptime(s, fmt).strftime('%m/%d/%y')
+        except ValueError:
+            continue
+    return s
+
 def _build_summary_from_audit(target_audit_data, target_time_data, target_date, exclude_comms=False):
     """
     Build a per-member summary dict from Daily Audit + Activity Time Analysis rows.
@@ -222,13 +241,15 @@ def get_daily_summary(creds, target_date_override=None):
 
     print(f"Target Date: {target_date}")
 
+    target_norm = _norm_date(target_date)
+
     # 1. Fetch Activity Time Analysis
     try:
         print("  Reading 'Activity Time Analysis'...")
         ws_time = sh.worksheet('Activity Time Analysis')
         time_data = ws_time.get_all_records()
-        target_time_data = [r for r in time_data if r.get('Date') == target_date]
-        print(f"    Found {len(target_time_data)} time records for {target_date}")
+        target_time_data = [r for r in time_data if _norm_date(r.get('Date')) == target_norm]
+        print(f"    Found {len(target_time_data)} time records for {target_date} (tab has {len(time_data)} rows total)")
     except Exception as e:
         print(f"    [WARN] Error fetching Time Analysis: {e}")
         target_time_data = []
@@ -238,16 +259,27 @@ def get_daily_summary(creds, target_date_override=None):
         print("  Reading 'Daily Audit'...")
         ws_audit = sh.worksheet('Daily Audit')
         audit_data = ws_audit.get_all_records()
-        target_audit_data = [r for r in audit_data if r.get('Activity Date') == target_date]
+        target_audit_data = [r for r in audit_data if _norm_date(r.get('Activity Date')) == target_norm]
         print(f"    Found {len(target_audit_data)} audit records for {target_date}")
     except Exception as e:
         print(f"    [WARN] Error fetching Daily Audit: {e}")
         target_audit_data = []
 
+    # Detect the failure mode behind the all-zeros leaderboard: Daily Audit has
+    # activity for the day but Activity Time Analysis has nothing, so every
+    # first/last/hours/break cell would render blank. Flag it loudly + in the email.
+    time_data_missing = (not target_time_data) and bool(target_audit_data)
+    if time_data_missing:
+        print(f"  [WARN] Activity Time Analysis has NO rows for {target_date} but Daily Audit has "
+              f"{len(target_audit_data)}. Active-hours columns will be blank. The 'Activity Time "
+              f"Analysis' tab is likely empty/stale — re-run the daily workflow (or "
+              f"execution/generate_activity_time.py) to repopulate it.")
+
     # Build both variants from the same raw rows so totals are directly comparable.
     summary_all = _build_summary_from_audit(target_audit_data, target_time_data, target_date, exclude_comms=False)
     summary_work = _build_summary_from_audit(target_audit_data, target_time_data, target_date, exclude_comms=True)
     summary_all['work_only'] = summary_work
+    summary_all['time_data_missing'] = time_data_missing
 
     return summary_all
 
@@ -536,6 +568,19 @@ def generate_email_html(summary, chart_url=None, work_chart_url=None):
     rows_html = _render_leaderboard_rows(summary['members'])
     platform_html = _render_platform_pills(summary['platform_counts'])
 
+    # Banner shown only when the time-analysis join came back empty for the day, so
+    # managers know blank First/Last/Active-Hours cells mean "data unavailable",
+    # not "the whole team worked 0 hours".
+    time_warning_html = ""
+    if summary.get('time_data_missing'):
+        time_warning_html = """
+        <div style="margin: 0 0 20px; padding: 12px 16px; background: #fef3c7; border: 1px solid #f59e0b; border-radius: 8px; color: #92400e; font-size: 13px;">
+            <strong>⚠ Active-hours data unavailable for this date.</strong>
+            Event counts below are accurate, but First Event / Last Event / Active Hours /
+            Max Break could not be computed (the Activity Time Analysis source was empty for this day).
+        </div>
+        """
+
     work_summary = summary.get('work_only')
     work_platform_html = _render_platform_pills(work_summary['platform_counts']) if work_summary else ""
 
@@ -650,6 +695,7 @@ def generate_email_html(summary, chart_url=None, work_chart_url=None):
                     Every tracked event for the day — ClickUp, GitHub, Google Workspace, Figma, and Backendless combined
                     (includes Gmail sends and ClickUp chat messages).
                 </p>
+                {time_warning_html}
                 <!-- Expanded Activity Table -->
                 <h3 style="margin: 0 0 16px; font-size: 16px; color: #1e293b; border-left: 4px solid #244d5d; padding-left: 10px;">Daily Highlights Leaderboard</h3>
                 <div class="table-container">
