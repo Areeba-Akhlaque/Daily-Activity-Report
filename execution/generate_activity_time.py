@@ -17,6 +17,7 @@ Output Columns:
 import os
 import sys
 import json
+import time
 import pandas as pd
 from datetime import datetime, timezone, timedelta
 import gspread
@@ -67,6 +68,61 @@ def get_creds():
         with open(token_path, 'w') as f:
             f.write(creds.to_json())
     return creds
+
+
+def _jsonsafe(v):
+    """Coerce a pandas/numpy scalar to a native JSON-serializable value for gspread."""
+    if v is None:
+        return ''
+    if isinstance(v, (str, int, float)):
+        return v
+    item = getattr(v, 'item', None)  # numpy scalar -> python scalar
+    if callable(item):
+        try:
+            return v.item()
+        except Exception:
+            pass
+    return str(v)
+
+
+def _get_or_create_ws(sh, title, rows=5000, cols=10):
+    """Return the worksheet, creating it only if it genuinely doesn't exist."""
+    try:
+        return sh.worksheet(title)
+    except gspread.exceptions.WorksheetNotFound:
+        return sh.add_worksheet(title=title, rows=rows, cols=cols)
+
+
+def _write_with_retry(ws, values, attempts=4):
+    """Write a worksheet with backoff, WITHOUT clearing first.
+
+    The old pattern was clear() then update(): a transient 429/5xx on the write
+    left the tab cleared-but-empty, which silently zeroed every 'Active Hours' cell
+    in the daily email. Here we overwrite from A1 (so a failed write keeps the last
+    good data) and only afterwards trim any stale trailing rows left over from a
+    previous, longer run. update() overwrites the whole header+data range each time,
+    so this is idempotent and the tab can never be emptied by a write failure.
+    """
+    last_err = None
+    n = len(values)
+    for i in range(attempts):
+        try:
+            ws.update(values=values, range_name='A1')
+            # Remove leftover rows from a previous run that had MORE rows than this one.
+            try:
+                grid_rows = ws.row_count
+                if grid_rows > n:
+                    ws.batch_clear([f'A{n + 1}:H{grid_rows}'])
+            except Exception as trim_err:
+                print(f'  [Sheet] trailing-row trim skipped: {trim_err}')
+            return True
+        except Exception as e:
+            last_err = e
+            wait = (i + 1) * 5
+            print(f'  [Sheet] write attempt {i + 1}/{attempts} failed: {e} — retrying in {wait}s')
+            time.sleep(wait)
+    print(f'  [ERROR] Activity Time Analysis write failed after {attempts} attempts: {last_err}')
+    raise last_err if last_err is not None else RuntimeError('write failed')
 
 
 def _load_cache(cache_filename, label):
@@ -402,27 +458,35 @@ def generate_activity_time_analysis(creds):
         })
     
     result_df = pd.DataFrame(results)
-    
+
+    # NEVER blank the tab on an empty result. If grouping produced no rows (e.g.
+    # caches missing on this runner), leave whatever is already in the sheet so the
+    # daily email keeps showing the last known good data instead of all-zeros.
+    if result_df.empty:
+        print('[WARN] Activity Time Analysis produced 0 rows — leaving existing tab untouched.')
+        return
+
     # Sort by date (newest first), then by name
     result_df['sort_dt'] = pd.to_datetime(result_df['Date'], format='%m/%d/%y')
     result_df = result_df.sort_values(by=['sort_dt', 'Team Member'], ascending=[False, True])
     result_df = result_df.drop(columns=['sort_dt'])
-    
+
     print(f'Final rows: {len(result_df)}')
-    
-    # Upload to Google Sheets
+
+    # Build a JSON-safe payload (native str/int/float only — no numpy types that
+    # could make the gspread write raise mid-flight).
+    header = result_df.columns.tolist()
+    values = [header]
+    for rec in result_df.to_dict('records'):
+        values.append([_jsonsafe(rec[c]) for c in header])
+
+    # Upload to Google Sheets with retry so a transient API error can't leave the
+    # tab cleared-but-empty (which silently zeroed the daily email's Active Hours).
     gc = gspread.authorize(creds)
     sh = gc.open_by_key(SHEET_ID)
-    
-    try:
-        ws = sh.worksheet('Activity Time Analysis')
-        ws.clear()
-    except:
-        ws = sh.add_worksheet(title='Activity Time Analysis', rows=5000, cols=10)
-    
-    values = [result_df.columns.tolist()] + result_df.values.tolist()
-    ws.update(values=values, range_name='A1')
-    
+    ws = _get_or_create_ws(sh, 'Activity Time Analysis')
+    _write_with_retry(ws, values)
+
     print(f'\n[SUCCESS] Activity Time Analysis updated: {len(result_df)} rows')
     
     # === NEW: Generate Hourly Data for Dashboard ===
