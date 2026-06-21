@@ -109,7 +109,18 @@ def update_console_audit_logs(gc, sh):
             ws = sh.add_worksheet(title='Console_Audit_Logs', rows=5000, cols=10)
         
         final = summary[['Name', 'Date', 'Platform', 'Event Type', 'Count']]
-        ws.update(values=[final.columns.tolist()] + final.values.tolist(), range_name='A1')
+        vals = [final.columns.tolist()] + final.values.tolist()
+        # Compact the grid (see Daily Audit note): Console_Audit_Logs had bloated to
+        # ~76k rows x 20 cols (1.5M cells) for ~1k rows of data. Reclaim the waste.
+        try:
+            nr, nc = max(len(vals), 1), len(final.columns)
+            old_rows = ws.row_count
+            if ws.row_count > nr or ws.col_count > nc:
+                ws.resize(rows=nr, cols=nc)
+                print(f"  [GRID] Resized Console_Audit_Logs to {nr} x {nc} (was {old_rows} rows)")
+        except Exception as rz:
+            print(f"  [WARN] Console_Audit_Logs resize skipped: {rz}")
+        ws.update(values=vals, range_name='A1')
         print(f"  [SUCCESS] Uploaded {len(final)} Backendless rows")
 
     except Exception as e:
@@ -243,11 +254,27 @@ def update_daily_audit(gc, sh):
         ws.clear()
     except:
         ws = sh.add_worksheet(title='Daily Audit', rows=100000, cols=10)
-    
+
     # Upload header
     headers = df_result.columns.tolist()
     rows_to_upload = [headers] + df_result.values.tolist()
-    
+
+    # Compact the grid to EXACTLY what we need before writing.
+    # ws.clear() frees cell *values* but not the grid, so over hundreds of runs the
+    # Daily Audit grid ballooned to ~830k rows (8.3M cells) and consumed the entire
+    # 10,000,000-cell workbook budget — which made the later Activity Time Analysis
+    # write fail with "above the limit of 10000000 cells". Resizing keeps grid == data
+    # and reclaims the wasted cells for the other tabs.
+    try:
+        needed_rows = max(len(rows_to_upload), 1)
+        needed_cols = max(len(headers), 1)
+        old_rows = ws.row_count
+        if ws.row_count > needed_rows or ws.col_count > needed_cols:
+            ws.resize(rows=needed_rows, cols=needed_cols)
+            print(f"  [GRID] Resized Daily Audit to {needed_rows} x {needed_cols} (was {old_rows} rows)")
+    except Exception as rz:
+        print(f"  [WARN] Daily Audit resize skipped: {rz}")
+
     # Chunked upload
     CHUNK_SIZE = 5000
     for i in range(0, len(rows_to_upload), CHUNK_SIZE):
