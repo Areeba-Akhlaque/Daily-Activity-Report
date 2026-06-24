@@ -12,7 +12,6 @@ CARD_LAST4_TO_PERSON = {
     '3371': 'Clarissa',
     '5585': 'Victor Cheung',
     '0532': 'Roman Naidenko',
-    '2201': 'David Andres',
     '8428': 'Cherry Aznar',
     '1918': 'Rafael Casabianca',
     '9483': 'JP Casabianca',
@@ -22,7 +21,10 @@ CARD_LAST4_TO_PERSON = {
     '2971': 'Saifullah Khan',
     '3014': 'Saymond Montoya',
     '2701': 'Alexander Pavelko',
-    '4518': 'David Andres',     # "David - Claude Card" (his 2nd card)
+    '2201': 'David Andres',     # "David - SW & Subscription" (David's card #1)
+    '4518': 'David Andres',     # "David - Claude Card" (David's card #2 — both count toward David)
+    '5936': 'Azalfa Akhlaq',    # "Azalfa - Software & Subscription"
+    '7067': 'William Titus',    # "William's - SW card"
 }
 
 # Cards explicitly excluded by the finance team.
