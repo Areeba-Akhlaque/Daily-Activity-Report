@@ -74,7 +74,8 @@ def main():
     results['google'] = run_script(os.path.join(EXEC_DIR, 'fetch_google_workspace.py'), 'Google Workspace Activity')
     results['figma'] = run_script(os.path.join(EXEC_DIR, 'fetch_figma.py'), 'Figma Activity')
     results['backendless'] = run_script(os.path.join(EXEC_DIR, 'fetch_backendless.py'), 'Backendless Activity')
-    
+    results['mercury'] = run_script(os.path.join(EXEC_DIR, 'fetch_mercury.py'), 'Mercury AI & Software Spend')
+
     # Step 1.5: Generate Reports (Daily Audit + Activity Time Analysis)
     print("\n[STEP 1.5] GENERATING REPORTS")
     results['reports'] = run_script(os.path.join(EXEC_DIR, 'generate_reports.py'), 'Daily Audit & Time Analysis')

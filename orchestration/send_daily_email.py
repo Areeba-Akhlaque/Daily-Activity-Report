@@ -280,8 +280,105 @@ def get_daily_summary(creds, target_date_override=None):
     summary_work = _build_summary_from_audit(target_audit_data, target_time_data, target_date, exclude_comms=True)
     summary_all['work_only'] = summary_work
     summary_all['time_data_missing'] = time_data_missing
+    summary_all['spend'] = get_spend_summary(sh, target_date)
 
     return summary_all
+
+
+def get_spend_summary(sh, target_date):
+    """Read the 'AI & Software Spend' tab (Mercury) and summarize month-to-date
+    spend per person + new charges on the target date. Returns None if absent."""
+    try:
+        ws = sh.worksheet('AI & Software Spend')
+        rows = ws.get_all_records()
+    except Exception:
+        return None
+    if not rows:
+        return None
+    try:
+        tdt = datetime.strptime(target_date, '%m/%d/%y')
+    except ValueError:
+        return None
+
+    by_person = defaultdict(lambda: {'total': 0.0, 'tools': defaultdict(float)})
+    month_total = 0.0
+    new_charges = []
+    for r in rows:
+        d = str(r.get('Date', '')).strip()
+        try:
+            rdt = datetime.strptime(d, '%m/%d/%y')
+        except ValueError:
+            continue
+        amt = safe_float(r.get('Amount'))
+        person = r.get('Team Member', '')
+        merchant = r.get('Merchant', '')
+        if rdt.year == tdt.year and rdt.month == tdt.month:
+            by_person[person]['total'] += amt
+            by_person[person]['tools'][merchant] += amt
+            month_total += amt
+        if d == target_date:
+            new_charges.append({'person': person, 'merchant': merchant, 'amount': amt,
+                                'tier': r.get('Tier', ''), 'type': r.get('Type', '')})
+
+    people = []
+    for name, d in sorted(by_person.items(), key=lambda x: -x[1]['total']):
+        top = sorted(d['tools'].items(), key=lambda x: -x[1])
+        people.append({'name': name, 'total': round(d['total'], 2),
+                       'tools': ', '.join(f"{m} ${v:,.0f}" for m, v in top[:4])})
+    return {
+        'month_label': tdt.strftime('%B %Y'),
+        'month_total': round(month_total, 2),
+        'people': people,
+        'new_charges': sorted(new_charges, key=lambda x: -x['amount']),
+        'new_total': round(sum(c['amount'] for c in new_charges), 2),
+    }
+
+
+def _render_spend_section(spend):
+    """HTML for the AI & Software Spend email section."""
+    if not spend or not spend['people']:
+        return ""
+
+    rows_html = ""
+    for m in spend['people']:
+        rows_html += f"""
+        <tr>
+            <td style="padding: 10px 12px; border-bottom: 1px solid #eee;"><b>{m['name']}</b></td>
+            <td style="padding: 10px 12px; border-bottom: 1px solid #eee; text-align: right; color: #047857; font-weight: bold;">${m['total']:,.2f}</td>
+            <td style="padding: 10px 12px; border-bottom: 1px solid #eee; color: #64748b; font-size: 12px;">{m['tools']}</td>
+        </tr>"""
+
+    new_html = ""
+    if spend['new_charges']:
+        items = "".join(
+            f"<li><strong>{c['person']}</strong> — {c['merchant']} "
+            f"{('('+c['tier']+')') if c['tier'] else ''} <strong>${c['amount']:,.2f}</strong></li>"
+            for c in spend['new_charges'])
+        new_html = f"""
+        <p style="margin: 16px 0 8px; font-size: 13px; color: #475569;"><strong>New charges yesterday</strong> (${spend['new_total']:,.2f}):</p>
+        <ul style="list-style: none; padding: 0; margin: 0; display: block;">{items}</ul>"""
+
+    return f"""
+    <div style="margin-top: 40px; padding-top: 24px; border-top: 2px dashed #cbd5e1;">
+        <h2 style="margin: 0 0 8px; font-size: 18px; color: #1e293b;">🧾 AI &amp; Software Spend</h2>
+        <p style="margin: 0 0 16px; color: #64748b; font-size: 12px;">
+            Per-person software &amp; subscription spend on Mercury cards for <strong>{spend['month_label']}</strong>
+            (month-to-date total <strong>${spend['month_total']:,.2f}</strong>). Tier labels are approximate.
+        </p>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align:left;">Team Member</th>
+                        <th style="text-align:right;">This Month</th>
+                        <th style="text-align:left;">Top Tools</th>
+                    </tr>
+                </thead>
+                <tbody>{rows_html}</tbody>
+            </table>
+        </div>
+        {new_html}
+    </div>"""
 
 
 
@@ -583,6 +680,7 @@ def generate_email_html(summary, chart_url=None, work_chart_url=None):
 
     work_summary = summary.get('work_only')
     work_platform_html = _render_platform_pills(work_summary['platform_counts']) if work_summary else ""
+    spend_section_html = _render_spend_section(summary.get('spend'))
 
     # Sync Status Logic
     sync_status_html = ""
@@ -723,8 +821,10 @@ def generate_email_html(summary, chart_url=None, work_chart_url=None):
                 </div>
 
                 {work_section_html}
+
+                {spend_section_html}
             </div>
-            
+
             <div class="links">
                 <!-- Centered Buttons Table for Email Client Compatibility -->
                 <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin: auto;">
