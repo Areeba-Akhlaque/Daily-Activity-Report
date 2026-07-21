@@ -56,9 +56,25 @@ START_DATE_STR = os.environ.get('START_DATE', '2026-01-01')
 # falls back to fetching from START_DATE (used after changing name_mappings/rules).
 FULL_REBUILD = os.environ.get('FULL_REBUILD', 'false').lower() in ('true', '1', 'yes')
 ROLLING_DAYS = int(os.environ.get('ROLLING_DAYS', '7'))
+
+# Google Admin Reports keeps only ~180 days of audit logs. Asking for anything older
+# returns HTTP 400, and fetch_logs_for_user() treats a non-retryable status as `break`
+# — silently, with no error printed. So a FULL_REBUILD from START_DATE would quietly
+# come back missing its earliest 30-day window and then overwrite the tab with that
+# short result, destroying history that Google can no longer re-serve.
+# Clamping the fetch floor keeps every requested window inside the retention window.
+RETENTION_DAYS = int(os.environ.get('GW_RETENTION_DAYS', '175'))
+RETENTION_FLOOR_DT = datetime.now(timezone.utc) - timedelta(days=RETENTION_DAYS)
+
 if FULL_REBUILD:
-    FETCH_START_DT = pd.to_datetime(START_DATE_STR).replace(tzinfo=timezone.utc)
+    _requested = pd.to_datetime(START_DATE_STR).replace(tzinfo=timezone.utc)
+    FETCH_START_DT = max(_requested, RETENTION_FLOOR_DT)
     print(f"[MODE] FULL_REBUILD — fetching Google Workspace from {START_DATE_STR}")
+    if FETCH_START_DT > _requested:
+        print(f"  [RETENTION] Google only serves ~{RETENTION_DAYS} days; clamping fetch start "
+              f"{_requested.strftime('%Y-%m-%d')} -> {FETCH_START_DT.strftime('%Y-%m-%d')}.")
+        print(f"  [RETENTION] Sheet rows older than {FETCH_START_DT.strftime('%Y-%m-%d')} "
+              f"will be PRESERVED — they can never be re-fetched.")
 else:
     FETCH_START_DT = datetime.now(timezone.utc) - timedelta(days=ROLLING_DAYS)
     print(f"[MODE] Rolling {ROLLING_DAYS}-day window — fetching Google Workspace from {FETCH_START_DT.strftime('%Y-%m-%d')}")
@@ -416,18 +432,24 @@ def process_and_upload(events):
         df_old = pd.DataFrame(columns=['Name', 'Date', 'Platform', 'Event Type', 'Quantity'])
         try:
             ws = sh.worksheet(tab_name)
-            if not FULL_REBUILD:
-                existing_data = ws.get_all_records()
-                df_old = pd.DataFrame(existing_data) if existing_data else df_old
+            # Always read the existing tab — including in FULL_REBUILD. This sheet is the
+            # only surviving copy of anything Google has already aged out of its ~180-day
+            # window, so a rebuild must merge with history rather than replace it.
+            existing_data = ws.get_all_records()
+            df_old = pd.DataFrame(existing_data) if existing_data else df_old
         except Exception:
             ws = sh.add_worksheet(title=tab_name, rows=2000, cols=10)
 
-        if FULL_REBUILD or df_old.empty:
+        # Refuse to overwrite a populated tab with an empty fetch (quota throttling and
+        # the silent HTTP-400 break both surface as "zero rows" rather than an exception).
+        if final_df.empty and not df_old.empty:
+            print(f"  [ABORT] Fetch returned 0 rows but the tab holds {len(df_old)} — "
+                  f"refusing to overwrite. Tab left untouched.")
+            return
+
+        if df_old.empty:
             combined = final_df
-            if FULL_REBUILD:
-                print(f"  [MERGE] FULL_REBUILD — overwriting with {len(final_df)} fresh rows")
-            else:
-                print(f"  [MERGE] No existing sheet data — writing {len(final_df)} fresh rows")
+            print(f"  [MERGE] No existing sheet data — writing {len(final_df)} fresh rows")
         else:
             for col in ['Name', 'Date', 'Platform', 'Event Type', 'Quantity']:
                 if col not in df_old.columns:
@@ -438,7 +460,8 @@ def process_and_upload(events):
             historical = df_old[df_old['_dt'].notna() & (df_old['_dt'].dt.date < window_start_naive)]
             historical = historical.drop(columns=['_dt'])
             combined = pd.concat([historical, final_df], ignore_index=True)
-            print(f"  [MERGE] Rolling {ROLLING_DAYS}d — {len(historical)} historical + {len(final_df)} fresh = {len(combined)}")
+            _mode = f"FULL_REBUILD from {window_start_naive}" if FULL_REBUILD else f"Rolling {ROLLING_DAYS}d"
+            print(f"  [MERGE] {_mode} — {len(historical)} preserved + {len(final_df)} fresh = {len(combined)}")
 
         combined['Quantity'] = pd.to_numeric(combined['Quantity'], errors='coerce').fillna(1).astype(int)
         # Sort by date desc so newest rows sit at the top of the sheet.
