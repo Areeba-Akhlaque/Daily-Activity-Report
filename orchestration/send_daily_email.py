@@ -385,26 +385,52 @@ def _render_spend_section(spend):
 # === Platform-Based Color System ===
 # Premium SaaS Palette (ClickUp=Violet, GitHub=Slate, Google=SkyBlue, Figma=Amber, Backendless=Emerald)
 EVENT_COLOR_MAP = {
-    # ClickUp
-    'Comment Posted': '#C084FC', 'task updated': '#A78BFA', 'task completed': '#8B5CF6',
-    'task created': '#7C3AED', 'Channels messages': '#C4B5FD', 'Direct chats messages': '#DDD6FE',
-    # GitHub
-    'Code Commit': '#94A3B8', 'PR Opened/Closed': '#CBD5E1', 'PR Reviewed': '#E2E8F0',
-    'PR Comment Posted': '#F1F5F9', 'Issue/PR Comment Posted': '#F8FAFC',
-    'Branch/Tag Created': '#64748B', 'Branch/Tag Deleted': '#475569', 'Issue Opened/Closed': '#334155',
-    # Google Workspace
-    'Gmail Send': '#38BDF8', 'Drive Edit': '#0EA5E9',
-    # Figma
-    'File Edited': '#FBBF24', 'File Created': '#F59E0B',
-    # Backendless
-    'Update Page UI': '#34D399', 'Modify table record': '#10B981',
-    'Deploy Cloud Code Model From Console': '#059669', 'Save Cloud Code Draft Model': '#6EE7B7',
-    'Update UI Page Handler Logic': '#2DD4BF', 'Delete File': '#14B8A6',
-    'Update Function Logic': '#0D9488', 'Delete table records': '#A7F3D0',
-    'Run Timer': '#5EEAD4', 'Create Column': '#4ADE80', 'Change Column': '#22C55E',
-    'Publish UI Container': '#86EFAC', 'Create new record in table': '#16A34A',
-    'Create new UI Page': '#4ADE80', 'Edit Custom Email Template': '#38BDF8',
-    'Create UI Container': '#818CF8', 'Copy File': '#6EE7B7', 'Create New Directory': '#A7F3D0',
+    "Channels messages": "#BE2D75",
+    "Comment Posted": "#CF3080",
+    "Direct chats messages": "#D2418A",
+    "task completed": "#D65194",
+    "task created": "#DA629E",
+    "task updated": "#DE73A8",
+    "Drive Edit": "#6435B6",
+    "Gmail Send": "#9C79D8",
+    "Add table record relations": "#21CA91",
+    "Change Column": "#21CD94",
+    "Change developer permissions": "#22D096",
+    "Copy File": "#22D498",
+    "Create API Service": "#23D79B",
+    "Create Column": "#23DA9D",
+    "Create New Directory": "#26DC9F",
+    "Create New File": "#29DCA0",
+    "Create Timer": "#2CDDA2",
+    "Create new UI Page": "#2FDDA3",
+    "Create new record in table": "#33DEA5",
+    "Delete Column": "#36DEA6",
+    "Delete File": "#39DFA8",
+    "Delete UI Page": "#3CDFA9",
+    "Delete table record relations": "#40E0AA",
+    "Delete table records": "#43E0AC",
+    "Deploy Cloud Code Model From Console": "#46E1AD",
+    "Invite New Developer": "#49E1AF",
+    "Modify table record": "#4DE2B0",
+    "Publish UI Container": "#50E2B2",
+    "Remove developer from team": "#53E3B3",
+    "Rename File": "#56E4B4",
+    "Run Timer": "#5AE4B6",
+    "Save Cloud Code Draft Model": "#5DE5B7",
+    "Update Function Logic": "#60E5B9",
+    "Update Page UI": "#63E6BA",
+    "Update UI Page": "#67E6BC",
+    "Update UI Page Handler Logic": "#6AE7BD",
+    "File Created": "#C77323",
+    "File Edited": "#E5A66C",
+    "Branch/Tag Created": "#23A7C7",
+    "Branch/Tag Deleted": "#25B1D4",
+    "Code Commit": "#2EB8DA",
+    "Issue Opened/Closed": "#3ABCDC",
+    "Issue/PR Comment Posted": "#46C0DE",
+    "PR Comment Posted": "#53C4E1",
+    "PR Opened/Closed": "#5FC8E3",
+    "PR Reviewed": "#6CCDE5",
 }
 
 EVENT_PLATFORM_MAP = {
@@ -421,7 +447,7 @@ EVENT_PLATFORM_MAP = {
 
 PLATFORM_SORT_ORDER = ['ClickUp', 'GitHub', 'Google Workspace', 'Figma', 'Backendless App', 'Other']
 
-_TEAL_SHADES = ['#34D399','#10B981','#059669','#6EE7B7','#2DD4BF','#14B8A6','#0D9488','#A7F3D0','#5EEAD4','#4ADE80','#22C55E','#86EFAC','#16A34A','#4ADE80','#38BDF8','#818CF8','#6EE7B7','#A7F3D0']
+_TEAL_SHADES = ['#22D096','#2CDDA2','#39DFA8','#46E1AD','#53E3B3','#60E5B9','#21CA91','#33DEA5','#4DE2B0','#5AE4B6','#26DC9F','#43E0AC']
 _backendless_shade_ctr = [0]
 
 def get_event_color(event_type, _cache={}):
@@ -434,8 +460,8 @@ def get_event_color(event_type, _cache={}):
         color = _TEAL_SHADES[_backendless_shade_ctr[0] % len(_TEAL_SHADES)]
         _backendless_shade_ctr[0] += 1
     else:
-        color = {'ClickUp':'#FF5C85', 'GitHub':'#686868', 'Google Workspace':'#1E88E5',
-                 'Figma':'#FF9800', 'Backendless App':'#26A69A'}.get(platform, '#777777')
+        color = {'ClickUp':'#CF3080', 'GitHub':'#2EB8DA', 'Google Workspace':'#8257D6',
+                 'Figma':'#C77323', 'Backendless App':'#22D096'}.get(platform, '#7A7F99')
     _cache[event_type] = color
     return color
 
