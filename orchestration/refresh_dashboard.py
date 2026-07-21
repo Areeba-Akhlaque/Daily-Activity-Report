@@ -25,6 +25,9 @@ print(f"=== Dashboard Data Refresh - {now_pst.strftime('%Y-%m-%d %H:%M:%S %Z')} 
 # Configuration
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(SCRIPT_DIR)
+import sys
+sys.path.insert(0, os.path.join(ROOT_DIR, 'execution'))
+from name_mappings import map_name, should_exclude
 # Load .env explicitly
 env_path = os.path.join(ROOT_DIR, '.env')
 if os.path.exists(env_path):
@@ -58,15 +61,44 @@ if not creds.valid and creds.refresh_token:
 gc = gspread.authorize(creds)
 sh = gc.open_by_key(SHEET_ID)
 
-# Fetch Daily Audit Report
-print("[2/5] Fetching Daily Audit Report...")
+# Build Daily Audit for the dashboard as a SPARSE, FULL-HISTORY dataset from the
+# source tabs (instead of the 90-day 0-filled 'Daily Audit' matrix). This lets the
+# dashboard show the full available history (back to Jan) AND keeps data.json small
+# (only non-zero rows). The 'Daily Audit' sheet tab and the email are NOT affected.
+print("[2/5] Building Daily Audit (sparse, full history) from source tabs...")
+from collections import defaultdict
+_SOURCE_TABS = ['Console_Audit_Logs', 'Clickup_Activity', 'Github_Activity',
+                'Github_Commits', 'Figma_Activity', 'GoogleWorkspace_Activity']
+_agg = defaultdict(int)
+for _tab in _SOURCE_TABS:
+    try:
+        _recs = sh.worksheet(_tab).get_all_records()
+    except Exception as e:
+        print(f"  [WARN] {_tab}: {e}")
+        continue
+    for r in _recs:
+        name = map_name(r.get('Name', r.get('Team Member', '')))
+        date = r.get('Date', r.get('Activity Date', ''))
+        etype = r.get('Event Type', r.get('Activity Type', ''))
+        try:
+            count = int(r.get('Count', r.get('Quantity', 1)) or 0)
+        except (ValueError, TypeError):
+            count = 0
+        if _tab in ('Github_Activity', 'Github_Commits'):
+            platform = 'GitHub'
+        else:
+            platform = r.get('Platform', _tab.replace('_Activity', '').replace('_Logs', '').replace('_', ' '))
+        if etype == 'Gmail Received':
+            continue
+        if count > 0 and name and date and etype and not should_exclude(name):
+            _agg[(name, date, platform, etype)] += count
+data1 = [{'Team Member': k[0], 'Activity Date': k[1], 'Platform': k[2],
+          'Activity Type': k[3], 'Count': v} for k, v in _agg.items()]
 try:
-    ws1 = sh.worksheet('Daily Audit')
-    data1 = ws1.get_all_records()
-    print(f"  Loaded {len(data1)} rows")
-except Exception as e:
-    print(f"  Error: {e}")
-    data1 = []
+    data1.sort(key=lambda x: datetime.strptime(str(x['Activity Date']), '%m/%d/%y'), reverse=True)
+except Exception:
+    pass
+print(f"  Built {len(data1)} sparse Daily-Audit rows (full history)")
 
 # Fetch Activity Time Analysis
 print("[3/5] Fetching Activity Time Analysis...")
