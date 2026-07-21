@@ -1,4 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pvragon Activity — Command Center</title>
+<link rel="icon" type="image/png" href="Logo.png">
 <style>
   :root{
     --bg:#07070f; --ink:#eaecff; --ink-2:#9a9fc6; --ink-3:#5f6490;
@@ -115,7 +121,8 @@
   @media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.001s!important}.aurora span{animation:none}}
   :focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
 </style>
-
+</head>
+<body>
 <div class="aurora"><span class="a"></span><span class="b"></span><span class="c"></span></div>
 <div class="grain"></div>
 <div id="tip"></div>
@@ -362,3 +369,5 @@ Promise.all([
   run(DATA);
 }).catch(err=>{console.error(err);const ld=document.getElementById('loading');if(ld)ld.textContent='Could not load data.json';});
 </script>
+</body>
+</html>
