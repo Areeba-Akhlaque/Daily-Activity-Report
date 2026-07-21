@@ -1,1504 +1,364 @@
-<!DOCTYPE html>
-<html lang="en">
+<title>Pvragon Activity — Command Center</title>
+<style>
+  :root{
+    --bg:#07070f; --ink:#eaecff; --ink-2:#9a9fc6; --ink-3:#5f6490;
+    --surface:rgba(20,19,38,0.55); --surface-2:rgba(30,28,54,0.7); --border:rgba(255,255,255,.07); --border-2:rgba(255,255,255,.14);
+    --cyan:#22d3ee; --mag:#f0389d; --good:#34d399;
+    --CU:#d6247f; --GH:#0891b2; --GW:#7c3aed; --FG:#c2620a; --BK:#0f9d6e; --OT:#64748b;
+    --mono:ui-monospace,'SF Mono','JetBrains Mono','Cascadia Code',Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  body{overflow-x:hidden;min-height:100vh;position:relative}
+  .aurora{position:fixed;inset:-25%;z-index:-2;filter:blur(70px);opacity:.5;pointer-events:none}
+  .aurora span{position:absolute;border-radius:50%;mix-blend-mode:screen;animation:drift 30s ease-in-out infinite}
+  .aurora .a{width:46vw;height:46vw;left:-4vw;top:-8vw;background:radial-gradient(circle,#3a0d5e,transparent 62%)}
+  .aurora .b{width:42vw;height:42vw;right:-6vw;top:4vw;background:radial-gradient(circle,#5c0a3a,transparent 62%);animation-delay:-9s}
+  .aurora .c{width:40vw;height:40vw;left:26vw;bottom:-16vw;background:radial-gradient(circle,#062a3e,transparent 62%);animation-delay:-17s}
+  @keyframes drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-3vw,2vh) scale(1.08)}}
+  .grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.03;background-image:radial-gradient(circle at 1px 1px,#fff 1px,transparent 0);background-size:3px 3px}
+  .wrap{max-width:1500px;margin:0 auto;padding:24px clamp(12px,3vw,32px) 60px}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pvragon Team Activity Dashboard</title>
-    <link rel="icon" type="image/png" href="Logo.png">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-card: rgba(30, 41, 59, 0.7);
-            /* Glassmorphism */
-            --accent: #6366f1;
-            --accent-hover: #4f46e5;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --border: rgba(255, 255, 255, 0.1);
-            --success: #10b981;
-        }
+  header{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+  .brand{display:flex;align-items:center;gap:13px}
+  .logo{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;flex:none;background:linear-gradient(135deg,var(--cyan),var(--mag));box-shadow:0 0 26px rgba(240,56,157,.45)}
+  .logo svg{width:24px;height:24px}
+  .brand h1{font-size:clamp(18px,2.4vw,24px);font-weight:800;letter-spacing:-.5px;line-height:1}
+  .brand .kick{font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--ink-3);text-transform:uppercase;margin-top:5px}
+  .status{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .pulse{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--good);text-transform:uppercase;padding:7px 13px;border:1px solid rgba(52,211,153,.3);border-radius:999px;background:rgba(52,211,153,.06)}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--good);animation:beat 2s infinite}
+  @keyframes beat{0%{box-shadow:0 0 0 0 rgba(52,211,153,.5)}70%{box-shadow:0 0 0 9px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+  .synced{font-family:var(--mono);font-size:11px;color:var(--ink-2)}.synced b{color:var(--ink)}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  .filters{background:var(--surface);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:18px;display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end;position:relative;z-index:30}
+  .fg{display:flex;flex-direction:column;gap:6px;position:relative}
+  .fl{font-family:var(--mono);font-size:9.5px;letter-spacing:1.6px;text-transform:uppercase;color:var(--ink-3)}
+  input[type=date],.msbtn{height:38px;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--ink);border-radius:9px;padding:0 12px;font-family:var(--sans);font-size:12.5px;cursor:pointer;display:flex;align-items:center;gap:8px;min-width:150px;transition:border-color .2s,box-shadow .2s,background .2s}
+  input[type=date]{font-family:var(--mono);color-scheme:dark}
+  input[type=date]:hover,.msbtn:hover{border-color:var(--border-2);background:rgba(255,255,255,.08)}
+  input[type=date]:focus,.msbtn:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(34,211,238,.2)}
+  .msbtn{justify-content:space-between}.msbtn .cnt{color:var(--ink-2)}.msbtn svg{width:12px;height:12px;opacity:.6}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font-size:11.5px;padding:7px 12px;border-radius:999px;border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;gap:7px;transition:.15s;user-select:none;background:rgba(255,255,255,.03)}
+  .chip .sw{width:9px;height:9px;border-radius:3px}
+  .chip.off{opacity:.36}.chip:hover{border-color:var(--border-2)}
+  .dd{position:absolute;top:calc(100% + 6px);left:0;width:250px;max-height:320px;overflow-y:auto;background:var(--surface-2);backdrop-filter:blur(16px);border:1px solid var(--border-2);border-radius:12px;box-shadow:0 20px 50px rgba(0,0,0,.55);padding:8px;z-index:40;display:none;animation:ddin .16s ease}
+  .dd.show{display:block}@keyframes ddin{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+  .dd input[type=text]{width:100%;background:rgba(0,0,0,.25);border:1px solid var(--border);color:var(--ink);border-radius:7px;padding:7px 10px;font-size:12px;margin-bottom:6px;font-family:var(--sans)}
+  .di{display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:7px;cursor:pointer;font-size:12.5px}
+  .di:hover{background:rgba(255,255,255,.06)}.di input{accent-color:var(--cyan);width:14px;height:14px;flex:none}
+  .di.selall{border-bottom:1px solid var(--border);margin-bottom:4px;padding-bottom:9px;font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-2)}
+  .reset{height:38px;padding:0 14px;border-radius:9px;border:1px solid var(--border);background:rgba(240,56,157,.08);color:#ffb3d9;font-size:12px;cursor:pointer;font-family:var(--mono);letter-spacing:1px;transition:.15s}
+  .reset:hover{border-color:var(--mag);background:rgba(240,56,157,.16)}
 
-        body {
-            font-family: 'Lato', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
-            background-attachment: fixed;
-            color: var(--text-primary);
-            min-height: 100vh;
-            font-size: 14px;
-        }
+  .card{background:var(--surface);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:16px;position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;inset:0 0 auto 0;height:1px;background:linear-gradient(90deg,transparent,var(--border-2),transparent)}
+  .ch{display:flex;justify-content:space-between;align-items:baseline;padding:15px 18px 0;gap:10px}
+  .ch h2{font-size:13.5px;font-weight:700}.ch .sub{font-family:var(--mono);font-size:10px;letter-spacing:1.6px;color:var(--ink-3);text-transform:uppercase}
 
-        .container {
-            max-width: 1800px;
-            margin: 0 auto;
-            padding: 24px;
-        }
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:15px}
+  .kpi{padding:17px 19px}
+  .kpi .lab{font-family:var(--mono);font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:8px}
+  .kpi .lab i{width:7px;height:7px;border-radius:2px}
+  .kpi .val{font-family:var(--mono);font-size:clamp(24px,3.2vw,38px);font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-1px;margin-top:9px;line-height:1;background:linear-gradient(120deg,#fff,#b9c0ee);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .kpi .foot{margin-top:8px;font-size:11px;color:var(--ink-2)}
+  .spark{margin-top:11px;height:28px;width:100%;display:block}
 
-        /* Glassmorphism Cards */
-        .card,
-        header,
-        .filters-container,
-        .stat-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-        }
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:15px}
+  .c8{grid-column:span 8}.c4{grid-column:span 4}.c7{grid-column:span 7}.c5{grid-column:span 5}.c12{grid-column:span 12}
+  .trend-wrap{position:relative;padding:8px 8px 0}.trend-wrap svg{display:block;width:100%;height:auto}
+  .cross{position:absolute;top:8px;bottom:20px;width:1px;background:linear-gradient(var(--cyan),transparent);opacity:0;pointer-events:none}
+  .tline{transition:opacity .2s,stroke-width .2s}
+  .mlegend{display:flex;flex-wrap:wrap;gap:3px 8px;padding:2px 16px 14px;max-height:70px;overflow-y:auto}
+  .mleg{display:flex;align-items:center;gap:6px;font-size:11px;cursor:pointer;padding:2px 6px;border-radius:6px;transition:background .15s;color:var(--ink-2)}
+  .mleg:hover{background:rgba(255,255,255,.06);color:var(--ink)}.mleg .sw{width:9px;height:9px;border-radius:2px;flex:none}
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 24px 32px;
-            margin-bottom: 30px;
-        }
+  .donut-body{display:flex;gap:12px;align-items:center;padding:12px 16px 16px;flex-wrap:wrap}
+  .donut-svg{position:relative;flex:none}
+  .donut-center{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+  .donut-center .n{font-family:var(--mono);font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
+  .donut-center .t{font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--ink-3);text-transform:uppercase}
+  .legend{display:flex;flex-direction:column;gap:2px;flex:1;min-width:150px}
+  .lg{display:flex;align-items:center;gap:9px;padding:6px 8px;border-radius:8px}
+  .lg .sw{width:10px;height:10px;border-radius:3px;flex:none}.lg .nm{font-size:12px;flex:1}
+  .lg .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums}.lg .pc{font-family:var(--mono);font-size:10px;color:var(--ink-3);width:36px;text-align:right}
 
-        .header-left h1 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
+  .lb{padding:6px 18px 14px;display:flex;flex-direction:column}
+  .lb-row{display:grid;grid-template-columns:24px 120px 1fr 50px;align-items:center;gap:11px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+  .lb-row:last-child{border-bottom:0}.rk{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);text-align:center}
+  .lb-row.top .rk{color:var(--mag)}.nm{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar{height:15px;display:flex;gap:1.5px;transform:scaleX(0);transform-origin:left;transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+  .bar.in{transform:scaleX(1)}.seg{height:100%;border-radius:2px;min-width:1.5px;transition:filter .15s}.seg:hover{filter:brightness(1.4)}
+  .tot{font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums;text-align:right}
 
-        #page-subtitle {
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
+  .ev{padding:8px 18px 16px;display:grid;grid-template-columns:1fr 1fr;gap:6px 24px}
+  .ev-row{display:grid;grid-template-columns:135px 1fr 46px;align-items:center;gap:10px}
+  .ev-row .en{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink-2)}
+  .ev-bar{height:9px;border-radius:5px;transform:scaleX(0);transform-origin:left;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+  .ev-bar.in{transform:scaleX(1)}.ev-row .ec{font-family:var(--mono);font-size:11px;text-align:right;font-variant-numeric:tabular-nums}
 
-        .filters-container {
-            padding: 16px 24px;
-            margin-bottom: 24px;
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            align-items: flex-end;
-            position: relative;
-            z-index: 100;
-        }
+  .heat{padding:10px 16px 16px}.heat svg{display:block;width:100%;height:auto}
+  .heat .cap{display:flex;justify-content:space-between;margin-top:6px;font-family:var(--mono);font-size:10px;color:var(--ink-3)}
+  .heat .scale{display:flex;align-items:center;gap:6px}.heat .scale i{width:40px;height:8px;border-radius:3px;background:linear-gradient(90deg,#122431,var(--cyan))}
 
-        .filter-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            position: relative;
-        }
+  #tip{position:fixed;z-index:60;pointer-events:none;opacity:0;transition:opacity .12s;background:rgba(10,9,20,.96);border:1px solid var(--border-2);border-radius:10px;padding:9px 12px;font-size:12px;box-shadow:0 12px 34px rgba(0,0,0,.6);backdrop-filter:blur(8px);max-width:250px}
+  #tip .th{font-family:var(--mono);font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px}
+  #tip .tr{display:flex;align-items:center;gap:8px;font-variant-numeric:tabular-nums}#tip .tr b{margin-left:auto;font-family:var(--mono)}
+  .empty{padding:40px;text-align:center;color:var(--ink-3);font-family:var(--mono);font-size:12px}
+  footer{margin-top:24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .reveal{opacity:0;animation:rise .6s cubic-bezier(.2,.8,.2,1) forwards}@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  ::-webkit-scrollbar{width:9px;height:9px}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:8px}::-webkit-scrollbar-track{background:transparent}
+  @media(max-width:1080px){.c8,.c4,.c7,.c5{grid-column:span 12}.kpis{grid-template-columns:repeat(2,1fr)}.ev{grid-template-columns:1fr}}
+  @media(max-width:560px){.kpis{grid-template-columns:1fr}.lb-row{grid-template-columns:20px 84px 1fr 44px;gap:7px}}
+  @media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.001s!important}.aurora span{animation:none}}
+  :focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+</style>
 
-        .filter-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
+<div class="aurora"><span class="a"></span><span class="b"></span><span class="c"></span></div>
+<div class="grain"></div>
+<div id="tip"></div>
+<div id="loading" style="position:fixed;inset:0;display:grid;place-items:center;font-family:ui-monospace,monospace;color:#5f6490;z-index:200;background:#07070f">Loading dashboard…</div>
 
-        /* Input Styling */
-        select,
-        input[type="date"],
-        .multi-select-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            height: 38px;
-            min-width: 160px;
-            cursor: pointer;
-            font-family: inherit;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        select:focus,
-        input:focus,
-        .multi-select-btn:focus {
-            outline: none;
-            border-color: var(--accent);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        /* Dropdown Styling */
-        .dropdown {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            width: 240px;
-            max-height: 300px;
-            overflow-y: auto;
-            z-index: 9999;
-            /* Ensure visible */
-            display: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            padding: 8px;
-            margin-top: 4px;
-        }
-
-        .dropdown.show {
-            display: block;
-        }
-
-        .dropdown-search {
-            padding: 4px 8px;
-            margin-bottom: 6px;
-        }
-
-        .dropdown-search input {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border);
-            color: white;
-            padding: 6px;
-            border-radius: 4px;
-        }
-
-        .dropdown-item {
-            padding: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            border-radius: 4px;
-            font-size: 13px;
-        }
-
-        .dropdown-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .dropdown-item input {
-            accent-color: var(--accent);
-            width: 14px;
-            height: 14px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-bottom: 24px;
-        }
-
-        .stat-card {
-            padding: 20px;
-        }
-
-        .stat-val {
-            font-size: 28px;
-            font-weight: 700;
-            color: white;
-            margin: 8px 0;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 11px;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .card {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 16px;
-            align-items: center;
-        }
-
-        .card-title {
-            font-weight: 600;
-            font-size: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .chart-wrap {
-            position: relative;
-            height: 320px;
-            width: 100%;
-        }
-
-        /* Badges */
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: 500;
-        }
-
-        .badge-plat {
-            background: rgba(99, 102, 241, 0.1);
-            color: #818cf8;
-            border: 1px solid rgba(99, 102, 241, 0.2);
-        }
-
-        @media (max-width: 1024px) {
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
-
-            .filters-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .filter-group {
-                width: 100%;
-            }
-
-            select,
-            input,
-            .multi-select-btn {
-                width: 100%;
-            }
-        }
-
-        /* AI Chatbot Styles */
-        .chat-widget {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-
-        .chat-button {
-            width: 60px;
-            height: 60px;
-            border-radius: 30px;
-            background: var(--accent);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: none;
-        }
-
-        .chat-button:hover {
-            transform: scale(1.1) rotate(5deg);
-            background: var(--accent-hover);
-        }
-
-        .chat-window {
-            width: 380px;
-            height: 500px;
-            background: var(--bg-card);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            transform-origin: bottom right;
-            transition: all 0.3s ease;
-        }
-
-        .chat-window.active {
-            display: flex;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px) scale(0.95);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .chat-header {
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .chat-header h3 {
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .chat-messages {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .message {
-            max-width: 85%;
-            padding: 12px 16px;
-            border-radius: 15px;
-            font-size: 13px;
-            line-height: 1.5;
-        }
-
-        .message.bot {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-primary);
-            align-self: flex-start;
-            border-bottom-left-radius: 4px;
-        }
-
-        .message.user {
-            background: var(--accent);
-            color: white;
-            align-self: flex-end;
-            border-bottom-right-radius: 4px;
-        }
-
-        .chat-input-area {
-            padding: 20px;
-            display: flex;
-            gap: 10px;
-            border-top: 1px solid var(--border);
-        }
-
-        .chat-input {
-            flex: 1;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 10px 15px;
-            color: white;
-            outline: none;
-            font-size: 13px;
-        }
-
-        .chat-send {
-            background: var(--accent);
-            border: none;
-            color: white;
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-
-        .chat-send:hover {
-            background: var(--accent-hover);
-        }
-
-        /* Responsive Chat */
-        @media (max-width: 480px) {
-            .chat-window {
-                width: calc(100vw - 40px);
-                right: 20px;
-                bottom: 100px;
-            }
-        }
-    </style>
-
-</head>
-
-<body>
-    <div id="loading"
-        style="display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 18px; color: var(--text-secondary);">
-        <i class="fas fa-spinner fa-spin" style="margin-right: 10px;"></i> Loading Dashboard...
+<div class="wrap">
+  <header class="reveal">
+    <div class="brand">
+      <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#0a0a12" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-8 4 5"/></svg></div>
+      <div><h1>Pvragon Activity</h1><div class="kick">Team Intelligence · Command Center</div></div>
     </div>
-
-    <div class="container" id="dashboard" style="display: none;">
-        <header>
-            <div class="header-left">
-                <h1>Pvragon Activity Dashboard - V2.1</h1>
-                <p id="page-subtitle">Realtime Monitoring</p>
-            </div>
-            <div><span id="lastUpdated" style="font-size: 12px; color: var(--text-secondary);"></span></div>
-        </header>
-
-        <div class="filters-container">
-            <div class="filter-group">
-                <span class="filter-label">Start Date</span>
-                <input type="date" id="startDate" onchange="handleDateChange()">
-            </div>
-            <div class="filter-group">
-                <span class="filter-label">End Date</span>
-                <input type="date" id="endDate" onchange="handleDateChange()">
-            </div>
-            <div class="filter-group" style="flex-grow: 1;">
-                <span class="filter-label">Team Members</span>
-                <div class="multi-select-btn" onclick="toggleDropdown('memberDropdown')">
-                    <span id="memberCountText">All Members</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="dropdown" id="memberDropdown">
-                    <div class="dropdown-search"><input type="text" placeholder="Search members..."
-                            onkeyup="filterDropdown(this)"></div>
-                    <div class="dropdown-item" onclick="toggleAll('member')">
-                        <input type="checkbox" id="chk-all-member" checked> <span>Select All</span>
-                    </div>
-                    <div id="memberList"></div>
-                </div>
-            </div>
-            <div class="filter-group" style="flex-grow: 1;">
-                <span class="filter-label">Event Types</span>
-                <div class="multi-select-btn" onclick="toggleDropdown('typeDropdown')">
-                    <span id="typeCountText">All Events</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="dropdown" id="typeDropdown">
-                    <div class="dropdown-search"><input type="text" placeholder="Search types..."
-                            onkeyup="filterDropdown(this)"></div>
-                    <div class="dropdown-item" onclick="toggleAll('type')">
-                        <input type="checkbox" id="chk-all-type" checked> <span>Select All</span>
-                    </div>
-                    <div id="typeList"></div>
-                </div>
-            </div>
-            <div class="filter-group">
-                <span class="filter-label">Platform</span>
-                <div class="multi-select-btn" onclick="toggleDropdown('platformDropdown')">
-                    <span id="platformSelectedText">All Platforms</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="dropdown" id="platformDropdown">
-                    <div class="dropdown-item" onclick="selectPlatform('all')">
-                        <span>All Platforms</span>
-                    </div>
-                    <div class="dropdown-item" onclick="selectPlatform('Google Workspace')">
-                        <span>Google Workspace</span>
-                    </div>
-                    <div class="dropdown-item" onclick="selectPlatform('ClickUp')">
-                        <span>ClickUp</span>
-                    </div>
-                    <div class="dropdown-item" onclick="selectPlatform('GitHub')">
-                        <span>GitHub</span>
-                    </div>
-                    <div class="dropdown-item" onclick="selectPlatform('Figma')">
-                        <span>Figma</span>
-                    </div>
-                    <div class="dropdown-item" onclick="selectPlatform('Backendless App')">
-                        <span>Backendless App</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-label">Total Events</div>
-                <div class="stat-val" id="val-events">-</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Active Members</div>
-                <div class="stat-val" id="val-members">-</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Avg Daily Events</div>
-                <div class="stat-val" id="val-avg">-</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Top Platform</div>
-                <div class="stat-val" id="val-top-plat" style="font-size: 20px;">-</div>
-            </div>
-        </div>
-
-        <div class="grid-2">
-            <div class="card">
-                <div class="card-header"><span class="card-title">Activity Timeline (Internal Team)</span></div>
-                <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
-            </div>
-            <div class="card">
-                <div class="card-header"><span class="card-title">Platform Distribution</span></div>
-                <div class="chart-wrap"><canvas id="platformChart"></canvas></div>
-            </div>
-        </div>
-
-        <div class="grid-2">
-            <div class="card" style="grid-column: 1 / -1; margin-bottom: 20px;">
-                <div class="card-header"><span class="card-title">Activity Breakdown by Member & Activity Type
-                        (Detailed)</span>
-                </div>
-                <div class="chart-wrap" style="height: 600px;"><canvas id="leaderboardChart"></canvas></div>
-            </div>
-
-            <div class="card" style="grid-column: 1 / -1;">
-                <div class="card-header"><span class="card-title">Daily Activity Range & Longest Break (Avg over
-                        selected period)</span>
-                </div>
-                <div class="chart-wrap" style="height: 500px;"><canvas id="rangeChart"></canvas></div>
-            </div>
-
-
-
-
-
-        </div>
-    </div>
-    </div>
-
-    <script>
-        let rawData = [];
-        let rawHourlyData = [];
-        let timeData = [];
-        let eventReferences = [];
-        let systemArchitecture = [];
-        let googleSheetUrl = "";
-
-        let state = {
-            startDate: null,
-            endDate: null,
-            members: new Set(),
-            types: new Set(),
-            platform: 'all'
-        };
-        let charts = { trend: null, platform: null, leaderboard: null, range: null };
-
-                                // Colors - Premium SaaS UI Color System (Tailwind Inspired)
-        const PLATFORM_COLORS = {
-            'ClickUp':          { base: '#8B5CF6' }, // Premium Violet
-            'GitHub':           { base: '#64748B' }, // Luminous Slate
-            'Google Workspace': { base: '#0EA5E9' }, // Sky Blue
-            'Figma':            { base: '#F59E0B' }, // Premium Amber
-            'Backendless App':  { base: '#10B981' }, // Emerald
-            'Other':            { base: '#94A3B8' }
-        };
-
-        // Explicit premium color per event type
-        const EVENT_COLOR_MAP = {
-            // ClickUp (Fuchsia/Purple progression)
-            'Comment Posted':         '#C084FC',
-            'task updated':           '#A78BFA',
-            'task completed':         '#8B5CF6',
-            'task created':           '#7C3AED',
-            'Channels messages':      '#C4B5FD',
-            'Direct chats messages':  '#DDD6FE',
-            // GitHub (Slate progression)
-            'Code Commit':            '#94A3B8',
-            'PR Opened/Closed':       '#CBD5E1',
-            'PR Reviewed':            '#E2E8F0',
-            'PR Comment Posted':      '#F1F5F9',
-            'Issue/PR Comment Posted':'#F8FAFC',
-            'Branch/Tag Created':     '#64748B',
-            'Branch/Tag Deleted':     '#475569',
-            'Issue Opened/Closed':    '#334155',
-            // Google Workspace (Sky Blue)
-            'Gmail Send':             '#38BDF8',
-            'Drive Edit':             '#0EA5E9',
-            // Figma (Amber)
-            'File Edited':            '#FBBF24',
-            'File Created':           '#F59E0B',
-            // Backendless (Emerald/Teal progression)
-            'Update Page UI':                          '#34D399',
-            'Modify table record':                     '#10B981',
-            'Deploy Cloud Code Model From Console':    '#059669',
-            'Save Cloud Code Draft Model':             '#6EE7B7',
-            'Update UI Page Handler Logic':            '#2DD4BF',
-            'Delete File':                             '#14B8A6',
-            'Update Function Logic':                   '#0D9488',
-            'Delete table records':                    '#A7F3D0',
-            'Run Timer':                               '#5EEAD4',
-            'Create Column':                           '#4ADE80',
-            'Change Column':                           '#22C55E',
-            'Publish UI Container':                    '#86EFAC',
-            'Create new record in table':              '#16A34A',
-            'Create new UI Page':                      '#4ADE80',
-            'Edit Custom Email Template':              '#38BDF8',
-            'Create UI Container':                     '#818CF8',
-            'Copy File':                               '#6EE7B7',
-            'Create New Directory':                    '#A7F3D0',
-        };
-
-        // Map event types to their platform
-        const EVENT_PLATFORM_MAP = {
-            'task created': 'ClickUp', 'task updated': 'ClickUp', 'task completed': 'ClickUp',
-            'Comment Posted': 'ClickUp', 'Channels messages': 'ClickUp', 'Direct chats messages': 'ClickUp',
-            'Code Commit': 'GitHub', 'PR Opened/Closed': 'GitHub', 'PR Reviewed': 'GitHub',
-            'PR Comment Posted': 'GitHub', 'Issue/PR Comment Posted': 'GitHub',
-            'Issue Opened/Closed': 'GitHub', 'Branch/Tag Created': 'GitHub', 'Branch/Tag Deleted': 'GitHub',
-            'Gmail Send': 'Google Workspace', 'Drive Edit': 'Google Workspace',
-            'File Edited': 'Figma', 'File Created': 'Figma',
-            'Update Page UI': 'Backendless App', 'Modify table record': 'Backendless App',
-            'Create UI Container': 'Backendless App', 'API/Console Access': 'Backendless App',
-        };
-
-        const _backendlessShadeCtr = { idx: 0 };
-        const _eventColorCache = {};
-
-        function getEventColor(eventType, platformHint) {
-            if (_eventColorCache[eventType]) return _eventColorCache[eventType];
-            if (EVENT_COLOR_MAP[eventType]) {
-                _eventColorCache[eventType] = EVENT_COLOR_MAP[eventType];
-                return EVENT_COLOR_MAP[eventType];
-            }
-            // Auto-shade for unmapped events (mostly Backendless)
-            let platform = EVENT_PLATFORM_MAP[eventType] || platformHint || 'Other';
-            if (!PLATFORM_COLORS[platform]) platform = 'Other';
-            const tealShades = ['#34D399','#10B981','#059669','#6EE7B7','#2DD4BF','#14B8A6','#0D9488','#A7F3D0','#5EEAD4','#4ADE80','#22C55E','#86EFAC','#16A34A','#4ADE80','#38BDF8','#818CF8','#6EE7B7','#A7F3D0'];
-            let color;
-            if (platform === 'Backendless App') {
-                color = tealShades[_backendlessShadeCtr.idx % tealShades.length];
-                _backendlessShadeCtr.idx++;
-            } else { color = PLATFORM_COLORS[platform].base; }
-            _eventColorCache[eventType] = color;
-            return color;
-        }
-
-        function getPlatformBaseColor(platform) {
-            return (PLATFORM_COLORS[platform] || PLATFORM_COLORS['Other']).base;
-        }
-
-        const PIE_COLORS_PLATFORMS = Object.values(PLATFORM_COLORS).map(p => p.base);
-
-        async function init() {
-            try {
-                // Determine Data Source
-                const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-                // Adjust path as needed (assuming relative path for GitHub Pages)
-                const path = 'data.json?t=' + new Date().getTime();
-
-                const response = await fetch(path);
-                if (!response.ok) throw new Error('Failed to load data');
-                const json = await response.json();
-
-                try {
-                    const hRes = await fetch('hourly_data.json?t=' + new Date().getTime());
-                    if (hRes.ok) rawHourlyData = await hRes.json();
-                } catch (e) { console.warn("No hourly data found"); }
-
-                if (json.dailyAudit) {
-                    rawData = json.dailyAudit.map(r => ({
-                        member: r['Team Member'],
-                        date: r['Activity Date'],
-                        platform: r['Platform'],
-                        type: r['Activity Type'],
-                        count: parseInt(r['Count'] || 0)
-                    }));
-                    timeData = json.timeAnalysis || [];
-                    eventReferences = json.eventReferences || [];
-                    systemArchitecture = json.systemArchitecture || [];
-                    googleSheetUrl = json.googleSheetUrl || "";
-                } else {
-                    rawData = json;
-                    timeData = json.timeAnalysis || [];
-                }
-
-                // Parse dates and set defaults
-                const dates = rawData.map(r => parseDate(r.date)).filter(Boolean).sort((a, b) => a - b);
-                if (dates.length) {
-                    // Default: start = 2026-01-01, end = latest date in data
-                    const last = dates[dates.length - 1];
-                    // Always default start to Jan 1, 2026
-                    const first = new Date('2026-01-01T00:00:00Z');
-
-                    const formatYMD = (d) => {
-                        return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
-                    };
-
-                    const strLast = formatYMD(last);
-                    const strFirst = '2026-01-01'; // Fixed start date
-
-                    document.getElementById('endDate').value = strLast;
-                    document.getElementById('startDate').value = strFirst;
-                    document.getElementById('endDate').max = strLast;
-                    document.getElementById('startDate').max = strLast;
-                    document.getElementById('startDate').min = '2026-01-01';
-
-                    state.startDate = first;
-                    state.endDate = last;
-
-                    document.getElementById('lastUpdated').innerText = 'Last Updated: ' + new Date().toLocaleString() + ' (PST)';
-                    document.getElementById('page-subtitle').innerText = 'Time Range: 12:00 AM - 11:59 PM PST (Rolling Audit Window)';
-                }
-
-                initCharts();
-                setupFilters();
-                applyFilters();
-
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-            } catch (e) {
-                document.getElementById('loading').innerHTML = '<span style="color:red">Error loading data. Please try again.</span>';
-                console.error(e);
-            }
-        }
-
-        function parseDate(str) {
-            if (!str) return null;
-            if (str.includes('/')) {
-                const parts = str.split('/');
-                if (parts.length === 3) {
-                    const y = parseInt(parts[2]) + 2000;
-                    // Use UTC to prevent local timezone from shifting the date completely
-                    return new Date(Date.UTC(y, parseInt(parts[0]) - 1, parseInt(parts[1]), 12, 0, 0));
-                }
-            } else if (str.includes('-')) {
-                const parts = str.split('-');
-                if (parts.length === 3) {
-                    // Use UTC to prevent local timezone from shifting the date completely
-                    return new Date(Date.UTC(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]), 12, 0, 0));
-                }
-            }
-            return new Date(str);
-        }
-
-        function setupFilters() {
-            const members = [...new Set(rawData.map(r => r.member))].filter(Boolean).sort();
-            const types = [...new Set(rawData.map(r => r.type))].filter(Boolean).sort();
-
-            populateDropdown('memberList', members, 'member');
-            populateDropdown('typeList', types, 'type');
-
-            state.members = new Set(members);
-            state.types = new Set(types);
-
-            updateButtonText('member', members.length, members.length);
-            updateButtonText('type', types.length, types.length);
-        }
-
-        function populateDropdown(id, items, category) {
-            document.getElementById(id).innerHTML = items.map(item => `
-                <div class="dropdown-item" onclick="toggleItem('${category}', '${item.replace(/'/g, "\\'")}')">
-                    <input type="checkbox" checked id="chk-${category}-${item.replace(/\s/g, '-')}" value="${item}"> 
-                    <span>${item}</span>
-                </div>
-            `).join('');
-        }
-
-        window.toggleDropdown = (id) => {
-            // Close others
-            document.querySelectorAll('.dropdown').forEach(d => {
-                if (d.id !== id) d.classList.remove('show');
-            });
-            document.getElementById(id).classList.toggle('show');
-        };
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', e => {
-            if (!e.target.closest('.filter-group')) {
-                document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('show'));
-            }
-        });
-
-        window.toggleItem = (cat, val) => {
-            const set = state[cat + 's'];
-            if (set.has(val)) set.delete(val); else set.add(val);
-
-            const safeId = val.replace(/\s/g, '-');
-            const chk = document.getElementById(`chk-${cat}-${safeId}`);
-            if (chk) chk.checked = set.has(val);
-
-            const allChk = document.getElementById(`chk-all-${cat}`);
-            const total = document.getElementById(`${cat}List`).children.length;
-            allChk.checked = set.size === total;
-
-            updateButtonText(cat, set.size, total);
-            applyFilters();
-        };
-
-        window.toggleAll = (cat) => {
-            const allChk = document.getElementById(`chk-all-${cat}`);
-            const e = window.event;
-            // Robust toggle logic: if target is not check, toggle it manually
-            if (e && e.target !== allChk) {
-                allChk.checked = !allChk.checked;
-            }
-            const isChecked = allChk.checked;
-
-            const inputs = document.getElementById(`${cat}List`).querySelectorAll('input');
-            const set = state[cat + 's'];
-
-            if (isChecked) {
-                inputs.forEach(inp => { inp.checked = true; set.add(inp.value); });
-            } else {
-                inputs.forEach(inp => { inp.checked = false; });
-                set.clear();
-            }
-            updateButtonText(cat, set.size, inputs.length);
-            applyFilters();
-        };
-
-        window.filterDropdown = (input) => {
-            const term = input.value.toLowerCase();
-            const items = input.parentElement.parentElement.querySelectorAll('.dropdown-item');
-            // Skip first one (Select All) for member/type filters
-            const isPlatform = input.parentElement.parentElement.id === 'platformDropdown';
-            const startIndex = isPlatform ? 0 : 1;
-
-            for (let i = startIndex; i < items.length; i++) {
-                const div = items[i];
-                div.style.display = div.innerText.toLowerCase().includes(term) ? 'flex' : 'none';
-            }
-        };
-
-        window.selectPlatform = (val) => {
-            state.platform = val;
-            const text = val === 'all' ? 'All Platforms' : val;
-            document.getElementById('platformSelectedText').innerText = text;
-
-            // Highlight selected item
-            const items = document.getElementById('platformDropdown').querySelectorAll('.dropdown-item');
-            items.forEach(item => {
-                const itemText = item.querySelector('span').innerText;
-                if ((val === 'all' && itemText === 'All Platforms') || itemText === val) {
-                    item.style.background = 'rgba(255, 255, 255, 0.1)';
-                    item.style.color = 'var(--accent)';
-                } else {
-                    item.style.background = 'transparent';
-                    item.style.color = 'white';
-                }
-            });
-
-            document.getElementById('platformDropdown').classList.remove('show');
-            applyFilters();
-        };
-
-        function updateButtonText(cat, selected, total) {
-            const text = (selected === total)
-                ? `All ${cat === 'member' ? 'Members' : 'Events'}`
-                : `${selected} Selected`;
-            document.getElementById(`${cat}CountText`).innerText = text;
-        }
-
-        window.handleDateChange = () => {
-            const startVal = document.getElementById('startDate').value;
-            const endVal = document.getElementById('endDate').value;
-            let s = startVal ? parseDate(startVal) : null;
-            let e = endVal ? parseDate(endVal) : null;
-
-            // Native browsers "Today" buttons often bypass max= constraints. We explicitly clamp local PKT 'today' down to maximum PST available date.
-            const maxD = parseDate(document.getElementById('endDate').max);
-            if (s && maxD && s > maxD) {
-                s = maxD;
-                document.getElementById('startDate').value = document.getElementById('startDate').max;
-            }
-            if (e && maxD && e > maxD) {
-                e = maxD;
-                document.getElementById('endDate').value = document.getElementById('endDate').max;
-            }
-
-            state.startDate = s;
-            state.endDate = e;
-            applyFilters();
-        };
-
-        window.applyFilters = () => {
-
-            const filtered = rawData.filter(r => {
-                if (!state.members.has(r.member)) return false;
-                if (!state.types.has(r.type)) return false;
-                if (state.platform !== 'all' && r.platform !== state.platform) return false;
-
-                const d = parseDate(r.date);
-                if (state.startDate && d < state.startDate) return false;
-                if (state.endDate && d > state.endDate) return false;
-
-                return true;
-            });
-
-            updateDashboard(filtered);
-        };
-
-        function getStringColor(str) {
-            // Hash-based color for MEMBER names (timeline chart)
-            let h = 0;
-            for (let i = 0; i < str.length; i++) {
-                h = str.charCodeAt(i) + ((h << 5) - h);
-            }
-            const hue = Math.abs(h) % 360;
-            const saturation = 50 + (Math.abs(h * 13) % 40);
-            const lightness = 60 + (Math.abs(h * 17) % 15);
-            return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-        }
-
-        function updateDashboard(data) {
-            const total = data.reduce((a, b) => a + b.count, 0);
-            document.getElementById('val-events').innerText = total.toLocaleString();
-
-            const activeMembers = new Set(data.filter(r => r.count > 0).map(r => r.member));
-            document.getElementById('val-members').innerText = activeMembers.size;
-
-            let days = 1;
-            if (state.startDate && state.endDate) {
-                days = Math.max(1, (state.endDate - state.startDate) / (1000 * 60 * 60 * 24));
-            }
-            document.getElementById('val-avg').innerText = Math.round(total / days);
-
-            const platCounts = {};
-            data.forEach(r => platCounts[r.platform] = (platCounts[r.platform] || 0) + r.count);
-            const sortedPlats = Object.entries(platCounts).sort((a, b) => b[1] - a[1]);
-            document.getElementById('val-top-plat').innerText = sortedPlats[0] ? sortedPlats[0][0] : '-';
-
-            updateTrend(data, activeMembers);
-            updatePlatform(platCounts);
-            updateLeaderboard(data);
-            updateRangeChart(activeMembers);
-        }
-
-        function updateTrend(data, activeMembers) {
-            const isSingleDay = (state.startDate && state.endDate && state.startDate.getTime() === state.endDate.getTime());
-
-            const datasets = [];
-            const labels = [];
-
-            if (isSingleDay) {
-                // Hourly Distribution Mode
-                document.querySelector('#trendChart').parentElement.previousElementSibling.querySelector('.card-title').innerText = 'Hourly Distribution (Internal Team)';
-
-                const targetDate = state.startDate;
-
-                // Filter hourly data
-                const hourlyFiltered = rawHourlyData.filter(r => {
-                    if (!state.members.has(r.member)) return false;
-                    if (!state.types.has(r.type)) return false;
-                    if (state.platform !== 'all' && r.platform !== state.platform) return false;
-
-                    const d = parseDate(r.date);
-                    if (d.getTime() !== targetDate.getTime()) return false;
-
-                    return true;
-                });
-
-                const hourMap = {};
-                hourlyFiltered.forEach(r => {
-                    if (!hourMap[r.hour]) hourMap[r.hour] = {};
-                    hourMap[r.hour][r.member] = (hourMap[r.hour][r.member] || 0) + (r.count || 1);
-                });
-
-                for (let h = 0; h < 24; h++) {
-                    const ampm = h >= 12 ? 'PM' : 'AM';
-                    let hr = h % 12;
-                    if (hr === 0) hr = 12;
-                    labels.push(`${hr} ${ampm}`);
-                }
-
-                activeMembers.forEach(member => {
-                    const color = getStringColor(member);
-                    const series = [];
-                    for (let h = 0; h < 24; h++) {
-                        series.push((hourMap[h] && hourMap[h][member]) || 0);
-                    }
-
-                    datasets.push({
-                        label: member,
-                        data: series,
-                        borderColor: color,
-                        backgroundColor: color,
-                        fill: true,
-                        backgroundColor: color.replace('hsl', 'hsla').replace(')', ', 0.1)'),
-                        tension: 0.4,
-                        pointRadius: 3,
-                        borderWidth: 2
-                    });
-                });
-
-            } else {
-                // Daily Trend Mode
-                document.querySelector('#trendChart').parentElement.previousElementSibling.querySelector('.card-title').innerText = 'Activity Timeline (Internal Team)';
-
-                const dateMap = {};
-                const allDates = new Set();
-
-                data.forEach(r => {
-                    if (!dateMap[r.date]) dateMap[r.date] = {};
-                    dateMap[r.date][r.member] = (dateMap[r.date][r.member] || 0) + r.count;
-                    allDates.add(r.date);
-                });
-
-                const sortedDates = [...allDates].sort((a, b) => parseDate(a) - parseDate(b));
-                labels.push(...sortedDates);
-
-                activeMembers.forEach(member => {
-                    const color = getStringColor(member);
-                    const series = sortedDates.map(d => (dateMap[d] && dateMap[d][member]) || 0);
-
-                    datasets.push({
-                        label: member,
-                        data: series,
-                        borderColor: color,
-                        backgroundColor: color,
-                        fill: false,
-                        tension: 0.3,
-                        pointRadius: 2,
-                        borderWidth: 2
-                    });
-                });
-            }
-
-            charts.trend.data.labels = labels;
-            charts.trend.data.datasets = datasets;
-            charts.trend.update();
-        }
-
-        function updatePlatform(counts) {
-            charts.platform.data.labels = Object.keys(counts);
-            charts.platform.data.datasets[0].data = Object.values(counts);
-            charts.platform.data.datasets[0].backgroundColor = Object.keys(counts).map(p => getPlatformBaseColor(p));
-            charts.platform.update();
-        }
-
-        function updateLeaderboard(data) {
-            // Pivot: Member (Y) vs Event Type (Stack)
-            const memberTotals = {};
-            data.forEach(r => memberTotals[r.member] = (memberTotals[r.member] || 0) + r.count);
-            // Sort members
-            const sortedMembers = Object.entries(memberTotals)
-                .filter(x => x[1] > 0)
-                .sort((a, b) => b[1] - a[1])
-                .map(x => x[0]);
-
-            // Get Event Types
-            const typeCounts = {};
-            data.forEach(r => typeCounts[r.type] = (typeCounts[r.type] || 0) + r.count);
-            const sortedTypes = Object.keys(typeCounts).sort((a, b) => typeCounts[b] - typeCounts[a]);
-
-            // Reset shade counters for fresh color assignment
-            _backendlessShadeCtr.idx = 0;
-            Object.keys(_eventColorCache).forEach(k => delete _eventColorCache[k]);
-
-            // Find platform for each event type from the data itself
-            const typePlatformLookup = {};
-            data.forEach(r => { if (r.type && r.platform) typePlatformLookup[r.type] = r.platform; });
-
-            // Sort types by platform first, then by count — so same-platform events are adjacent in legend
-            const platformOrder = ['ClickUp', 'GitHub', 'Google Workspace', 'Figma', 'Backendless App', 'Other'];
-            const sortedTypesByPlatform = sortedTypes.sort((a, b) => {
-                const pa = EVENT_PLATFORM_MAP[a] || typePlatformLookup[a] || 'Other';
-                const pb = EVENT_PLATFORM_MAP[b] || typePlatformLookup[b] || 'Other';
-                const ia = platformOrder.indexOf(pa) === -1 ? 99 : platformOrder.indexOf(pa);
-                const ib = platformOrder.indexOf(pb) === -1 ? 99 : platformOrder.indexOf(pb);
-                if (ia !== ib) return ia - ib;
-                return typeCounts[b] - typeCounts[a];
-            });
-
-            const datasets = sortedTypesByPlatform.map(type => {
-                const dataPoints = sortedMembers.map(mem => {
-                    const rows = data.filter(r => r.member === mem && r.type === type);
-                    return rows.reduce((acc, curr) => acc + curr.count, 0);
-                });
-
-                const platformForType = typePlatformLookup[type] || 'Other';
-                return {
-                    label: type,
-                    data: dataPoints,
-                    backgroundColor: getEventColor(type, platformForType),
-                    borderRadius: 1
-                };
-            });
-
-            charts.leaderboard.data.labels = sortedMembers;
-            charts.leaderboard.data.datasets = datasets;
-            charts.leaderboard.options.indexAxis = 'y'; // Horizontal bars
-            charts.leaderboard.update();
-        }
-
-        function updateRangeChart(activeMembers) {
-            // Filter timeData based on selected dates and members
-            const relevant = timeData.filter(r => {
-                const d = parseDate(r['Date']);
-                if (state.startDate && d < state.startDate) return false;
-                if (state.endDate && d > state.endDate) return false;
-                return activeMembers.has(r['Team Member']);
-            });
-
-            // Aggregation: Calc Avg Start, Avg End, Max Break per member
-            const memberStats = {};
-
-            relevant.forEach(r => {
-                const mem = r['Team Member'];
-                if (!memberStats[mem]) memberStats[mem] = { starts: [], ends: [], breaks: [] };
-
-                // Parse "09:00 AM" to decimal hours
-                const parseTime = (tStr) => {
-                    if (!tStr) return null;
-                    const [time, period] = tStr.split(' ');
-                    let [h, m] = time.split(':').map(Number);
-                    if (period === 'PM' && h !== 12) h += 12;
-                    if (period === 'AM' && h === 12) h = 0;
-                    return h + (m / 60);
-                };
-
-                const s = parseTime(r['First Activity (PST)']);
-                const e = parseTime(r['Last Activity (PST)']);
-                const b = parseInt(r['Longest Break (Minutes)'] || 0);
-
-                if (s !== null) memberStats[mem].starts.push(s);
-                if (e !== null) memberStats[mem].ends.push(e);
-                memberStats[mem].breaks.push(b);
-            });
-
-            const members = Object.keys(memberStats).sort((a, b) => {
-                const statA = memberStats[a];
-                const statB = memberStats[b];
-                const durA = (statA.ends.reduce((sum, v) => sum + v, 0) / statA.ends.length) -
-                    (statA.starts.reduce((sum, v) => sum + v, 0) / statA.starts.length);
-                const durB = (statB.ends.reduce((sum, v) => sum + v, 0) / statB.ends.length) -
-                    (statB.starts.reduce((sum, v) => sum + v, 0) / statB.starts.length);
-                return durB - durA; // Descending duration
-            });
-            const ranges = members.map(m => {
-                const s = memberStats[m].starts;
-                const e = memberStats[m].ends;
-                const b = memberStats[m].breaks;
-
-                // Calculate Average
-                const avgStart = s.length ? s.reduce((a, b) => a + b, 0) / s.length : 0;
-                const avgEnd = e.length ? e.reduce((a, b) => a + b, 0) / e.length : 0;
-                const avgMaxBreak = b.length ? b.reduce((a, b) => a + b, 0) / b.length : 0; // Updated to Average of Max Daily Breaks
-
-                return { avgStart, avgEnd, avgMaxBreak };
-            });
-
-            // Format for Chart.js floating bars: [start, end]
-            const dataPoints = ranges.map(r => [r.avgStart, r.avgEnd]);
-            const backgroundColors = ranges.map(r => r.avgMaxBreak > 180 ? '#ef4444' : r.avgMaxBreak > 60 ? '#f59e0b' : '#10b981'); // Red if >3h break, Orange >1h
-
-            charts.range.data.labels = members;
-            charts.range.data.datasets = [{
-                label: 'Activity Window',
-                data: dataPoints,
-                backgroundColor: backgroundColors,
-                borderWidth: 0,
-                barPercentage: 0.5
-            }];
-
-            // Update Tooltip to show text times and break
-            charts.range.options.plugins.tooltip.callbacks.label = (ctx) => {
-                const raw = ctx.raw; // [start, end]
-                const idx = ctx.dataIndex;
-                const stat = ranges[idx];
-
-                const fmt = (h) => {
-                    const ampm = h >= 12 ? 'PM' : 'AM';
-                    let hr = Math.floor(h) % 12;
-                    if (hr === 0) hr = 12;
-                    let min = Math.round((h % 1) * 60);
-                    return `${hr}:${min.toString().padStart(2, '0')} ${ampm}`;
-                };
-
-                return ` ${fmt(raw[0])} - ${fmt(raw[1])} (Avg Max Break: ${Math.round(stat.avgMaxBreak)}m)`;
-            };
-
-            charts.range.update();
-        }
-
-        function initCharts() {
-            if (typeof ChartDataLabels !== 'undefined') {
-                Chart.register(ChartDataLabels);
-            }
-
-            const commonOpts = {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: true, position: 'bottom', labels: { boxWidth: 10, color: '#94a3b8' } },
-                    datalabels: { display: false }
-                }
-            };
-
-            charts.trend = new Chart(document.getElementById('trendChart'), {
-                type: 'line',
-                data: { labels: [], datasets: [] },
-                options: {
-                    ...commonOpts,
-                    interaction: { mode: 'nearest', axis: 'x', intersect: true },
-                    plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 10, color: '#94a3b8' } }, datalabels: { display: false } },
-                    scales: {
-                        x: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
-                        y: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }
-                    }
-                }
-            });
-
-            charts.platform = new Chart(document.getElementById('platformChart'), {
-                type: 'doughnut',
-                data: { labels: [], datasets: [{ data: [], borderWidth: 0 }] },
-                options: { ...commonOpts, plugins: { legend: { position: 'right', labels: { color: '#94a3b8' } }, datalabels: { display: false } } }
-            });
-
-            const barOpts = {
-                ...commonOpts,
-                indexAxis: 'y',
-                interaction: { mode: 'y' },
-                plugins: {
-                    legend: { display: false }, // Hide legend as requested
-                    tooltip: {
-                        filter: function (item) {
-                            return item.parsed.x > 0; // Only show > 0 in tooltip
-                        }
-                    },
-                    datalabels: {
-                        display: true,
-                        color: 'white',
-                        font: { weight: 'bold', size: 10 },
-                        formatter: (value) => value > 0 ? value : ''
-                    }
-                },
-                scales: {
-                    x: { stacked: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
-                    y: { stacked: true, grid: { display: false }, ticks: { color: '#94a3b8' } }
-                }
-            };
-
-            charts.leaderboard = new Chart(document.getElementById('leaderboardChart'), {
-                type: 'bar',
-                data: { labels: [], datasets: [] },
-                options: barOpts
-            });
-
-            charts.range = new Chart(document.getElementById('rangeChart'), {
-                type: 'bar',
-                data: { labels: [], datasets: [] },
-                options: {
-                    ...commonOpts,
-                    indexAxis: 'y',
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: { enabled: true },
-                        datalabels: { display: false }
-                    },
-                    scales: {
-                        x: {
-                            min: 0, max: 24,
-                            grid: { color: '#334155' },
-                            ticks: {
-                                color: '#94a3b8',
-                                stepSize: 2,
-                                callback: function (val) {
-                                    if (val === 0 || val === 24) return '12 AM';
-                                    if (val === 12) return '12 PM';
-                                    return val > 12 ? (val - 12) + ' PM' : val + ' AM';
-                                }
-                            }
-                        },
-                        y: { grid: { display: false }, ticks: { color: '#94a3b8' } }
-                    }
-                }
-            });
-        }
-    </script>
-
-    <!-- AI Data Assistant Widget -->
-    <div class="chat-widget">
-        <div class="chat-window" id="chatWindow">
-            <div class="chat-header">
-                <h3><i class="fas fa-robot"></i> Data Assistant</h3>
-                <div style="display: flex; gap: 10px; align-items: center;">
-                    <button onclick="toggleSettings()" title="AI Settings"
-                        style="background:none; border:none; color:rgba(255,255,255,0.6); cursor:pointer; font-size: 14px;"><i
-                            class="fas fa-cog"></i></button>
-                    <button class="chat-close" onclick="toggleChat()"
-                        style="background:none; border:none; color:white; cursor:pointer;"><i
-                            class="fas fa-times"></i></button>
-                </div>
-            </div>
-
-            <!-- API Settings Sub-panel -->
-            <div id="aiSettings"
-                style="display:none; padding: 15px; border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.15); backdrop-filter: blur(5px);">
-                <label style="font-size: 11px; color: var(--text-secondary); display: block; margin-bottom: 5px;">GEMINI
-                    API KEY:</label>
-                <div style="display: flex; gap: 5px;">
-                    <input type="password" id="geminiKey" placeholder="Paste key here..."
-                        style="flex:1; background: rgba(0,0,0,0.5); border: 1px solid var(--border); border-radius: 5px; color: white; padding: 5px 8px; font-size: 12px;">
-                    <button onclick="saveKey()"
-                        style="background: var(--success); border:none; color:white; padding: 5px 10px; border-radius: 5px; cursor:pointer; font-size: 11px;">Save</button>
-                </div>
-                <p style="font-size: 10px; color: var(--text-secondary); margin-top: 8px;">Need a key? <a
-                        href="https://aistudio.google.com/app/apikey" target="_blank"
-                        style="color:var(--accent); text-decoration: none;">Get a free one here &rarr;</a></p>
-            </div>
-
-            <div class="chat-messages" id="chatMessages">
-                <div class="message bot">
-                    Welcome to the <b>Pvragon AI Auditor</b>. I have live access to all audit logs and system logic.
-                    Please ask any questions regarding team activity, work hours, or specific event patterns.
-                </div>
-            </div>
-            <div class="chat-input-area">
-                <input type="text" class="chat-input" id="chatInput" placeholder="Ask about team activity..."
-                    onkeypress="if(event.key === 'Enter') sendMessage()">
-                <button class="chat-send" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
-            </div>
-        </div>
-        <button class="chat-button" onclick="toggleChat()">
-            <i class="fas fa-comment-dots"></i>
-        </button>
-    </div>
-
-    <script>
-        // API Key Management (User-provided via Gear Icon)
-        let geminiApiKey = localStorage.getItem('gemini_api_key');
-
-        function toggleSettings() {
-            const s = document.getElementById('aiSettings');
-            s.style.display = s.style.display === 'none' ? 'block' : 'none';
-            document.getElementById('geminiKey').value = geminiApiKey;
-        }
-
-        function saveKey() {
-            const val = document.getElementById('geminiKey').value.trim();
-            if (val) {
-                localStorage.setItem('gemini_api_key', val);
-                geminiApiKey = val;
-                alert('API Key Saved!');
-                toggleSettings();
-            }
-        }
-
-        function toggleChat() {
-            const chatWin = document.getElementById('chatWindow');
-            chatWin.classList.toggle('active');
-            if (chatWin.classList.contains('active')) document.getElementById('chatInput').focus();
-        }
-
-        function appendMessage(text, role) {
-            const container = document.getElementById('chatMessages');
-            const msg = document.createElement('div');
-            msg.className = `message ${role}`;
-            msg.innerHTML = text.replace(/\n/g, '<br>');
-            container.appendChild(msg);
-            container.scrollTop = container.scrollHeight;
-        }
-
-        async function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const text = input.value.trim();
-            if (!text) return;
-            appendMessage(text, 'user');
-            input.value = '';
-            const typingMsg = document.createElement('div');
-            typingMsg.className = 'message bot';
-            typingMsg.innerText = 'Analyzing data...';
-            document.getElementById('chatMessages').appendChild(typingMsg);
-            try {
-                const response = await askGeminiAI(text);
-                typingMsg.remove();
-                appendMessage(response, 'bot');
-            } catch (err) {
-                typingMsg.remove();
-                appendMessage(`<b>Error:</b> ${err.message}. Please check your Key settings.`, 'bot');
-            }
-        }
-
-        async function askGeminiAI(userQuery) {
-            // 1. Group Event Data (Fix: Include Platform in key)
-            const eventSummary = {};
-            rawData.forEach(r => {
-                const k = `${r.member} | ${r.date} | ${r.platform}`;
-                eventSummary[k] = (eventSummary[k] || 0) + r.count;
-            });
-            const stats = Object.entries(eventSummary)
-                .map(([k, v]) => `${k} | ${v} events`)
-                .join('\n');
-
-            // 2. Prepare Time Analysis Data (for hours calculation)
-            const timeStats = timeData.slice(-100).map(t =>
-                `${t['Team Member']} | ${t['Date']} | Split: ${t['First Activity (PST)']} to ${t['Last Activity (PST)']} (Break: ${t['Longest Break (Minutes)']}m)`
-            ).join('\n');
-
-            // 3. Prepare Sheet-level knowledge
-            const refSummary = eventReferences.slice(0, 30).map(r =>
-                `${r['Platform']} | ${r['Event Type']}: ${r['Description']}`
-            ).join('\n');
-
-            const archSummary = systemArchitecture.map(a =>
-                `${a['Tab Name']}: ${a['Key Logic/Scope']}`
-            ).join('\n');
-
-            const context = `
-                Role: Pvragon Auditor Analyst. 
-                Reference Date (Today): Wednesday, February 25, 2026.
-                Feb 2026 Weekends: Feb 1, 7, 8, 14, 15, 21, 22, 28.
-                Live Google Sheet URL: ${googleSheetUrl}
-
-                PART 1: Activity Logs (Member | Date | Platform | Event Count)
-                ${stats}
-
-                PART 2: Time Window Logs (Member | Date | Start/End Window)
-                ${timeStats}
-
-                PART 3: Sheet Definitions & Descriptions
-                ${refSummary}
-
-                PART 4: System Logic (How tabs are calculated)
-                ${archSummary}
-
-                User Question: "${userQuery}"
-
-                Instructions:
-                - You are the primary Pvragon Data Analyst. Prioritize deep, accurate data analysis over providing links.
-                - Use PART 1-4 to provide definitive, data-backed answers to queries about team performance, hours spent, and system logic.
-                - If asked about "hours", perform a calculation based on the Start/End timestamps in PART 2.
-                - Only provide the Google Sheet URL (${googleSheetUrl}) if the user explicitly asks for "the sheet link" or "raw data access".
-                - Answer in Strictly Professional English. Be decisive and detailed.
-            `;
-
-            const models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-flash-latest', 'gemini-pro-latest', 'gemini-2.5-pro'];
-            let lastErr = "";
-            const typingMsg = document.querySelector('.message.bot:last-child');
-
-            for (const model of models) {
-                try {
-                    if (typingMsg) typingMsg.innerText = `Analyzing logs via ${model}...`;
-                    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiApiKey}`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ contents: [{ parts: [{ text: context }] }] })
-                    });
-                    const json = await res.json();
-                    if (json.candidates && json.candidates[0]) return json.candidates[0].content.parts[0].text;
-                    if (json.error) lastErr = `${model}: ${json.error.message}`;
-                } catch (e) {
-                    lastErr = `${model}: ${e.message}`;
-                }
-            }
-            throw new Error(lastErr || "Analysis failed");
-        }
-
-        window.addEventListener('DOMContentLoaded', init);
-    </script>
-</body>
-
-</html>
+    <div class="status"><span class="synced">Range <b id="rangelab">—</b></span><span class="pulse"><span class="dot"></span> Live</span></div>
+  </header>
+
+  <div class="filters reveal" style="animation-delay:.05s">
+    <div class="fg"><span class="fl">From</span><input type="date" id="fromD"></div>
+    <div class="fg"><span class="fl">To</span><input type="date" id="toD"></div>
+    <div class="fg" id="memWrap"><span class="fl">Team Members</span>
+      <button class="msbtn" id="memBtn"><span class="cnt" id="memCnt">All members</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="dd" id="memDD"></div></div>
+    <div class="fg" id="evWrap" style="flex:1;min-width:180px"><span class="fl">Event Types</span>
+      <button class="msbtn" id="evBtn"><span class="cnt" id="evCnt">All events</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="dd" id="evDD"></div></div>
+    <div class="fg" style="flex:1"><span class="fl">Platform</span><div class="chips" id="platChips"></div></div>
+    <button class="reset" id="reset">RESET</button>
+  </div>
+
+  <section class="kpis" id="kpis"></section>
+
+  <div class="grid">
+    <div class="card c8 reveal" style="animation-delay:.1s"><div class="ch"><h2>Activity Trend</h2><span class="sub">Events / day · per member</span></div><div class="trend-wrap" id="trend"><div class="cross" id="cross"></div></div><div class="mlegend" id="mlegend"></div></div>
+    <div class="card c4 reveal" style="animation-delay:.14s"><div class="ch"><h2>Platform Distribution</h2><span class="sub">Share</span></div><div class="donut-body"><div class="donut-svg" id="donut"></div><div class="legend" id="legend"></div></div></div>
+    <div class="card c7 reveal" style="animation-delay:.18s"><div class="ch"><h2>Member Leaderboard</h2><span class="sub">by event type</span></div><div class="lb" id="lb"></div></div>
+    <div class="card c5 reveal" style="animation-delay:.22s"><div class="ch"><h2>Activity Heatmap</h2><span class="sub">Hour × Weekday · PST</span></div><div class="heat"><div id="heat"></div><div class="cap"><span>12A · 6 · 12P · 6 · 11P</span><span class="scale">low <i></i> high</span></div></div></div>
+    <div class="card c12 reveal" style="animation-delay:.26s"><div class="ch"><h2>Event Type Breakdown</h2><span class="sub">Top 16 · shaded by platform</span></div><div class="ev" id="ev"></div></div>
+  </div>
+
+  <footer class="reveal" style="animation-delay:.3s"><span id="footcount">—</span><span>Pvragon Activity Tracker · 5 platforms unified</span></footer>
+</div>
+
+<script>
+function transform(d,h){
+  function pdx(s){const p=String(s).split('/');return new Date(2000+ +p[2],+p[0]-1,+p[1]);}
+  const CODE={'ClickUp':'CU','GitHub':'GH','Google Workspace':'GW','Figma':'FG','Backendless App':'BK'};
+  const rows=[];(d.dailyAudit||[]).forEach(r=>{const c=+r['Count']||0;if(!c)return;rows.push([r['Team Member']||'',r['Activity Date']||'',CODE[r['Platform']]||'OT',r['Activity Type']||'',c]);});
+  const hourly=[];(h||[]).forEach(r=>{const raw=String(r.platform||'');let p=raw.slice(0,2)==='GW'?'GW':raw==='ClickUp'?'CU':raw.indexOf('GitHub')>=0?'GH':raw==='Figma'?'FG':raw==='Backendless'?'BK':'OT';hourly.push([r.member||'',r.date||'',+r.hour||0,p,+r.count||1]);});
+  const members=[...new Set(rows.map(r=>r[0]))].sort();
+  const etypes=[...new Set(rows.map(r=>r[3]))].sort();
+  const dates=[...new Set(rows.map(r=>r[1]))].sort((a,b)=>pdx(a)-pdx(b));
+  return {rows,hourly,members,etypes,dmin:dates[0]||'01/01/26',dmax:dates[dates.length-1]||'01/01/26'};
+}
+
+function run(DATA){
+
+
+const PC={CU:'ClickUp',GH:'GitHub',GW:'Google Workspace',FG:'Figma',BK:'Backendless',OT:'Other'};
+const PCOL={CU:'#d6247f',GH:'#0891b2',GW:'#7c3aed',FG:'#c2620a',BK:'#0f9d6e',OT:'#64748b'};
+const PORDER=['CU','GH','GW','FG','BK','OT'];
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+const tip=document.getElementById('tip');
+function showTip(h,x,y){tip.innerHTML=h;tip.style.opacity=1;const w=tip.offsetWidth,ht=tip.offsetHeight;tip.style.left=Math.min(x+14,innerWidth-w-8)+'px';tip.style.top=Math.max(8,y-ht-12)+'px';}
+function hideTip(){tip.style.opacity=0;}
+function pd(s){const p=s.split('/');return new Date(2000+ +p[2], +p[0]-1, +p[1]);}
+function toISO(s){const p=s.split('/');return '20'+p[2]+'-'+p[0]+'-'+p[1];}
+
+/* ---- member colors ---- */
+const MEM_PALETTE=['#22d3ee','#f0389d','#a78bfa','#34d399','#fbbf24','#60a5fa','#fb7185','#4ade80','#c084fc','#2dd4bf','#f59e0b','#38bdf8','#e879f9','#a3e635','#fca5a5','#5eead4','#93c5fd','#fdba74','#d8b4fe','#86efac','#f472b6','#67e8f9'];
+const MCOLMAP={};DATA.members.slice().sort().forEach((m,i)=>MCOLMAP[m]=MEM_PALETTE[i%MEM_PALETTE.length]);
+const MCOL=m=>MCOLMAP[m]||'#94a3b8';
+
+/* ---- event-type colors: platform-family shades (matches the email) ---- */
+const EVENT_COLOR_MAP={"Channels messages":"#BE2D75","Comment Posted":"#CF3080","Direct chats messages":"#D2418A","task completed":"#D65194","task created":"#DA629E","task updated":"#DE73A8","Drive Edit":"#6435B6","Gmail Send":"#9C79D8","Add table record relations":"#21CA91","Change Column":"#21CD94","Change developer permissions":"#22D096","Copy File":"#22D498","Create API Service":"#23D79B","Create Column":"#23DA9D","Create New Directory":"#26DC9F","Create New File":"#29DCA0","Create Timer":"#2CDDA2","Create new UI Page":"#2FDDA3","Create new record in table":"#33DEA5","Delete Column":"#36DEA6","Delete File":"#39DFA8","Delete UI Page":"#3CDFA9","Delete table record relations":"#40E0AA","Delete table records":"#43E0AC","Deploy Cloud Code Model From Console":"#46E1AD","Invite New Developer":"#49E1AF","Modify table record":"#4DE2B0","Publish UI Container":"#50E2B2","Remove developer from team":"#53E3B3","Rename File":"#56E4B4","Run Timer":"#5AE4B6","Save Cloud Code Draft Model":"#5DE5B7","Update Function Logic":"#60E5B9","Update Page UI":"#63E6BA","Update UI Page":"#67E6BC","Update UI Page Handler Logic":"#6AE7BD","File Created":"#C77323","File Edited":"#E5A66C","Branch/Tag Created":"#23A7C7","Branch/Tag Deleted":"#25B1D4","Code Commit":"#2EB8DA","Issue Opened/Closed":"#3ABCDC","Issue/PR Comment Posted":"#46C0DE","PR Comment Posted":"#53C4E1","PR Opened/Closed":"#5FC8E3","PR Reviewed":"#6CCDE5"};
+function h2hsl(hex){hex=hex.replace('#','');const r=parseInt(hex.slice(0,2),16)/255,g=parseInt(hex.slice(2,4),16)/255,b=parseInt(hex.slice(4,6),16)/255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b);let h,s,l=(mx+mn)/2;if(mx===mn){h=s=0;}else{const d=mx-mn;s=l>.5?d/(2-mx-mn):d/(mx+mn);h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4;h/=6;}return[h*360,s*100,l*100];}
+function hsl2hex(h,s,l){s/=100;l/=100;const c=(1-Math.abs(2*l-1))*s,x=c*(1-Math.abs((h/60)%2-1)),m=l-c/2;let a=h<60?[c,x,0]:h<120?[x,c,0]:h<180?[0,c,x]:h<240?[0,x,c]:h<300?[x,0,c]:[c,0,x];const t=v=>Math.round((v+m)*255).toString(16).padStart(2,'0');return '#'+t(a[0])+t(a[1])+t(a[2]);}
+// event -> platform code (from data), and generate shades for events not in EVENT_COLOR_MAP
+const evPlat={};DATA.rows.forEach(r=>{if(!evPlat[r[3]])evPlat[r[3]]=r[2];});
+const shadeMap={};
+(function(){const byP={};Object.keys(evPlat).forEach(e=>{if(EVENT_COLOR_MAP[e])return;(byP[evPlat[e]]=byP[evPlat[e]]||[]).push(e);});
+ Object.keys(byP).forEach(p=>{const evs=byP[p].sort();const [h,s]=h2hsl(PCOL[p]||'#64748b');
+   evs.forEach((e,i)=>{const L=evs.length>1?42+i/(evs.length-1)*30:56;shadeMap[e]=hsl2hex(h,Math.max(s,45),L);});});})();
+const eColor=e=>EVENT_COLOR_MAP[e]||shadeMap[e]||'#94a3b8';
+
+const START=toISO(DATA.dmin);  // earliest date present in data.json (rolling ~90-day window)
+const st={from:new Date(START+'T00:00:00'),to:pd(DATA.dmax),members:new Set(DATA.members),plats:new Set(PORDER),etypes:new Set(DATA.etypes)};
+
+/* ---- filter UI ---- */
+const fromD=document.getElementById('fromD'),toD=document.getElementById('toD');
+fromD.value=START;fromD.min=START;fromD.max=toISO(DATA.dmax);
+toD.value=toISO(DATA.dmax);toD.min=START;toD.max=toISO(DATA.dmax);
+fromD.onchange=e=>{if(e.target.value){st.from=new Date(e.target.value+'T00:00:00');apply();}};
+toD.onchange=e=>{if(e.target.value){st.to=new Date(e.target.value+'T00:00:00');apply();}};
+
+function buildMulti(ddId,btnCntId,items,set,labelAll,labelUnit){
+  const dd=document.getElementById(ddId);const allSel=()=>set.size===items.length;
+  dd.innerHTML=`<input type="text" placeholder="Search…"><label class="di selall"><input type="checkbox"><span>Select all</span></label>`+
+    items.map(it=>`<label class="di"><input type="checkbox" data-v="${esc(it)}"><span>${esc(it)}</span></label>`).join('');
+  const allCb=dd.querySelector('.selall input');allCb.checked=allSel();
+  dd.querySelectorAll('input[data-v]').forEach(cb=>cb.checked=set.has(cb.dataset.v));
+  const search=dd.querySelector('input[type=text]');
+  search.oninput=()=>{const q=search.value.toLowerCase();dd.querySelectorAll('label.di:not(.selall)').forEach(l=>{const v=l.querySelector('input').dataset.v;l.style.display=v.toLowerCase().includes(q)?'':'none';});};
+  function updCnt(){document.getElementById(btnCntId).textContent=allSel()?labelAll:(set.size?set.size+' '+labelUnit:'None selected');}
+  allCb.onchange=()=>{const c=allCb.checked;set.clear();if(c)items.forEach(i=>set.add(i));dd.querySelectorAll('input[data-v]').forEach(cb=>cb.checked=c);updCnt();apply();};
+  dd.querySelectorAll('input[data-v]').forEach(cb=>{cb.onchange=()=>{if(cb.checked)set.add(cb.dataset.v);else set.delete(cb.dataset.v);allCb.checked=allSel();updCnt();apply();};});
+  updCnt();
+}
+buildMulti('memDD','memCnt',DATA.members,st.members,'All members','members');
+buildMulti('evDD','evCnt',DATA.etypes,st.etypes,'All events','events');
+function toggleDD(id){document.querySelectorAll('.dd').forEach(d=>{if(d.id!==id)d.classList.remove('show')});document.getElementById(id).classList.toggle('show');}
+document.getElementById('memBtn').onclick=e=>{e.stopPropagation();toggleDD('memDD');};
+document.getElementById('evBtn').onclick=e=>{e.stopPropagation();toggleDD('evDD');};
+document.addEventListener('click',e=>{if(!e.target.closest('.dd')&&!e.target.closest('.msbtn'))document.querySelectorAll('.dd').forEach(d=>d.classList.remove('show'));});
+const pc=document.getElementById('platChips');
+pc.innerHTML=PORDER.filter(p=>p!=='OT'||DATA.rows.some(r=>r[2]==='OT')).map(p=>`<div class="chip" data-p="${p}"><span class="sw" style="background:${PCOL[p]}"></span>${PC[p]}</div>`).join('');
+pc.querySelectorAll('.chip').forEach(c=>{c.onclick=()=>{const p=c.dataset.p;if(st.plats.has(p)){if(st.plats.size>1)st.plats.delete(p);}else st.plats.add(p);c.classList.toggle('off',!st.plats.has(p));apply();};});
+document.getElementById('reset').onclick=()=>{st.from=new Date(START+'T00:00:00');st.to=pd(DATA.dmax);st.members=new Set(DATA.members);st.plats=new Set(PORDER);st.etypes=new Set(DATA.etypes);
+  fromD.value=START;toD.value=toISO(DATA.dmax);buildMulti('memDD','memCnt',DATA.members,st.members,'All members','members');buildMulti('evDD','evCnt',DATA.etypes,st.etypes,'All events','events');
+  pc.querySelectorAll('.chip').forEach(c=>c.classList.remove('off'));apply();};
+
+/* ---- compute + render ---- */
+function apply(){
+  const rows=DATA.rows.filter(r=>{const d=pd(r[1]);return d>=st.from&&d<=st.to&&st.members.has(r[0])&&st.plats.has(r[2])&&st.etypes.has(r[3]);});
+  const hourly=DATA.hourly.filter(r=>{const d=pd(r[1]);return d>=st.from&&d<=st.to&&st.members.has(r[0])&&st.plats.has(r[3]);});
+  document.getElementById('rangelab').textContent=fromD.value+' → '+toD.value;
+  document.getElementById('footcount').textContent=fmt(rows.reduce((s,r)=>s+r[4],0))+' events · '+rows.length+' records';
+  renderKPIs(rows);renderTrend(rows);renderDonut(rows);renderLeaderboard(rows);renderEvents(rows);renderHeat(hourly);
+}
+function ease(t){return 1-Math.pow(1-t,3);}
+function countUp(el,to,dec){if(RM){el.textContent=dec?to.toFixed(1):fmt(to);return;}const dur=850,s=performance.now();
+  (function stp(t){const p=Math.min(1,(t-s)/dur),v=to*ease(p);el.textContent=dec?v.toFixed(1):fmt(v);if(p<1)requestAnimationFrame(stp);else el.textContent=dec?to.toFixed(1):fmt(to);})(performance.now());}
+
+function renderKPIs(rows){
+  const tot=rows.reduce((s,r)=>s+r[4],0),mem=new Set(rows.map(r=>r[0])),days=new Set(rows.map(r=>r[1]));
+  const plat={};rows.forEach(r=>plat[r[2]]=(plat[r[2]]||0)+r[4]);
+  const top=Object.keys(plat).sort((a,b)=>plat[b]-plat[a])[0];
+  const byDate={};rows.forEach(r=>byDate[r[1]]=(byDate[r[1]]||0)+r[4]);
+  const tv=Object.keys(byDate).sort((a,b)=>pd(a)-pd(b)).map(k=>byDate[k]);
+  const cards=[
+    {lab:'Total Events',v:tot,foot:`${days.size} active days`,acc:'var(--cyan)',spark:tv},
+    {lab:'Active Members',v:mem.size,foot:'contributing',acc:'var(--mag)'},
+    {lab:'Avg / Day',v:days.size?tot/days.size:0,foot:'events per active day',acc:'#a78bfa'},
+    {lab:'Top Platform',txt:top?PC[top]:'—',foot:top?Math.round(plat[top]/tot*100)+'% of activity':'',acc:top?PCOL[top]:'#64748b'}
+  ];
+  const el=document.getElementById('kpis');
+  el.innerHTML=cards.map(c=>`<div class="card kpi"><div class="lab"><i style="background:${c.acc}"></i>${c.lab}</div><div class="val" ${c.txt?'':'data-v="'+c.v+'"'}>${c.txt||'0'}</div><div class="foot">${c.foot}</div>${c.spark&&c.spark.length>1?spark(c.spark):''}</div>`).join('');
+  el.querySelectorAll('.val[data-v]').forEach(v=>countUp(v,parseFloat(v.dataset.v)));
+}
+function spark(vals){const w=200,h=28,mx=Math.max(...vals),mn=Math.min(...vals);const pts=vals.map((v,i)=>[i/(vals.length-1)*w,h-3-(v-mn)/((mx-mn)||1)*(h-6)]);const d=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22d3ee" stop-opacity=".35"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></linearGradient></defs><path d="${d} L${w} ${h} L0 ${h} Z" fill="url(#sg)"/><path d="${d}" fill="none" stroke="#22d3ee" stroke-width="1.6"/><circle cx="${pts[pts.length-1][0].toFixed(1)}" cy="${pts[pts.length-1][1].toFixed(1)}" r="2.5" fill="#22d3ee"/></svg>`;}
+
+function renderTrend(rows){
+  const box=document.getElementById('trend');box.querySelectorAll('svg').forEach(s=>s.remove());
+  const mleg=document.getElementById('mlegend');
+  // X-axis = every active date in the selected window (from all data in range), so it stays stable
+  // and a single member always draws a full line — no "not enough data" bail-out.
+  const dates=[...new Set(DATA.rows.filter(r=>{const d=pd(r[1]);return d>=st.from&&d<=st.to;}).map(r=>r[1]))].sort((a,b)=>pd(a)-pd(b));
+  const members=[...new Set(rows.map(r=>r[0]))].sort();
+  if(!dates.length||!members.length){box.insertAdjacentHTML('beforeend','<div class="empty">No activity for this selection</div>');mleg.innerHTML='';return;}
+  const pm={};members.forEach(m=>pm[m]={});rows.forEach(r=>pm[r[0]][r[1]]=(pm[r[0]][r[1]]||0)+r[4]);
+  const yMax=Math.max(1,...members.map(m=>Math.max(...dates.map(d=>pm[m][d]||0))));
+  const single=dates.length===1;
+  const W=760,H=250,pl=44,pr=16,pt=16,pb=28,iw=W-pl-pr,ih=H-pt-pb;
+  const X=i=>single?pl+iw/2:pl+i/(dates.length-1)*iw,Y=v=>pt+ih-(v/yMax)*ih;
+  let grid='';for(let g=0;g<=3;g++){const yy=pt+ih-g/3*ih;grid+=`<line x1="${pl}" y1="${yy}" x2="${W-pr}" y2="${yy}" stroke="rgba(255,255,255,.05)"/><text x="${pl-8}" y="${yy+3}" fill="#5f6490" font-size="9" font-family="var(--mono)" text-anchor="end">${Math.round(g/3*yMax)}</text>`;}
+  const step=Math.max(1,Math.ceil(dates.length/9));let xl='';dates.forEach((d,i)=>{if(single||i%step===0)xl+=`<text x="${X(i).toFixed(1)}" y="${H-8}" fill="#5f6490" font-size="8.5" font-family="var(--mono)" text-anchor="middle">${d.slice(0,5)}</text>`;});
+  const base=members.length>6?0.5:0.85;
+  let vis='',hit='';
+  if(single){
+    members.forEach(m=>{const v=pm[m][dates[0]]||0,cy=Y(v).toFixed(1),cx=X(0).toFixed(1);
+      vis+=`<circle cx="${cx}" cy="${cy}" r="5" fill="${MCOL(m)}" class="tline" data-m="${esc(m)}" opacity="${base}" style="filter:drop-shadow(0 0 5px ${MCOL(m)}90)"/>`;
+      hit+=`<circle cx="${cx}" cy="${cy}" r="12" fill="transparent" class="thit" data-m="${esc(m)}" style="cursor:pointer"/>`;});
+  } else {
+    members.forEach(m=>{const dd='M'+dates.map((d,i)=>X(i).toFixed(1)+' '+Y(pm[m][d]||0).toFixed(1)).join(' L');
+      vis+=`<path d="${dd}" fill="none" stroke="${MCOL(m)}" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" class="tline" data-m="${esc(m)}" opacity="${base}"/>`;
+      hit+=`<path d="${dd}" fill="none" stroke="transparent" stroke-width="12" class="thit" data-m="${esc(m)}" style="cursor:pointer"/>`;});
+  }
+  box.insertAdjacentHTML('beforeend',`<svg viewBox="0 0 ${W} ${H}" id="tsvg">${grid}${xl}${vis}${hit}</svg>`);
+  if(!RM&&!single)box.querySelectorAll('path.tline').forEach((p,i)=>{const len=p.getTotalLength();p.style.strokeDasharray=len;p.style.strokeDashoffset=len;p.style.transition=`stroke-dashoffset 1.1s cubic-bezier(.3,.8,.3,1) ${Math.min(i*25,360)}ms`;requestAnimationFrame(()=>p.style.strokeDashoffset=0);});
+  mleg.innerHTML=members.map(m=>`<span class="mleg" data-m="${esc(m)}"><span class="sw" style="background:${MCOL(m)}"></span>${m}</span>`).join('');
+  const vpaths=[...box.querySelectorAll('.tline')];
+  const hi=m=>vpaths.forEach(p=>{const on=p.dataset.m===m;p.style.opacity=on?1:0.07;if(p.tagName.toLowerCase()==='path')p.style.strokeWidth=on?3:1.2;});
+  const reset=()=>vpaths.forEach(p=>{p.style.opacity=base;if(p.tagName.toLowerCase()==='path')p.style.strokeWidth=1.8;});
+  box.querySelectorAll('.thit').forEach(p=>{p.addEventListener('mouseenter',()=>hi(p.dataset.m));p.addEventListener('mouseleave',()=>{reset();hideTip();});
+    p.addEventListener('mousemove',e=>{const r=document.getElementById('tsvg').getBoundingClientRect();let i=single?0:Math.round(((e.clientX-r.left)/r.width*W-pl)/iw*(dates.length-1));i=Math.max(0,Math.min(dates.length-1,i));const m=p.dataset.m;
+      showTip(`<div class="th">${m} · ${dates[i]}</div><div class="tr"><span style="width:8px;height:8px;border-radius:2px;background:${MCOL(m)}"></span>Events<b>${fmt(pm[m][dates[i]]||0)}</b></div>`,e.clientX,e.clientY);});});
+  mleg.querySelectorAll('.mleg').forEach(l=>{l.addEventListener('mouseenter',()=>hi(l.dataset.m));l.addEventListener('mouseleave',reset);});
+}
+function renderDonut(rows){
+  const el=document.getElementById('donut'),S=170,r=64,C=2*Math.PI*r,cx=S/2;
+  const plat={};rows.forEach(x=>plat[x[2]]=(plat[x[2]]||0)+x[4]);
+  const items=PORDER.filter(k=>plat[k]).map(k=>({k,v:plat[k]}));const tot=items.reduce((s,i)=>s+i.v,0);
+  if(!tot){el.innerHTML='<div class="empty">No data</div>';document.getElementById('legend').innerHTML='';return;}
+  let acc=0,arcs='';items.forEach(it=>{const seg=it.v/tot*C;arcs+=`<circle cx="${cx}" cy="${cx}" r="${r}" fill="none" stroke="${PCOL[it.k]}" stroke-width="17" stroke-dasharray="${Math.max(0,seg-2)} ${C-Math.max(0,seg-2)}" stroke-dashoffset="${(-acc).toFixed(2)}" transform="rotate(-90 ${cx} ${cx})" stroke-linecap="round" class="arc" data-k="${it.k}" style="filter:drop-shadow(0 0 5px ${PCOL[it.k]}80)"/>`;acc+=seg;});
+  el.innerHTML=`<svg width="${S}" height="${S}" viewBox="0 0 ${S} ${S}">${arcs}</svg><div class="donut-center"><div class="n" id="dtot">0</div><div class="t">Events</div></div>`;
+  countUp(document.getElementById('dtot'),tot);
+  if(!RM)el.querySelectorAll('.arc').forEach(a=>{const o=a.getAttribute('stroke-dasharray');a.setAttribute('stroke-dasharray',`0 ${C}`);requestAnimationFrame(()=>{a.style.transition='stroke-dasharray 1s cubic-bezier(.3,.8,.3,1)';a.setAttribute('stroke-dasharray',o);});});
+  el.querySelectorAll('.arc').forEach(a=>{a.onmousemove=e=>{const k=a.dataset.k;showTip(`<div class="th">${PC[k]}</div><div class="tr"><span style="width:8px;height:8px;border-radius:2px;background:${PCOL[k]}"></span>${Math.round(plat[k]/tot*100)}% share<b>${fmt(plat[k])}</b></div>`,e.clientX,e.clientY);};a.onmouseleave=hideTip;});
+  document.getElementById('legend').innerHTML=items.map(it=>`<div class="lg"><span class="sw" style="background:${PCOL[it.k]};box-shadow:0 0 8px ${PCOL[it.k]}90"></span><span class="nm">${PC[it.k]}</span><span class="vl">${fmt(it.v)}</span><span class="pc">${Math.round(it.v/tot*100)}%</span></div>`).join('');
+}
+function renderLeaderboard(rows){
+  const el=document.getElementById('lb');const m={};rows.forEach(r=>{(m[r[0]]=m[r[0]]||{t:0,by:{}});m[r[0]].t+=r[4];m[r[0]].by[r[3]]=(m[r[0]].by[r[3]]||0)+r[4];});
+  const arr=Object.keys(m).map(k=>({m:k,...m[k]})).sort((a,b)=>b.t-a.t).slice(0,12);
+  if(!arr.length){el.innerHTML='<div class="empty">No members in selection</div>';return;}
+  const mx=Math.max(...arr.map(a=>a.t));
+  el.innerHTML=arr.map((x,i)=>{const evs=Object.keys(x.by).sort((a,b)=>x.by[b]-x.by[a]);
+    const segs=evs.map(e=>`<span class="seg" data-e="${esc(e)}" data-m="${esc(x.m)}" data-v="${x.by[e]}" style="width:${(x.by[e]/mx*100).toFixed(2)}%;background:${eColor(e)}"></span>`).join('');
+    return `<div class="lb-row ${i<3?'top':''}"><span class="rk">${String(i+1).padStart(2,'0')}</span><span class="nm">${x.m}</span><div class="bar">${segs}</div><span class="tot">${fmt(x.t)}</span></div>`;}).join('');
+  [...el.querySelectorAll('.bar')].forEach((b,i)=>setTimeout(()=>b.classList.add('in'),RM?0:60+i*45));
+  el.querySelectorAll('.seg').forEach(s=>{s.onmousemove=e=>showTip(`<div class="th">${s.dataset.m}</div><div class="tr"><span style="width:8px;height:8px;border-radius:2px;background:${eColor(s.dataset.e)}"></span>${s.dataset.e}<b>${fmt(+s.dataset.v)}</b></div>`,e.clientX,e.clientY);s.onmouseleave=hideTip;});
+}
+function renderEvents(rows){
+  const el=document.getElementById('ev');const m={};rows.forEach(r=>{m[r[3]]=(m[r[3]]||0)+r[4];});
+  const arr=Object.keys(m).map(k=>({e:k,v:m[k]})).sort((a,b)=>b.v-a.v).slice(0,16);
+  if(!arr.length){el.innerHTML='<div class="empty">No events</div>';return;}
+  const mx=Math.max(...arr.map(a=>a.v));
+  el.innerHTML=arr.map(x=>`<div class="ev-row"><span class="en" title="${esc(x.e)}">${x.e}</span><div class="ev-bar" style="width:${(x.v/mx*100).toFixed(1)}%;background:linear-gradient(90deg,${eColor(x.e)},${eColor(x.e)}bb)"></div><span class="ec">${fmt(x.v)}</span></div>`).join('');
+  [...el.querySelectorAll('.ev-bar')].forEach((b,i)=>setTimeout(()=>b.classList.add('in'),RM?0:50+i*28));
+}
+function renderHeat(hourly){
+  const el=document.getElementById('heat');const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const H=Array.from({length:7},()=>Array(24).fill(0));hourly.forEach(r=>{const wd=(pd(r[1]).getDay()+6)%7;H[wd][r[2]]+=r[4];});
+  const flat=H.flat().filter(x=>x>0).sort((a,b)=>a-b);const cap=flat.length?flat[Math.floor(flat.length*0.92)]||1:1;
+  const W=560,gp=38,ch=20,rg=4,iw=W-gp;
+  const col=c=>{const t=Math.min(1,Math.sqrt(c/cap));const a=[18,36,49],b=[34,211,238];return `rgb(${a.map((x,i)=>Math.round(x+(b[i]-x)*t)).join(',')})`;};
+  if(!flat.length){el.innerHTML='<div class="empty">No activity in selection</div>';return;}
+  let cells='';H.forEach((row,wd)=>{cells+=`<text x="${gp-8}" y="${wd*(ch+rg)+ch/2+4}" fill="#5f6490" font-size="9" font-family="var(--mono)" text-anchor="end">${days[wd]}</text>`;
+    row.forEach((c,h)=>{cells+=`<rect x="${(gp+h*(iw/24)).toFixed(1)}" y="${wd*(ch+rg)}" width="${(iw/24-2).toFixed(1)}" height="${ch}" rx="3" fill="${c?col(c):'#0e1424'}" class="hc" data-wd="${days[wd]}" data-h="${h}" data-c="${c}"/>`;});});
+  const Ht=7*(ch+rg);
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${Ht+14}">${cells}${[0,6,12,18,23].map(h=>`<text x="${(gp+h*(iw/24)+(iw/24-2)/2).toFixed(1)}" y="${Ht+11}" fill="#5f6490" font-size="8" font-family="var(--mono)" text-anchor="middle">${h}</text>`).join('')}</svg>`;
+  el.querySelectorAll('.hc').forEach(r=>{r.onmousemove=e=>{const h=+r.dataset.h,hh=h===0?'12 AM':h<12?h+' AM':h===12?'12 PM':(h-12)+' PM';showTip(`<div class="th">${r.dataset.wd} · ${hh}</div><div class="tr"><span style="width:8px;height:8px;border-radius:2px;background:#22d3ee"></span>Events<b>${fmt(+r.dataset.c)}</b></div>`,e.clientX,e.clientY);};r.onmouseleave=hideTip;});
+}
+apply();
+
+}
+
+Promise.all([
+  fetch('data.json',{cache:'no-store'}).then(r=>r.json()),
+  fetch('hourly_data.json',{cache:'no-store'}).then(r=>r.json()).catch(()=>[])
+]).then(([d,h])=>{
+  const ld=document.getElementById('loading'); if(ld)ld.remove();
+  const DATA=transform(d,h);
+  if(!DATA.rows.length){document.body.insertAdjacentHTML('afterbegin','<div style="padding:40px;text-align:center;color:#9a9fc6;font-family:monospace">No activity data found in data.json.</div>');return;}
+  run(DATA);
+}).catch(err=>{console.error(err);const ld=document.getElementById('loading');if(ld)ld.textContent='Could not load data.json';});
+</script>
