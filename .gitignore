@@ -27,3 +27,7 @@ Thumbs.db
 execution/dashboard/
 node_modules/
 execution/node_modules/
+
+# Local email preview built by orchestration/preview_email.py — never commit,
+# it contains per-person activity and AI/software spend figures.
+email_preview.html
