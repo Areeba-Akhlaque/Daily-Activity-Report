@@ -450,12 +450,12 @@ EVENT_COLOR_MAP = {
     "Code Commit": "#808FA3",
     "Issue Opened/Closed": "#787878",
     "Issue/PR Comment Posted": "#B3B3B3",
-    "PR Comment Posted": "#575757",
-    "PR Opened/Closed": "#E4E4E4",
+    "PR Comment Posted": "#E4E4E4",
+    "PR Opened/Closed": "#575757",
     "PR Reviewed": "#BFCBE8",
     "File Created": "#8A5E36",
     "File Edited": "#E08F42",
-    "Drive Edit": "#3B708C",
+    "Drive Edit": "#24418D",
     "Gmail Send": "#41B0DC"
 }
 
