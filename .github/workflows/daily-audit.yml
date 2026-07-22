@@ -10,10 +10,14 @@ on:
         description: 'Skip sending email to managers (use for testing)'
         type: boolean
         default: false
-      full_rebuild:
-        description: 'Rebuild all historical data from START_DATE (use after changing name_mappings or exclusion rules)'
-        type: boolean
-        default: false
+      # NOTE: the 'full_rebuild' input was deliberately REMOVED.
+      # Google Admin Reports only serves ~180 days and that floor slides forward
+      # daily, so the Sheet is the only surviving copy of older activity. A rebuild
+      # re-derives the tabs from whatever the APIs still return, which means one
+      # click could permanently erase history no API can give back. The daily
+      # rolling merge already keeps everything current, so nothing needs it.
+      # If a genuine rebuild is ever required (e.g. after changing name_mappings),
+      # run the fetcher locally on purpose, after taking a backup.
 
 # Permissions for GitHub Pages deployment
 permissions:
@@ -89,7 +93,7 @@ jobs:
           DASHBOARD_URL=https://Areeba-Akhlaque.github.io/Daily-Activity-Report/dashboard/index.html
           START_DATE=2026-01-01
           SKIP_EMAIL=${{ github.event.inputs.skip_email || 'false' }}
-          FULL_REBUILD=${{ github.event.inputs.full_rebuild || 'false' }}
+          FULL_REBUILD=false
           ROLLING_DAYS=7
           EOF
       
@@ -129,6 +133,16 @@ jobs:
       - name: Upload Chart to Google Drive
         continue-on-error: true
         run: python orchestration/upload_charts_to_drive.py
+
+      # Off-Sheet copy of the whole workbook. The Sheet holds months of activity that
+      # Google's ~180-day retention can no longer re-serve, so without this the archive
+      # is a single point of failure. Zipped CSV keeps a year of daily snapshots under
+      # ~300 MB. Runs even on failure so a bad run is always recoverable, and never
+      # blocks the audit.
+      - name: Backup workbook to Google Drive
+        if: always()
+        continue-on-error: true
+        run: python orchestration/backup_sheet_to_drive.py
 
       - name: Prepare Dashboard for Deployment
         if: always()

@@ -460,6 +460,13 @@ def process_and_upload(events):
             historical = df_old[df_old['_dt'].notna() & (df_old['_dt'].dt.date < window_start_naive)]
             historical = historical.drop(columns=['_dt'])
             combined = pd.concat([historical, final_df], ignore_index=True)
+            # Fresh rows must WIN over stale sheet rows for the same key. Without this,
+            # any event the fetch reports for a date OLDER than the window start (e.g.
+            # GitHub's historical PR/Issue search) lands in BOTH `historical` and the fresh
+            # frame, silently duplicating that person/day/event-type — 85 such rows had
+            # accumulated across 54 dates before this guard existed.
+            combined = combined.drop_duplicates(
+                subset=['Name', 'Date', 'Platform', 'Event Type'], keep='last')
             _mode = f"FULL_REBUILD from {window_start_naive}" if FULL_REBUILD else f"Rolling {ROLLING_DAYS}d"
             print(f"  [MERGE] {_mode} — {len(historical)} preserved + {len(final_df)} fresh = {len(combined)}")
 
