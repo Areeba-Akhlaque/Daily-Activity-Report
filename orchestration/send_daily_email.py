@@ -602,36 +602,80 @@ def generate_stacked_bar_chart(summary, creds=None, chart_label_suffix="", save_
             'label': t,
             'data': data,
             'backgroundColor': color,
+            # A hairline of the canvas colour between stacked segments. On a white
+            # chart adjacent shades of one platform otherwise butt straight up
+            # against each other and read as a single block; this separates them
+            # without changing a single colour.
+            'borderColor': '#FFFFFF',
+            'borderWidth': 1,
         })
         
     chart_title = 'Activity Breakdown by Member & Activity Type'
     if chart_label_suffix:
         chart_title = chart_title + chart_label_suffix
 
+    # Presentation only — no colour, ordering or aggregation rule is touched here.
+    # The palette is identical to the dashboard's; what made the email version look
+    # flat was the default Chart.js chrome (thin bars, heavy grey gridlines, small
+    # default font), not the colours.
+    _FONT = "'Lato', 'Segoe UI', Arial, sans-serif"
+    _INK, _MUTED, _GRID = '#334155', '#64748B', '#EDF1F6'
+
     chart_config = {
         'type': 'horizontalBar',
         'data': { 'labels': names, 'datasets': datasets },
         'options': {
-            'title': { 'display': True, 'text': chart_title },
+            'title': {
+                'display': True, 'text': chart_title,
+                'fontFamily': _FONT, 'fontSize': 17, 'fontStyle': '600',
+                'fontColor': _INK, 'padding': 18
+            },
             'tooltips': { 'mode': 'index', 'intersect': False },
-            'legend': { 
-                'display': True, 
-                'position': 'top', 
+            'legend': {
+                'display': True,
+                'position': 'top',
                 'align': 'center',
-                'labels': { 'usePointStyle': False, 'boxWidth': 12 }
+                'labels': {
+                    'usePointStyle': True, 'boxWidth': 8, 'padding': 12,
+                    'fontFamily': _FONT, 'fontSize': 11, 'fontColor': _MUTED
+                }
             },
             'responsive': False,
+            'layout': { 'padding': { 'left': 12, 'right': 24, 'top': 4, 'bottom': 12 } },
             'scales': {
-                'xAxes': [{ 'stacked': True, 'ticks': { 'beginAtZero': True } }],
-                'yAxes': [{ 'stacked': True }]
+                'xAxes': [{
+                    'stacked': True,
+                    'ticks': {
+                        'beginAtZero': True, 'fontFamily': _FONT,
+                        'fontSize': 11, 'fontColor': _MUTED, 'padding': 6
+                    },
+                    'gridLines': { 'color': _GRID, 'zeroLineColor': _GRID, 'drawBorder': False }
+                }],
+                'yAxes': [{
+                    'stacked': True,
+                    # Fatter bars with a little air between them; the default is
+                    # thin enough that small segments vanish.
+                    'categoryPercentage': 0.82,
+                    'barPercentage': 0.94,
+                    'ticks': {
+                        'fontFamily': _FONT, 'fontSize': 12,
+                        'fontColor': _INK, 'padding': 8
+                    },
+                    'gridLines': { 'display': False, 'drawBorder': False }
+                }]
             },
             'plugins': { 'datalabels': { 'display': False } }
         }
     }
     
     try:
-        total_height = max(400, len(names) * 30 + 100)
-        chart_payload = {'chart': chart_config, 'width': 800, 'height': total_height, 'backgroundColor': 'white'}
+        # Taller rows so the fatter bars have room, and render at 2x so the image is
+        # crisp on high-DPI screens — the <img> is max-width:100%, so it just scales
+        # down. A soft off-white canvas instead of pure white keeps the pale shades
+        # (e.g. #E4E4E4) from dissolving into the background.
+        total_height = max(420, len(names) * 34 + 120)
+        chart_payload = {'chart': chart_config, 'width': 860, 'height': total_height,
+                         'backgroundColor': '#FCFCFD', 'devicePixelRatio': 2}
 
         # Step 1: Get short URL for email embedding (email client loads image itself — no download needed)
         quickchart_url = None
