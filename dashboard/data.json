@@ -2,13 +2,237 @@
   "dailyAudit": [
     {
       "Team Member": "James Hereford",
-      "Activity Date": "07/25/26",
+      "Activity Date": "07/26/26",
+      "Platform": "ClickUp",
+      "Activity Type": "Channels messages",
+      "Count": 13
+    },
+    {
+      "Team Member": "Roman Naidenko",
+      "Activity Date": "07/26/26",
+      "Platform": "GitHub",
+      "Activity Type": "PR Opened/Closed",
+      "Count": 8
+    },
+    {
+      "Team Member": "Roman Naidenko",
+      "Activity Date": "07/26/26",
+      "Platform": "GitHub",
+      "Activity Type": "Branch/Tag Created",
+      "Count": 1
+    },
+    {
+      "Team Member": "Roman Naidenko",
+      "Activity Date": "07/26/26",
+      "Platform": "GitHub",
+      "Activity Type": "Issue/PR Comment Posted",
+      "Count": 1
+    },
+    {
+      "Team Member": "Roman Naidenko",
+      "Activity Date": "07/26/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 1
+    },
+    {
+      "Team Member": "James Hereford",
+      "Activity Date": "07/26/26",
       "Platform": "Google Workspace",
       "Activity Type": "Gmail Send",
-      "Count": 3
+      "Count": 7
     },
     {
       "Team Member": "Areeba Akhlaque",
+      "Activity Date": "07/26/26",
+      "Platform": "Google Workspace",
+      "Activity Type": "Drive Edit",
+      "Count": 1
+    },
+    {
+      "Team Member": "Alexander Pavelko",
+      "Activity Date": "07/25/26",
+      "Platform": "Backendless App",
+      "Activity Type": "Publish UI Container",
+      "Count": 1
+    },
+    {
+      "Team Member": "Alexander Pavelko",
+      "Activity Date": "07/25/26",
+      "Platform": "Backendless App",
+      "Activity Type": "Update Page UI",
+      "Count": 2
+    },
+    {
+      "Team Member": "James Hereford",
+      "Activity Date": "07/25/26",
+      "Platform": "ClickUp",
+      "Activity Type": "Channels messages",
+      "Count": 70
+    },
+    {
+      "Team Member": "David Andres",
+      "Activity Date": "07/25/26",
+      "Platform": "ClickUp",
+      "Activity Type": "Channels messages",
+      "Count": 6
+    },
+    {
+      "Team Member": "William Titus",
+      "Activity Date": "07/25/26",
+      "Platform": "ClickUp",
+      "Activity Type": "Channels messages",
+      "Count": 3
+    },
+    {
+      "Team Member": "Victoria Chanz\u00e1",
+      "Activity Date": "07/25/26",
+      "Platform": "ClickUp",
+      "Activity Type": "task completed",
+      "Count": 2
+    },
+    {
+      "Team Member": "Victoria Chanz\u00e1",
+      "Activity Date": "07/25/26",
+      "Platform": "ClickUp",
+      "Activity Type": "task updated",
+      "Count": 2
+    },
+    {
+      "Team Member": "David Andres",
+      "Activity Date": "07/25/26",
+      "Platform": "ClickUp",
+      "Activity Type": "Comment Posted",
+      "Count": 1
+    },
+    {
+      "Team Member": "David Andres",
+      "Activity Date": "07/25/26",
+      "Platform": "ClickUp",
+      "Activity Type": "task created",
+      "Count": 1
+    },
+    {
+      "Team Member": "David Andres",
+      "Activity Date": "07/25/26",
+      "Platform": "ClickUp",
+      "Activity Type": "task updated",
+      "Count": 1
+    },
+    {
+      "Team Member": "Victoria Chanz\u00e1",
+      "Activity Date": "07/25/26",
+      "Platform": "ClickUp",
+      "Activity Type": "task created",
+      "Count": 1
+    },
+    {
+      "Team Member": "Roman Naidenko",
+      "Activity Date": "07/25/26",
+      "Platform": "GitHub",
+      "Activity Type": "PR Opened/Closed",
+      "Count": 9
+    },
+    {
+      "Team Member": "David Andres",
+      "Activity Date": "07/25/26",
+      "Platform": "GitHub",
+      "Activity Type": "PR Opened/Closed",
+      "Count": 2
+    },
+    {
+      "Team Member": "David Andres",
+      "Activity Date": "07/25/26",
+      "Platform": "GitHub",
+      "Activity Type": "Branch/Tag Created",
+      "Count": 1
+    },
+    {
+      "Team Member": "David Andres",
+      "Activity Date": "07/25/26",
+      "Platform": "GitHub",
+      "Activity Type": "Issue/PR Comment Posted",
+      "Count": 1
+    },
+    {
+      "Team Member": "Roman Naidenko",
+      "Activity Date": "07/25/26",
+      "Platform": "GitHub",
+      "Activity Type": "Branch/Tag Created",
+      "Count": 1
+    },
+    {
+      "Team Member": "Roman Naidenko",
+      "Activity Date": "07/25/26",
+      "Platform": "GitHub",
+      "Activity Type": "Issue/PR Comment Posted",
+      "Count": 1
+    },
+    {
+      "Team Member": "Victor Cheung",
+      "Activity Date": "07/25/26",
+      "Platform": "GitHub",
+      "Activity Type": "PR Opened/Closed",
+      "Count": 1
+    },
+    {
+      "Team Member": "Roman Naidenko",
+      "Activity Date": "07/25/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 1
+    },
+    {
+      "Team Member": "David Andres",
+      "Activity Date": "07/25/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 4
+    },
+    {
+      "Team Member": "James Hereford",
+      "Activity Date": "07/25/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 3
+    },
+    {
+      "Team Member": "James Hereford",
+      "Activity Date": "07/25/26",
+      "Platform": "Google Workspace",
+      "Activity Type": "Gmail Send",
+      "Count": 47
+    },
+    {
+      "Team Member": "Areeba Akhlaque",
+      "Activity Date": "07/25/26",
+      "Platform": "Google Workspace",
+      "Activity Type": "Drive Edit",
+      "Count": 5
+    },
+    {
+      "Team Member": "Areeba Akhlaque",
+      "Activity Date": "07/25/26",
+      "Platform": "Google Workspace",
+      "Activity Type": "Gmail Send",
+      "Count": 4
+    },
+    {
+      "Team Member": "William Titus",
+      "Activity Date": "07/25/26",
+      "Platform": "Google Workspace",
+      "Activity Type": "Gmail Send",
+      "Count": 2
+    },
+    {
+      "Team Member": "Bradd Schofield",
+      "Activity Date": "07/25/26",
+      "Platform": "Google Workspace",
+      "Activity Type": "Gmail Send",
+      "Count": 1
+    },
+    {
+      "Team Member": "James Hereford",
       "Activity Date": "07/25/26",
       "Platform": "Google Workspace",
       "Activity Type": "Drive Edit",
@@ -75,7 +299,7 @@
       "Activity Date": "07/24/26",
       "Platform": "ClickUp",
       "Activity Type": "task updated",
-      "Count": 18
+      "Count": 16
     },
     {
       "Team Member": "Victoria Chanz\u00e1",
@@ -400,18 +624,18 @@
       "Count": 1
     },
     {
-      "Team Member": "David Andres",
-      "Activity Date": "07/24/26",
-      "Platform": "GitHub",
-      "Activity Type": "PR Opened/Closed",
-      "Count": 22
-    },
-    {
       "Team Member": "JP Casabianca",
       "Activity Date": "07/24/26",
       "Platform": "GitHub",
       "Activity Type": "PR Opened/Closed",
       "Count": 17
+    },
+    {
+      "Team Member": "David Andres",
+      "Activity Date": "07/24/26",
+      "Platform": "GitHub",
+      "Activity Type": "PR Opened/Closed",
+      "Count": 15
     },
     {
       "Team Member": "David Andres",
@@ -456,17 +680,17 @@
       "Count": 3
     },
     {
-      "Team Member": "Victor Cheung",
-      "Activity Date": "07/24/26",
-      "Platform": "GitHub",
-      "Activity Type": "PR Opened/Closed",
-      "Count": 3
-    },
-    {
       "Team Member": "JP Casabianca",
       "Activity Date": "07/24/26",
       "Platform": "GitHub",
       "Activity Type": "PR Reviewed",
+      "Count": 2
+    },
+    {
+      "Team Member": "Victor Cheung",
+      "Activity Date": "07/24/26",
+      "Platform": "GitHub",
+      "Activity Type": "PR Opened/Closed",
       "Count": 2
     },
     {
@@ -491,18 +715,18 @@
       "Count": 1
     },
     {
-      "Team Member": "David Andres",
-      "Activity Date": "07/24/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 16
-    },
-    {
       "Team Member": "JP Casabianca",
       "Activity Date": "07/24/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 15
+    },
+    {
+      "Team Member": "Victor Cheung",
+      "Activity Date": "07/24/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 3
     },
     {
       "Team Member": "Roman Naidenko",
@@ -512,11 +736,11 @@
       "Count": 1
     },
     {
-      "Team Member": "Rafael Casabianca",
+      "Team Member": "David Andres",
       "Activity Date": "07/24/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 1
+      "Count": 16
     },
     {
       "Team Member": "James Hereford",
@@ -524,6 +748,13 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 6
+    },
+    {
+      "Team Member": "Rafael Casabianca",
+      "Activity Date": "07/24/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 1
     },
     {
       "Team Member": "James Hereford",
@@ -995,13 +1226,6 @@
       "Count": 14
     },
     {
-      "Team Member": "David Andres",
-      "Activity Date": "07/23/26",
-      "Platform": "GitHub",
-      "Activity Type": "PR Opened/Closed",
-      "Count": 11
-    },
-    {
       "Team Member": "Rafael Casabianca",
       "Activity Date": "07/23/26",
       "Platform": "GitHub",
@@ -1016,11 +1240,11 @@
       "Count": 9
     },
     {
-      "Team Member": "Victor Cheung",
+      "Team Member": "David Andres",
       "Activity Date": "07/23/26",
       "Platform": "GitHub",
       "Activity Type": "PR Opened/Closed",
-      "Count": 7
+      "Count": 8
     },
     {
       "Team Member": "Rafael Casabianca",
@@ -1034,6 +1258,13 @@
       "Activity Date": "07/23/26",
       "Platform": "GitHub",
       "Activity Type": "Issue/PR Comment Posted",
+      "Count": 4
+    },
+    {
+      "Team Member": "Victor Cheung",
+      "Activity Date": "07/23/26",
+      "Platform": "GitHub",
+      "Activity Type": "PR Opened/Closed",
       "Count": 4
     },
     {
@@ -1121,6 +1352,13 @@
       "Count": 4
     },
     {
+      "Team Member": "David Andres",
+      "Activity Date": "07/23/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 7
+    },
+    {
       "Team Member": "James Hereford",
       "Activity Date": "07/23/26",
       "Platform": "GitHub",
@@ -1128,11 +1366,11 @@
       "Count": 7
     },
     {
-      "Team Member": "David Andres",
+      "Team Member": "Victor Cheung",
       "Activity Date": "07/23/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 7
+      "Count": 1
     },
     {
       "Team Member": "James Hereford",
@@ -1422,13 +1660,6 @@
       "Count": 4
     },
     {
-      "Team Member": "Rafael Casabianca",
-      "Activity Date": "07/22/26",
-      "Platform": "ClickUp",
-      "Activity Type": "task created",
-      "Count": 4
-    },
-    {
       "Team Member": "Victor Cheung",
       "Activity Date": "07/22/26",
       "Platform": "ClickUp",
@@ -1461,6 +1692,13 @@
       "Activity Date": "07/22/26",
       "Platform": "ClickUp",
       "Activity Type": "task updated",
+      "Count": 3
+    },
+    {
+      "Team Member": "Rafael Casabianca",
+      "Activity Date": "07/22/26",
+      "Platform": "ClickUp",
+      "Activity Type": "task created",
       "Count": 3
     },
     {
@@ -1615,21 +1853,14 @@
       "Activity Date": "07/22/26",
       "Platform": "GitHub",
       "Activity Type": "PR Opened/Closed",
-      "Count": 23
+      "Count": 10
     },
     {
       "Team Member": "Roman Naidenko",
       "Activity Date": "07/22/26",
       "Platform": "GitHub",
       "Activity Type": "PR Opened/Closed",
-      "Count": 11
-    },
-    {
-      "Team Member": "David Andres",
-      "Activity Date": "07/22/26",
-      "Platform": "GitHub",
-      "Activity Type": "Branch/Tag Created",
-      "Count": 6
+      "Count": 9
     },
     {
       "Team Member": "James Hereford",
@@ -1639,35 +1870,14 @@
       "Count": 5
     },
     {
-      "Team Member": "JP Casabianca",
-      "Activity Date": "07/22/26",
-      "Platform": "GitHub",
-      "Activity Type": "PR Opened/Closed",
-      "Count": 3
-    },
-    {
       "Team Member": "David Andres",
       "Activity Date": "07/22/26",
       "Platform": "GitHub",
-      "Activity Type": "Issue/PR Comment Posted",
-      "Count": 2
+      "Activity Type": "Branch/Tag Created",
+      "Count": 4
     },
     {
       "Team Member": "JP Casabianca",
-      "Activity Date": "07/22/26",
-      "Platform": "GitHub",
-      "Activity Type": "Issue/PR Comment Posted",
-      "Count": 2
-    },
-    {
-      "Team Member": "JP Casabianca",
-      "Activity Date": "07/22/26",
-      "Platform": "GitHub",
-      "Activity Type": "PR Reviewed",
-      "Count": 2
-    },
-    {
-      "Team Member": "Victor Cheung",
       "Activity Date": "07/22/26",
       "Platform": "GitHub",
       "Activity Type": "PR Opened/Closed",
@@ -1677,14 +1887,14 @@
       "Team Member": "David Andres",
       "Activity Date": "07/22/26",
       "Platform": "GitHub",
-      "Activity Type": "PR Reviewed",
+      "Activity Type": "Issue/PR Comment Posted",
       "Count": 1
     },
     {
       "Team Member": "JP Casabianca",
       "Activity Date": "07/22/26",
       "Platform": "GitHub",
-      "Activity Type": "Branch/Tag Created",
+      "Activity Type": "Issue/PR Comment Posted",
       "Count": 1
     },
     {
@@ -1695,24 +1905,10 @@
       "Count": 1
     },
     {
-      "Team Member": "Rafael Casabianca",
+      "Team Member": "JP Casabianca",
       "Activity Date": "07/22/26",
       "Platform": "GitHub",
-      "Activity Type": "PR Opened/Closed",
-      "Count": 1
-    },
-    {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "07/22/26",
-      "Platform": "GitHub",
-      "Activity Type": "Branch/Tag Created",
-      "Count": 1
-    },
-    {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "07/22/26",
-      "Platform": "GitHub",
-      "Activity Type": "Issue/PR Comment Posted",
+      "Activity Type": "PR Reviewed",
       "Count": 1
     },
     {
@@ -1723,34 +1919,6 @@
       "Count": 1
     },
     {
-      "Team Member": "Victor Cheung",
-      "Activity Date": "07/22/26",
-      "Platform": "GitHub",
-      "Activity Type": "Branch/Tag Created",
-      "Count": 1
-    },
-    {
-      "Team Member": "Victor Cheung",
-      "Activity Date": "07/22/26",
-      "Platform": "GitHub",
-      "Activity Type": "Issue/PR Comment Posted",
-      "Count": 1
-    },
-    {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "07/22/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 4
-    },
-    {
-      "Team Member": "JP Casabianca",
-      "Activity Date": "07/22/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 2
-    },
-    {
       "Team Member": "David Andres",
       "Activity Date": "07/22/26",
       "Platform": "GitHub",
@@ -1758,14 +1926,14 @@
       "Count": 10
     },
     {
-      "Team Member": "James Hereford",
+      "Team Member": "Areeba Akhlaque",
       "Activity Date": "07/22/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 19
+      "Count": 2
     },
     {
-      "Team Member": "Areeba Akhlaque",
+      "Team Member": "JP Casabianca",
       "Activity Date": "07/22/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -1777,6 +1945,20 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
+    },
+    {
+      "Team Member": "James Hereford",
+      "Activity Date": "07/22/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 19
+    },
+    {
+      "Team Member": "Roman Naidenko",
+      "Activity Date": "07/22/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 4
     },
     {
       "Team Member": "James Hereford",
@@ -1961,6 +2143,13 @@
       "Count": 9
     },
     {
+      "Team Member": "William Titus",
+      "Activity Date": "07/21/26",
+      "Platform": "ClickUp",
+      "Activity Type": "task updated",
+      "Count": 9
+    },
+    {
       "Team Member": "Areeba Akhlaque",
       "Activity Date": "07/21/26",
       "Platform": "ClickUp",
@@ -1976,13 +2165,6 @@
     },
     {
       "Team Member": "Victoria Chanz\u00e1",
-      "Activity Date": "07/21/26",
-      "Platform": "ClickUp",
-      "Activity Type": "task updated",
-      "Count": 8
-    },
-    {
-      "Team Member": "William Titus",
       "Activity Date": "07/21/26",
       "Platform": "ClickUp",
       "Activity Type": "task updated",
@@ -2059,6 +2241,13 @@
       "Count": 4
     },
     {
+      "Team Member": "William Titus",
+      "Activity Date": "07/21/26",
+      "Platform": "ClickUp",
+      "Activity Type": "task completed",
+      "Count": 4
+    },
+    {
       "Team Member": "Areeba Akhlaque",
       "Activity Date": "07/21/26",
       "Platform": "ClickUp",
@@ -2091,13 +2280,6 @@
       "Activity Date": "07/21/26",
       "Platform": "ClickUp",
       "Activity Type": "task created",
-      "Count": 3
-    },
-    {
-      "Team Member": "William Titus",
-      "Activity Date": "07/21/26",
-      "Platform": "ClickUp",
-      "Activity Type": "task completed",
       "Count": 3
     },
     {
@@ -2206,20 +2388,6 @@
       "Count": 1
     },
     {
-      "Team Member": "Saymond Montoya",
-      "Activity Date": "07/21/26",
-      "Platform": "ClickUp",
-      "Activity Type": "task completed",
-      "Count": 1
-    },
-    {
-      "Team Member": "Saymond Montoya",
-      "Activity Date": "07/21/26",
-      "Platform": "ClickUp",
-      "Activity Type": "task updated",
-      "Count": 1
-    },
-    {
       "Team Member": "Victor Cheung",
       "Activity Date": "07/21/26",
       "Platform": "ClickUp",
@@ -2255,13 +2423,6 @@
       "Count": 2
     },
     {
-      "Team Member": "David Andres",
-      "Activity Date": "07/21/26",
-      "Platform": "GitHub",
-      "Activity Type": "PR Opened/Closed",
-      "Count": 1
-    },
-    {
       "Team Member": "James Hereford",
       "Activity Date": "07/21/26",
       "Platform": "GitHub",
@@ -2276,18 +2437,18 @@
       "Count": 1
     },
     {
-      "Team Member": "James Hereford",
-      "Activity Date": "07/21/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 42
-    },
-    {
       "Team Member": "David Andres",
       "Activity Date": "07/21/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 4
+    },
+    {
+      "Team Member": "James Hereford",
+      "Activity Date": "07/21/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 42
     },
     {
       "Team Member": "Roman Naidenko",
@@ -2483,7 +2644,7 @@
       "Activity Date": "07/20/26",
       "Platform": "ClickUp",
       "Activity Type": "task created",
-      "Count": 13
+      "Count": 12
     },
     {
       "Team Member": "Bradd Schofield",
@@ -2801,13 +2962,6 @@
       "Count": 1
     },
     {
-      "Team Member": "Victor Cheung",
-      "Activity Date": "07/20/26",
-      "Platform": "GitHub",
-      "Activity Type": "PR Opened/Closed",
-      "Count": 6
-    },
-    {
       "Team Member": "JP Casabianca",
       "Activity Date": "07/20/26",
       "Platform": "GitHub",
@@ -2822,20 +2976,6 @@
       "Count": 2
     },
     {
-      "Team Member": "David Andres",
-      "Activity Date": "07/20/26",
-      "Platform": "GitHub",
-      "Activity Type": "PR Opened/Closed",
-      "Count": 1
-    },
-    {
-      "Team Member": "David Andres",
-      "Activity Date": "07/20/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 1
-    },
-    {
       "Team Member": "Victor Cheung",
       "Activity Date": "07/20/26",
       "Platform": "GitHub",
@@ -2848,6 +2988,13 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 5
+    },
+    {
+      "Team Member": "David Andres",
+      "Activity Date": "07/20/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 1
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -2973,7 +3120,7 @@
       "Activity Date": "07/19/26",
       "Platform": "ClickUp",
       "Activity Type": "Channels messages",
-      "Count": 4
+      "Count": 3
     },
     {
       "Team Member": "JP Casabianca",
@@ -2987,20 +3134,6 @@
       "Activity Date": "07/19/26",
       "Platform": "ClickUp",
       "Activity Type": "task updated",
-      "Count": 1
-    },
-    {
-      "Team Member": "Saymond Montoya",
-      "Activity Date": "07/19/26",
-      "Platform": "ClickUp",
-      "Activity Type": "Channels messages",
-      "Count": 1
-    },
-    {
-      "Team Member": "Saymond Montoya",
-      "Activity Date": "07/19/26",
-      "Platform": "ClickUp",
-      "Activity Type": "task created",
       "Count": 1
     },
     {
@@ -3029,21 +3162,21 @@
       "Activity Date": "07/19/26",
       "Platform": "Google Workspace",
       "Activity Type": "Gmail Send",
-      "Count": 47
+      "Count": 38
     },
     {
       "Team Member": "Areeba Akhlaque",
       "Activity Date": "07/19/26",
       "Platform": "Google Workspace",
       "Activity Type": "Drive Edit",
-      "Count": 8
+      "Count": 6
     },
     {
       "Team Member": "Areeba Akhlaque",
       "Activity Date": "07/19/26",
       "Platform": "Google Workspace",
       "Activity Type": "Gmail Send",
-      "Count": 5
+      "Count": 4
     },
     {
       "Team Member": "Bradd Schofield",
@@ -3522,14 +3655,14 @@
       "Count": 10
     },
     {
-      "Team Member": "Roman Naidenko",
+      "Team Member": "Rafael Casabianca",
       "Activity Date": "07/17/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 2
     },
     {
-      "Team Member": "Rafael Casabianca",
+      "Team Member": "Roman Naidenko",
       "Activity Date": "07/17/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -3991,13 +4124,6 @@
       "Count": 1
     },
     {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "07/16/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 6
-    },
-    {
       "Team Member": "James Hereford",
       "Activity Date": "07/16/26",
       "Platform": "GitHub",
@@ -4010,6 +4136,13 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 16
+    },
+    {
+      "Team Member": "Roman Naidenko",
+      "Activity Date": "07/16/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 6
     },
     {
       "Team Member": "Rafael Casabianca",
@@ -4495,11 +4628,11 @@
       "Count": 6
     },
     {
-      "Team Member": "Roman Naidenko",
+      "Team Member": "David Andres",
       "Activity Date": "07/15/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 2
+      "Count": 35
     },
     {
       "Team Member": "JP Casabianca",
@@ -4509,18 +4642,18 @@
       "Count": 13
     },
     {
-      "Team Member": "David Andres",
-      "Activity Date": "07/15/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 35
-    },
-    {
       "Team Member": "James Hereford",
       "Activity Date": "07/15/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 6
+    },
+    {
+      "Team Member": "Roman Naidenko",
+      "Activity Date": "07/15/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 2
     },
     {
       "Team Member": "Prameeth Kotian",
@@ -4726,11 +4859,11 @@
       "Count": 1
     },
     {
-      "Team Member": "James Hereford",
+      "Team Member": "Rafael Casabianca",
       "Activity Date": "07/14/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 6
+      "Count": 2
     },
     {
       "Team Member": "David Andres",
@@ -4740,21 +4873,21 @@
       "Count": 33
     },
     {
-      "Team Member": "Victor Cheung",
-      "Activity Date": "07/14/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 2
-    },
-    {
-      "Team Member": "Rafael Casabianca",
-      "Activity Date": "07/14/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 2
-    },
-    {
       "Team Member": "JP Casabianca",
+      "Activity Date": "07/14/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 2
+    },
+    {
+      "Team Member": "James Hereford",
+      "Activity Date": "07/14/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 6
+    },
+    {
+      "Team Member": "Victor Cheung",
       "Activity Date": "07/14/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -5286,18 +5419,18 @@
       "Count": 1
     },
     {
-      "Team Member": "James Hereford",
-      "Activity Date": "07/13/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 3
-    },
-    {
       "Team Member": "David Andres",
       "Activity Date": "07/13/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 15
+    },
+    {
+      "Team Member": "James Hereford",
+      "Activity Date": "07/13/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 3
     },
     {
       "Team Member": "Victor Cheung",
@@ -5454,6 +5587,13 @@
       "Count": 3
     },
     {
+      "Team Member": "JP Casabianca",
+      "Activity Date": "07/12/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 10
+    },
+    {
       "Team Member": "David Andres",
       "Activity Date": "07/12/26",
       "Platform": "GitHub",
@@ -5466,13 +5606,6 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 4
-    },
-    {
-      "Team Member": "JP Casabianca",
-      "Activity Date": "07/12/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 10
     },
     {
       "Team Member": "James Hereford",
@@ -5923,13 +6056,6 @@
       "Count": 2
     },
     {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "07/10/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 9
-    },
-    {
       "Team Member": "James Hereford",
       "Activity Date": "07/10/26",
       "Platform": "GitHub",
@@ -5937,11 +6063,18 @@
       "Count": 7
     },
     {
-      "Team Member": "Rafael Casabianca",
+      "Team Member": "David Andres",
       "Activity Date": "07/10/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 5
+      "Count": 8
+    },
+    {
+      "Team Member": "Roman Naidenko",
+      "Activity Date": "07/10/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 9
     },
     {
       "Team Member": "JP Casabianca",
@@ -5951,11 +6084,11 @@
       "Count": 9
     },
     {
-      "Team Member": "David Andres",
+      "Team Member": "Rafael Casabianca",
       "Activity Date": "07/10/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 8
+      "Count": 5
     },
     {
       "Team Member": "James Hereford",
@@ -6399,11 +6532,11 @@
       "Count": 21
     },
     {
-      "Team Member": "Victor Cheung",
+      "Team Member": "JP Casabianca",
       "Activity Date": "07/09/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 4
+      "Count": 10
     },
     {
       "Team Member": "Rafael Casabianca",
@@ -6420,11 +6553,11 @@
       "Count": 3
     },
     {
-      "Team Member": "JP Casabianca",
+      "Team Member": "Victor Cheung",
       "Activity Date": "07/09/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 10
+      "Count": 4
     },
     {
       "Team Member": "James Hereford",
@@ -7008,18 +7141,18 @@
       "Count": 2
     },
     {
+      "Team Member": "David Andres",
+      "Activity Date": "07/08/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 10
+    },
+    {
       "Team Member": "JP Casabianca",
       "Activity Date": "07/08/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 5
-    },
-    {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "07/08/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 1
     },
     {
       "Team Member": "Victor Cheung",
@@ -7029,11 +7162,11 @@
       "Count": 6
     },
     {
-      "Team Member": "David Andres",
+      "Team Member": "Rafael Casabianca",
       "Activity Date": "07/08/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 10
+      "Count": 4
     },
     {
       "Team Member": "James Hereford",
@@ -7043,11 +7176,11 @@
       "Count": 1
     },
     {
-      "Team Member": "Rafael Casabianca",
+      "Team Member": "Areeba Akhlaque",
       "Activity Date": "07/08/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 4
+      "Count": 1
     },
     {
       "Team Member": "James Hereford",
@@ -7498,13 +7631,6 @@
       "Count": 17
     },
     {
-      "Team Member": "David Andres",
-      "Activity Date": "07/07/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 4
-    },
-    {
       "Team Member": "Roman Naidenko",
       "Activity Date": "07/07/26",
       "Platform": "GitHub",
@@ -7512,14 +7638,21 @@
       "Count": 6
     },
     {
-      "Team Member": "JP Casabianca",
+      "Team Member": "Rafael Casabianca",
       "Activity Date": "07/07/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 2
     },
     {
-      "Team Member": "Rafael Casabianca",
+      "Team Member": "David Andres",
+      "Activity Date": "07/07/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 4
+    },
+    {
+      "Team Member": "JP Casabianca",
       "Activity Date": "07/07/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -8989,14 +9122,14 @@
       "Count": 4
     },
     {
-      "Team Member": "Roman Naidenko",
+      "Team Member": "Victor Cheung",
       "Activity Date": "07/02/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 3
     },
     {
-      "Team Member": "Victor Cheung",
+      "Team Member": "Roman Naidenko",
       "Activity Date": "07/02/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -9486,13 +9619,6 @@
       "Count": 1
     },
     {
-      "Team Member": "David Andres",
-      "Activity Date": "07/01/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 6
-    },
-    {
       "Team Member": "JP Casabianca",
       "Activity Date": "07/01/26",
       "Platform": "GitHub",
@@ -9500,18 +9626,11 @@
       "Count": 10
     },
     {
-      "Team Member": "Saymond Montoya",
+      "Team Member": "David Andres",
       "Activity Date": "07/01/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 4
-    },
-    {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "07/01/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 3
+      "Count": 6
     },
     {
       "Team Member": "James Hereford",
@@ -9521,11 +9640,25 @@
       "Count": 1
     },
     {
+      "Team Member": "Roman Naidenko",
+      "Activity Date": "07/01/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 3
+    },
+    {
       "Team Member": "Rafael Casabianca",
       "Activity Date": "07/01/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
+    },
+    {
+      "Team Member": "Saymond Montoya",
+      "Activity Date": "07/01/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 4
     },
     {
       "Team Member": "James Hereford",
@@ -9976,6 +10109,13 @@
       "Count": 1
     },
     {
+      "Team Member": "Rafael Casabianca",
+      "Activity Date": "06/30/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 3
+    },
+    {
       "Team Member": "JP Casabianca",
       "Activity Date": "06/30/26",
       "Platform": "GitHub",
@@ -9983,18 +10123,11 @@
       "Count": 28
     },
     {
-      "Team Member": "David Andres",
+      "Team Member": "James Hereford",
       "Activity Date": "06/30/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 3
-    },
-    {
-      "Team Member": "Rafael Casabianca",
-      "Activity Date": "06/30/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 3
+      "Count": 2
     },
     {
       "Team Member": "Victor Cheung",
@@ -10004,11 +10137,11 @@
       "Count": 4
     },
     {
-      "Team Member": "James Hereford",
+      "Team Member": "David Andres",
       "Activity Date": "06/30/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 2
+      "Count": 3
     },
     {
       "Team Member": "Roman Naidenko",
@@ -10536,18 +10669,18 @@
       "Count": 1
     },
     {
-      "Team Member": "JP Casabianca",
-      "Activity Date": "06/29/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 10
-    },
-    {
       "Team Member": "Rafael Casabianca",
       "Activity Date": "06/29/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 9
+    },
+    {
+      "Team Member": "JP Casabianca",
+      "Activity Date": "06/29/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 10
     },
     {
       "Team Member": "Roman Naidenko",
@@ -10557,14 +10690,14 @@
       "Count": 4
     },
     {
-      "Team Member": "David Andres",
+      "Team Member": "Victor Cheung",
       "Activity Date": "06/29/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 2
     },
     {
-      "Team Member": "Victor Cheung",
+      "Team Member": "David Andres",
       "Activity Date": "06/29/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -11131,6 +11264,13 @@
       "Count": 4
     },
     {
+      "Team Member": "David Andres",
+      "Activity Date": "06/26/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 4
+    },
+    {
       "Team Member": "JP Casabianca",
       "Activity Date": "06/26/26",
       "Platform": "GitHub",
@@ -11139,13 +11279,6 @@
     },
     {
       "Team Member": "Roman Naidenko",
-      "Activity Date": "06/26/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 4
-    },
-    {
-      "Team Member": "David Andres",
       "Activity Date": "06/26/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -12566,11 +12699,11 @@
       "Count": 1
     },
     {
-      "Team Member": "Roman Naidenko",
+      "Team Member": "Areeba Akhlaque",
       "Activity Date": "06/23/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 1
+      "Count": 4
     },
     {
       "Team Member": "JP Casabianca",
@@ -12580,11 +12713,11 @@
       "Count": 1
     },
     {
-      "Team Member": "Areeba Akhlaque",
+      "Team Member": "Roman Naidenko",
       "Activity Date": "06/23/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 4
+      "Count": 1
     },
     {
       "Team Member": "David Andres",
@@ -13035,18 +13168,18 @@
       "Count": 9
     },
     {
-      "Team Member": "JP Casabianca",
-      "Activity Date": "06/19/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 3
-    },
-    {
       "Team Member": "David Andres",
       "Activity Date": "06/19/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 4
+    },
+    {
+      "Team Member": "JP Casabianca",
+      "Activity Date": "06/19/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 3
     },
     {
       "Team Member": "James Hereford",
@@ -13455,13 +13588,6 @@
       "Count": 1
     },
     {
-      "Team Member": "JP Casabianca",
-      "Activity Date": "06/18/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 14
-    },
-    {
       "Team Member": "David Andres",
       "Activity Date": "06/18/26",
       "Platform": "GitHub",
@@ -13469,14 +13595,21 @@
       "Count": 9
     },
     {
-      "Team Member": "James Hereford",
+      "Team Member": "Roman Naidenko",
       "Activity Date": "06/18/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
     },
     {
-      "Team Member": "Roman Naidenko",
+      "Team Member": "JP Casabianca",
+      "Activity Date": "06/18/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 14
+    },
+    {
+      "Team Member": "James Hereford",
       "Activity Date": "06/18/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -14008,13 +14141,6 @@
       "Count": 5
     },
     {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "06/17/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 2
-    },
-    {
       "Team Member": "JP Casabianca",
       "Activity Date": "06/17/26",
       "Platform": "GitHub",
@@ -14022,11 +14148,11 @@
       "Count": 4
     },
     {
-      "Team Member": "Rafael Casabianca",
+      "Team Member": "Roman Naidenko",
       "Activity Date": "06/17/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 1
+      "Count": 2
     },
     {
       "Team Member": "Victor Cheung",
@@ -14034,6 +14160,13 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 3
+    },
+    {
+      "Team Member": "Rafael Casabianca",
+      "Activity Date": "06/17/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 1
     },
     {
       "Team Member": "James Hereford",
@@ -14477,11 +14610,32 @@
       "Count": 2
     },
     {
+      "Team Member": "Roman Naidenko",
+      "Activity Date": "06/16/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 8
+    },
+    {
+      "Team Member": "JP Casabianca",
+      "Activity Date": "06/16/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 4
+    },
+    {
       "Team Member": "David Andres",
       "Activity Date": "06/16/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 7
+    },
+    {
+      "Team Member": "James Hereford",
+      "Activity Date": "06/16/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 2
     },
     {
       "Team Member": "Saifullah Khan",
@@ -14496,27 +14650,6 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
-    },
-    {
-      "Team Member": "JP Casabianca",
-      "Activity Date": "06/16/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 4
-    },
-    {
-      "Team Member": "James Hereford",
-      "Activity Date": "06/16/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 2
-    },
-    {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "06/16/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 8
     },
     {
       "Team Member": "James Hereford",
@@ -14974,14 +15107,14 @@
       "Count": 2
     },
     {
-      "Team Member": "Saifullah Khan",
+      "Team Member": "Roman Naidenko",
       "Activity Date": "06/15/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 8
     },
     {
-      "Team Member": "Roman Naidenko",
+      "Team Member": "Saifullah Khan",
       "Activity Date": "06/15/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -15646,18 +15779,18 @@
       "Count": 1
     },
     {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "06/12/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 11
-    },
-    {
       "Team Member": "JP Casabianca",
       "Activity Date": "06/12/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 14
+    },
+    {
+      "Team Member": "Roman Naidenko",
+      "Activity Date": "06/12/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 11
     },
     {
       "Team Member": "David Andres",
@@ -16164,7 +16297,7 @@
       "Count": 10
     },
     {
-      "Team Member": "Rafael Casabianca",
+      "Team Member": "Areeba Akhlaque",
       "Activity Date": "06/11/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -16178,7 +16311,7 @@
       "Count": 1
     },
     {
-      "Team Member": "Areeba Akhlaque",
+      "Team Member": "Rafael Casabianca",
       "Activity Date": "06/11/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -17151,25 +17284,11 @@
       "Count": 3
     },
     {
-      "Team Member": "JP Casabianca",
-      "Activity Date": "06/09/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 10
-    },
-    {
       "Team Member": "James Hereford",
       "Activity Date": "06/09/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 14
-    },
-    {
-      "Team Member": "David Andres",
-      "Activity Date": "06/09/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 6
     },
     {
       "Team Member": "Saifullah Khan",
@@ -17179,14 +17298,28 @@
       "Count": 3
     },
     {
-      "Team Member": "Rafael Casabianca",
+      "Team Member": "David Andres",
+      "Activity Date": "06/09/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 6
+    },
+    {
+      "Team Member": "Roman Naidenko",
       "Activity Date": "06/09/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 2
     },
     {
-      "Team Member": "Roman Naidenko",
+      "Team Member": "JP Casabianca",
+      "Activity Date": "06/09/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 10
+    },
+    {
+      "Team Member": "Rafael Casabianca",
       "Activity Date": "06/09/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -17669,18 +17802,18 @@
       "Count": 6
     },
     {
-      "Team Member": "Saifullah Khan",
-      "Activity Date": "06/08/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 2
-    },
-    {
       "Team Member": "James Hereford",
       "Activity Date": "06/08/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 8
+    },
+    {
+      "Team Member": "Saifullah Khan",
+      "Activity Date": "06/08/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 2
     },
     {
       "Team Member": "Muhammad Farhan",
@@ -18313,18 +18446,18 @@
       "Count": 1
     },
     {
-      "Team Member": "David Andres",
-      "Activity Date": "06/05/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 3
-    },
-    {
       "Team Member": "Muhammad Farhan",
       "Activity Date": "06/05/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 8
+    },
+    {
+      "Team Member": "David Andres",
+      "Activity Date": "06/05/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 3
     },
     {
       "Team Member": "JP Casabianca",
@@ -19237,25 +19370,18 @@
       "Count": 1
     },
     {
-      "Team Member": "JP Casabianca",
-      "Activity Date": "06/03/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 6
-    },
-    {
-      "Team Member": "David Andres",
-      "Activity Date": "06/03/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 1
-    },
-    {
       "Team Member": "Roman Naidenko",
       "Activity Date": "06/03/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 3
+    },
+    {
+      "Team Member": "JP Casabianca",
+      "Activity Date": "06/03/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 6
     },
     {
       "Team Member": "Muhammad Farhan",
@@ -19266,6 +19392,13 @@
     },
     {
       "Team Member": "Rafael Casabianca",
+      "Activity Date": "06/03/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 1
+    },
+    {
+      "Team Member": "David Andres",
       "Activity Date": "06/03/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -19762,14 +19895,14 @@
       "Count": 20
     },
     {
-      "Team Member": "Muhammad Farhan",
+      "Team Member": "JP Casabianca",
       "Activity Date": "06/02/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
     },
     {
-      "Team Member": "JP Casabianca",
+      "Team Member": "Muhammad Farhan",
       "Activity Date": "06/02/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -20532,18 +20665,18 @@
       "Count": 1
     },
     {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "05/31/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 3
-    },
-    {
       "Team Member": "James Hereford",
       "Activity Date": "05/31/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
+    },
+    {
+      "Team Member": "Roman Naidenko",
+      "Activity Date": "05/31/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 3
     },
     {
       "Team Member": "James Hereford",
@@ -21008,6 +21141,13 @@
       "Count": 1
     },
     {
+      "Team Member": "James Hereford",
+      "Activity Date": "05/29/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 3
+    },
+    {
       "Team Member": "David Andres",
       "Activity Date": "05/29/26",
       "Platform": "GitHub",
@@ -21016,13 +21156,6 @@
     },
     {
       "Team Member": "JP Casabianca",
-      "Activity Date": "05/29/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 3
-    },
-    {
-      "Team Member": "James Hereford",
       "Activity Date": "05/29/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -21435,11 +21568,25 @@
       "Count": 1
     },
     {
+      "Team Member": "JP Casabianca",
+      "Activity Date": "05/28/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 8
+    },
+    {
       "Team Member": "David Andres",
       "Activity Date": "05/28/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 49
+    },
+    {
+      "Team Member": "James Hereford",
+      "Activity Date": "05/28/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 7
     },
     {
       "Team Member": "Roman Naidenko",
@@ -21449,25 +21596,11 @@
       "Count": 1
     },
     {
-      "Team Member": "JP Casabianca",
-      "Activity Date": "05/28/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 8
-    },
-    {
       "Team Member": "Rafael Casabianca",
       "Activity Date": "05/28/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
-    },
-    {
-      "Team Member": "James Hereford",
-      "Activity Date": "05/28/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 7
     },
     {
       "Team Member": "James Hereford",
@@ -21960,18 +22093,18 @@
       "Count": 1
     },
     {
-      "Team Member": "JP Casabianca",
-      "Activity Date": "05/27/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 53
-    },
-    {
       "Team Member": "David Andres",
       "Activity Date": "05/27/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 43
+    },
+    {
+      "Team Member": "JP Casabianca",
+      "Activity Date": "05/27/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 53
     },
     {
       "Team Member": "Saifullah Khan",
@@ -22450,6 +22583,13 @@
       "Count": 4
     },
     {
+      "Team Member": "Roman Naidenko",
+      "Activity Date": "05/26/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 6
+    },
+    {
       "Team Member": "David Andres",
       "Activity Date": "05/26/26",
       "Platform": "GitHub",
@@ -22464,13 +22604,6 @@
       "Count": 20
     },
     {
-      "Team Member": "Rafael Casabianca",
-      "Activity Date": "05/26/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 6
-    },
-    {
       "Team Member": "Muhammad Farhan",
       "Activity Date": "05/26/26",
       "Platform": "GitHub",
@@ -22478,7 +22611,7 @@
       "Count": 3
     },
     {
-      "Team Member": "Roman Naidenko",
+      "Team Member": "Rafael Casabianca",
       "Activity Date": "05/26/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -23024,13 +23157,6 @@
       "Count": 1
     },
     {
-      "Team Member": "Muhammad Farhan",
-      "Activity Date": "05/25/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 4
-    },
-    {
       "Team Member": "JP Casabianca",
       "Activity Date": "05/25/26",
       "Platform": "GitHub",
@@ -23050,6 +23176,13 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
+    },
+    {
+      "Team Member": "Muhammad Farhan",
+      "Activity Date": "05/25/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 4
     },
     {
       "Team Member": "James Hereford",
@@ -23976,6 +24109,13 @@
       "Count": 1
     },
     {
+      "Team Member": "Rafael Casabianca",
+      "Activity Date": "05/22/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 7
+    },
+    {
       "Team Member": "David Andres",
       "Activity Date": "05/22/26",
       "Platform": "GitHub",
@@ -23990,6 +24130,13 @@
       "Count": 4
     },
     {
+      "Team Member": "Muhammad Farhan",
+      "Activity Date": "05/22/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 5
+    },
+    {
       "Team Member": "Saifullah Khan",
       "Activity Date": "05/22/26",
       "Platform": "GitHub",
@@ -24002,20 +24149,6 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 38
-    },
-    {
-      "Team Member": "Rafael Casabianca",
-      "Activity Date": "05/22/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 7
-    },
-    {
-      "Team Member": "Muhammad Farhan",
-      "Activity Date": "05/22/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 5
     },
     {
       "Team Member": "James Hereford",
@@ -25215,20 +25348,6 @@
       "Count": 5
     },
     {
-      "Team Member": "JP Casabianca",
-      "Activity Date": "05/20/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 10
-    },
-    {
-      "Team Member": "James Hereford",
-      "Activity Date": "05/20/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 2
-    },
-    {
       "Team Member": "David Andres",
       "Activity Date": "05/20/26",
       "Platform": "GitHub",
@@ -25241,6 +25360,20 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 13
+    },
+    {
+      "Team Member": "JP Casabianca",
+      "Activity Date": "05/20/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 10
+    },
+    {
+      "Team Member": "James Hereford",
+      "Activity Date": "05/20/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 2
     },
     {
       "Team Member": "Saifullah Khan",
@@ -25852,6 +25985,13 @@
       "Count": 5
     },
     {
+      "Team Member": "Muhammad Farhan",
+      "Activity Date": "05/19/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 8
+    },
+    {
       "Team Member": "David Andres",
       "Activity Date": "05/19/26",
       "Platform": "GitHub",
@@ -25864,13 +26004,6 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 57
-    },
-    {
-      "Team Member": "Muhammad Farhan",
-      "Activity Date": "05/19/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 8
     },
     {
       "Team Member": "James Hereford",
@@ -26440,13 +26573,6 @@
       "Count": 2
     },
     {
-      "Team Member": "JP Casabianca",
-      "Activity Date": "05/18/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 39
-    },
-    {
       "Team Member": "Muhammad Farhan",
       "Activity Date": "05/18/26",
       "Platform": "GitHub",
@@ -26454,18 +26580,25 @@
       "Count": 14
     },
     {
-      "Team Member": "Rafael Casabianca",
-      "Activity Date": "05/18/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 4
-    },
-    {
       "Team Member": "James Hereford",
       "Activity Date": "05/18/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
+    },
+    {
+      "Team Member": "JP Casabianca",
+      "Activity Date": "05/18/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 39
+    },
+    {
+      "Team Member": "Rafael Casabianca",
+      "Activity Date": "05/18/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 4
     },
     {
       "Team Member": "James Hereford",
@@ -27182,13 +27315,6 @@
       "Count": 1
     },
     {
-      "Team Member": "James Hereford",
-      "Activity Date": "05/15/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 45
-    },
-    {
       "Team Member": "JP Casabianca",
       "Activity Date": "05/15/26",
       "Platform": "GitHub",
@@ -27208,6 +27334,13 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 14
+    },
+    {
+      "Team Member": "James Hereford",
+      "Activity Date": "05/15/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 45
     },
     {
       "Team Member": "James Hereford",
@@ -27686,18 +27819,18 @@
       "Count": 1
     },
     {
-      "Team Member": "James Hereford",
-      "Activity Date": "05/14/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 23
-    },
-    {
       "Team Member": "David Andres",
       "Activity Date": "05/14/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 7
+    },
+    {
+      "Team Member": "James Hereford",
+      "Activity Date": "05/14/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 23
     },
     {
       "Team Member": "JP Casabianca",
@@ -28337,13 +28470,6 @@
       "Count": 1
     },
     {
-      "Team Member": "James Hereford",
-      "Activity Date": "05/13/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 12
-    },
-    {
       "Team Member": "David Andres",
       "Activity Date": "05/13/26",
       "Platform": "GitHub",
@@ -28356,6 +28482,13 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 23
+    },
+    {
+      "Team Member": "James Hereford",
+      "Activity Date": "05/13/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 12
     },
     {
       "Team Member": "JP Casabianca",
@@ -28855,20 +28988,6 @@
       "Count": 1
     },
     {
-      "Team Member": "James Hereford",
-      "Activity Date": "05/12/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 15
-    },
-    {
-      "Team Member": "Muhammad Farhan",
-      "Activity Date": "05/12/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 3
-    },
-    {
       "Team Member": "JP Casabianca",
       "Activity Date": "05/12/26",
       "Platform": "GitHub",
@@ -28883,11 +29002,11 @@
       "Count": 8
     },
     {
-      "Team Member": "Roman Naidenko",
+      "Team Member": "James Hereford",
       "Activity Date": "05/12/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 1
+      "Count": 15
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -28895,6 +29014,20 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
+    },
+    {
+      "Team Member": "Roman Naidenko",
+      "Activity Date": "05/12/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 1
+    },
+    {
+      "Team Member": "Muhammad Farhan",
+      "Activity Date": "05/12/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 3
     },
     {
       "Team Member": "James Hereford",
@@ -30094,11 +30227,11 @@
       "Count": 1
     },
     {
-      "Team Member": "Muhammad Farhan",
+      "Team Member": "James Hereford",
       "Activity Date": "05/08/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 9
+      "Count": 2
     },
     {
       "Team Member": "Roman Naidenko",
@@ -30108,11 +30241,11 @@
       "Count": 3
     },
     {
-      "Team Member": "James Hereford",
+      "Team Member": "Muhammad Farhan",
       "Activity Date": "05/08/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 2
+      "Count": 9
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -30584,25 +30717,18 @@
       "Count": 1
     },
     {
-      "Team Member": "Muhammad Farhan",
-      "Activity Date": "05/07/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 9
-    },
-    {
-      "Team Member": "Saifullah Khan",
-      "Activity Date": "05/07/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 1
-    },
-    {
       "Team Member": "David Andres",
       "Activity Date": "05/07/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 3
+    },
+    {
+      "Team Member": "Muhammad Farhan",
+      "Activity Date": "05/07/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 9
     },
     {
       "Team Member": "James Hereford",
@@ -30613,6 +30739,13 @@
     },
     {
       "Team Member": "Roman Naidenko",
+      "Activity Date": "05/07/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 1
+    },
+    {
+      "Team Member": "Saifullah Khan",
       "Activity Date": "05/07/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -31179,7 +31312,7 @@
       "Count": 32
     },
     {
-      "Team Member": "JP Casabianca",
+      "Team Member": "James Hereford",
       "Activity Date": "05/06/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -31200,13 +31333,6 @@
       "Count": 12
     },
     {
-      "Team Member": "James Hereford",
-      "Activity Date": "05/06/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 3
-    },
-    {
       "Team Member": "Rafael Casabianca",
       "Activity Date": "05/06/26",
       "Platform": "GitHub",
@@ -31219,6 +31345,13 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
+    },
+    {
+      "Team Member": "JP Casabianca",
+      "Activity Date": "05/06/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 3
     },
     {
       "Team Member": "James Hereford",
@@ -32334,6 +32467,13 @@
       "Count": 1
     },
     {
+      "Team Member": "James Hereford",
+      "Activity Date": "05/04/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 1
+    },
+    {
       "Team Member": "Roman Naidenko",
       "Activity Date": "05/04/26",
       "Platform": "GitHub",
@@ -32353,13 +32493,6 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 2
-    },
-    {
-      "Team Member": "James Hereford",
-      "Activity Date": "05/04/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 1
     },
     {
       "Team Member": "James Hereford",
@@ -32712,11 +32845,25 @@
       "Count": 1
     },
     {
+      "Team Member": "JP Casabianca",
+      "Activity Date": "05/03/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 14
+    },
+    {
       "Team Member": "David Andres",
       "Activity Date": "05/03/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 16
+    },
+    {
+      "Team Member": "Rafael Casabianca",
+      "Activity Date": "05/03/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 2
     },
     {
       "Team Member": "Muhammad Farhan",
@@ -32726,25 +32873,11 @@
       "Count": 1
     },
     {
-      "Team Member": "JP Casabianca",
-      "Activity Date": "05/03/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 14
-    },
-    {
       "Team Member": "Saifullah Khan",
       "Activity Date": "05/03/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
-    },
-    {
-      "Team Member": "Rafael Casabianca",
-      "Activity Date": "05/03/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 2
     },
     {
       "Team Member": "James Hereford",
@@ -33223,6 +33356,13 @@
       "Count": 2
     },
     {
+      "Team Member": "James Hereford",
+      "Activity Date": "05/01/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 8
+    },
+    {
       "Team Member": "David Andres",
       "Activity Date": "05/01/26",
       "Platform": "GitHub",
@@ -33235,13 +33375,6 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
-    },
-    {
-      "Team Member": "James Hereford",
-      "Activity Date": "05/01/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 8
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -33825,20 +33958,6 @@
       "Count": 19
     },
     {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "04/30/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 3
-    },
-    {
-      "Team Member": "Victor Cheung",
-      "Activity Date": "04/30/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 1
-    },
-    {
       "Team Member": "Roman Naidenko",
       "Activity Date": "04/30/26",
       "Platform": "GitHub",
@@ -33851,6 +33970,20 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 2
+    },
+    {
+      "Team Member": "Victor Cheung",
+      "Activity Date": "04/30/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 1
+    },
+    {
+      "Team Member": "Areeba Akhlaque",
+      "Activity Date": "04/30/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 3
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -34413,13 +34546,6 @@
       "Count": 1
     },
     {
-      "Team Member": "James Hereford",
-      "Activity Date": "04/29/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 33
-    },
-    {
       "Team Member": "Saifullah Khan",
       "Activity Date": "04/29/26",
       "Platform": "GitHub",
@@ -34427,11 +34553,11 @@
       "Count": 11
     },
     {
-      "Team Member": "Roman Naidenko",
+      "Team Member": "James Hereford",
       "Activity Date": "04/29/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 1
+      "Count": 33
     },
     {
       "Team Member": "JP Casabianca",
@@ -34439,6 +34565,13 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 3
+    },
+    {
+      "Team Member": "Roman Naidenko",
+      "Activity Date": "04/29/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 1
     },
     {
       "Team Member": "Mariana Gracia Salgado",
@@ -35057,13 +35190,6 @@
       "Count": 1
     },
     {
-      "Team Member": "Victor Cheung",
-      "Activity Date": "04/28/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 1
-    },
-    {
       "Team Member": "James Hereford",
       "Activity Date": "04/28/26",
       "Platform": "GitHub",
@@ -35071,18 +35197,18 @@
       "Count": 7
     },
     {
-      "Team Member": "Dana Hett\u00e9",
-      "Activity Date": "04/28/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 2
-    },
-    {
       "Team Member": "JP Casabianca",
       "Activity Date": "04/28/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 24
+    },
+    {
+      "Team Member": "Rafael Casabianca",
+      "Activity Date": "04/28/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 1
     },
     {
       "Team Member": "Roman Naidenko",
@@ -35099,7 +35225,14 @@
       "Count": 2
     },
     {
-      "Team Member": "Rafael Casabianca",
+      "Team Member": "Dana Hett\u00e9",
+      "Activity Date": "04/28/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 2
+    },
+    {
+      "Team Member": "Victor Cheung",
       "Activity Date": "04/28/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -35659,20 +35792,6 @@
       "Count": 1
     },
     {
-      "Team Member": "JP Casabianca",
-      "Activity Date": "04/27/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 28
-    },
-    {
-      "Team Member": "Victor Cheung",
-      "Activity Date": "04/27/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 11
-    },
-    {
       "Team Member": "Muhammad Farhan",
       "Activity Date": "04/27/26",
       "Platform": "GitHub",
@@ -35680,11 +35799,25 @@
       "Count": 20
     },
     {
+      "Team Member": "JP Casabianca",
+      "Activity Date": "04/27/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 28
+    },
+    {
       "Team Member": "James Hereford",
       "Activity Date": "04/27/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 17
+    },
+    {
+      "Team Member": "Victor Cheung",
+      "Activity Date": "04/27/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 11
     },
     {
       "Team Member": "Roman Naidenko",
@@ -35848,18 +35981,18 @@
       "Count": 6
     },
     {
-      "Team Member": "Muhammad Farhan",
-      "Activity Date": "04/26/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 8
-    },
-    {
       "Team Member": "David Andres",
       "Activity Date": "04/26/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 4
+    },
+    {
+      "Team Member": "Muhammad Farhan",
+      "Activity Date": "04/26/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 8
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -36800,13 +36933,6 @@
       "Count": 1
     },
     {
-      "Team Member": "James Hereford",
-      "Activity Date": "04/23/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 28
-    },
-    {
       "Team Member": "JP Casabianca",
       "Activity Date": "04/23/26",
       "Platform": "GitHub",
@@ -36814,14 +36940,21 @@
       "Count": 13
     },
     {
-      "Team Member": "Roman Naidenko",
+      "Team Member": "Rafael Casabianca",
       "Activity Date": "04/23/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 5
     },
     {
-      "Team Member": "Rafael Casabianca",
+      "Team Member": "James Hereford",
+      "Activity Date": "04/23/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 28
+    },
+    {
+      "Team Member": "Roman Naidenko",
       "Activity Date": "04/23/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -37437,6 +37570,13 @@
       "Count": 1
     },
     {
+      "Team Member": "Bradd Schofield",
+      "Activity Date": "04/22/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 3
+    },
+    {
       "Team Member": "James Hereford",
       "Activity Date": "04/22/26",
       "Platform": "GitHub",
@@ -37444,7 +37584,14 @@
       "Count": 9
     },
     {
-      "Team Member": "Muhammad Farhan",
+      "Team Member": "Saifullah Khan",
+      "Activity Date": "04/22/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 2
+    },
+    {
+      "Team Member": "Roman Naidenko",
       "Activity Date": "04/22/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -37458,25 +37605,11 @@
       "Count": 8
     },
     {
-      "Team Member": "Bradd Schofield",
+      "Team Member": "Muhammad Farhan",
       "Activity Date": "04/22/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 3
-    },
-    {
-      "Team Member": "Roman Naidenko",
-      "Activity Date": "04/22/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 3
-    },
-    {
-      "Team Member": "Saifullah Khan",
-      "Activity Date": "04/22/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 2
     },
     {
       "Team Member": "David Andres",
@@ -38074,6 +38207,13 @@
       "Count": 16
     },
     {
+      "Team Member": "James Hereford",
+      "Activity Date": "04/21/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 3
+    },
+    {
       "Team Member": "David Andres",
       "Activity Date": "04/21/26",
       "Platform": "GitHub",
@@ -38086,13 +38226,6 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 2
-    },
-    {
-      "Team Member": "James Hereford",
-      "Activity Date": "04/21/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 3
     },
     {
       "Team Member": "James Hereford",
@@ -38704,13 +38837,6 @@
       "Count": 1
     },
     {
-      "Team Member": "James Hereford",
-      "Activity Date": "04/20/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 33
-    },
-    {
       "Team Member": "Saifullah Khan",
       "Activity Date": "04/20/26",
       "Platform": "GitHub",
@@ -38718,14 +38844,21 @@
       "Count": 8
     },
     {
-      "Team Member": "JP Casabianca",
+      "Team Member": "James Hereford",
+      "Activity Date": "04/20/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 33
+    },
+    {
+      "Team Member": "David Andres",
       "Activity Date": "04/20/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
     },
     {
-      "Team Member": "David Andres",
+      "Team Member": "JP Casabianca",
       "Activity Date": "04/20/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -38935,11 +39068,11 @@
       "Count": 1
     },
     {
-      "Team Member": "David Andres",
+      "Team Member": "JP Casabianca",
       "Activity Date": "04/19/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 12
+      "Count": 20
     },
     {
       "Team Member": "James Hereford",
@@ -38949,11 +39082,11 @@
       "Count": 24
     },
     {
-      "Team Member": "JP Casabianca",
+      "Team Member": "David Andres",
       "Activity Date": "04/19/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 20
+      "Count": 12
     },
     {
       "Team Member": "James Hereford",
@@ -39523,11 +39656,11 @@
       "Count": 1
     },
     {
-      "Team Member": "David Andres",
+      "Team Member": "James Hereford",
       "Activity Date": "04/17/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 1
+      "Count": 8
     },
     {
       "Team Member": "Roman Naidenko",
@@ -39537,11 +39670,11 @@
       "Count": 4
     },
     {
-      "Team Member": "James Hereford",
+      "Team Member": "David Andres",
       "Activity Date": "04/17/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 8
+      "Count": 1
     },
     {
       "Team Member": "James Hereford",
@@ -40034,6 +40167,13 @@
       "Count": 3
     },
     {
+      "Team Member": "Victor Cheung",
+      "Activity Date": "04/16/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 1
+    },
+    {
       "Team Member": "Saifullah Khan",
       "Activity Date": "04/16/26",
       "Platform": "GitHub",
@@ -40042,13 +40182,6 @@
     },
     {
       "Team Member": "David Andres",
-      "Activity Date": "04/16/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 1
-    },
-    {
-      "Team Member": "Victor Cheung",
       "Activity Date": "04/16/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -40636,6 +40769,13 @@
       "Count": 1
     },
     {
+      "Team Member": "Muhammad Farhan",
+      "Activity Date": "04/15/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 9
+    },
+    {
       "Team Member": "James Hereford",
       "Activity Date": "04/15/26",
       "Platform": "GitHub",
@@ -40643,11 +40783,11 @@
       "Count": 7
     },
     {
-      "Team Member": "Muhammad Farhan",
+      "Team Member": "Saifullah Khan",
       "Activity Date": "04/15/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 9
+      "Count": 3
     },
     {
       "Team Member": "JP Casabianca",
@@ -40662,13 +40802,6 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 4
-    },
-    {
-      "Team Member": "Saifullah Khan",
-      "Activity Date": "04/15/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 3
     },
     {
       "Team Member": "Roman Naidenko",
@@ -41133,18 +41266,18 @@
       "Count": 1
     },
     {
-      "Team Member": "David Andres",
-      "Activity Date": "04/14/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 4
-    },
-    {
       "Team Member": "Areeba Akhlaque",
       "Activity Date": "04/14/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 10
+    },
+    {
+      "Team Member": "David Andres",
+      "Activity Date": "04/14/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 4
     },
     {
       "Team Member": "James Hereford",
@@ -41154,20 +41287,6 @@
       "Count": 18
     },
     {
-      "Team Member": "Saifullah Khan",
-      "Activity Date": "04/14/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 6
-    },
-    {
-      "Team Member": "Muhammad Farhan",
-      "Activity Date": "04/14/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 4
-    },
-    {
       "Team Member": "JP Casabianca",
       "Activity Date": "04/14/26",
       "Platform": "GitHub",
@@ -41175,11 +41294,25 @@
       "Count": 4
     },
     {
+      "Team Member": "Saifullah Khan",
+      "Activity Date": "04/14/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 6
+    },
+    {
       "Team Member": "Roman Naidenko",
       "Activity Date": "04/14/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
+    },
+    {
+      "Team Member": "Muhammad Farhan",
+      "Activity Date": "04/14/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 4
     },
     {
       "Team Member": "James Hereford",
@@ -41728,14 +41861,14 @@
       "Count": 5
     },
     {
-      "Team Member": "Rafael Casabianca",
+      "Team Member": "Saifullah Khan",
       "Activity Date": "04/13/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
     },
     {
-      "Team Member": "Saifullah Khan",
+      "Team Member": "Rafael Casabianca",
       "Activity Date": "04/13/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -42358,11 +42491,11 @@
       "Count": 1
     },
     {
-      "Team Member": "David Andres",
+      "Team Member": "James Hereford",
       "Activity Date": "04/10/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 5
+      "Count": 1
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -42379,11 +42512,11 @@
       "Count": 4
     },
     {
-      "Team Member": "James Hereford",
+      "Team Member": "David Andres",
       "Activity Date": "04/10/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 1
+      "Count": 5
     },
     {
       "Team Member": "Muhammad Farhan",
@@ -42834,11 +42967,11 @@
       "Count": 1
     },
     {
-      "Team Member": "Muhammad Farhan",
+      "Team Member": "David Andres",
       "Activity Date": "04/09/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 3
+      "Count": 6
     },
     {
       "Team Member": "JP Casabianca",
@@ -42848,11 +42981,11 @@
       "Count": 4
     },
     {
-      "Team Member": "Areeba Akhlaque",
+      "Team Member": "James Hereford",
       "Activity Date": "04/09/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 4
+      "Count": 1
     },
     {
       "Team Member": "Roman Naidenko",
@@ -42862,18 +42995,18 @@
       "Count": 7
     },
     {
-      "Team Member": "David Andres",
+      "Team Member": "Muhammad Farhan",
       "Activity Date": "04/09/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 6
+      "Count": 3
     },
     {
-      "Team Member": "James Hereford",
+      "Team Member": "Areeba Akhlaque",
       "Activity Date": "04/09/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 1
+      "Count": 4
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -44556,6 +44689,20 @@
       "Count": 1
     },
     {
+      "Team Member": "Saifullah Khan",
+      "Activity Date": "04/06/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 2
+    },
+    {
+      "Team Member": "Roman Naidenko",
+      "Activity Date": "04/06/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 1
+    },
+    {
       "Team Member": "JP Casabianca",
       "Activity Date": "04/06/26",
       "Platform": "GitHub",
@@ -44571,20 +44718,6 @@
     },
     {
       "Team Member": "Rafael Casabianca",
-      "Activity Date": "04/06/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 1
-    },
-    {
-      "Team Member": "Saifullah Khan",
-      "Activity Date": "04/06/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 2
-    },
-    {
-      "Team Member": "Roman Naidenko",
       "Activity Date": "04/06/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -45242,6 +45375,13 @@
       "Count": 1
     },
     {
+      "Team Member": "James Hereford",
+      "Activity Date": "04/03/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 7
+    },
+    {
       "Team Member": "Muhammad Farhan",
       "Activity Date": "04/03/26",
       "Platform": "GitHub",
@@ -45254,13 +45394,6 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 4
-    },
-    {
-      "Team Member": "James Hereford",
-      "Activity Date": "04/03/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 7
     },
     {
       "Team Member": "David Andres",
@@ -45753,11 +45886,11 @@
       "Count": 11
     },
     {
-      "Team Member": "Areeba Akhlaque",
+      "Team Member": "JP Casabianca",
       "Activity Date": "04/02/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 1
+      "Count": 3
     },
     {
       "Team Member": "David Andres",
@@ -45767,18 +45900,18 @@
       "Count": 4
     },
     {
-      "Team Member": "Muhammad Farhan",
+      "Team Member": "Areeba Akhlaque",
       "Activity Date": "04/02/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
     },
     {
-      "Team Member": "JP Casabianca",
+      "Team Member": "Muhammad Farhan",
       "Activity Date": "04/02/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 3
+      "Count": 1
     },
     {
       "Team Member": "Mariana Gracia Salgado",
@@ -46992,11 +47125,11 @@
       "Count": 4
     },
     {
-      "Team Member": "David Andres",
+      "Team Member": "JP Casabianca",
       "Activity Date": "03/31/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 1
+      "Count": 2
     },
     {
       "Team Member": "Muhammad Farhan",
@@ -47006,11 +47139,11 @@
       "Count": 1
     },
     {
-      "Team Member": "JP Casabianca",
+      "Team Member": "David Andres",
       "Activity Date": "03/31/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 2
+      "Count": 1
     },
     {
       "Team Member": "Mariana Gracia Salgado",
@@ -47601,13 +47734,6 @@
       "Count": 1
     },
     {
-      "Team Member": "James Hereford",
-      "Activity Date": "03/30/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 7
-    },
-    {
       "Team Member": "Muhammad Farhan",
       "Activity Date": "03/30/26",
       "Platform": "GitHub",
@@ -47615,18 +47741,25 @@
       "Count": 10
     },
     {
-      "Team Member": "David Andres",
-      "Activity Date": "03/30/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 3
-    },
-    {
       "Team Member": "Saifullah Khan",
       "Activity Date": "03/30/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
+    },
+    {
+      "Team Member": "James Hereford",
+      "Activity Date": "03/30/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 7
+    },
+    {
+      "Team Member": "David Andres",
+      "Activity Date": "03/30/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 3
     },
     {
       "Team Member": "James Hereford",
@@ -48427,13 +48560,6 @@
       "Count": 1
     },
     {
-      "Team Member": "David Andres",
-      "Activity Date": "03/27/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 3
-    },
-    {
       "Team Member": "Areeba Akhlaque",
       "Activity Date": "03/27/26",
       "Platform": "GitHub",
@@ -48448,6 +48574,13 @@
       "Count": 14
     },
     {
+      "Team Member": "David Andres",
+      "Activity Date": "03/27/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 3
+    },
+    {
       "Team Member": "Muhammad Farhan",
       "Activity Date": "03/27/26",
       "Platform": "GitHub",
@@ -48455,18 +48588,18 @@
       "Count": 4
     },
     {
-      "Team Member": "Rafael Casabianca",
-      "Activity Date": "03/27/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 5
-    },
-    {
       "Team Member": "JP Casabianca",
       "Activity Date": "03/27/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 2
+    },
+    {
+      "Team Member": "Rafael Casabianca",
+      "Activity Date": "03/27/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 5
     },
     {
       "Team Member": "James Hereford",
@@ -49071,21 +49204,7 @@
       "Count": 1
     },
     {
-      "Team Member": "James Hereford",
-      "Activity Date": "03/26/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 5
-    },
-    {
       "Team Member": "Saifullah Khan",
-      "Activity Date": "03/26/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 5
-    },
-    {
-      "Team Member": "David Andres",
       "Activity Date": "03/26/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -49099,6 +49218,20 @@
       "Count": 4
     },
     {
+      "Team Member": "David Andres",
+      "Activity Date": "03/26/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 5
+    },
+    {
+      "Team Member": "James Hereford",
+      "Activity Date": "03/26/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 5
+    },
+    {
       "Team Member": "JP Casabianca",
       "Activity Date": "03/26/26",
       "Platform": "GitHub",
@@ -49106,14 +49239,14 @@
       "Count": 5
     },
     {
-      "Team Member": "Roman Naidenko",
+      "Team Member": "Areeba Akhlaque",
       "Activity Date": "03/26/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
     },
     {
-      "Team Member": "Areeba Akhlaque",
+      "Team Member": "Roman Naidenko",
       "Activity Date": "03/26/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -49764,11 +49897,11 @@
       "Count": 1
     },
     {
-      "Team Member": "David Andres",
+      "Team Member": "Areeba Akhlaque",
       "Activity Date": "03/25/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 10
+      "Count": 5
     },
     {
       "Team Member": "JP Casabianca",
@@ -49778,11 +49911,11 @@
       "Count": 24
     },
     {
-      "Team Member": "Muhammad Farhan",
+      "Team Member": "David Andres",
       "Activity Date": "03/25/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 5
+      "Count": 10
     },
     {
       "Team Member": "Saifullah Khan",
@@ -49792,18 +49925,18 @@
       "Count": 4
     },
     {
+      "Team Member": "Muhammad Farhan",
+      "Activity Date": "03/25/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 5
+    },
+    {
       "Team Member": "James Hereford",
       "Activity Date": "03/25/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
-    },
-    {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "03/25/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 5
     },
     {
       "Team Member": "Bradd Schofield",
@@ -50359,11 +50492,11 @@
       "Count": 1
     },
     {
-      "Team Member": "James Hereford",
+      "Team Member": "Bradd Schofield",
       "Activity Date": "03/24/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 12
+      "Count": 2
     },
     {
       "Team Member": "David Andres",
@@ -50373,11 +50506,11 @@
       "Count": 13
     },
     {
-      "Team Member": "Areeba Akhlaque",
+      "Team Member": "James Hereford",
       "Activity Date": "03/24/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 2
+      "Count": 12
     },
     {
       "Team Member": "Saifullah Khan",
@@ -50387,7 +50520,7 @@
       "Count": 1
     },
     {
-      "Team Member": "Bradd Schofield",
+      "Team Member": "Areeba Akhlaque",
       "Activity Date": "03/24/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -53810,18 +53943,18 @@
       "Count": 1
     },
     {
-      "Team Member": "James Hereford",
-      "Activity Date": "03/14/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 4
-    },
-    {
       "Team Member": "Muhammad Farhan",
       "Activity Date": "03/14/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
+    },
+    {
+      "Team Member": "James Hereford",
+      "Activity Date": "03/14/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 4
     },
     {
       "Team Member": "James Hereford",
@@ -57450,18 +57583,11 @@
       "Count": 1
     },
     {
-      "Team Member": "James Hereford",
+      "Team Member": "Saifullah Khan",
       "Activity Date": "03/05/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 4
-    },
-    {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "03/05/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 4
+      "Count": 1
     },
     {
       "Team Member": "Muhammad Farhan",
@@ -57471,11 +57597,18 @@
       "Count": 1
     },
     {
-      "Team Member": "Saifullah Khan",
+      "Team Member": "Areeba Akhlaque",
       "Activity Date": "03/05/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 1
+      "Count": 4
+    },
+    {
+      "Team Member": "James Hereford",
+      "Activity Date": "03/05/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 4
     },
     {
       "Team Member": "James Hereford",
@@ -58724,18 +58857,18 @@
       "Count": 1
     },
     {
-      "Team Member": "Muhammad Farhan",
-      "Activity Date": "03/03/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 12
-    },
-    {
       "Team Member": "Saifullah Khan",
       "Activity Date": "03/03/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 5
+    },
+    {
+      "Team Member": "Muhammad Farhan",
+      "Activity Date": "03/03/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 12
     },
     {
       "Team Member": "James Hereford",
@@ -60082,13 +60215,6 @@
       "Count": 1
     },
     {
-      "Team Member": "Alexander Pavelko",
-      "Activity Date": "02/26/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 8
-    },
-    {
       "Team Member": "Areeba Akhlaque",
       "Activity Date": "02/26/26",
       "Platform": "GitHub",
@@ -60097,6 +60223,13 @@
     },
     {
       "Team Member": "James Hereford",
+      "Activity Date": "02/26/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 8
+    },
+    {
+      "Team Member": "Alexander Pavelko",
       "Activity Date": "02/26/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
@@ -60628,11 +60761,11 @@
       "Count": 1
     },
     {
-      "Team Member": "Saifullah Khan",
+      "Team Member": "James Hereford",
       "Activity Date": "02/25/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 10
+      "Count": 5
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -60642,11 +60775,11 @@
       "Count": 11
     },
     {
-      "Team Member": "James Hereford",
+      "Team Member": "Saifullah Khan",
       "Activity Date": "02/25/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
-      "Count": 5
+      "Count": 10
     },
     {
       "Team Member": "James Hereford",
@@ -61125,18 +61258,18 @@
       "Count": 44
     },
     {
-      "Team Member": "James Hereford",
-      "Activity Date": "02/24/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 1
-    },
-    {
       "Team Member": "Saifullah Khan",
       "Activity Date": "02/24/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 3
+    },
+    {
+      "Team Member": "James Hereford",
+      "Activity Date": "02/24/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 1
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -63218,18 +63351,18 @@
       "Count": 1
     },
     {
-      "Team Member": "James Hereford",
-      "Activity Date": "02/18/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 4
-    },
-    {
       "Team Member": "Areeba Akhlaque",
       "Activity Date": "02/18/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 13
+    },
+    {
+      "Team Member": "James Hereford",
+      "Activity Date": "02/18/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 4
     },
     {
       "Team Member": "Saifullah Khan",
@@ -64807,18 +64940,18 @@
       "Count": 1
     },
     {
-      "Team Member": "Saifullah Khan",
-      "Activity Date": "02/12/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 4
-    },
-    {
       "Team Member": "Areeba Akhlaque",
       "Activity Date": "02/12/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 7
+    },
+    {
+      "Team Member": "Saifullah Khan",
+      "Activity Date": "02/12/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 4
     },
     {
       "Team Member": "James Hereford",
@@ -65619,6 +65752,13 @@
       "Count": 2
     },
     {
+      "Team Member": "Saifullah Khan",
+      "Activity Date": "02/10/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 1
+    },
+    {
       "Team Member": "Muhammad Farhan",
       "Activity Date": "02/10/26",
       "Platform": "GitHub",
@@ -65631,13 +65771,6 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 9
-    },
-    {
-      "Team Member": "Saifullah Khan",
-      "Activity Date": "02/10/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 1
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -65955,18 +66088,18 @@
       "Count": 17
     },
     {
-      "Team Member": "Saifullah Khan",
-      "Activity Date": "02/09/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 3
-    },
-    {
       "Team Member": "James Hereford",
       "Activity Date": "02/09/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 2
+    },
+    {
+      "Team Member": "Saifullah Khan",
+      "Activity Date": "02/09/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 3
     },
     {
       "Team Member": "James Hereford",
@@ -66410,13 +66543,6 @@
       "Count": 1
     },
     {
-      "Team Member": "Areeba Akhlaque",
-      "Activity Date": "02/06/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 6
-    },
-    {
       "Team Member": "James Hereford",
       "Activity Date": "02/06/26",
       "Platform": "GitHub",
@@ -66429,6 +66555,13 @@
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
+    },
+    {
+      "Team Member": "Areeba Akhlaque",
+      "Activity Date": "02/06/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 6
     },
     {
       "Team Member": "James Hereford",
@@ -67964,18 +68097,18 @@
       "Count": 1
     },
     {
-      "Team Member": "Saifullah Khan",
-      "Activity Date": "02/02/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 2
-    },
-    {
       "Team Member": "Areeba Akhlaque",
       "Activity Date": "02/02/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 9
+    },
+    {
+      "Team Member": "Saifullah Khan",
+      "Activity Date": "02/02/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 2
     },
     {
       "Team Member": "James Hereford",
@@ -68776,18 +68909,18 @@
       "Count": 27
     },
     {
-      "Team Member": "JP Casabianca",
-      "Activity Date": "01/29/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 3
-    },
-    {
       "Team Member": "James Hereford",
       "Activity Date": "01/29/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 1
+    },
+    {
+      "Team Member": "JP Casabianca",
+      "Activity Date": "01/29/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 3
     },
     {
       "Team Member": "Saifullah Khan",
@@ -69133,18 +69266,18 @@
       "Count": 40
     },
     {
-      "Team Member": "Saifullah Khan",
-      "Activity Date": "01/28/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 2
-    },
-    {
       "Team Member": "JP Casabianca",
       "Activity Date": "01/28/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 3
+    },
+    {
+      "Team Member": "Saifullah Khan",
+      "Activity Date": "01/28/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 2
     },
     {
       "Team Member": "Areeba Akhlaque",
@@ -70897,18 +71030,18 @@
       "Count": 1
     },
     {
-      "Team Member": "James Hereford",
-      "Activity Date": "01/21/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 2
-    },
-    {
       "Team Member": "Saifullah Khan",
       "Activity Date": "01/21/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 4
+    },
+    {
+      "Team Member": "James Hereford",
+      "Activity Date": "01/21/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 2
     },
     {
       "Team Member": "James Hereford",
@@ -71534,18 +71667,18 @@
       "Count": 1
     },
     {
-      "Team Member": "Saifullah Khan",
-      "Activity Date": "01/16/26",
-      "Platform": "GitHub",
-      "Activity Type": "Code Commit",
-      "Count": 2
-    },
-    {
       "Team Member": "James Hereford",
       "Activity Date": "01/16/26",
       "Platform": "GitHub",
       "Activity Type": "Code Commit",
       "Count": 5
+    },
+    {
+      "Team Member": "Saifullah Khan",
+      "Activity Date": "01/16/26",
+      "Platform": "GitHub",
+      "Activity Type": "Code Commit",
+      "Count": 2
     },
     {
       "Team Member": "James Hereford",
@@ -73301,9 +73434,9 @@
   "timeAnalysis": [
     {
       "Team Member": "Areeba Akhlaque",
-      "Date": "07/25/26",
-      "First Activity (PST)": "05:53 AM",
-      "Last Activity (PST)": "05:53 AM",
+      "Date": "07/26/26",
+      "First Activity (PST)": "05:50 AM",
+      "Last Activity (PST)": "05:50 AM",
       "Active Window (Hours)": 0.5,
       "Longest Break (Minutes)": 0,
       "Total Events": 1,
@@ -73311,13 +73444,103 @@
     },
     {
       "Team Member": "James Hereford",
+      "Date": "07/26/26",
+      "First Activity (PST)": "12:02 AM",
+      "Last Activity (PST)": "05:13 AM",
+      "Active Window (Hours)": 5.7,
+      "Longest Break (Minutes)": 82,
+      "Total Events": 20,
+      "Platform Distribution": "GW:GmailSend, ClickUp"
+    },
+    {
+      "Team Member": "Roman Naidenko",
+      "Date": "07/26/26",
+      "First Activity (PST)": "01:05 AM",
+      "Last Activity (PST)": "01:05 AM",
+      "Active Window (Hours)": 0.5,
+      "Longest Break (Minutes)": 0,
+      "Total Events": 1,
+      "Platform Distribution": "GitHub Commit"
+    },
+    {
+      "Team Member": "Alexander Pavelko",
+      "Date": "07/25/26",
+      "First Activity (PST)": "10:12 AM",
+      "Last Activity (PST)": "11:09 AM",
+      "Active Window (Hours)": 1.5,
+      "Longest Break (Minutes)": 54,
+      "Total Events": 3,
+      "Platform Distribution": "Backendless"
+    },
+    {
+      "Team Member": "Areeba Akhlaque",
+      "Date": "07/25/26",
+      "First Activity (PST)": "05:58 AM",
+      "Last Activity (PST)": "10:53 PM",
+      "Active Window (Hours)": 5.1,
+      "Longest Break (Minutes)": 471,
+      "Total Events": 9,
+      "Platform Distribution": "GW:GmailSend, GW:DriveEdit"
+    },
+    {
+      "Team Member": "Bradd Schofield",
+      "Date": "07/25/26",
+      "First Activity (PST)": "10:00 AM",
+      "Last Activity (PST)": "10:00 AM",
+      "Active Window (Hours)": 0.5,
+      "Longest Break (Minutes)": 0,
+      "Total Events": 1,
+      "Platform Distribution": "GW:GmailSend"
+    },
+    {
+      "Team Member": "David Andres",
+      "Date": "07/25/26",
+      "First Activity (PST)": "07:38 AM",
+      "Last Activity (PST)": "03:16 PM",
+      "Active Window (Hours)": 3.9,
+      "Longest Break (Minutes)": 285,
+      "Total Events": 12,
+      "Platform Distribution": "GitHub Commit, ClickUp"
+    },
+    {
+      "Team Member": "James Hereford",
       "Date": "07/25/26",
       "First Activity (PST)": "01:05 AM",
-      "Last Activity (PST)": "05:12 AM",
-      "Active Window (Hours)": 2,
+      "Last Activity (PST)": "11:47 PM",
+      "Active Window (Hours)": 20.6,
       "Longest Break (Minutes)": 187,
+      "Total Events": 121,
+      "Platform Distribution": "GW:GmailSend, GW:DriveEdit, GitHub Commit, ClickUp"
+    },
+    {
+      "Team Member": "Roman Naidenko",
+      "Date": "07/25/26",
+      "First Activity (PST)": "12:31 PM",
+      "Last Activity (PST)": "12:31 PM",
+      "Active Window (Hours)": 0.5,
+      "Longest Break (Minutes)": 0,
+      "Total Events": 1,
+      "Platform Distribution": "GitHub Commit"
+    },
+    {
+      "Team Member": "Victoria Chanz\u00e1",
+      "Date": "07/25/26",
+      "First Activity (PST)": "03:37 PM",
+      "Last Activity (PST)": "03:44 PM",
+      "Active Window (Hours)": 0.6,
+      "Longest Break (Minutes)": 6,
       "Total Events": 3,
-      "Platform Distribution": "GW:GmailSend"
+      "Platform Distribution": "ClickUp"
+    },
+    {
+      "Team Member": "William Titus",
+      "Date": "07/25/26",
+      "First Activity (PST)": "12:45 PM",
+      "Last Activity (PST)": "02:04 PM",
+      "Active Window (Hours)": 1.8,
+      "Longest Break (Minutes)": 42,
+      "Total Events": 5,
+      "Platform Distribution": "GW:GmailSend, ClickUp"
     },
     {
       "Team Member": "Alexander Pavelko",
@@ -73456,8 +73679,8 @@
       "Last Activity (PST)": "03:03 PM",
       "Active Window (Hours)": 2.9,
       "Longest Break (Minutes)": 261,
-      "Total Events": 11,
-      "Platform Distribution": "ClickUp"
+      "Total Events": 13,
+      "Platform Distribution": "GitHub Commit, ClickUp"
     },
     {
       "Team Member": "Victoria Chanz\u00e1",
@@ -73466,7 +73689,7 @@
       "Last Activity (PST)": "02:42 PM",
       "Active Window (Hours)": 7.7,
       "Longest Break (Minutes)": 88,
-      "Total Events": 54,
+      "Total Events": 52,
       "Platform Distribution": "GW:GmailSend, GW:DriveEdit, ClickUp"
     },
     {
@@ -73624,10 +73847,10 @@
       "Date": "07/23/26",
       "First Activity (PST)": "01:36 PM",
       "Last Activity (PST)": "11:59 PM",
-      "Active Window (Hours)": 3.8,
-      "Longest Break (Minutes)": 455,
-      "Total Events": 9,
-      "Platform Distribution": "GW:GmailSend, ClickUp"
+      "Active Window (Hours)": 5.4,
+      "Longest Break (Minutes)": 357,
+      "Total Events": 10,
+      "Platform Distribution": "GW:GmailSend, GitHub Commit, ClickUp"
     },
     {
       "Team Member": "Victoria Chanz\u00e1",
@@ -73756,7 +73979,7 @@
       "Last Activity (PST)": "04:22 PM",
       "Active Window (Hours)": 3.3,
       "Longest Break (Minutes)": 255,
-      "Total Events": 12,
+      "Total Events": 11,
       "Platform Distribution": "GW:DriveEdit, GitHub Commit, ClickUp"
     },
     {
@@ -73950,16 +74173,6 @@
       "Platform Distribution": "GW:GmailSend"
     },
     {
-      "Team Member": "Saymond Montoya",
-      "Date": "07/21/26",
-      "First Activity (PST)": "05:55 AM",
-      "Last Activity (PST)": "05:55 AM",
-      "Active Window (Hours)": 0.5,
-      "Longest Break (Minutes)": 0,
-      "Total Events": 1,
-      "Platform Distribution": "ClickUp"
-    },
-    {
       "Team Member": "Victor Cheung",
       "Date": "07/21/26",
       "First Activity (PST)": "12:49 AM",
@@ -73986,7 +74199,7 @@
       "Last Activity (PST)": "01:39 PM",
       "Active Window (Hours)": 3.8,
       "Longest Break (Minutes)": 180,
-      "Total Events": 26,
+      "Total Events": 27,
       "Platform Distribution": "GW:GmailSend, GW:DriveEdit, ClickUp"
     },
     {
@@ -74146,7 +74359,7 @@
       "Last Activity (PST)": "03:06 PM",
       "Active Window (Hours)": 7.5,
       "Longest Break (Minutes)": 67,
-      "Total Events": 47,
+      "Total Events": 46,
       "Platform Distribution": "GW:GmailSend, GW:DriveEdit, ClickUp"
     },
     {
@@ -91445,19 +91658,19 @@
       "Key Logic/Scope": "Calculated Work Day metrics. Strictly uses First/Last activity timestamps with 0 buffer."
     }
   ],
-  "lastUpdated": "2026-07-25 05:58:10 PDT",
+  "lastUpdated": "2026-07-26 05:54:06 PDT",
   "googleSheetUrl": "https://docs.google.com/spreadsheets/d/1t7jeunt3IDmnBcIoRYxM06sZgzCYYMAK8AgwH21M0Fo",
   "stats": {
-    "totalAuditRows": 10471,
-    "totalTimeRows": 1772,
+    "totalAuditRows": 10490,
+    "totalTimeRows": 1780,
     "totalEventRefs": 73,
     "uniqueMembers": 23,
     "platforms": [
       "Figma",
-      "ClickUp",
       "Backendless App",
       "Google Workspace",
-      "GitHub"
+      "GitHub",
+      "ClickUp"
     ]
   }
 }
