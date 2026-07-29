@@ -90,7 +90,7 @@ jobs:
           EMAIL_RECIPIENTS=areeba@pvragon.com,jaime@pvragon.com,bradd@pvragon.com
           EMAIL_USER=${{ secrets.EMAIL_USER }}
           EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}
-          DASHBOARD_URL=https://Areeba-Akhlaque.github.io/Daily-Activity-Report/dashboard/index.html
+          DASHBOARD_URL=${{ vars.DASHBOARD_URL || 'https://Areeba-Akhlaque.github.io/Daily-Activity-Report/dashboard/index.html' }}
           START_DATE=2026-01-01
           SKIP_EMAIL=${{ github.event.inputs.skip_email || 'false' }}
           FULL_REBUILD=false
@@ -170,7 +170,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Links" >> $GITHUB_STEP_SUMMARY
           echo "- [Google Sheet](https://docs.google.com/spreadsheets/d/${{ secrets.GOOGLE_SHEET_ID }})" >> $GITHUB_STEP_SUMMARY
-          echo "- [Dashboard](https://Areeba-Akhlaque.github.io/Daily-Activity-Report/dashboard/index.html)" >> $GITHUB_STEP_SUMMARY
+          echo "- [Dashboard](${{ vars.DASHBOARD_URL || 'https://Areeba-Akhlaque.github.io/Daily-Activity-Report/dashboard/index.html' }})" >> $GITHUB_STEP_SUMMARY
 
   deploy:
     environment:
